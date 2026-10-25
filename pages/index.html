@@ -1,0 +1,157 @@
+<!--meta {"key":"index","title":"Stil-Daheim: Einrichten mit Gefühl und mit Zollstock","desc":"Finde deinen Wohnstil, miss Teppich, Vorhang, Bilder und Lampe richtig aus und richte deine Mietwohnung schön ein, ohne Ärger beim Auszug.","og":"assets/start.jpg"} -->
+<!--HEAD-->
+<style>
+/* Startseite */
+.hero .wrap{padding-bottom:clamp(52px,8vw,96px)}
+.hero img{object-position:50% 60%}
+.strips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.pstrip{display:flex;flex-direction:column;border-radius:10px;overflow:hidden;background:var(--pan);border:1px solid var(--line);color:var(--ink);text-decoration:none}
+.pstrip:hover{border-color:var(--ink)}
+.sws{display:flex;flex-direction:column}
+.sw{display:flex;align-items:flex-end;height:60px;padding:0 12px 8px;font-size:.84rem;font-weight:600;font-stretch:90%}
+.pn{padding:14px 14px 18px}
+.pn b{display:block;font-size:1.35rem;font-stretch:80%;line-height:1.1}
+.pn small{display:block;color:var(--mut);font-size:.9rem;line-height:1.42;margin-top:6px}
+@media (max-width:1040px){.strips{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.strips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;gap:12px;margin-inline:-20px;padding:0 20px 6px;scrollbar-width:none}.strips::-webkit-scrollbar{display:none}.pstrip{flex:0 0 68%;scroll-snap-align:start}}
+.swipe{display:none;color:var(--mut);font-size:.9rem;margin-top:10px}
+@media (max-width:640px){.swipe{display:block}}
+/* Stil-Finder */
+.quiz{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,4vw,44px);max-width:900px}
+.q-top{display:flex;align-items:center;gap:16px;margin-bottom:24px;color:var(--mut);font-size:.93rem;font-variant-numeric:tabular-nums}
+.q-bar{flex:1;height:4px;background:var(--band);border-radius:2px;overflow:hidden}
+.q-bar i{display:block;height:100%;width:0;background:var(--brass);transition:width .35s}
+.q-q{font-size:clamp(1.55rem,3.3vw,2.2rem);margin:0 0 24px;outline:none}
+.q-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.q-opts button{display:flex;align-items:center;text-align:left;padding:15px 18px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);font-size:1.03rem;line-height:1.35;min-height:62px}
+.q-opts button:hover{border-color:var(--grn)}
+.q-opts button[aria-pressed=true]{border-color:var(--grn);background:color-mix(in srgb,var(--grn) 10%,var(--bg))}
+.q-nav{margin-top:18px;min-height:42px;display:flex;gap:18px;align-items:center}
+.q-link{color:var(--grn);font-weight:600;padding:8px 2px;text-decoration:underline;text-underline-offset:.2em}
+.q-res{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,48px)}
+.q-res .kicker{color:var(--mut);margin:0}
+.q-res h3{font-size:clamp(2.4rem,6vw,3.8rem);font-stretch:78%;line-height:1;margin:4px 0 14px}
+.q-res ul{padding-left:1.2em;margin:8px 0 0}.q-res li{margin:6px 0}.q-res li::marker{color:var(--brass)}
+.q-res .mix{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--mut)}
+.q-res .mix b{color:var(--ink)}
+.bigpal{display:grid;grid-template-rows:repeat(4,1fr);border-radius:10px;overflow:hidden;min-height:260px;border:1px solid var(--line)}
+.bigpal span{display:flex;align-items:flex-end;justify-content:space-between;padding:10px 14px;font-weight:600;font-size:.92rem;font-stretch:90%}
+.bigpal small{font-weight:500;opacity:.85;font-variant-numeric:tabular-nums}
+@media (max-width:720px){.q-opts{grid-template-columns:1fr}.q-res{grid-template-columns:1fr}.bigpal{min-height:200px}}
+/* Ausmessen */
+.measure{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(28px,5vw,72px);align-items:start}
+.mist{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--line)}
+.mist li{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.mist b{font-weight:600}
+.mist span{color:var(--mut)}
+.mini .field{margin-top:18px}
+@media (max-width:900px){.measure{grid-template-columns:1fr}}
+/* Miete */
+</style>
+<!--MAIN-->
+<div class="hero">
+  <picture><source type="image/webp" srcset="assets/start-m.webp 960w, assets/start.webp 1672w" sizes="100vw"><img src="assets/start.jpg" srcset="assets/start-m.jpg 960w, assets/start.jpg 1672w" sizes="100vw" alt="Ruhiges Wohnzimmer im Altbau im warmen Abendlicht, mit Leinensofa, Wollteppich und Pflanze" fetchpriority="high"></picture>
+  <div class="hdim" data-at=".503,.982,.468" aria-hidden="true"><i></i><i></i><span class="lbl">Sofa 240 cm</span></div>
+  <div class="wrap">
+    <h1>Mit Gefühl einrichten. Und mit Zollstock.</h1>
+    <p>Finde deinen Wohnstil, miss richtig aus und kauf das Passende. Auch in der Mietwohnung.</p>
+    <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div>
+  </div>
+</div>
+
+<section class="band" id="stil-finder"><div class="wrap">
+  <div class="sec-h"><h2>Welcher Stil passt zu dir?</h2><p class="lede">Fünf schnelle Fragen. Danach kennst du deinen Stil, seine Farben und die drei Stücke, mit denen du anfängst.</p></div>
+  <div class="quiz" id="quiz" aria-live="polite"></div>
+</div></section>
+
+<section id="stile"><div class="wrap">
+  <div class="sec-h"><h2>Sechs Stile und ihre Farben.</h2><p class="lede">Jeder Stil hat eine eigene Farbkarte. Tippe einen an, um ihn kennenzulernen.</p></div>
+  {{STRIPS}}
+  <p class="swipe">Zur Seite wischen für alle sechs Stile.</p>
+</div></section>
+
+<section class="band" id="ausmessen"><div class="wrap measure">
+  <div>
+    <h2>Die meisten Einrichtungsfehler sind Maßfehler.</h2>
+    <p class="lede">Ein zu kleiner Teppich lässt das Sofa verloren aussehen, eine zu kurze Gardinenstange macht das Fenster schmal. Mit ein paar Zentimetern Regel wird es stimmig.</p>
+    <ul class="mist">
+      <li><b>Teppich zu klein</b><span>Mindestens die vorderen Füße aller Sitzmöbel gehören darauf.</span></li>
+      <li><b>Gardinenstange zu kurz</b><span>Je Seite 15 bis 20 cm breiter als das Fenster.</span></li>
+      <li><b>Bilder zu hoch</b><span>Die Bildmitte gehört auf 140 bis 160 cm.</span></li>
+      <li><b>Lampe zu hoch</b><span>Über dem Esstisch 60 bis 80 cm über der Platte.</span></li>
+    </ul>
+    <div class="btns"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
+  </div>
+  <div class="mini">
+    <div class="sheet" id="mini-sheet" role="img" aria-label="Zeichnung: Sofa und Teppich von oben"></div>
+    <div class="field"><label for="mini-sofa">Wie breit ist dein Sofa?</label><div class="frow"><input type="range" id="mini-sofa" min="140" max="320" step="10" value="220"><span class="vbox"><input class="vin" id="mini-sofa-n" type="number" inputmode="numeric" min="140" max="320" step="10" value="220" aria-label="Sofabreite in Zentimetern"><span class="vu">cm</span></span></div></div>
+    <p class="result" id="mini-res" aria-live="polite"></p>
+  </div>
+</div></section>
+
+<section id="miete"><div class="wrap split">
+  <figure class="ph"><picture><source type="image/webp" srcset="assets/miete-m.webp 960w, assets/miete.webp 1672w" sizes="(max-width:900px) 100vw, 50vw"><img src="assets/miete.jpg" srcset="assets/miete-m.jpg 960w, assets/miete.jpg 1672w" sizes="(max-width:900px) 100vw, 50vw" alt="Kleine Mietwohnung, eingerichtet ohne Bohren: angelehnter Spiegel, Bilderleiste, Wandleuchte mit Stoffkabel" loading="lazy" decoding="async"></picture></figure>
+  <div>
+    <h2>Schön wohnen, ohne Ärger beim Auszug.</h2>
+    <p class="lede">Was du in der Mietwohnung darfst, was du später zurückbauen musst und was ganz ohne Bohren geht.</p>
+    <dl class="kv">
+      <dt>Streichen</dt><dd>Erlaubt, auch farbig. Kräftige Farben müssen beim Auszug aber wieder neutral sein, entschied der Bundesgerichtshof.</dd>
+      <dt>Bohren</dt><dd>Dübellöcher in üblichem Umfang gehören zum normalen Gebrauch. In Fliesen möglichst in die Fugen.</dd>
+      <dt>Auszug</dt><dd>Was du eingebaut hast, baust du zurück, wenn der Vermieter es verlangt.</dd>
+    </dl>
+    <div class="btns"><a class="btn" href="mieten.html">Ratgeber Wohnen zur Miete</a></div>
+  </div>
+</div></section>
+
+<section class="band" id="alles"><div class="wrap">
+  <div class="sec-h"><h2>Alle Ratgeber.</h2></div>
+  <div class="hub">
+    <a href="#stil-finder"><b>Welcher Stil passt zu mir?</b><span>Der Stil-Finder mit fünf Fragen, mit Farbkarte und Startliste.</span></a>
+    <a href="stile.html"><b>Wohnstile im Überblick</b><span>Vintage, Modern, Skandinavisch, Japandi, Industrial und Boho.</span></a>
+    <a href="vintage.html"><b>Vintage einrichten</b><span>Fundstücke erkennen, prüfen und mit Neuem kombinieren.</span></a>
+    <a href="modern.html"><b>Modern einrichten</b><span>Ruhige Räume mit klaren Linien und gutem Stauraum.</span></a>
+    <a href="rechner.html"><b>Raum-Rechner</b><span>Teppich, Vorhang, Bilder, Lampe, Wandfarbe und Tapete auf den Zentimeter.</span></a>
+    <a href="mieten.html"><b>Schöner wohnen zur Miete</b><span>Streichen, Bohren, Auszug: was erlaubt ist und was ohne Bohren geht.</span></a>
+  </div>
+</div></section>
+<!--END-->
+<script src="draw.js"></script>
+<script>
+/* Stil-Finder */
+(()=>{const S={{STYLES_JSON}};
+const Q=[
+ ['Wie sieht ein guter Sonntag bei dir aus?',[['Flohmarkt, danach Kuchen',{vintage:2,boho:1}],['Alles aufgeräumt, dazu ein gutes Buch',{modern:2,japandi:1}],['Kerzen, Decke und Tee',{skandinavisch:2,japandi:1}],['Pflanzen umtopfen, Musik an',{boho:2}],['Ausstellung oder Konzert in der Stadt',{industrial:2,modern:1}]]],
+ ['Welche Wandfarbe würdest du nehmen?',[['Weiß, hell und freundlich',{skandinavisch:2,modern:1}],['Warmes Beige oder Lehm',{japandi:2,boho:1}],['Tiefes Grün oder Senfgelb',{vintage:2}],['Sichtbeton, Ziegel oder Dunkelgrau',{industrial:2}],['Kreideweiß mit schwarzen Akzenten',{modern:2,industrial:1}]]],
+ ['Welches Material fasst du am liebsten an?',[['Helles Holz und Wolle',{skandinavisch:2,japandi:1}],['Teak und Samt',{vintage:2}],['Stein, Glas und Lack',{modern:2}],['Stahl und Leder',{industrial:2}],['Rattan, Jute und Leinen',{boho:2,japandi:1}]]],
+ ['Wie viel steht bei dir offen herum?',[['So wenig wie möglich',{modern:2,japandi:2}],['Ein paar Lieblingsstücke',{skandinavisch:2,industrial:1}],['Viel, und jedes Stück hat eine Geschichte',{vintage:2,boho:2}]]],
+ ['Welches Sofa nimmst du?',[['Niedrig, kantig, einfarbig',{modern:2}],['Schräge Holzbeine, Cord oder Samt',{vintage:2}],['Hell und weich, mit Wolldecke',{skandinavisch:2}],['Leder, das mit den Jahren schöner wird',{industrial:2}],['Tief, mit vielen bunten Kissen',{boho:2}],['Ganz flach, Leinen, nichts Überflüssiges',{japandi:2}]]]];
+const ORDER=Object.keys(S),box=document.getElementById('quiz');let step=0,ans=[];
+try{const s=JSON.parse(localStorage.getItem('sdquiz')||'null');if(s&&Array.isArray(s)&&s.length===Q.length){ans=s;step=Q.length}}catch(e){}
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]});return ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b))}
+function render(focus){
+  if(step<Q.length){const q=Q[step];
+    box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
+  }else{const r=score(),a=S[r[0]],b=S[r[1]];
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><p><b>Damit fängst du an:</b></p><ul>${a.start.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p class="mix">Dein zweiter Stil ist <b>${esc(b.name)}</b>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><button type="button" class="btn ghost" data-again>Noch einmal</button></div></div><div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div>`;
+  }
+  if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
+}
+function lt(h){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>140}
+box.addEventListener('click',e=>{const o=e.target.closest('[data-i]');
+  if(o){ans[step]=+o.dataset.i;step++;if(step===Q.length){ans=ans.slice(0,Q.length);try{localStorage.setItem('sdquiz',JSON.stringify(ans))}catch(x){}}render(true);return}
+  if(e.target.closest('[data-back]')){step=Math.max(0,step-1);render(true);return}
+  if(e.target.closest('[data-again]')){step=0;ans=[];try{localStorage.removeItem('sdquiz')}catch(x){}render(true)}});
+render(false);
+})();
+</script>
+<script>
+/* Teaser: Teppich unter dem Sofa, Maßfehler, Mietrecht in Kürze */
+(()=>{const r=document.getElementById('mini-sofa'),n=document.getElementById('mini-sofa-n'),out=document.getElementById('mini-res'),sh=document.getElementById('mini-sheet');
+function up(){const v=+r.value;if(document.activeElement!==n)n.value=v;const res=SD.rug.living(sh,{sofa:v});out.innerHTML=res.html}
+r.addEventListener('input',up);
+n.addEventListener('input',()=>{const v=+n.value;if(v>=140&&v<=320){r.value=v;up()}});
+n.addEventListener('change',()=>{let v=+n.value;if(isNaN(v))v=+r.value;v=Math.min(320,Math.max(140,Math.round(v/10)*10));r.value=v;n.value=v;up()});
+up();
+})();
+</script>
