@@ -5,15 +5,18 @@
 .hero .wrap{padding-bottom:clamp(52px,8vw,96px)}
 .hero img{object-position:50% 60%}
 .strips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
-.pstrip{display:flex;flex-direction:column;border-radius:10px;overflow:hidden;background:var(--pan);border:1px solid var(--line);color:var(--ink);text-decoration:none}
-.pstrip:hover{border-color:var(--ink)}
-.sws{display:flex;flex-direction:column}
-.sw{display:flex;align-items:flex-end;height:60px;padding:0 12px 8px;font-size:.84rem;font-weight:600;font-stretch:90%}
+.pstrip{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:var(--pan);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .3s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.pstrip:hover{border-color:var(--ink);transform:translateY(-2px)}}
+.pimg{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--band)}
+.pimg img{width:100%;height:100%;object-fit:cover}
+.sws{display:grid;grid-template-columns:repeat(4,1fr);height:14px}
+.sws i{display:block}
 .pn{padding:14px 14px 18px}
-.pn b{display:block;font-size:1.35rem;font-stretch:80%;line-height:1.1}
-.pn small{display:block;color:var(--mut);font-size:.9rem;line-height:1.42;margin-top:6px}
-@media (max-width:1040px){.strips{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:640px){.strips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;gap:12px;margin-inline:-20px;padding:0 20px 6px;scrollbar-width:none}.strips::-webkit-scrollbar{display:none}.pstrip{flex:0 0 68%;scroll-snap-align:start}}
+.pn b{display:block;font-size:1.3rem;font-stretch:80%;line-height:1.1}
+.pn small{display:block;color:var(--mut);font-size:.88rem;line-height:1.42;margin-top:6px}
+@media (max-width:1040px){.strips{grid-template-columns:repeat(3,minmax(0,1fr))}.pimg{aspect-ratio:4/3}}
+@media (max-width:640px){.strips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;gap:12px;margin-inline:-20px;padding:0 20px 6px;scrollbar-width:none}.strips::-webkit-scrollbar{display:none}.pstrip{flex:0 0 72%;scroll-snap-align:start}.pimg{aspect-ratio:4/3}}
+@media (prefers-reduced-motion:reduce){.pstrip{transition:none}.pstrip:hover{transform:none}}
 .swipe{display:none;color:var(--mut);font-size:.9rem;margin-top:10px}
 @media (max-width:640px){.swipe{display:block}}
 /* Stil-Finder */
@@ -28,16 +31,18 @@
 .q-opts button[aria-pressed=true]{border-color:var(--grn);background:color-mix(in srgb,var(--grn) 10%,var(--bg))}
 .q-nav{margin-top:18px;min-height:42px;display:flex;gap:18px;align-items:center}
 .q-link{color:var(--grn);font-weight:600;padding:8px 2px;text-decoration:underline;text-underline-offset:.2em}
-.q-res{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,48px)}
+.q-res{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,48px);align-items:start}
 .q-res .kicker{color:var(--mut);margin:0}
 .q-res h3{font-size:clamp(2.4rem,6vw,3.8rem);font-stretch:78%;line-height:1;margin:4px 0 14px}
-.q-res ul{padding-left:1.2em;margin:8px 0 0}.q-res li{margin:6px 0}.q-res li::marker{color:var(--brass)}
-.q-res .mix{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--mut)}
+.q-res .mix{margin:18px 0 0;color:var(--mut)}
 .q-res .mix b{color:var(--ink)}
-.bigpal{display:grid;grid-template-rows:repeat(4,1fr);border-radius:10px;overflow:hidden;min-height:260px;border:1px solid var(--line)}
-.bigpal span{display:flex;align-items:flex-end;justify-content:space-between;padding:10px 14px;font-weight:600;font-size:.92rem;font-stretch:90%}
-.bigpal small{font-weight:500;opacity:.85;font-variant-numeric:tabular-nums}
-@media (max-width:720px){.q-opts{grid-template-columns:1fr}.q-res{grid-template-columns:1fr}.bigpal{min-height:200px}}
+.q-res .mix a{font-weight:600}
+.q-vis{display:grid;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.q-vis picture,.q-vis img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.bigpal{display:grid;grid-template-columns:repeat(4,1fr)}
+.bigpal span{display:flex;flex-direction:column;justify-content:flex-end;min-height:84px;padding:8px 10px;font-weight:600;font-size:.86rem;font-stretch:90%;line-height:1.2}
+.bigpal small{font-weight:500;font-variant-numeric:tabular-nums;font-size:.74rem}
+@media (max-width:720px){.q-opts{grid-template-columns:1fr}.q-res{grid-template-columns:1fr}.q-vis{order:-1}}
 /* Ausmessen */
 .measure{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(28px,5vw,72px);align-items:start}
 .mist{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--line)}
@@ -105,14 +110,7 @@
 
 <section class="band" id="alles"><div class="wrap">
   <div class="sec-h"><h2>Alle Ratgeber.</h2></div>
-  <div class="hub">
-    <a href="#stil-finder"><b>Welcher Stil passt zu mir?</b><span>Der Stil-Finder mit fünf Fragen, mit Farbkarte und Startliste.</span></a>
-    <a href="stile.html"><b>Wohnstile im Überblick</b><span>Vintage, Modern, Skandinavisch, Japandi, Industrial und Boho.</span></a>
-    <a href="vintage.html"><b>Vintage einrichten</b><span>Fundstücke erkennen, prüfen und mit Neuem kombinieren.</span></a>
-    <a href="modern.html"><b>Modern einrichten</b><span>Ruhige Räume mit klaren Linien und gutem Stauraum.</span></a>
-    <a href="rechner.html"><b>Raum-Rechner</b><span>Teppich, Vorhang, Bilder, Lampe, Wandfarbe und Tapete auf den Zentimeter.</span></a>
-    <a href="mieten.html"><b>Schöner wohnen zur Miete</b><span>Streichen, Bohren, Auszug: was erlaubt ist und was ohne Bohren geht.</span></a>
-  </div>
+  {{TILES:finder=boho,stile=japandi,vintage,modern,rechner,mieten}}
 </div></section>
 <!--END-->
 <script src="draw.js"></script>
@@ -133,7 +131,8 @@ function render(focus){
   if(step<Q.length){const q=Q[step];
     box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><p><b>Damit fängst du an:</b></p><ul>${a.start.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p class="mix">Dein zweiter Stil ist <b>${esc(b.name)}</b>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><button type="button" class="btn ghost" data-again>Noch einmal</button></div></div><div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div>`;
+    const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><button type="button" class="btn ghost" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
 }
