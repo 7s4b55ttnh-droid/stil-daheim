@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stil-daheim.de/sitemap.xml
