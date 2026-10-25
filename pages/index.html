@@ -22,7 +22,11 @@
 /* Stil-Finder */
 .quiz{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,4vw,44px);max-width:900px}
 .q-top{display:flex;align-items:center;gap:16px;margin-bottom:24px;color:var(--mut);font-size:.93rem;font-variant-numeric:tabular-nums}
-.q-bar{flex:1;height:4px;background:var(--band);border-radius:2px;overflow:hidden}
+.q-bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.dots{display:inline-flex;gap:4px;margin-right:12px;flex:none}
+.dots i{width:18px;height:18px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent)}
+.q-res .btns{margin-top:22px}
+.q-more{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:10px}
 .q-bar i{display:block;height:100%;width:0;background:var(--brass);transition:width .35s}
 .q-q{font-size:clamp(1.55rem,3.3vw,2.2rem);margin:0 0 24px;outline:none}
 .q-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -50,6 +54,9 @@
 .mist b{font-weight:600}
 .mist span{color:var(--mut)}
 .mini .field{margin-top:18px}
+#miete .kv{margin-top:26px}
+.mob-only{display:none}
+@media (max-width:900px){.measure .desk-only{display:none}.mob-only{display:flex}}
 @media (max-width:900px){.measure{grid-template-columns:1fr}}
 /* Miete */
 </style>
@@ -85,12 +92,13 @@
       <li><b>Bilder zu hoch</b><span>Die Bildmitte gehört auf 140 bis 160 cm.</span></li>
       <li><b>Lampe zu hoch</b><span>Über dem Esstisch 60 bis 80 cm über der Platte.</span></li>
     </ul>
-    <div class="btns"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
+    <div class="btns desk-only"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
   </div>
   <div class="mini">
     <div class="sheet" id="mini-sheet" role="img" aria-label="Zeichnung: Sofa und Teppich von oben"></div>
-    <div class="field"><label for="mini-sofa">Wie breit ist dein Sofa?</label><div class="frow"><input type="range" id="mini-sofa" min="140" max="320" step="10" value="220"><span class="vbox"><input class="vin" id="mini-sofa-n" type="number" inputmode="numeric" min="140" max="320" step="10" value="220" aria-label="Sofabreite in Zentimetern"><span class="vu">cm</span></span></div></div>
+    <div class="field"><label for="mini-sofa">Wie breit ist dein Sofa?</label><div class="frow"><input type="range" id="mini-sofa" min="140" max="320" step="10" value="220"><span class="vbox"><input class="vin" id="mini-sofa-n" type="text" inputmode="numeric" autocomplete="off" value="220" aria-label="Sofabreite in Zentimetern"><span class="vu">cm</span></span></div><p class="clampmsg" id="mini-msg" aria-live="polite"></p></div>
     <p class="result" id="mini-res" aria-live="polite"></p>
+    <div class="btns mob-only"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
   </div>
 </div></section>
 
@@ -119,20 +127,20 @@
 (()=>{const S={{STYLES_JSON}};
 const Q=[
  ['Wie sieht ein guter Sonntag bei dir aus?',[['Flohmarkt, danach Kuchen',{vintage:2,boho:1}],['Alles aufgeräumt, dazu ein gutes Buch',{modern:2,japandi:1}],['Kerzen, Decke und Tee',{skandinavisch:2,japandi:1}],['Pflanzen umtopfen, Musik an',{boho:2}],['Ausstellung oder Konzert in der Stadt',{industrial:2,modern:1}]]],
- ['Welche Wandfarbe würdest du nehmen?',[['Weiß, hell und freundlich',{skandinavisch:2,modern:1}],['Warmes Beige oder Lehm',{japandi:2,boho:1}],['Tiefes Grün oder Senfgelb',{vintage:2}],['Sichtbeton, Ziegel oder Dunkelgrau',{industrial:2}],['Kreideweiß mit schwarzen Akzenten',{modern:2,industrial:1}]]],
+ ['Welche Wandfarbe würdest du nehmen?',[['Weiß, hell und freundlich',{skandinavisch:2,modern:1},['#f4f4f1']],['Warmes Beige oder Lehm',{japandi:2,boho:1},['#d9c6a5','#b78c6b']],['Tiefes Grün oder Senfgelb',{vintage:2},['#2f4f3e','#c49a3a']],['Sichtbeton, Ziegel oder Dunkelgrau',{industrial:2},['#a7a5a0','#9a5136','#3a3b3c']],['Kreideweiß mit schwarzen Akzenten',{modern:2,industrial:1},['#eeede9','#1c1f1d']]]],
  ['Welches Material fasst du am liebsten an?',[['Helles Holz und Wolle',{skandinavisch:2,japandi:1}],['Teak und Samt',{vintage:2}],['Stein, Glas und Lack',{modern:2}],['Stahl und Leder',{industrial:2}],['Rattan, Jute und Leinen',{boho:2,japandi:1}]]],
  ['Wie viel steht bei dir offen herum?',[['So wenig wie möglich',{modern:2,japandi:2}],['Ein paar Lieblingsstücke',{skandinavisch:2,industrial:1}],['Viel, und jedes Stück hat eine Geschichte',{vintage:2,boho:2}]]],
  ['Welches Sofa nimmst du?',[['Niedrig, kantig, einfarbig',{modern:2}],['Schräge Holzbeine, Cord oder Samt',{vintage:2}],['Hell und weich, mit Wolldecke',{skandinavisch:2}],['Leder, das mit den Jahren schöner wird',{industrial:2}],['Tief, mit vielen bunten Kissen',{boho:2}],['Ganz flach, Leinen, nichts Überflüssiges',{japandi:2}]]]];
 const ORDER=Object.keys(S),box=document.getElementById('quiz');let step=0,ans=[];
 try{const s=JSON.parse(localStorage.getItem('sdquiz')||'null');if(s&&Array.isArray(s)&&s.length===Q.length){ans=s;step=Q.length}}catch(e){}
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]});return ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b))}
+function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]*(1+i*0.01)});return ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b))}
 function render(focus){
   if(step<Q.length){const q=Q[step];
-    box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
+    box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
     const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><button type="button" class="btn ghost" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
 }
@@ -147,10 +155,13 @@ render(false);
 <script>
 /* Teaser: Teppich unter dem Sofa, Maßfehler, Mietrecht in Kürze */
 (()=>{const r=document.getElementById('mini-sofa'),n=document.getElementById('mini-sofa-n'),out=document.getElementById('mini-res'),sh=document.getElementById('mini-sheet');
-function up(){const v=+r.value;if(document.activeElement!==n)n.value=v;const res=SD.rug.living(sh,{sofa:v});out.innerHTML=res.html}
+function up(){const v=+r.value;if(document.activeElement!==n)n.value=v;msg.textContent='';const res=SD.rug.living(sh,{sofa:v});out.innerHTML=res.html}
 r.addEventListener('input',up);
-n.addEventListener('input',()=>{const v=+n.value;if(v>=140&&v<=320){r.value=v;up()}});
-n.addEventListener('change',()=>{let v=+n.value;if(isNaN(v))v=+r.value;v=Math.min(320,Math.max(140,Math.round(v/10)*10));r.value=v;n.value=v;up()});
+const P=s=>{s=String(s).trim().replace(/\s/g,'').replace(',','.');return s===''?NaN:Number(s)},msg=document.getElementById('mini-msg');
+let exact=null;
+function up2(v){const res=SD.rug.living(sh,{sofa:v});out.innerHTML=res.html}
+n.addEventListener('input',()=>{const v=P(n.value);if(v>=140&&v<=320){r.value=v;exact=v;msg.textContent='';up2(v)}});
+n.addEventListener('change',()=>{let v=P(n.value);if(isNaN(v)){v=+r.value;msg.textContent=''}else if(v<140){v=140;msg.textContent='Mindestens 140 cm. Der Rechner nimmt 140 cm.'}else if(v>320){v=320;msg.textContent='Höchstens 320 cm. Der Rechner nimmt 320 cm.'}else msg.textContent='';r.value=v;n.value=String(v).replace('.',',');exact=v;up2(v)});
 up();
 })();
 </script>

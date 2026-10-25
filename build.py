@@ -42,7 +42,7 @@ ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-
 EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
 
 # Hauptnavigation (Kopfzeile) und alle Ratgeber (Menü, Fußzeile, „Passt dazu“)
-NAV = [('stile.html', 'Stile', 'stile'), ('vintage.html', 'Vintage', 'vintage'), ('modern.html', 'Modern', 'modern'),
+NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'),
        ('rechner.html', 'Raum-Rechner', 'rechner'), ('mieten.html', 'Zur Miete', 'mieten')]
 # (Link, Titel, Kurztext, Schlüssel, Foto)
 GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
@@ -173,6 +173,17 @@ def related(spec, plain=False):
             % ('' if plain else ' class="band"', tiles(spec)))
 
 
+def sources(m):
+    """Quellenliste als aufklappbarer Block, Prüfdatum bleibt sichtbar."""
+    inner = m.group(1)
+    checked = re.search(r'<p[^>]*>(Geprüft am.*?)</p>', inner, re.S)
+    inner = re.sub(r'<p[^>]*>Geprüft am.*?</p>', '', inner, flags=re.S).strip()
+    n = inner.count('<li')
+    return ('<details class="src"><summary>%s</summary>%s</details>%s' % (
+        'Alle %d Quellen anzeigen' % n if n > 1 else 'Quelle anzeigen', inner,
+        '<p class="src checked">%s</p>' % checked.group(1) if checked else ''))
+
+
 def de_date(iso):
     y, m, d = iso.split('-')
     return '%s.%s.%s' % (d, m, y)
@@ -193,7 +204,8 @@ def page(src):
     meta, head, main, end = read_page(src)
     key = meta['key']
     path = '' if key == 'index' else src.name
-    links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == key else '', n) for h, n, k in NAV)
+    navkey = 'stile' if key in STYLE else key   # Stil-Ratgeber gehören zu „Stile“
+    links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == navkey else '', n) for h, n, k in NAV)
     grid = ''.join('<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s) for h, n, s, k, p in GRID)
     flinks = ''.join('<a href="%s">%s</a>' % (h, n) for h, n, s, k, p in GRID[1:])
     stand = '' if key == '404' else '<p class="stand">Stand: %s</p>' % de_date(meta['updated'])
@@ -203,7 +215,7 @@ def page(src):
             '<title>%(title)s</title><meta name="description" content="%(desc)s">\n'
             '<meta property="og:title" content="%(title)s"><meta property="og:description" content="%(desc)s"><meta property="og:type" content="website">'
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
-            '<link rel="canonical" href="%(dom)s%(path)s"><meta name="theme-color" content="#1e4a3d">\n'
+            '<link rel="canonical" href="%(dom)s%(path)s"><meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
             '<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>'
             '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">'
             '<link rel="stylesheet" href="site.css">\n%(head)s\n<script src="site.js" defer></script></head><body>\n'
@@ -214,8 +226,8 @@ def page(src):
             '<button class="ic mb" id="mb" type="button" aria-expanded="false" aria-controls="msheet">%(burger)s<span>Menü</span></button></div></header>\n'
             '<div class="sheet-m" id="msheet" hidden role="dialog" aria-modal="true" aria-label="Menü"><div class="sheet-in">'
             '<div class="sheet-top"><b>Stil-Daheim</b><button class="ic" id="mclose" type="button" aria-label="Menü schließen">%(close)s</button></div>'
-            '<p class="m-h">Ratgeber und Rechner</p><nav class="m-grid" aria-label="Alle Ratgeber">%(grid)s</nav>'
             '<div id="mtoc-wrap" hidden><p class="m-h">Auf dieser Seite</p><nav class="m-toc" id="mtoc" aria-label="Auf dieser Seite"></nav></div>'
+            '<p class="m-h">Ratgeber und Rechner</p><nav class="m-grid" aria-label="Alle Ratgeber">%(grid)s</nav>'
             '<p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>\n'
             '<main id="main">\n%(main)s\n</main>\n'
             '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind mit KI erzeugte Beispielbilder. '
@@ -235,6 +247,7 @@ def page(src):
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
+    html = re.sub(r'<div class="src">(.*?)</div>', sources, html, flags=re.S)
     html = html.replace('href="index.html#', 'href="./#').replace('href="index.html"', 'href="./"')
     html = html.replace('Stil-Daheim', BRAND)
     assert '{{' not in html, (src.name, html[html.find('{{'):html.find('{{') + 60])

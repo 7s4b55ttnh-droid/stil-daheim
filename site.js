@@ -1,4 +1,4 @@
-/* Schön-Daheim – gemeinsame Bedienung: Menü, Hell/Dunkel, Kopfzeile über Fotos, Nach oben, Teilen, Drucken. */
+/* Stil-Daheim – gemeinsame Bedienung: Menü, Hell/Dunkel, Kopfzeile über Fotos, Nach oben, Teilen, Drucken, Checklisten. */
 (function(){
   var d=document,root=d.documentElement,RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function $(s,c){return (c||d).querySelector(s)}
@@ -10,7 +10,9 @@
   /* Hell/Dunkel */
   var th=$('#th');
   function isDark(){var a=root.dataset.theme;return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
-  if(th)th.addEventListener('click',function(){var v=isDark()?'light':'dark';root.dataset.theme=v;try{localStorage.setItem('sdth',v)}catch(e){}});
+  function thState(){if(th)th.setAttribute('aria-pressed',String(isDark()))}
+  if(th){th.addEventListener('click',function(){var v=isDark()?'light':'dark';root.dataset.theme=v;try{localStorage.setItem('sdth',v)}catch(e){}thState()});thState();
+    try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',thState)}catch(e){}}
 
   /* Menü */
   var mb=$('#mb'),sheet=$('#msheet'),cl=$('#mclose'),last=null;
@@ -26,6 +28,7 @@
     });
     /* Auf dieser Seite: aus Abschnitten mit Überschrift */
     var toc=$('#mtoc'),wrap=$('#mtoc-wrap'),seen={};
+    $$('#tabs [role=tab]').forEach(function(b){var a=d.createElement('a');a.href='#'+b.id.slice(2);a.textContent=b.textContent;toc.appendChild(a)});
     $$('main section[id], main article[id]').forEach(function(el){
       var h=el.querySelector('h2');if(!h)return;var t=h.textContent.replace(/\s+/g,' ').replace(/[.?!]$/,'').trim();if(seen[t])return;seen[t]=1;
       var a=d.createElement('a');a.href='#'+el.id;a.textContent=t;toc.appendChild(a);
@@ -66,16 +69,33 @@
   d.addEventListener('click',function(e){
     var b=e.target.closest('[data-share]');if(!b)return;
     var src=d.getElementById(b.getAttribute('data-share')),sec=b.closest('section[id]');
-    var url=location.href.split('#')[0]+(sec?'#'+sec.id:'');
-    var text=(src?src.innerText.replace(/\s+/g,' ').trim():d.title);
+    var url=b.getAttribute('data-share-url')||(location.href.split('#')[0].split('?')[0]+(sec?'#'+sec.id:''));
+    var text=b.getAttribute('data-share-text');
+    if(!text&&src){var cl=src.cloneNode(true);$$('a,.tag',cl).forEach(function(x){x.remove()});$$('.big',cl).forEach(function(x){x.textContent=x.textContent+'. '});text=cl.textContent}
+    text=(text||d.title).replace(/\s+/g,' ').replace(/\s+\./g,'.').trim();
     function copy(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text+' '+url).then(function(){sdToast('Ergebnis und Link kopiert')},function(){sdToast('Kopieren nicht möglich')})}else sdToast('Kopieren nicht möglich')}
     if(navigator.share){navigator.share({title:d.title,text:text,url:url}).catch(function(err){if(!err||err.name!=='AbortError')copy()});return}
     copy();
   });
 
   /* Drucken */
-  d.addEventListener('click',function(e){if(e.target.closest('[data-print]'))print()});
+  var pt=null;
+  d.addEventListener('click',function(e){var b=e.target.closest('[data-print]');if(!b)return;pt=b.closest('main>section');if(pt){pt.classList.add('ptarget');root.classList.add('plist')}print()});
+  addEventListener('afterprint',function(){root.classList.remove('plist');if(pt)pt.classList.remove('ptarget');pt=null});
   var closed=[];
   addEventListener('beforeprint',function(){closed=$$('details:not([open])');closed.forEach(function(x){x.open=true})});
   addEventListener('afterprint',function(){closed.forEach(function(x){x.open=false});closed=[]});
+
+  /* Checkliste: Fortschritt oben, erledigte Punkte gedimmt, Liste leeren, Abschlussnachricht. Gespeichert nur im Browser. */
+  window.sdChecklist=function(id,items,key,words){var box=d.getElementById(id);if(!box)return;var s=[];try{s=JSON.parse(localStorage.getItem(key)||'[]')||[]}catch(e){}
+    words=words||{};var verb=words.verb||'geprüft',done=words.done||'Alles erledigt.';
+    box.innerHTML='<div class="ck-h"><p class="ckt" aria-live="polite"></p><div class="ckbar" aria-hidden="true"><i></i></div><button type="button" data-reset>Liste leeren</button></div>'+
+      items.map(function(t,i){return '<label><input type="checkbox" data-i="'+i+'"><span><b>'+t[0]+'</b><small>'+t[1]+'</small></span></label>'}).join('')+'<p class="ck-done" aria-live="polite"></p>';
+    var ins=$$('input',box),bar=$('.ckbar i',box),txt=$('.ckt',box),fin=$('.ck-done',box);
+    function up(){var n=0;ins.forEach(function(b){var on=!!s[b.dataset.i];b.checked=on;b.closest('label').classList.toggle('done',on);if(on)n++});
+      bar.style.width=(n/items.length*100)+'%';txt.textContent=n+' von '+items.length+' '+verb;fin.textContent=n===items.length?done:''}
+    function save(){try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}}
+    ins.forEach(function(b){b.addEventListener('change',function(){s[b.dataset.i]=b.checked;save();up()})});
+    $('[data-reset]',box).addEventListener('click',function(){s=[];save();up();sdToast('Liste geleert')});
+    up()};
 })();

@@ -9,6 +9,7 @@
 .tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--brass)}
 .tool{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(24px,4vw,60px);align-items:start}
 .out{position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px)}
+.out .result{margin:0 0 16px}
 .ctl .opts{margin-bottom:22px}
 .ctl .grp{font-weight:600;margin:0 0 8px}
 .how{margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -32,7 +33,7 @@
 .rbar svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-left:auto}
 @media (min-width:901px){.rbar{display:none}}
 @media (prefers-reduced-motion:reduce){.rbar{transition:none}}
-@media (max-width:640px){.rules td.v{white-space:normal}.rules,.rules tbody,.rules tr,.rules th,.rules td{display:block;width:auto}.rules tr{padding:12px 0;border-bottom:1px solid var(--line)}.rules th,.rules td{border:0;padding:2px 0}}
+@media (max-width:640px){.rules td.v,.rules th{width:auto}.rules td.v{white-space:normal}.rules,.rules tbody,.rules tr,.rules th,.rules td{display:block;width:auto}.rules tr{padding:12px 0;border-bottom:1px solid var(--line)}.rules th,.rules td{border:0;padding:2px 0}}
 </style>
 <!--MAIN-->
 <div class="hero sub">
@@ -50,7 +51,7 @@
   <div class="tabs" role="tablist" aria-label="Rechner wählen" id="tabs"></div>
   <div id="panels"></div>
   <button class="rbar" id="rbar" type="button" aria-label="Zum Ergebnis"><span id="rbar-t"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
-  <template id="how-teppich"><details class="how"><summary>So rechnen wir</summary><div><p><b>Wohnzimmer:</b> Wir nehmen die kleinste gängige Größe, die mindestens 30 cm breiter ist als dein Sofa. So steht der Teppich links und rechts über, und die vorderen Füße passen darauf. <b>Esszimmer:</b> Tisch plus 70 cm auf jeder Seite. <b>Schlafzimmer:</b> Bettbreite plus je 60 cm, quer gelegt, mit 60 cm am Fußende.</p><p>Gerechnet wird mit 160 × 230, 200 × 300, 240 × 340 und 300 × 400 cm, rund mit 160, 200, 240 und 300 cm. Liegt dein Wunschmaß knapp darüber, nimm die nächste Größe.</p></div></details></template><template id="how-vorhang"><details class="how"><summary>So rechnen wir</summary><div><p>Stange: Fensterbreite plus je 20 cm. Höhe: 15 cm über dem Fensterrahmen, aber mindestens 5 cm unter der Decke. Länge: Höhe der Stange minus 2 cm. Stoffbreite: Stangenlänge mal 1,5 bei Ösen und Schlaufen, mal 2 bei Kräusel- oder Smokband. Die Schals rechnen wir beispielhaft mit 140 cm Breite und runden auf ein Paar auf.</p></div></details></template><template id="how-bilder"><details class="how"><summary>So rechnen wir</summary><div><p>Freie Wand: Bildmitte auf 150 cm. Über dem Sofa 20 cm Abstand zur Lehne, über dem Sideboard 15 cm. Nagelhöhe = Bildmitte + halbe Bildhöhe − Abstand des Aufhängers zur Oberkante.</p></div></details></template><template id="how-lampe"><details class="how"><summary>So rechnen wir</summary><div><p>Unterkante 60 cm über dem Tisch, wenn der Raum niedriger als 2,50 m ist, 65 cm bis 2,70 m, darüber 70 cm. Pendellänge = Raumhöhe − Tischhöhe − Abstand − Höhe der Leuchte. Schirm: ein Drittel bis die Hälfte der Tischbreite.</p></div></details></template><template id="how-farbe"><details class="how"><summary>So rechnen wir</summary><div><p>Wandfläche = Umfang × Raumhöhe. Abgezogen werden pauschal 0,90 × 2,00 m je Tür und 1,20 × 1,20 m je Fenster. Liter = Fläche × Anstriche ÷ Ergiebigkeit. Wir runden auf Eimer mit 2,5, 5 und 10 Litern auf, mit möglichst wenig Rest.</p></div></details></template><template id="how-tapete"><details class="how"><summary>So rechnen wir</summary><div><p>Bahnen = Wandbreite ÷ Rollenbreite, aufgerundet. Bahnlänge = Raumhöhe + 10 cm, bei Rapport auf ganze Rapporte aufgerundet. Bahnen je Rolle = Rollenlänge ÷ Bahnlänge, abgerundet. Rollen = Bahnen ÷ Bahnen je Rolle, aufgerundet.</p></div></details></template>
+  <template id="how-teppich"><details class="how"><summary>So rechnen wir</summary><div><p><b>Wohnzimmer:</b> Wir nehmen die kleinste gängige Größe, die mindestens 30 cm breiter ist als dein Sofa. So steht der Teppich links und rechts über, und die vorderen Füße passen darauf. <b>Esszimmer:</b> Tisch plus 70 cm auf jeder Seite. Passt keine gängige Größe, nennen wir das Maß für einen Teppich nach Maß. <b>Schlafzimmer:</b> Bettbreite plus je 60 cm, quer gelegt, mit 60 cm am Fußende.</p><p>Gerechnet wird mit 160 × 230, 200 × 300, 240 × 340 und 300 × 400 cm, rund mit 160, 200, 240 und 300 cm. Liegt dein Wunschmaß knapp darüber, nimm die nächste Größe.</p></div></details></template><template id="how-vorhang"><details class="how"><summary>So rechnen wir</summary><div><p>Stange: Fensterbreite plus je 20 cm. Höhe: 15 cm über dem Fensterrahmen, aber mindestens 5 cm unter der Decke. Länge: Höhe der Stange minus 2 cm. Stoffbreite: Stangenlänge mal 1,5 bei Ösen und Schlaufen, mal 2 bei Kräusel- oder Smokband. Die Schals rechnen wir beispielhaft mit 140 cm Breite und runden auf ein Paar auf.</p></div></details></template><template id="how-bilder"><details class="how"><summary>So rechnen wir</summary><div><p>Freie Wand: Bildmitte auf 150 cm. Über dem Sofa 20 cm Abstand zur Lehne, über dem Sideboard 15 cm. Nagelhöhe = Bildmitte + halbe Bildhöhe − Abstand des Aufhängers zur Oberkante.</p></div></details></template><template id="how-lampe"><details class="how"><summary>So rechnen wir</summary><div><p>Unterkante 60 cm über dem Tisch, wenn der Raum niedriger als 2,50 m ist, 65 cm bis 2,70 m, darüber 70 cm. Pendellänge = Raumhöhe − Tischhöhe − Abstand − Höhe der Leuchte. Schirm: ein Drittel bis die Hälfte der Tischbreite.</p></div></details></template><template id="how-farbe"><details class="how"><summary>So rechnen wir</summary><div><p>Wandfläche = Umfang × Raumhöhe. Abgezogen werden pauschal 0,90 × 2,00 m je Tür und 1,20 × 1,20 m je Fenster. Liter = Fläche × Anstriche ÷ Ergiebigkeit. Wir runden auf Eimer mit 2,5, 5 und 10 Litern auf, mit möglichst wenig Rest.</p></div></details></template><template id="how-tapete"><details class="how"><summary>So rechnen wir</summary><div><p>Bahnen = Wandbreite ÷ Rollenbreite, aufgerundet. Bahnlänge = Raumhöhe + 10 cm, bei Rapport auf ganze Rapporte aufgerundet. Bahnen je Rolle = Rollenlänge ÷ Bahnlänge, abgerundet. Rollen = Bahnen ÷ Bahnen je Rolle, aufgerundet.</p></div></details></template>
 </div></section>
 
 <section class="band" id="regeln"><div class="wrap narrow">
@@ -89,6 +90,7 @@ const T=[
  {id:'tapete',name:'Tapete',fields:{_:[['wall','Breite aller Wände zusammen',50,2000,10,400,'cm','Türen und Fenster nicht abziehen, der Verschnitt gleicht das aus.'],['H','Raumhöhe',200,400,5,250,'cm',''],['rapport','Rapport',0,64,1,0,'cm','Steht auf dem Etikett. 0 bei Tapeten ohne Musteransatz.'],['roll','Rollenbreite',0,0,0,'53','','',[['53','53 cm'],['106','106 cm']]]]},
   run:(box,v)=>SD.wallpaper(box,{wall:v.wall,H:v.H,rapport:v.rapport,roll:+v.roll})}];
 const tabs=$('tabs'),panels=$('panels');let state={};
+const fmtN=v=>String(v).replace('.',','),parseN=s=>{s=String(s).trim().replace(/\s/g,'').replace(',','.');return s===''?NaN:Number(s)};
 try{state=JSON.parse(localStorage.getItem('sdcalc')||'{}')||{}}catch(e){}
 const save=()=>{try{localStorage.setItem('sdcalc',JSON.stringify(state))}catch(e){}};
 const mode=t=>t.modes?state[t.id].mode:'_';
@@ -101,27 +103,37 @@ T.forEach(t=>{
   const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.id='t-'+t.id;b.setAttribute('aria-controls','p-'+t.id);b.textContent=t.name;tabs.appendChild(b);
   const p=document.createElement('div');p.id='p-'+t.id;p.setAttribute('role','tabpanel');p.setAttribute('aria-labelledby','t-'+t.id);p.hidden=true;
   const how=document.getElementById('how-'+t.id);
-  p.innerHTML=`<div class="tool"><div class="ctl">${t.modes?`<p class="grp" id="g-${t.id}">${t.ask}</p><div class="opts" role="group" aria-labelledby="g-${t.id}">${t.modes.map(m=>`<button type="button" data-m="${m[0]}">${m[1]}</button>`).join('')}</div>`:''}<div class="flds"></div></div><div class="out"><div class="sheet" role="img" aria-label="Maßzeichnung ${t.name}"></div><p class="result" id="r-${t.id}" aria-live="polite"></p><div class="acts"><button class="abtn" type="button" data-share="r-${t.id}">{{SHARE}}Ergebnis teilen</button></div></div></div>${how?how.innerHTML:''}`;
+  p.innerHTML=`<div class="tool"><div class="ctl">${t.modes?`<p class="grp" id="g-${t.id}">${t.ask}</p><div class="opts" role="group" aria-labelledby="g-${t.id}">${t.modes.map(m=>`<button type="button" data-m="${m[0]}">${m[1]}</button>`).join('')}</div>`:''}<div class="flds"></div></div><div class="out"><p class="result" id="r-${t.id}" aria-live="polite"></p><div class="sheet" role="img" aria-label="Maßzeichnung ${t.name}"></div><div class="acts"><button class="abtn" type="button" data-share="r-${t.id}">{{SHARE}}Ergebnis teilen</button><button class="abtn" type="button" data-reset>Zurücksetzen</button></div></div></div>${how?how.innerHTML:''}`;
   panels.appendChild(p);build(t)});
 function build(t){const p=$('p-'+t.id);
   p.querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===state[t.id].mode));
   p.querySelector('.flds').innerHTML=list(t).map(fd=>{const [id,lab,min,max,step,,unit,hint,opts]=fd,v=val(t,fd),k=key(t,id);
     if(opts)return `<div class="field" data-f="${id}"><p class="grp" id="l-${t.id}-${k}">${lab}</p><div class="opts" role="group" aria-labelledby="l-${t.id}-${k}">${opts.map(o=>`<button type="button" data-o="${o[0]}" aria-pressed="${String(v)===o[0]}">${o[1]}</button>`).join('')}</div></div>`;
-    return `<div class="field" data-f="${id}"><label for="i-${t.id}-${k}">${lab}</label><div class="frow"><input type="range" id="i-${t.id}-${k}" min="${min}" max="${max}" step="${step}" value="${v}"><span class="vbox"><input class="vin" type="number" inputmode="decimal" min="${min}" max="${max}" step="${step}" value="${v}" aria-label="${lab} in ${unit==='cm'?'Zentimetern':unit==='m²/l'?'Quadratmetern je Liter':unit}"><span class="vu">${unit}</span></span></div>${hint?`<p class="hint">${hint}</p>`:''}</div>`}).join('');
+    return `<div class="field" data-f="${id}" data-u="${unit}"><label for="i-${t.id}-${k}">${lab}</label><div class="frow"><input type="range" id="i-${t.id}-${k}" min="${min}" max="${max}" step="${step}" value="${v}"><span class="vbox"><input class="vin" type="text" inputmode="decimal" autocomplete="off" data-min="${min}" data-max="${max}" value="${fmtN(v)}" aria-label="${lab} in ${unit==='cm'?'Zentimetern':unit==='m²/l'?'Quadratmetern je Liter':unit}"><span class="vu">${unit}</span></span></div><p class="clampmsg" aria-live="polite"></p>${hint?`<p class="hint">${hint}</p>`:''}</div>`}).join('');
   calc(t)}
 function calc(t){const p=$('p-'+t.id),v={};list(t).forEach(fd=>{const x=val(t,fd);v[fd[0]]=fd[8]?String(x):+x});
   const hide=t.vis?t.vis(v,mode(t)):[];p.querySelectorAll('.flds .field').forEach(fl=>fl.hidden=hide.includes(fl.dataset.f));
-  p.querySelector('.result').innerHTML=t.run(p.querySelector('.sheet'),v,mode(t)).html;save();bar(t)}
+  p.querySelector('.result').innerHTML=t.run(p.querySelector('.sheet'),v,mode(t)).html;save();bar(t);
+  const q=new URLSearchParams();q.set('w',t.id);if(t.modes)q.set('m',mode(t));list(t).forEach(fd=>{if(!hide.includes(fd[0]))q.set(fd[0],String(v[fd[0]]))});
+  p.querySelector('[data-share]').setAttribute('data-share-url',location.href.split('#')[0].split('?')[0]+'?'+q.toString()+'#'+t.id)}
 const rbar=$('rbar');let outVis=true;
 function bar(t){const p=$('p-'+t.id),b=p.querySelector('.result .big'),el=$('rbar-t');if(el&&!p.hidden)el.innerHTML=`<small>${t.name}</small>${b?b.textContent:''}`}
 const io='IntersectionObserver' in window?new IntersectionObserver(es=>{es.forEach(e=>{if(!e.target.closest('[role=tabpanel]').hidden)outVis=e.isIntersecting});const sec=$('rechnen').getBoundingClientRect();rbar.classList.toggle('on',!outVis&&sec.top<innerHeight*.5&&sec.bottom>innerHeight*.6)},{threshold:0}):null;
 addEventListener('scroll',()=>{if(!io)return;const sec=$('rechnen').getBoundingClientRect();rbar.classList.toggle('on',!outVis&&sec.top<innerHeight*.5&&sec.bottom>innerHeight*.6)},{passive:true});
 rbar.addEventListener('click',()=>{const o=document.querySelector('[role=tabpanel]:not([hidden]) .out');if(o)o.scrollIntoView({block:'start'})});
 const tool=el=>T.find(x=>x.id===el.closest('[role=tabpanel]').id.slice(2));
-panels.addEventListener('input',e=>{const el=e.target,fl=el.closest('.field');if(!fl)return;const t=tool(el),k=key(t,fl.dataset.f),r=fl.querySelector('input[type=range]'),n=fl.querySelector('.vin');
-  if(el===r){state[t.id][k]=+r.value;n.value=r.value}else{const v=+n.value;if(n.value===''||isNaN(v)||v<+n.min||v>+n.max)return;r.value=v;state[t.id][k]=v}calc(t)});
-panels.addEventListener('change',e=>{const el=e.target;if(!el.classList.contains('vin'))return;const fl=el.closest('.field'),r=fl.querySelector('input[type=range]');let v=+el.value;if(el.value===''||isNaN(v))v=+r.value;v=Math.min(+el.max,Math.max(+el.min,v));el.value=v;r.value=v;r.dispatchEvent(new Event('input',{bubbles:true}))});
+panels.addEventListener('input',e=>{const el=e.target,fl=el.closest('.field');if(!fl||el.tagName!=='INPUT')return;const t=tool(el),k=key(t,fl.dataset.f),r=fl.querySelector('input[type=range]'),n=fl.querySelector('.vin'),msg=fl.querySelector('.clampmsg');
+  if(el===r){state[t.id][k]=+r.value;n.value=fmtN(r.value);msg.textContent=''}
+  else{const v=parseN(n.value);if(isNaN(v)||v<+n.dataset.min||v>+n.dataset.max)return;r.value=v;state[t.id][k]=v;msg.textContent=''}calc(t)});
+panels.addEventListener('change',e=>{const el=e.target;if(!el.classList||!el.classList.contains('vin'))return;const fl=el.closest('.field'),t=tool(el),k=key(t,fl.dataset.f),r=fl.querySelector('input[type=range]'),msg=fl.querySelector('.clampmsg'),u=fl.dataset.u,mn=+el.dataset.min,mx=+el.dataset.max;
+  let v=parseN(el.value);
+  if(isNaN(v)){v=state[t.id][k]!=null?+state[t.id][k]:+r.value;msg.textContent=''}
+  else if(v<mn){v=mn;msg.textContent='Mindestens '+fmtN(mn)+' '+u+'. Der Rechner nimmt '+fmtN(mn)+' '+u+'.'}
+  else if(v>mx){v=mx;msg.textContent='Höchstens '+fmtN(mx)+' '+u+'. Der Rechner nimmt '+fmtN(mx)+' '+u+'.'}
+  else msg.textContent='';
+  el.value=fmtN(v);r.value=v;state[t.id][k]=v;calc(t)});
 panels.addEventListener('click',e=>{if(!e.target.closest('[role=tabpanel]'))return;const t=tool(e.target);
+  if(e.target.closest('[data-reset]')){const m=state[t.id].mode;state[t.id]=t.modes?{mode:m}:{};build(t);if(window.sdToast)sdToast('Werte zurückgesetzt');return}
   const mb=e.target.closest('[data-m]');if(mb){state[t.id].mode=mb.dataset.m;build(t);return}
   const ob=e.target.closest('[data-o]');if(ob){const fl=ob.closest('.field');state[t.id][key(t,fl.dataset.f)]=ob.dataset.o;fl.querySelectorAll('[data-o]').forEach(b=>b.setAttribute('aria-pressed',b===ob));calc(t)}});
 function show(id,focus){T.forEach(t=>{const on=t.id===id,b=$('t-'+t.id);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;$('p-'+t.id).hidden=!on;if(on)calc(t)});if(focus)$('t-'+id).focus()}
@@ -130,6 +142,11 @@ tabs.addEventListener('keydown',e=>{const ids=T.map(t=>t.id),cur=ids.indexOf((do
   if(e.key==='ArrowRight')n=(cur+1)%ids.length;if(e.key==='ArrowLeft')n=(cur-1+ids.length)%ids.length;if(e.key==='Home')n=0;if(e.key==='End')n=ids.length-1;
   if(n!=null){e.preventDefault();show(ids[n],true);history.replaceState(null,'','#'+ids[n])}});
 if(io)document.querySelectorAll('#panels .out').forEach(o=>io.observe(o));
+const sp=new URLSearchParams(location.search),st=T.find(t=>t.id===sp.get('w'));
+if(st){if(st.modes&&st.modes.some(m=>m[0]===sp.get('m')))state[st.id].mode=sp.get('m');
+  list(st).forEach(fd=>{const x=sp.get(fd[0]);if(x==null)return;const k=key(st,fd[0]);if(fd[8]){if(fd[8].some(o=>o[0]===x))state[st.id][k]=x}else{const v=parseN(x);if(!isNaN(v)&&v>=fd[2]&&v<=fd[3])state[st.id][k]=v}});
+  build(st);history.replaceState(null,'',location.pathname+'#'+st.id)}
 const h=location.hash.slice(1),deep=T.some(t=>t.id===h);show(deep?h:'teppich');if(deep)requestAnimationFrame(()=>$('rechnen').scrollIntoView());
+addEventListener('hashchange',()=>{const x=location.hash.slice(1);if(T.some(t=>t.id===x)){show(x);$('rechnen').scrollIntoView()}});
 })();
 </script>
