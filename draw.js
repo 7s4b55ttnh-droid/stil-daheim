@@ -1,4 +1,4 @@
-/* Schön-Daheim – Raum-Rechner: Rechenregeln und Maßzeichnungen.
+/* Stil-Daheim – Raum-Rechner: Rechenregeln und Maßzeichnungen.
    Alle Längen in Zentimetern. Die Faustregeln stehen gesammelt in R und sind auf der Seite mit Quellen belegt. */
 (function(){
 'use strict';
@@ -61,6 +61,8 @@ function dimV(s,y1,y2,x,txt,a,b,pos){var g=E('g',{'class':'d-dim'},s);
   return g}
 function text(s,x,y,t,anchor){var e=E('text',{x:x,y:y,'class':'d-lbl','text-anchor':anchor||'start'},s);e.textContent=t;return e}
 function amz(q,label){return '<a href="https://www.amazon.de/s?k='+encodeURIComponent(q).replace(/%20/g,'+')+'&amp;tag='+TAG+'" rel="sponsored nofollow noopener" target="_blank">'+label+'</a><span class="tag">Anzeige</span>'}
+function oops(box,msg){prep(box);var s=svg(box,640,260);var g=E('g',{'class':'d-dim'},s);E('line',{x1:200,y1:120,x2:440,y2:120},g);tk(g,200,120);tk(g,440,120);lab(g,320,120,'?');text(s,320,190,msg,'middle');return s}
+function check(msg){return '<span class="big">Bitte Maße prüfen</span>'+msg}
 function pick(sizes,needL,needS){for(var i=0;i<sizes.length;i++){if(sizes[i][1]>=needL&&sizes[i][0]>=needS)return sizes[i]}return null}
 
 /* ---------- Teppich ---------- */
@@ -72,7 +74,7 @@ function sofaTop(s,x,y,w,d){ /* Sofa von oben */
   var n=w>180?3:2,cw=(w-2*arm)/n;for(var i=1;i<n;i++)E('line',{x1:x+arm+cw*i,y1:y+back,x2:x+arm+cw*i,y2:y+d,'class':'d-line'},s)}
 function living(box,o){
   prep(box);
-  var S=o.sofa,need=S+2*R.livingSide,size=pick(R.rugSizes,need,R.livingUnder+R.tableGap+R.tableDepth+40)||R.rugSizes[R.rugSizes.length-1];
+  var S=o.sofa,need=S+2*R.livingSide,size=pick(R.rugSizes,need,R.livingUnder+R.tableGap+R.tableDepth+30)||R.rugSizes[R.rugSizes.length-1];
   var RL=size[1],RS=size[0],TL=Math.round(S*R.tableShare/10)*10;
   var W=640,H=430,ml=Math.max(40,FS*3),mr=Math.max(120,FS*6),mt=Math.max(58,FS*3.6),mb=Math.max(70,FS*4);
   var extW=Math.max(RL,S),extH=R.sofaDepth-R.livingUnder+RS;
@@ -84,7 +86,7 @@ function living(box,o){
   sofaTop(s,sx,oy,S*k,R.sofaDepth*k);
   var tx=sx+(S-TL)/2*k,ty=oy+(R.sofaDepth+R.tableGap)*k;
   E('rect',{x:tx,y:ty,width:TL*k,height:R.tableDepth*k,rx:4,'class':'d-obj'},s);
-  text(s,tx+TL*k/2,ty+R.tableDepth*k/2+5,'Couchtisch','middle');
+  var tl=tw('Couchtisch')<TL*k-10?'Couchtisch':tw('Tisch')<TL*k-8?'Tisch':'';if(tl)text(s,tx+TL*k/2,ty+R.tableDepth*k/2+5,tl,'middle');
   dimH(s,sx,sx+S*k,oy-24,'Sofa '+cm(S),oy,oy);
   dimH(s,rx,rx+RL*k,ry+RS*k+30,'Teppich '+cm(RL),ry+RS*k,ry+RS*k);
   dimV(s,ry,ry+RS*k,rx+RL*k+28,cm(RS),rx+RL*k,rx+RL*k,'right');
@@ -94,9 +96,9 @@ function living(box,o){
   return {size:size,html:html}}
 function dining(box,o){
   prep(box);
-  var round=o.shape==='round',L=round?o.D:o.L,B=round?o.D:o.B,e=R.diningEdge,size,RL,RS,dia=0;
-  if(round){for(var i=0;i<R.roundSizes.length;i++){if(R.roundSizes[i]>=L+2*e){dia=R.roundSizes[i];break}}if(!dia)dia=R.roundSizes[R.roundSizes.length-1];RL=RS=dia}
-  else{size=pick(R.rugSizes,L+2*e,B+2*e)||R.rugSizes[R.rugSizes.length-1];RL=size[1];RS=size[0]}
+  var round=o.shape==='round',L=round?o.D:o.L,B=round?o.D:o.B,e=R.diningEdge,size,RL,RS,dia=0,custom=false;
+  if(round){for(var i=0;i<R.roundSizes.length;i++){if(R.roundSizes[i]>=L+2*e){dia=R.roundSizes[i];break}}if(!dia){custom=true;dia=Math.ceil((L+2*e)/10)*10}RL=RS=dia}
+  else{size=pick(R.rugSizes,L+2*e,B+2*e);if(!size){custom=true;size=[Math.ceil((B+2*e)/10)*10,Math.ceil((L+2*e)/10)*10]}RL=size[1];RS=size[0]}
   var W=640,H=430,ml=Math.max(40,FS*3),mr=Math.max(120,FS*6),mt=Math.max(40,FS*2.6),mb=Math.max(70,FS*4.4);
   var k=Math.min((W-ml-mr)/RL,(H-mt-mb)/RS);
   var ox=ml+((W-ml-mr)-RL*k)/2,oy=mt+((H-mt-mb)-RS*k)/2;
@@ -108,12 +110,13 @@ function dining(box,o){
   else{var nn=Math.max(1,Math.floor(L/60));for(var q=0;q<nn;q++){var px=cx-L*k/2+(L*k/nn)*(q+.5);
       E('rect',{x:px-ch/2,y:cy-B*k/2-ch-4,width:ch,height:ch,rx:4,'class':'d-soft'},s);E('rect',{x:px-ch/2,y:cy+B*k/2+4,width:ch,height:ch,rx:4,'class':'d-soft'},s)}
     E('rect',{x:cx-L*k/2,y:cy-B*k/2,width:L*k,height:B*k,rx:3,'class':'d-obj'},s)}
-  text(s,cx,cy+5,round?'Tisch Ø '+cm(L):'Tisch','middle');
+  var tlab=round?'Tisch Ø '+cm(L):'Tisch';if(tw(tlab)<L*k*0.92)text(s,cx,cy+5,tlab,'middle');else if(round)text(s,cx,Math.max(FS,oy-FS*0.6),tlab,'middle');
   dimH(s,ox,ox+RL*k,oy+RS*k+30,(round?'Ø ':'')+'Teppich '+cm(RL),oy+RS*k,oy+RS*k);
   if(!round){dimV(s,oy,oy+RS*k,ox+RL*k+28,cm(RS),ox+RL*k,ox+RL*k,'right');dimH(s,cx-L*k/2,cx+L*k/2,oy-14,'Tisch '+cm(L),cy-B*k/2,cy-B*k/2)}
   var over=round?(dia-L)/2:Math.min((RL-L)/2,(RS-B)/2);
   dimH(s,ox,cx-L*k/2,cy+(round?0:B*k/2+ch+26),cm(round?(dia-L)/2:(RL-L)/2),null,null,'below');
   var name=round?'Ø '+dia+' cm':RS+' × '+RL+' cm';
+  if(custom){var html='<span class="big">'+name+' nach Maß</span>Für deinen Tisch gibt es keine gängige Teppichgröße. Damit die Stühle auch zurückgeschoben auf dem Teppich bleiben, braucht er rundum '+cm(e)+', also '+(round?'einen Durchmesser von '+cm(dia):cm(RS)+' × '+cm(RL))+'. Frag nach einem Teppich nach Maß. Die größte gängige Größe ist '+(round?'Ø 300 cm':'300 × 400 cm')+', dann bleibt weniger Rand. '+amz('Teppich nach Maß','Teppiche nach Maß ansehen');return {html:html}}
   var html='<span class="big">'+name+'</span>Um den Tisch bleiben mindestens '+cm(over)+' Teppich. So stehen die Stühle auch zurückgeschoben noch darauf. '+amz(round?'runder Teppich '+dia+' cm':'Teppich '+RS+'x'+RL,(round?'Runde Teppiche Ø '+dia+' cm':'Teppiche '+RS+' × '+RL+' cm')+' ansehen');
   return {html:html}}
 function bed(box,o){
@@ -139,6 +142,7 @@ function bed(box,o){
 function curtain(box,o){
   prep(box);
   var Bw=o.w,Bh=o.h,sill=o.sill,room=o.room,top=sill+Bh;
+  if(top>room-R.ceilingGap){oops(box,'Fenster reicht bis '+cm(top)+', Raum '+cm(room));return {html:check('Das Fenster reicht mit '+cm(sill)+' Abstand zum Boden und '+cm(Bh)+' Höhe bis '+cm(top)+'. Der Raum ist aber nur '+cm(room)+' hoch. Prüfe Fensterhöhe, Abstand zum Boden und Raumhöhe.')}}
   var rodH=Math.min(top+R.rodAbove,room-R.ceilingGap),ceiling=room-top<R.rodAbove+R.ceilingGap;
   var full=o.full||R.fullness,rod=Bw+2*R.rodSide,len=rodH-R.floorGap,fabric=rod*full,n=Math.max(2,Math.ceil(fabric/R.panelWidth));if(n%2)n++;
   var W=640,H=460,ml=Math.max(110,FS*8.2),mr=Math.max(110,FS*7.6),mt=Math.max(30,FS*2.2),mb=36,extW=rod+40,extH=room;
@@ -175,7 +179,7 @@ function picture(box,o){
   dimV(s,Y(center),fy,fx-34,'Mitte '+cm(center),fx,null,'left');
   dimV(s,Y(nail)-7,fy,fx+w*k+34,'Nagel '+cm(nail),cx+10,null,'right');
   if(above)dimV(s,Y(F),Y(center-h/2),cx,cm(gap),null,null,'right');
-  var html='<span class="big">Nagel auf '+cm(nail)+'</span>'+(above?'Die Unterkante des Bildes sitzt '+cm(gap)+' über '+(o.what==='Sideboard'?'dem Sideboard':'der Sofalehne')+', die Bildmitte damit auf '+cm(center)+'.'+(o.MW?' Schön wirkt ein Bild oder eine Gruppe, die zwei Drittel bis drei Viertel so breit ist wie das Möbel: hier '+f(Math.round(o.MW*2/3))+' bis '+cm(o.MW*3/4)+'.':''):'Die Bildmitte liegt auf Augenhöhe, also auf '+cm(center)+'.')+' Gemessen vom Boden, mit dem Aufhänger '+cm(a)+' unter der Oberkante. '+amz('Bilderrahmen '+w+'x'+h,'Bilderrahmen ansehen');
+  var html='<span class="big">Nagel auf '+cm(nail)+'</span>'+(above?'Die Unterkante des Bildes sitzt '+cm(gap)+' über '+(o.what==='Sideboard'?'dem Sideboard':'der Sofalehne')+', die Bildmitte damit auf '+cm(center)+'.'+(o.MW?' Schön wirkt ein Bild oder eine Gruppe, die zwei Drittel bis drei Viertel so breit ist wie das Möbel: hier '+f(Math.round(o.MW*2/3))+' bis '+cm(o.MW*3/4)+'.':''):'Die Bildmitte liegt auf Augenhöhe, also auf '+cm(center)+'.')+' Gemessen vom Boden, mit dem Aufhänger '+cm(a)+' unter der Oberkante.'+(above&&o.MW?(w>o.MW*0.75?' <b>Achtung:</b> Dein Bild ist breiter als drei Viertel des Möbels und wirkt dort schnell zu wuchtig.':w<o.MW*0.4?' <b>Tipp:</b> Ein einzelnes Bild wirkt über diesem Möbel eher klein. Eine Gruppe aus zwei oder drei Bildern füllt die Fläche besser.':''):'')+' '+amz('Bilderrahmen '+w+'x'+h,'Bilderrahmen ansehen');
   return {html:html}}
 
 /* ---------- Pendelleuchte ---------- */
@@ -201,6 +205,7 @@ function paint(box,o){
   prep(box);
   var L=o.L,B=o.B,H=o.H,wall=2*(L+B)*H/1e4,doors=o.doors*R.door[0]*R.door[1]/1e4,wins=o.wins*R.window[0]*R.window[1]/1e4,ceil=o.ceil?L*B/1e4:0;
   var yld=o.yld||R.paintYield,area=Math.max(0,wall-doors-wins)+ceil,lit=area*o.coats/yld,b=buckets(lit);
+  if(area<0.5){oops(box,'Türen und Fenster größer als die Wände');return {html:check('Türen und Fenster sind zusammen größer als die Wandfläche von '+f(wall,1)+' m². Prüfe Raumlänge, Raumbreite und die Zahl der Fenster und Türen.')}}
   var W=640,H2=460,ml=24,mr=24,mt=Math.max(46,FS*2.8),gap=Math.max(92,FS*5.6),mb=Math.max(56,FS*3.6),row=L+B,k=Math.min((W-ml-mr)/row,(H2-mt-mb-gap)/(2*H)),ox=(W-row*k)/2;
   var s=svg(box,W,H2),plan=[[],[],[],[]],wi=o.wins,di=o.doors,wall=0,walls=[L,B,L,B];
   while(wi>0&&(plan[0].length+plan[1].length+plan[2].length)<6){if(plan[wall].length<2){plan[wall].push('w');wi--}wall=(wall+1)%3}
@@ -209,7 +214,7 @@ function paint(box,o){
     E('rect',{x:x,y:top,width:wl*k,height:H*k,'class':'d-cloth'},s);
     plan[i].forEach(function(t,j){var iw=t==='w'?R.window[0]:R.door[0],ih=t==='w'?R.window[1]:R.door[1],bot=t==='w'?R.sill:0;var px=x+(wl*k)*(j+1)/(plan[i].length+1)-iw*k/2;E('rect',{x:px,y:fy-(bot+ih)*k,width:iw*k,height:ih*k,'class':'d-obj'},s)});
     text(s,x+wl*k/2,top-FS*0.45,'Wand '+(i+1),'middle');
-    if(i%2){E('line',{x1:ox,y1:fy,x2:ox+row*k,y2:fy,'class':'d-floor'},s);dimH(s,ox,ox+row*k,fy+FS*1.8,cm(row),fy,fy)}});
+    E('line',{x1:x,y1:fy,x2:x+wl*k,y2:fy,'class':'d-floor'},s);dimH(s,x,x+wl*k,fy+FS*1.8,cm(wl),fy,fy)});
   if(di>0||wi>0)text(s,W/2,H2-FS*0.4,'Weitere Fenster und Türen sind eingerechnet','middle');
   var html='<span class="big">'+f(lit,1)+' Liter</span>Zu streichen sind etwa '+f(area,1)+' m²'+(o.ceil?' mit Decke':'')+'. Bei '+(o.coats===1?'einem Anstrich':o.coats+' Anstrichen')+' und '+f(yld,yld%1?1:0)+' m² je Liter reicht: <b>'+b.txt+'</b>. '+amz('Wandfarbe weiß '+(b.max)+' Liter','Wandfarbe ansehen');
   return {html:html}}
@@ -220,14 +225,15 @@ function buckets(l){var best=null;for(var a=0;a<=4;a++)for(var c=0;c<=4;c++)for(
 function wallpaper(box,o){
   prep(box);
   var Wd=o.wall,H=o.H,rp=o.rapport,rw=o.roll,rl=R.rollLen[rw]||1005,bahn=rp>0?Math.ceil((H+R.rollAdd)/rp)*rp:H+R.rollAdd,strips=Math.ceil(Wd/rw),per=Math.floor(rl/bahn),rolls=per>0?Math.ceil(strips/per):strips;
-  var W=640,H2=360,ml=30,mr=Math.max(110,FS*5.6),mt=Math.max(30,FS*2.2),mb=Math.max(60,FS*3.6),k=Math.min((W-ml-mr)/Wd,(H2-mt-mb)/H),ox=ml+((W-ml-mr)-Wd*k)/2,fy=mt+H*k;
+  var W=640,H2=380,ml=30,mr=Math.max(110,FS*5.6),mt=Math.max(44,FS*3.8),mb=Math.max(60,FS*3.6),k=Math.min((W-ml-mr)/Wd,(H2-mt-mb)/H),ox=ml+((W-ml-mr)-Wd*k)/2,fy=mt+H*k;
   var s=svg(box,W,H2);
   for(var i=0;i<strips;i++){var x=ox+i*rw*k,w=Math.min(rw,Wd-i*rw)*k;E('rect',{x:x,y:mt,width:w,height:H*k,'class':i%2?'d-soft':'d-cloth'},s)}
   E('line',{x1:ox-10,y1:fy,x2:ox+Wd*k+10,y2:fy,'class':'d-floor'},s);
   dimH(s,ox,ox+Wd*k,fy+30,'Wand '+cm(Wd),fy,fy);
   dimV(s,mt,fy,ox+Wd*k+30,cm(H),ox+Wd*k,ox+Wd*k,'right');
   if(strips>1)dimH(s,ox,ox+rw*k,mt-14,cm(rw),null,null,'above');
-  var html='<span class="big">'+rolls+' '+(rolls===1?'Rolle':'Rollen')+'</span>'+strips+' Bahnen à '+cm(rw)+', jede '+cm(bahn)+' lang'+(rp?' (mit '+cm(rp)+' Rapport)':'')+'. Aus einer Rolle mit '+f(rl/100,2)+' m schneidest du '+per+' '+(per===1?'Bahn':'Bahnen')+'. Kauf eine Rolle Reserve dazu, alle mit derselben Chargennummer. '+amz('Vliestapete '+(rw>60?'1,06 m':'0,53 m'),'Tapeten ansehen');
+  if(per<1){oops(box,'Bahn länger als die Rolle');return {html:check('Eine Bahn wäre '+cm(bahn)+' lang, die Rolle hat aber nur '+f(rl/100,2)+' m. Prüfe Raumhöhe und Rapport.')}}
+  var html='<span class="big">'+rolls+' '+(rolls===1?'Rolle':'Rollen')+' + 1 Reserve</span>'+strips+' '+(strips===1?'Bahn':'Bahnen')+' à '+cm(rw)+', '+(strips===1?'sie ist ':'jede ')+cm(bahn)+' lang'+(rp?' (mit '+cm(rp)+' Rapport)':'')+'. Aus einer Rolle mit '+f(rl/100,2)+' m schneidest du '+per+' '+(per===1?'Bahn':'Bahnen')+'. Kauf eine Rolle Reserve dazu, alle mit derselben Chargennummer. '+amz('Vliestapete '+(rw>60?'1,06 m':'0,53 m'),'Tapeten ansehen');
   return {html:html}}
 
 window.SD={R:R,rug:{living:living,dining:dining,bed:bed},curtain:curtain,picture:picture,pendant:pendant,paint:paint,wallpaper:wallpaper,f:f,cm:cm};
