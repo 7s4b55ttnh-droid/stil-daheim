@@ -49,6 +49,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'skandi'),
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
+        ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
@@ -75,7 +76,7 @@ STYLES = [
          pal=[('Schnee', '#f4f4f1', '#1c1f1d'), ('Birke', '#e3d3b5', '#1c1f1d'), ('Nebelblau', '#a9b7c0', '#1c1f1d'), ('Salbei', '#a3ae97', '#1c1f1d')],
          start=[('Möbel aus heller Eiche oder Birke', 'Couchtisch Eiche hell'), ('Wolldecken und ein Fell', 'Wolldecke Grobstrick'),
                 ('Eine Leuchte mit Stoff- oder Papierschirm', 'Stehleuchte Stoffschirm')],
-         href='stile.html#skandinavisch', img='skandi', alt='Heller Wohnraum mit Eichenholz, Leinen und Papierleuchte'),
+         href='skandinavisch.html', img='skandi', alt='Heller Wohnraum mit Eichenholz, Leinen und Papierleuchte'),
     dict(key='japandi', name='Japandi', desc='Japanische Ruhe trifft skandinavische Gemütlichkeit. Natur, Handwerk, viel Luft.',
          pal=[('Reispapier', '#efe8dc', '#1c1f1d'), ('Ton', '#b78c6b', '#1c1f1d'), ('Moos', '#6f7558', '#fff'), ('Tusche', '#2b2a27', '#fff')],
          start=[('Ein niedriges Sofa oder Bodenkissen', 'Bodenkissen Leinen groß'), ('Eine Papierleuchte', 'Papierleuchte Stehleuchte Reispapier'),
