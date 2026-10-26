@@ -50,6 +50,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
+        ('japandi.html', 'Japandi einrichten', 'Ruhig, natürlich und warm', 'japandi', 'japandi'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
@@ -81,7 +82,7 @@ STYLES = [
          pal=[('Reispapier', '#efe8dc', '#1c1f1d'), ('Ton', '#b78c6b', '#1c1f1d'), ('Moos', '#6f7558', '#fff'), ('Tusche', '#2b2a27', '#fff')],
          start=[('Ein niedriges Sofa oder Bodenkissen', 'Bodenkissen Leinen groß'), ('Eine Papierleuchte', 'Papierleuchte Stehleuchte Reispapier'),
                 ('Handgemachte Keramik', 'Keramik Vase handgemacht')],
-         href='stile.html#japandi', img='japandi', alt='Japandi-Wohnzimmer mit Papier-Stehleuchte, niedrigem Leinensofa, Juteteppich und Holzlamellen'),
+         href='japandi.html', img='japandi', alt='Japandi-Wohnzimmer mit Papier-Stehleuchte, niedrigem Leinensofa, Juteteppich und Holzlamellen'),
     dict(key='industrial', name='Industrial', desc='Loft-Gefühl mit Stahl, Holz und Leder vor rohen Wänden.',
          pal=[('Beton', '#a7a5a0', '#1c1f1d'), ('Stahl', '#4a4f53', '#fff'), ('Rost', '#8e4b2c', '#fff'), ('Leder', '#6b4429', '#fff')],
          start=[('Ein Regal aus Stahl und Massivholz', 'Regal Metall Massivholz Industrial'), ('Ein Sessel aus Leder', 'Ledersessel cognac'),
