@@ -52,6 +52,8 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
         ('japandi.html', 'Japandi einrichten', 'Ruhig, natürlich und warm', 'japandi', 'japandi'),
         ('industrial.html', 'Industrial einrichten', 'Loft-Gefühl mit Stahl, Holz und Leder', 'industrial', 'industrial'),
+        ('boho.html', 'Boho einrichten', 'Rattan, Muster, Pflanzen und Handgemachtes', 'boho', 'boho'),
+        ('kleine-raeume.html', 'Kleine Räume größer wirken lassen', '8 Tricks und eine Checkliste', 'kleine-raeume', 'kleine-raeume'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
@@ -93,7 +95,7 @@ STYLES = [
          pal=[('Sand', '#e2cba7', '#1c1f1d'), ('Rattan', '#c29a5b', '#1c1f1d'), ('Terrakotta', '#a8552f', '#fff'), ('Olive', '#6f6f3d', '#fff')],
          start=[('Ein Sessel aus Rattan oder Korb', 'Rattansessel'), ('Ein Teppich mit Muster', 'Kelim Teppich'),
                 ('Viele Pflanzen in Körben', 'Pflanzkorb Seegras')],
-         href='stile.html#boho', img='boho', alt='Boho-Wohnzimmer mit Rattansessel, Kelim-Teppich, Makramee und vielen Pflanzen'),
+         href='boho.html', img='boho', alt='Boho-Wohnzimmer mit Rattansessel, Kelim-Teppich, Makramee und vielen Pflanzen'),
 ]
 STYLE = {s['key']: s for s in STYLES}
 
