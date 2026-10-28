@@ -361,3 +361,18 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .ph{margin:0;border-radius:6px;overflow:hidden;aspect-ratio:4/5;background:var(--band)}
 .ph img{width:100%;height:100%;object-fit:cover}
 @media (max-width:900px){.split{grid-template-columns:1fr}.ph{aspect-ratio:16/10}}
+
+/* Bewegung (sanft, aus bei „Bewegung reduzieren“) */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1) var(--rd,0ms),transform .6s cubic-bezier(.2,.7,.2,1) var(--rd,0ms)}
+.rv.in{opacity:1;transform:none}
+.btn,.chips button,.item,.abtn,.jump a,.dev button{transition:transform .18s cubic-bezier(.3,1.6,.5,1),opacity .2s,background-color .2s,border-color .2s}
+.btn:active,.chips button:active,.item:active,.abtn:active,.jump a:active,.dev button:active{transform:scale(.96)}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.btn:active,.chips button:active,.item:active,.abtn:active,.jump a:active,.dev button:active{transform:none}}
+@media print{.rv{opacity:1!important;transform:none!important}}
+.fn>*{opacity:0;transform:translateY(12px) rotate(-5deg);transform-origin:0 100%}
+.fn.in>*{opacity:1;transform:none;transition:opacity .45s calc(var(--i,0)*90ms),transform .6s cubic-bezier(.3,1.4,.5,1) calc(var(--i,0)*90ms)}
+.sheet.drw svg :is(line,rect,path,polyline,polygon,circle,ellipse){stroke-dasharray:1600;stroke-dashoffset:1600;animation:sdraw 1.4s cubic-bezier(.4,0,.2,1) forwards}
+.sheet.drw svg text{opacity:0;animation:sfade .5s .9s forwards}
+@keyframes sdraw{to{stroke-dashoffset:0}}@keyframes sfade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fn>*{opacity:1;transform:none}.sheet.drw svg *{animation:none!important}}
+@media print{.fn>*{opacity:1!important;transform:none!important}}
