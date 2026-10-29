@@ -1,0 +1,18 @@
+# Stil-Daheim
+
+> Ratgeber-Website zum Einrichten in Deutschland: Wohnstile mit Farbkarten, Stil-Finder, Raum-Rechner (Teppich, Vorhang, Bilder, Lampe, Wandfarbe, Tapete) und schöner wohnen zur Miete. Mit Quellen und Prüfdatum. Finanziert über gekennzeichnete Amazon-Partnerlinks.
+
+## Ratgeber und Rechner
+
+- [Stil-Daheim: Einrichten mit Gefühl und mit Zollstock](https://stil-daheim.de/): Finde deinen Wohnstil, miss Teppich, Vorhang, Bilder und Lampe richtig aus und richte deine Mietwohnung schön ein, ohne Ärger beim Auszug.
+- [Wohnstile im Überblick: Vintage, Modern, Skandinavisch, Japandi, Industrial, Boho](https://stil-daheim.de/stile.html): Sechs Wohnstile verständlich erklärt: woran du sie erkennst, welche Farben und Materialien dazugehören und mit welchen drei Stücken du anfängst.
+- [Vintage einrichten: Fundstücke erkennen, kombinieren, pflegen](https://stil-daheim.de/vintage.html): Was Vintage von Retro und Antik unterscheidet, wie du gute Second-Hand-Möbel erkennst, Holzwurm und Furnier entlarvst und alte Stücke mit Neuem kombinierst.
+- [Modern einrichten: ruhig, klar und trotzdem gemütlich](https://stil-daheim.de/modern.html): So gelingt der moderne, minimalistische Wohnstil in einer normalen Wohnung: Farben, Formen, Stauraum, Licht und die typischen Fehler, die Räume kalt wirken lassen.
+- [Skandinavisch einrichten: hell, gemütlich und praktisch](https://stil-daheim.de/skandinavisch.html): So gelingt der skandinavische Wohnstil: helle Basis, helles Holz, Stoffe in Schichten, warmes Licht und praktische Möbel. Mit Hygge und Lagom erklärt, typischen Fehlern und Einkaufsliste.
+- [Japandi einrichten: ruhig, natürlich und warm](https://stil-daheim.de/japandi.html): So gelingt der Japandi-Stil: ruhige Erdtöne, niedrige Möbel, Holz, Leinen und Papierlicht. Mit Wabi-Sabi erklärt, sechs Schritten, typischen Fehlern und Einkaufsliste.
+- [Industrial einrichten: Loft-Gefühl mit Stahl, Holz und Leder](https://stil-daheim.de/industrial.html): So gelingt der Industrial Style in einer normalen Wohnung: rohe Wände, Metall, altes Holz, Leder und Fabrikleuchten, dazu Wärme durch Stoffe. Mit sechs Schritten, Fehlern, Tipps zur Miete und Einkaufsliste.
+- [Boho einrichten: lässig, warm und gesammelt](https://stil-daheim.de/boho.html): So gelingt der Boho-Stil ohne Chaos: Naturmaterialien, Erdtöne mit kräftigen Akzenten, Teppiche in Schichten, Pflanzen und viele kleine Lichter. Mit sechs Schritten, Fehlern und Einkaufsliste.
+- [Kleine Räume größer wirken lassen: 8 Tricks, die wirklich helfen](https://stil-daheim.de/kleine-raeume.html): So wirkt ein kleiner Raum größer: helle Farben, hellere Decke, große Spiegel, Möbel auf Beinen, Höhe nutzen, Vorhänge bis zum Boden, Licht aus vielen Quellen. Mit Checkliste, Fehlern und Tipps zur Miete.
+- [Raum-Rechner: Teppich, Vorhang, Bilder, Lampe, Wandfarbe, Tapete](https://stil-daheim.de/rechner.html): Welche Teppichgröße, wie lang die Gardinenstange, wie hoch das Bild, wie tief die Lampe, wie viel Farbe und Tapete? Maße eingeben, Zeichnung und Ergebnis sofort sehen.
+- [Schöner wohnen zur Miete: Was erlaubt ist und was ohne Bohren geht](https://stil-daheim.de/mieten.html): Streichen, Dübellöcher, Boden, Balkon und Auszug: was Mieter beim Einrichten dürfen, was die Gerichte sagen und zehn Ideen, mit denen es ohne Bohren schöner wird.
+- [So arbeiten wir: Quellen, Rechner, KI und Partnerlinks](https://stil-daheim.de/so-arbeiten-wir.html): Wer hinter Stil-Daheim steht, woher die Regeln und Zahlen kommen, wie die Rechner rechnen, wo KI hilft und wie sich die Seite über Amazon-Partnerlinks finanziert.
