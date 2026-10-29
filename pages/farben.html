@@ -1,0 +1,133 @@
+<!--meta {"key":"farben","title":"Wandfarbe wählen und kombinieren: mit der 60-30-10-Regel – Stil-Daheim","desc":"So findest du die passende Wandfarbe: wie Farben wirken, welche Töne kleine Räume größer machen, wie du mit der 60-30-10-Regel kombinierst und die Farbe vorher testest. Mit Farb-Kombinierer.","og":"assets/start.jpg","updated":"2026-10-29","kurz":"Kombiniere nach der 60-30-10-Regel: 60&nbsp;% Hauptfarbe für Wände und große Flächen, 30&nbsp;% Nebenfarbe, 10&nbsp;% Akzent. Helle Töne lassen kleine Räume größer wirken, dunkle Farben machen sie gemütlicher, und jede Farbe testest du vorher bei Tages- und Kunstlicht."} -->
+<!--HEAD-->
+<style>
+.hero.sub.plain{min-height:0;background:radial-gradient(120% 110% at 88% 0%,#2f5a4b 0%,#1e4a3d 38%,#14241e 100%)}
+.hero.sub.plain::after{display:none}
+.hero.sub.plain .wrap{padding-block:clamp(130px,17vw,190px) clamp(52px,8vw,92px)}
+.combo{display:grid;gap:18px;margin-top:28px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.picks button{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px 6px 6px;border-radius:999px;border:1px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.95rem;cursor:pointer}
+.picks button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.12);flex:none}
+.picks button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.ratio{display:grid;grid-template-columns:6fr 3fr 1fr;height:120px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.ratio span{display:flex;align-items:flex-end;padding:10px 12px;font-size:.82rem;font-weight:600;line-height:1.2;transition:background-color .4s}
+.ratio span:last-child{padding:10px 4px;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);align-items:center}
+.vars{display:flex;flex-wrap:wrap;gap:8px}
+.vars button{min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.9rem;cursor:pointer}
+.vars button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cnote{margin:0;color:var(--mut);font-size:.95rem}
+</style>
+<!--MAIN-->
+<div class="hero sub plain">
+  <div class="wrap">
+    <h1>Wandfarbe wählen und kombinieren</h1>
+    <p>Wie Farben wirken, welche Töne zusammenpassen und wie du vorher sicher gehst. Mit einem Kombinierer für die 60-30-10-Regel.</p>
+    <div class="btns"><a class="btn" href="#kombinierer">Zum Farb-Kombinierer</a><a class="btn ghost" href="#wirkung">Wie Farben wirken</a></div>
+  </div>
+</div>
+
+<section id="wirkung"><div class="wrap narrow">
+  <h2>Wie Farben wirken.</h2>
+  <p class="lede">Eine Farbe verändert, wie groß, warm und ruhig ein Raum wirkt. Das sind die wichtigsten Regeln.</p>
+  <dl class="kv" style="margin-top:30px">
+    <dt>Hell und dunkel</dt><dd>Helle Farben lassen kleine Räume größer und offener wirken. Dunkle Farben schlucken Licht und machen einen Raum kleiner, aber auch gemütlicher.</dd>
+    <dt>Warm und kühl</dt><dd>Blau wirkt kühl, beruhigend und frisch, Rot warm und geborgen. Grün wirkt zugleich beruhigend und anregend. Grau mit rotem Unterton wirkt warm, Graublau eher kühl.</dd>
+    <dt>Lange und kurze Wand</dt><dd>Eine dunkle lange Wand lässt den Raum weiter wirken. Eine dunkle kurze Wand macht ihn kleiner, aber gemütlicher. In langen, schmalen Fluren nimmt eine dunkle Stirnwand die Tiefe.</dd>
+    <dt>Die Decke</dt><dd>Eine helle Decke lässt den Raum höher wirken, eine dunklere senkt sie optisch ab. Das hilft bei sehr hohen Altbaudecken.</dd>
+    <dt>Licht</dt><dd>Jede Farbe sieht bei Tageslicht anders aus als bei Lampenlicht. In sehr sonnigen Südzimmern wirken kräftiges Rot, Senfgelb und Orange schnell zu heiß, Blautöne und gedecktes Grün dagegen frisch.</dd>
+  </dl>
+</div></section>
+
+<section class="band" id="kombinierer"><div class="wrap narrow">
+  <h2>Der Farb-Kombinierer.</h2>
+  <p class="lede">Wähle deine Wandfarbe und eine Richtung. Der Balken zeigt die Aufteilung nach der 60-30-10-Regel.</p>
+  <div class="combo">
+    <div><p class="m-h" style="margin:0 0 8px">1 · Deine Hauptfarbe</p><div class="picks" id="picks" role="group" aria-label="Hauptfarbe wählen"></div></div>
+    <div><p class="m-h" style="margin:0 0 8px">2 · Welche Richtung?</p><div class="vars" id="vars" role="group" aria-label="Kombination wählen"><button type="button" data-v="0">Ton in Ton</button><button type="button" data-v="1">Mit Kontrast</button><button type="button" data-v="2">Ruhig und neutral</button></div></div>
+    <div class="ratio" id="ratio" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="cnote" id="ctxt" aria-live="polite"></p>
+    <div class="items" id="cshop"></div>
+    <p class="tip">Wie viel Farbe du brauchst, sagt der <a href="rechner.html#farbe">Farb-Rechner</a>.</p>
+  </div>
+</div></section>
+
+<section id="regel"><div class="wrap narrow">
+  <h2>Die 60-30-10-Regel.</h2>
+  <p class="lede">Ein einfaches Gestaltungsprinzip, damit ein Raum nicht langweilig und nicht unruhig wirkt.</p>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>60&nbsp;% Hauptfarbe</h3><p>Wände, große Teppiche und wichtige Möbel. Hier gehört die ruhigste Farbe hin.</p></li>
+    <li><h3>30&nbsp;% Nebenfarbe</h3><p>Vorhänge, Polstermöbel oder eine einzelne Akzentwand. Sie gibt dem Raum Charakter.</p></li>
+    <li><h3>10&nbsp;% Akzent</h3><p>Kissen, Bilder und Deko. Hier darf es kräftig werden, zum Beispiel die Gegenfarbe aus dem Farbkreis.</p></li>
+  </ol>
+  <div class="fact"><span class="n">3</span><b>Wege, Farben zu kombinieren</b><p>Ton in Ton mit Schattierungen einer Grundfarbe, mit der Gegenfarbe aus dem Farbkreis als Kontrast, oder kräftige Töne abgemildert durch Weiß und Grau.</p></div>
+</div></section>
+
+<section class="band" id="testen"><div class="wrap narrow">
+  <h2>Vor dem Streichen testen.</h2>
+  <ol class="steps" style="margin-top:28px">
+    <li><h3>Kleine Probedose kaufen</h3><p>Viele Wandfarben gibt es als Minidose. Damit siehst du die echte Farbe statt eines Bildschirmtons.</p></li>
+    <li><h3>Auf Karton streichen</h3><p>Streich ein großes Stück Karton und stell es nacheinander an verschiedene Wände. So bleibt die Wand sauber, wenn dir die Farbe nicht gefällt.</p></li>
+    <li><h3>Bei Tag und am Abend ansehen</h3><p>Prüf die Probe bei Tageslicht und bei Lampenlicht. Erst dann kaufen.</p></li>
+    <li><h3>Genug aus einer Charge kaufen</h3><p>Kauf alle Eimer auf einmal und achte auf dieselbe Charge, sonst gibt es kleine Farbunterschiede an der Wand.</p></li>
+  </ol>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Zum Streichen.</h2><p class="lede">Werkzeug für ein sauberes Ergebnis. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Malerkrepp Abdeckband}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Malerkrepp</b><span>Für saubere Kanten an Decke und Fenster</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Farbroller Set Wandfarbe}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Farbroller-Set</b><span>Mit Wanne und Abstreifgitter</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Abdeckvlies Maler}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Abdeckvlies</b><span>Schützt den Boden, rutscht nicht</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Eckenpinsel Flachpinsel Wandfarbe}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Eckenpinsel</b><span>Für Ecken und Ränder</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Welche Farbe macht einen kleinen Raum größer?</summary><div><p>Helle Töne und Pastell, besonders kühles Grün, Blau und Weiß. Einfarbige Flächen wirken größer als Muster. Mehr Tricks stehen unter <a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a>.</p></div></details>
+    <details><summary>Darf ich in der Mietwohnung farbig streichen?</summary><div><p>Ja, während der Mietzeit darfst du auch kräftige Farben verwenden. Beim Auszug musst du sie meist wieder neutral streichen. Mehr dazu unter <a href="mieten.html">Schöner wohnen zur Miete</a>.</p></div></details>
+    <details><summary>Welche Farbe passt zu meinem Wohnstil?</summary><div><p>Jeder Stil hat eine eigene Farbkarte, von Cognac bei Vintage bis Moos bei Japandi. Du findest sie unter <a href="stile.html">Wohnstile im Überblick</a>.</p></div></details>
+    <details><summary>Was ist eine Komplementärfarbe?</summary><div><p>Die Farbe, die im Farbkreis gegenüberliegt, etwa Blau und Orange. Als Akzent in Kissen oder Bildern bringt sie Spannung, ohne dass du die Wand dunkel streichen musst.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>OBI Magazin: Farbberater, Wandfarben und ihre Wirkung (22.05.2024) <a href="https://www.obi.at/magazin/wohnen/innengestaltung/wandgestaltung/farbberater" target="_blank" rel="noopener">obi.at</a></li>
+    <li>hausjournal.net: Passende Wandfarbe finden (aktualisiert 03.01.2025) <a href="https://www.hausjournal.net/passende-wandfarbe" target="_blank" rel="noopener">hausjournal.net</a></li>
+    <li>Planner 5D: Die 60-30-10-Regel im Interior Design (13.08.2025) <a href="https://planner5d.com/blog/de/die-60-30-10-regel-und-wie-man-sie-im-design-anwendet/" target="_blank" rel="noopener">planner5d.com</a></li>
+    <li>immowelt: Hitzefalle Südzimmer, diese Wandfarben sorgen für ein kühleres Raumgefühl (26.08.2026) <a href="https://www.immowelt.de/ratgeber/news/hitzefalle-suedzimmer-diese-wandfarben-sorgen-fuer-ein-deutlich-kuehleres-raumgefuehl" target="_blank" rel="noopener">immowelt.de</a></li>
+  </ol><p style="margin-top:14px">Die Kombinationen im Farb-Kombinierer sind Vorschläge der Redaktion nach der 60-30-10-Regel. Geprüft am 29.10.2026.</p></div>
+</div></section>
+
+{{RELATED:kleine-raeume,stile,rechner|plain}}
+<!--END-->
+<script>
+/* Farb-Kombinierer: Hauptfarbe + Richtung → Aufteilung 60-30-10 und Suchlinks. Vorschläge der Redaktion. */
+(function(){var C=[
+ ['Warmes Weiß','#f3efe6',[['#d8cbb5','Sand'],['#6f7558','Moos']],[['#a9b7c0','Nebelblau'],['#a8552f','Terrakotta']],[['#d9d6cf','Hellgrau'],['#2b2a27','Tusche']]],
+ ['Salbei','#a3ae97',[['#d7dccd','Helles Salbei'],['#4f5e48','Tannengrün']],[['#efe8dc','Creme'],['#b76e79','Altrosa']],[['#efe8dc','Creme'],['#b9a27e','Eiche']]],
+ ['Greige','#c9c0b2',[['#e6e0d5','Leinen'],['#7d6e5d','Taupe']],[['#f3efe6','Warmes Weiß'],['#2f4a5e','Petrol']],[['#f3efe6','Warmes Weiß'],['#3a3b3c','Graphit']]],
+ ['Nebelblau','#a9b7c0',[['#d6dee3','Eisblau'],['#2f4a5e','Petrol']],[['#f3efe6','Warmes Weiß'],['#c4864a','Ocker']],[['#e8e6e1','Kalkweiß'],['#6b6f72','Schiefer']]],
+ ['Terrakotta','#b46a4a',[['#e2cba7','Sand'],['#7a3f28','Rost']],[['#efe8dc','Creme'],['#4f6b6a','Graugrün']],[['#efe8dc','Creme'],['#5a4636','Nussbaum']]],
+ ['Dunkelgrün','#2f4f3e',[['#a3ae97','Salbei'],['#1d3128','Tannennadel']],[['#efe8dc','Creme'],['#c49a3a','Senf']],[['#efe8dc','Creme'],['#8f5530','Cognac']]]];
+ var V=['Ton in Ton','Mit Kontrast','Ruhig und neutral'],TXT=['Schattierungen derselben Farbfamilie wirken ruhig und stimmig.','Die Akzentfarbe liegt im Farbkreis eher gegenüber und bringt Spannung, in kleiner Menge.','Neutrale Töne dämpfen die Hauptfarbe, ideal, wenn es gemütlich und zeitlos werden soll.'];
+ var s={c:1,v:0};try{var x=JSON.parse(localStorage.getItem('sdfk')||'null');if(x&&C[x.c]&&V[x.v])s=x}catch(e){}
+ var P=document.getElementById('picks'),R=document.getElementById('ratio').children,T=document.getElementById('ctxt'),SH=document.getElementById('cshop'),VS=document.getElementById('vars');
+ function lum(h){var n=parseInt(h.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;return (r*299+g*587+b*114)/1000}
+ P.innerHTML=C.map(function(c,i){return '<button type="button" data-i="'+i+'" aria-pressed="false"><i style="background:'+c[1]+'"></i>'+c[0]+'</button>'}).join('');
+ function link(name){var q=encodeURIComponent('Wandfarbe '+name).replace(/%20/g,'+');return 'https://www.amazon.de/s?k='+q+'&tag=stildaheim-21'}
+ function up(){var c=C[s.c],sec=c[2+s.v],cols=[[c[1],c[0]],sec[0],sec[1]];
+  [].forEach.call(R,function(el,i){el.style.background=cols[i][0];el.style.color=lum(cols[i][0])>140?'#1c1f1d':'#fff';el.textContent=(i===0?'60 % ':i===1?'30 % ':'10 % ')+cols[i][1]});
+  T.textContent=c[0]+' mit '+sec[0][1]+' und einem Akzent in '+sec[1][1]+'. '+TXT[s.v]+' Teste die Töne vorher als Probe an deiner Wand.';
+  SH.innerHTML=[cols[0],cols[1]].map(function(k){return '<a class="item" href="'+link(k[1])+'" rel="sponsored nofollow noopener" target="_blank"><div><b>Wandfarbe '+k[1]+'</b><span>Suche nach ähnlichen Tönen</span></div><span class="go"><span>Bei Amazon</span><small>Anzeige</small></span></a>'}).join('');
+  [].forEach.call(P.children,function(b){b.setAttribute('aria-pressed',+b.dataset.i===s.c)});[].forEach.call(VS.children,function(b){b.setAttribute('aria-pressed',+b.dataset.v===s.v)});
+  try{localStorage.setItem('sdfk',JSON.stringify(s))}catch(e){}}
+ P.addEventListener('click',function(e){var b=e.target.closest('button');if(b){s.c=+b.dataset.i;up()}});
+ VS.addEventListener('click',function(e){var b=e.target.closest('button');if(b){s.v=+b.dataset.v;up()}});
+ up()})();
+</script>

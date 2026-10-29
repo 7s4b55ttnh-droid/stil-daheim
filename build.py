@@ -54,6 +54,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('industrial.html', 'Industrial einrichten', 'Loft-Gefühl mit Stahl, Holz und Leder', 'industrial', 'industrial'),
         ('boho.html', 'Boho einrichten', 'Rattan, Muster, Pflanzen und Handgemachtes', 'boho', 'boho'),
         ('kleine-raeume.html', 'Kleine Räume größer wirken lassen', '8 Tricks und eine Checkliste', 'kleine-raeume', 'kleine-raeume'),
+        ('farben.html', 'Wandfarbe wählen und kombinieren', 'Wirkung, 60-30-10-Regel, Kombinierer', 'farben', 'start'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
