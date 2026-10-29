@@ -376,3 +376,9 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 @keyframes sdraw{to{stroke-dashoffset:0}}@keyframes sfade{to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.fn>*{opacity:1;transform:none}.sheet.drw svg *{animation:none!important}}
 @media print{.fn>*{opacity:1!important;transform:none!important}}
+
+/* Kasten „Kurz gesagt“ (build.py, meta kurz) */
+.kurz-s{padding-block:clamp(28px,4vw,44px) 0}
+.kurz{border-left:3px solid var(--brass);background:var(--pan);border-radius:0 12px 12px 0;padding:16px 20px}
+.kurz b{display:block;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-t);margin-bottom:6px}
+.kurz p{margin:0;font-size:1.02rem;line-height:1.5}

@@ -255,6 +255,7 @@ def page(src):
     html = re.sub(r'<div class="src">(.*?)</div>', sources, html, flags=re.S)
     html = html.replace('href="index.html#', 'href="./#').replace('href="index.html"', 'href="./"')
     html = html.replace('Stil-Daheim', BRAND)
+    html = seo(html, meta, path)
     assert '{{' not in html, (src.name, html[html.find('{{'):html.find('{{') + 60])
     if src.name == '404.html':
         html = re.sub(r'(href|src|srcset)="(?!https?:|#|/|mailto:)([^"]+)"', lambda m: '%s="/%s"' % (m.group(1), m.group(2).lstrip('./') if m.group(2) not in ('./',) else ''), html)
@@ -262,6 +263,58 @@ def page(src):
         html = html.replace('url(assets/fonts/', 'url(/assets/fonts/')
     (OUT / src.name).write_text(html)
     return meta
+
+
+def _txt(s):
+    import html as H
+    return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', s))).strip()
+
+
+def seo(html, meta, path):
+    """Kasten „Kurz gesagt“ (meta kurz) und strukturierte Daten (Article, FAQPage, BreadcrumbList) für Suchmaschinen und KI-Assistenten."""
+    if meta['noindex'] or meta['key'] in ('impressum', 'datenschutz', '404'):
+        return html
+    i0 = html.index('<main')
+    if meta.get('kurz'):
+        box = '<section class="kurz-s"><div class="wrap narrow"><div class="kurz" id="kurz-gesagt"><b>Kurz gesagt</b><p>%s</p></div></div></section>\n' % meta['kurz']
+        i = html.index('<section', i0)
+        html = html[:i] + box + html[i:]
+    main = html[i0:html.index('</main>')]
+    url = DOMAIN + path
+    org = {'@type': 'Organization', 'name': 'Stil-Daheim', 'url': DOMAIN}
+    if meta['key'] == 'index':
+        graph = [{'@type': 'WebSite', 'name': 'Stil-Daheim', 'url': DOMAIN, 'inLanguage': 'de-DE', 'description': meta['desc'], 'publisher': org}]
+    else:
+        h1 = re.search(r'<h1[^>]*>(.*?)</h1>', main, re.S)
+        art = {'@type': 'Article', 'headline': _txt(h1.group(1))[:110] if h1 else meta['title'], 'name': meta['title'], 'description': meta['desc'],
+               'inLanguage': 'de-DE', 'url': url, 'mainEntityOfPage': url, 'dateModified': meta['updated'], 'author': org, 'publisher': org,
+               'image': DOMAIN + meta.get('og', 'assets/start.jpg')}
+        if meta.get('kurz'):
+            art['abstract'] = _txt(meta['kurz'])
+        graph = [art]
+        q = []
+        for sec in re.findall(r'<section[^>]*id="fragen"[^>]*>.*?</section>', main, re.S):
+            for a, b in re.findall(r'<details[^>]*>\s*<summary>(.*?)</summary>\s*<div>(.*?)</div>\s*</details>', sec, re.S):
+                if _txt(a) and _txt(b):
+                    q.append({'@type': 'Question', 'name': _txt(a), 'acceptedAnswer': {'@type': 'Answer', 'text': _txt(b)}})
+        if q:
+            graph.append({'@type': 'FAQPage', 'mainEntity': q})
+        graph.append({'@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Stil-Daheim', 'item': DOMAIN},
+            {'@type': 'ListItem', 'position': 2, 'name': art['headline'][:80], 'item': url}]})
+    ld = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/')
+    return html.replace('</head>', '<script type="application/ld+json">%s</script>\n</head>' % ld, 1)
+
+
+def llms(metas):
+    """Übersicht für KI-Assistenten (llms.txt)."""
+    order = ['index'] + [g[3] for g in GRID]
+    ms = sorted([m for m in metas if not m['noindex'] and m['key'] not in ('impressum', 'datenschutz', '404')],
+                key=lambda m: (order.index(m['key']) if m['key'] in order else 99, m['file']))
+    lines = ['# Stil-Daheim', '', '> Ratgeber-Website zum Einrichten in Deutschland: Wohnstile mit Farbkarten, Stil-Finder, Raum-Rechner (Teppich, Vorhang, Bilder, Lampe, Wandfarbe, Tapete) und schöner wohnen zur Miete. Mit Quellen und Prüfdatum. Finanziert über gekennzeichnete Amazon-Partnerlinks.', '', '## Ratgeber und Rechner', '']
+    for m in ms:
+        lines.append('- [%s](%s%s): %s' % (m['title'].replace(' – Stil-Daheim', ''), DOMAIN, '' if m['key'] == 'index' else m['file'], m['desc']))
+    (OUT / 'llms.txt').write_text('\n'.join(lines) + '\n')
 
 
 def sitemap(metas):
@@ -287,4 +340,5 @@ if __name__ == '__main__':
         print('gebaut:', n)
     if not sys.argv[1:]:
         sitemap(metas)
+        llms(metas)
         print('sitemap.xml:', sum(1 for m in metas if not m['noindex']), 'Seiten')
