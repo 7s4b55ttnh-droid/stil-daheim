@@ -1,0 +1,114 @@
+<!--meta {"key":"licht","title":"Licht planen: Lumen pro Raum, Kelvin und drei Lichtebenen – Stil-Daheim","desc":"So planst du Licht in jedem Raum: drei Lichtebenen, die richtige Lichtfarbe in Kelvin und wie viel Lumen ein Raum braucht. Mit Lumen-Rechner für Wohnzimmer, Schlafzimmer, Küche, Bad und Arbeitszimmer.","og":"assets/essen.jpg","updated":"2026-10-30","kurz":"Plane Licht in drei Ebenen: Grundlicht, Arbeitslicht zum Lesen oder Kochen und Akzentlicht für Stimmung. Wohn- und Schlafzimmer brauchen etwa 100 bis 150 Lumen pro Quadratmeter in Warmweiß mit 2.700 bis 3.000&nbsp;Kelvin, Küche und Bad 200 bis 300 Lumen in Neutralweiß."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:50% 45%}
+.lumen{display:grid;gap:16px;margin-top:28px}
+.lumen .row{display:flex;flex-wrap:wrap;gap:8px}
+.lumen .row button{min-height:44px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.95rem;cursor:pointer}
+.lumen .row button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lumen label{display:flex;align-items:center;gap:10px;font-weight:600}
+.lumen input{width:6ch;min-height:44px;font:inherit;font-size:1.2rem;font-weight:700;text-align:right;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.lres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.lres div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.lres b{display:block;font-size:1.45rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums}
+.lres span{font-size:.85rem;color:var(--mut)}
+.kel{height:14px;border-radius:7px;background:linear-gradient(90deg,#ffb35c,#ffd9a0 30%,#fff4e0 50%,#e9f1ff 75%,#c6dcff)}
+@media (max-width:560px){.lres{grid-template-columns:1fr}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:essen|Esszimmer am Abend mit Pendelleuchte über dem Holztisch, warmes Licht}}
+  <div class="wrap">
+    <h1>Licht planen</h1>
+    <p>Drei Lichtebenen, die richtige Lichtfarbe und genug Helligkeit. So wird jeder Raum hell genug und trotzdem gemütlich.</p>
+    <div class="btns"><a class="btn" href="#rechner">Zum Lumen-Rechner</a><a class="btn ghost" href="#ebenen">Die drei Lichtebenen</a></div>
+  </div>
+</div>
+
+<section id="ebenen"><div class="wrap narrow">
+  <h2>Die drei Lichtebenen.</h2>
+  <p class="lede">Eine Deckenlampe allein macht jeden Raum flach. Gutes Licht kommt aus mehreren Quellen.</p>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Grundlicht</h3><p>Sorgt für Helligkeit im ganzen Raum, meist eine Deckenleuchte in der Mitte. Am besten dimmbar.</p></li>
+    <li><h3>Arbeitslicht</h3><p>Für alles, wofür du gut sehen musst: eine Leselampe am Sessel, eine Schreibtischlampe, Licht über der Arbeitsplatte. Hier darf es neutraler und heller sein.</p></li>
+    <li><h3>Akzentlicht</h3><p>Betont Wände, Bilder oder Pflanzen und schafft Stimmung. Indirektes Licht gibt eine weiche Grundhelligkeit, kleine Leuchten im Regal oder auf dem Sideboard machen es gemütlich.</p></li>
+  </ol>
+  <div class="fact"><span class="n">3</span><b>Schalter statt einer</b><p>Mehrere Schalter und dimmbare Lampen passen das Licht an Stimmung und Tageszeit an. Vermeide nackte Glühbirnen in Sichthöhe, sie blenden.</p></div>
+</div></section>
+
+<section class="band" id="kelvin"><div class="wrap narrow">
+  <h2>Die richtige Lichtfarbe.</h2>
+  <p class="lede">Die Farbtemperatur steht in Kelvin auf der Verpackung. Je niedriger die Zahl, desto wärmer das Licht.</p>
+  <div class="kel" aria-hidden="true" style="margin-top:28px"></div>
+  <dl class="kv" style="margin-top:18px">
+    <dt>2.700 bis 3.000&nbsp;K</dt><dd>Warmweiß. Gemütlich, ideal für Wohn- und Schlafzimmer.</dd>
+    <dt>um 4.000&nbsp;K</dt><dd>Neutralweiß. Funktional, gut für Küche und Bad.</dd>
+    <dt>5.000 bis 6.500&nbsp;K</dt><dd>Tageslichtweiß. Fördert die Konzentration, passend fürs Arbeitszimmer.</dd>
+  </dl>
+</div></section>
+
+<section id="rechner"><div class="wrap narrow">
+  <h2>Der Lumen-Rechner.</h2>
+  <p class="lede">Wie hell muss es sein? Wähle den Raum und gib die Fläche ein.</p>
+  <div class="lumen">
+    <div class="row" id="lroom" role="group" aria-label="Raum wählen"></div>
+    <label for="lm2">Fläche <input id="lm2" type="text" inputmode="decimal" autocomplete="off" value="20" aria-label="Fläche in Quadratmetern"> m²</label>
+    <div class="lres" aria-live="polite"><div><b id="l1"></b><span>Lumen für den ganzen Raum</span></div><div><b id="l2"></b><span>Lichtfarbe</span></div><div><b id="l3"></b><span>Lampen mit je 800 Lumen</span></div></div>
+    <p class="cnote" id="ltxt" style="margin:0;color:var(--mut)"></p>
+  </div>
+  <p class="tip">Die Lumen verteilen sich auf alle Lichtebenen zusammen, nicht auf eine einzige Lampe. Wie hoch die Pendelleuchte über dem Tisch hängt, sagt der <a href="rechner.html#lampe">Lampen-Rechner</a>.</p>
+</div></section>
+
+<section class="band" id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für gutes Licht.</h2><p class="lede">Dimmbar, warm und an mehreren Stellen. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:LED Lampe E27 dimmbar warmweiß 2700K}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Dimmbare LED-Lampen</b><span>Warmweiß mit 2.700&nbsp;K</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Stehleuchte Leselampe dimmbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Stehleuchte mit Leselicht</b><span>Grund- und Arbeitslicht in einem</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Tischleuchte klein Sideboard}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Kleine Tischleuchte</b><span>Akzentlicht fürs Regal oder Sideboard</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:LED Unterbauleuchte Küche}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Unterbauleuchte für die Küche</b><span>Arbeitslicht über der Arbeitsplatte</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Funk Dimmer Steckdose}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Dimmer für die Steckdose</b><span>Macht Stehleuchten dimmbar, ohne Elektriker</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Was ist der Unterschied zwischen Watt und Lumen?</summary><div><p>Lumen gibt an, wie hell eine Lampe ist. Watt sagt nur, wie viel Strom sie braucht. Bei LED-Lampen ist deshalb die Lumen-Zahl entscheidend.</p></div></details>
+    <details><summary>Welches Licht passt zu welchem Wohnstil?</summary><div><p>Warmweißes Licht passt zu fast allen Stilen. Papier- und Stoffschirme passen zu <a href="japandi.html">Japandi</a> und <a href="skandinavisch.html">Skandinavisch</a>, Metallleuchten zu <a href="industrial.html">Industrial</a>.</p></div></details>
+    <details><summary>Wie bekomme ich mehr Licht zur Miete?</summary><div><p>Mit Steh- und Tischleuchten, Leuchten zum Einstecken und Dimmern für die Steckdose, ganz ohne neue Kabel. Mehr Ideen unter <a href="mieten.html">Schöner wohnen zur Miete</a>.</p></div></details>
+    <details><summary>Wie wirkt ein kleiner Raum größer?</summary><div><p>Mit Licht aus vielen Quellen, auch in den Ecken. Mehr Tricks unter <a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a>.</p></div></details>
+  </div>
+</div></section>
+
+<section class="band" id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>homeandsmart: Lichtplanung leicht gemacht, Lumen pro Quadratmeter (aktualisiert 27.03.2026) <a href="https://www.homeandsmart.de/lichtplanung-lumen-leuchten-171451" target="_blank" rel="noopener">homeandsmart.de</a></li>
+    <li>toom: Beleuchtung im Wohnzimmer, Lichtebenen und Lichtfarbe <a href="https://toom.de/selbermachen/wohnen-haushalt/beleuchtung/beleuchtung-im-wohnzimmer/" target="_blank" rel="noopener">toom.de</a></li>
+    <li>sanier.de: Lampenkauf, was bedeuten Kelvin, Watt, Lumen und Lux (12.11.2025) <a href="https://www.sanier.de/elektroinstallation/beleuchtung/lampenkauf-was-bedeuten-kelvin-watt-lumen-und-lux" target="_blank" rel="noopener">sanier.de</a></li>
+  </ol><p style="margin-top:14px">Richtwerte, keine Normen. Geprüft am 30.10.2026.</p></div>
+</div></section>
+
+{{RELATED:rechner,kleine-raeume,skandinavisch}}
+<!--END-->
+<script>
+/* Lumen-Rechner: Raum + Fläche → Lumen, Lichtfarbe, Zahl der 800-lm-Lampen. Richtwerte nach homeandsmart.de. */
+(function(){var R=[['Wohnzimmer',100,150,'Warmweiß 2.700–3.000 K'],['Schlafzimmer',100,100,'Warmweiß 2.700–3.000 K'],['Küche',250,300,'Neutralweiß um 4.000 K'],['Bad',200,300,'Neutralweiß um 4.000 K'],['Arbeitszimmer',300,500,'Tageslichtweiß 5.000–6.500 K']];
+ var s={r:0,m:20};try{var x=JSON.parse(localStorage.getItem('sdlm')||'null');if(x&&R[x.r]&&x.m>0)s=x}catch(e){}
+ var B=document.getElementById('lroom'),I=document.getElementById('lm2'),f=function(n){return Math.round(n).toLocaleString('de-DE')};
+ B.innerHTML=R.map(function(r,i){return '<button type="button" data-i="'+i+'" aria-pressed="false">'+r[0]+'</button>'}).join('');
+ function num(v){var t=String(v).trim().replace(/\s|m²|qm/gi,'');if(t.indexOf(',')>-1)t=t.replace(/\./g,'').replace(',','.');var n=parseFloat(t);return isFinite(n)?n:NaN}
+ function up(){var r=R[s.r],a=r[1]*s.m,b=r[2]*s.m;
+  document.getElementById('l1').textContent=a===b?f(a):f(a)+'–'+f(b);
+  document.getElementById('l2').textContent=r[3].split(' ')[0];
+  var na=Math.ceil(a/800),nb=Math.ceil(b/800);document.getElementById('l3').textContent=na===nb?na:na+'–'+nb;
+  document.getElementById('ltxt').textContent=r[0]+' mit '+String(s.m).replace('.',',')+' m²: insgesamt '+(a===b?f(a):f(a)+' bis '+f(b))+' Lumen, verteilt auf Grund-, Arbeits- und Akzentlicht. Lichtfarbe: '+r[3]+'.';
+  [].forEach.call(B.children,function(b){b.setAttribute('aria-pressed',+b.dataset.i===s.r)});if(document.activeElement!==I)I.value=String(s.m).replace('.',',');
+  try{localStorage.setItem('sdlm',JSON.stringify(s))}catch(e){}}
+ B.addEventListener('click',function(e){var b=e.target.closest('button');if(b){s.r=+b.dataset.i;up()}});
+ I.addEventListener('input',function(){var v=num(I.value);if(v>=1&&v<=200){s.m=v;up()}});
+ I.addEventListener('change',function(){var v=num(I.value);if(!(v>=1))v=s.m;s.m=Math.min(200,Math.max(1,v));I.value=String(s.m).replace('.',',');up()});
+ up()})();
+</script>
