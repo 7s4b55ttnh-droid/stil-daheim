@@ -56,6 +56,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('kleine-raeume.html', 'Kleine Räume größer wirken lassen', '8 Tricks und eine Checkliste', 'kleine-raeume', 'kleine-raeume'),
         ('farben.html', 'Wandfarbe wählen und kombinieren', 'Wirkung, 60-30-10-Regel, Kombinierer', 'farben', 'start'),
         ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'essen'),
+        ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'start'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
