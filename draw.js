@@ -236,5 +236,93 @@ function wallpaper(box,o){
   var html='<span class="big">'+rolls+' '+(rolls===1?'Rolle':'Rollen')+' + 1 Reserve</span>'+strips+' '+(strips===1?'Bahn':'Bahnen')+' à '+cm(rw)+', '+(strips===1?'sie ist ':'jede ')+cm(bahn)+' lang'+(rp?' (mit '+cm(rp)+' Rapport)':'')+'. Aus einer Rolle mit '+f(rl/100,2)+' m schneidest du '+per+' '+(per===1?'Bahn':'Bahnen')+'. Kauf eine Rolle Reserve dazu, alle mit derselben Chargennummer. '+amz('Vliestapete '+(rw>60?'1,06 m':'0,53 m'),'Tapeten ansehen');
   return {html:html}}
 
-window.SD={R:R,rug:{living:living,dining:dining,bed:bed},curtain:curtain,picture:picture,pendant:pendant,paint:paint,wallpaper:wallpaper,f:f,cm:cm};
+/* ---------- Couchtisch ---------- */
+function coffee(box,o){
+  prep(box);
+  var S=o.sofa,seat=o.seat,lMin=Math.round(S/2/5)*5,lMax=Math.round(S*2/3/5)*5,gap=45,hMax=seat,hMin=seat-5,TL=Math.round((lMin+lMax)/2/5)*5,TD=60;
+  var W=640,H=400,ml=Math.max(40,FS*3),mr=Math.max(120,FS*6),mt=Math.max(58,FS*3.6),mb=Math.max(60,FS*3.6);
+  var extW=S,extH=R.sofaDepth+gap+TD,k=Math.min((W-ml-mr)/extW,(H-mt-mb)/extH),ox=ml+((W-ml-mr)-extW*k)/2,oy=mt;
+  var s=svg(box,W,H);
+  sofaTop(s,ox,oy,S*k,R.sofaDepth*k);
+  var tx=ox+(S-TL)/2*k,ty=oy+(R.sofaDepth+gap)*k;
+  E('rect',{x:tx,y:ty,width:TL*k,height:TD*k,rx:4,'class':'d-obj'},s);
+  dimH(s,ox,ox+S*k,oy-24,'Sofa '+cm(S),oy,oy);
+  dimH(s,tx,tx+TL*k,ty+TD*k+30,'Tisch '+f(lMin)+'–'+cm(lMax),ty+TD*k,ty+TD*k);
+  dimV(s,oy+R.sofaDepth*k,ty,tx+TL*k+28,cm(gap),null,tx+TL*k,'right');
+  var html='<span class="big">'+f(lMin)+'–'+cm(lMax)+' lang</span>Halb bis zwei Drittel so lang wie dein '+cm(S)+' breites Sofa. Stell ihn etwa '+cm(gap)+' vor die Sitzkante, in kleinen Räumen reichen 35&nbsp;cm. Die Platte liegt am besten auf Sitzhöhe oder bis 5&nbsp;cm darunter, also bei '+f(hMin)+' bis '+cm(hMax)+'. '+amz('Couchtisch '+(Math.round(lMax/10)*10)+' cm','Couchtische ansehen');
+  return {html:html}}
+
+/* ---------- Fernseher ---------- */
+function tv(box,o){
+  prep(box);
+  var fac=+o.res,inch=2.54,dist,diag;
+  if(o.mode==='abstand'){diag=o.inch;dist=Math.round(diag*inch*fac/5)*5}
+  else{dist=o.dist;diag=Math.round(dist/(inch*fac))}
+  var dcm=diag*inch,sw=dcm*0.8716,sh=dcm*0.4903,eye=112,mid=110;
+  var W=640,H=360,ml=Math.max(40,FS*3),mr=Math.max(60,FS*3),mt=30,mb=Math.max(70,FS*4.2),extW=dist+70,extH=Math.max(160,mid+sh/2+20);
+  var k=Math.min((W-ml-mr)/extW,(H-mt-mb)/extH),ox=ml+((W-ml-mr)-extW*k)/2,fy=mt+extH*k,Y=function(v){return fy-v*k};
+  var s=svg(box,W,H);
+  E('line',{x1:20,y1:fy,x2:W-20,y2:fy,'class':'d-floor'},s);
+  var sx=ox,wx=ox+(70+dist)*k;
+  E('path',{d:'M'+sx+' '+fy+'V'+Y(85)+'H'+(sx+22*k)+'V'+Y(45)+'H'+(sx+70*k)+'V'+fy+'Z','class':'d-soft'},s);
+  E('rect',{x:sx+26*k,y:Y(98),width:22*k,height:53*k,rx:6,'class':'d-obj'},s);E('circle',{cx:sx+40*k,cy:Y(eye),r:Math.max(5,10*k),'class':'d-obj'},s);
+  E('line',{x1:wx+6,y1:Y(0),x2:wx+6,y2:Y(extH),'class':'d-line'},s);
+  E('rect',{x:wx,y:Y(mid+sh/2),width:6,height:sh*k,rx:1,'class':'d-obj'},s);
+  dimH(s,sx+40*k,wx,fy+30,cm(dist),fy,fy);
+  dimV(s,Y(mid+sh/2),Y(mid-sh/2),wx-22,diag+' Zoll',null,null,'left');
+  var rl=fac===1.5?'4K':fac===3?'HD':'Full HD';
+  var html=o.mode==='abstand'
+    ?'<span class="big">'+cm(dist)+' Abstand</span>Bei '+diag+' Zoll ('+cm(dcm)+' Diagonale) und '+rl+' sitzt du am besten etwa '+f(dist/100,1)+'&nbsp;m vom Bildschirm entfernt. Wer empfindliche Augen hat oder lieber entspannt schaut, rückt etwas weiter weg. '+amz('TV Wandhalterung '+diag+' Zoll','Wandhalterungen ansehen')
+    :'<span class="big">'+diag+' Zoll</span>Bei '+f(dist/100,1)+'&nbsp;m Abstand und '+rl+' passt ein Fernseher mit etwa '+diag+' Zoll ('+cm(dcm)+' Diagonale). Kleiner geht immer, größer wird bei diesem Abstand anstrengend. '+amz('Fernseher '+(Math.round(diag/5)*5)+' Zoll '+(fac===1.5?'4K':''),'Fernseher ansehen');
+  return {html:html}}
+
+/* ---------- Bett im Raum ---------- */
+function bedroom(box,o){
+  prep(box);
+  var RW=o.rw,RL=o.rl,BW=o.bed,BL=o.len,side=(RW-BW)/2,foot=RL-BL,one=RW-BW;
+  var W=640,H=430,ml=Math.max(50,FS*3.4),mr=Math.max(110,FS*5.6),mt=Math.max(52,FS*3.4),mb=Math.max(56,FS*3.4);
+  var k=Math.min((W-ml-mr)/RW,(H-mt-mb)/RL),ox=ml+((W-ml-mr)-RW*k)/2,oy=mt;
+  var s=svg(box,W,H);
+  E('rect',{x:ox,y:oy,width:RW*k,height:RL*k,'class':'d-line',fill:'none'},s);
+  if(BW>RW||BL>RL){oops(box,'Das Bett ist größer als der Raum');return {html:check('Ein Bett mit '+BW+' × '+BL+'&nbsp;cm passt nicht in '+RW+' × '+RL+'&nbsp;cm. Prüfe die Maße.')}}
+  var bx=ox+(RW-BW)/2*k;
+  E('rect',{x:bx,y:oy,width:BW*k,height:BL*k,rx:5,'class':'d-obj'},s);
+  var pw=BW>120?(BW*k-18)/2:BW*k-12;E('rect',{x:bx+6,y:oy+12*k,width:pw,height:38*k,rx:6,'class':'d-soft'},s);if(BW>120)E('rect',{x:bx+12+pw,y:oy+12*k,width:pw,height:38*k,rx:6,'class':'d-soft'},s);
+  E('line',{x1:bx,y1:oy+70*k,x2:bx+BW*k,y2:oy+70*k,'class':'d-line'},s);
+  dimH(s,ox,ox+RW*k,oy-24,'Raum '+cm(RW),oy,oy);
+  dimV(s,oy,oy+RL*k,ox+RW*k+28,cm(RL),ox+RW*k,ox+RW*k,'right');
+  if(side>0)dimH(s,ox,bx,foot>0?oy+BL*k+Math.min(foot*k*0.3,26):oy+BL*k*0.55,cm(side),null,null,'below');
+  if(foot>0)dimV(s,oy+BL*k,oy+RL*k,bx+BW*k/2,cm(foot),null,null);
+  var big,txt;
+  if(side>=80){big='Passt gut';txt='Mittig an die Wand gestellt bleiben links und rechts je '+cm(side)+'. Das reicht bequem zum Aufstehen und Bettenmachen.'}
+  else if(side>=50){big='Passt, aber eng';txt='Mittig gestellt bleiben links und rechts nur je '+cm(side)+', bequem sind etwa 80&nbsp;cm.'+(one>=80?' Schiebst du das Bett an eine Seitenwand, bleiben auf der anderen Seite '+cm(one)+' frei. Dann muss eine Person übers Fußende ins Bett.':'')}
+  else if(one>=50){big='Nur an der Wand';txt='Mittig bleiben nur je '+cm(side)+'. Stell das Bett an eine Seitenwand, dann bleiben '+cm(one)+' frei, und eine Person steigt übers Fußende ein.'}
+  else{big='Sehr eng';txt='Neben dem Bett bleiben zusammen nur '+cm(Math.max(0,one))+'. Ein schmaleres Bett oder ein anderer Platz im Raum wäre besser.'}
+  txt+=' Am Fußende bleiben '+cm(Math.max(0,foot))+(foot<80?', für einen Schrank mit Drehtüren davor wären etwa 80&nbsp;cm gut.':'. Steht dort ein Schrank, brauchst du davor etwa 80&nbsp;cm.');
+  return {html:'<span class="big">'+big+'</span>'+txt+' '+amz('Bett '+BW+'x'+BL,'Betten '+BW+' × '+BL+' cm ansehen')}}
+
+/* ---------- Läufer im Flur ---------- */
+function runner(box,o){
+  prep(box);
+  var FW=o.fw,FL=o.fl,widths=[60,70,80,90,100,120],lens=[150,200,250,300,350,400];
+  var w=null,i;for(i=widths.length-1;i>=0;i--)if(widths[i]<=FW-20){w=widths[i];break}
+  if(!w){oops(box,'Flur zu schmal');return {html:check('Bei '+cm(FW)+' Flurbreite bleibt für einen Läufer mit mindestens 60&nbsp;cm kein Rand. Eine kleine Fußmatte passt besser.')}}
+  var avail=FL-40,two=false,l=null,n=1;
+  for(i=lens.length-1;i>=0;i--)if(lens[i]<=avail){l=lens[i];break}
+  if(avail>440){var each=(avail-35)/2;for(i=lens.length-1;i>=0;i--)if(lens[i]<=each){if(lens[i]>(l||0)*0.5){two=true;l=lens[i];n=2}break}}
+  if(!l){oops(box,'Flur zu kurz');return {html:check('Bei '+cm(FL)+' Flurlänge passt kein Läufer ab 150&nbsp;cm. Nimm einen kleinen Teppich.')}}
+  var W=640,H=300,ml=40,mr=Math.max(120,FS*6.4),mt=Math.max(50,FS*3.2),mb=Math.max(56,FS*3.4);
+  var k=Math.min((W-ml-mr)/FL,(H-mt-mb)/FW),ox=ml+((W-ml-mr)-FL*k)/2,oy=mt;
+  var s=svg(box,W,H);
+  E('rect',{x:ox,y:oy,width:FL*k,height:FW*k,'class':'d-line',fill:'none'},s);
+  var used=n*l+(n-1)*35,st=ox+(FL-used)/2*k,ry=oy+(FW-w)/2*k;
+  for(i=0;i<n;i++)E('rect',{x:st+i*(l+35)*k,y:ry,width:l*k,height:w*k,rx:2,'class':'d-rug'},s);
+  dimH(s,ox,ox+FL*k,oy-22,'Flur '+cm(FL),oy,oy);
+  dimV(s,oy,oy+FW*k,ox+FL*k+28,cm(FW),ox+FL*k,ox+FL*k,'right');
+  dimH(s,st,st+l*k,oy+FW*k+28,'Läufer '+cm(l),oy+FW*k,oy+FW*k);
+  var side=(FW-w)/2,end=(FL-used)/2;
+  var html='<span class="big">'+(n===2?'2 × ':'')+w+' × '+l+' cm</span>Links und rechts bleiben je '+cm(side)+' Boden frei, an '+(n===2?'den Flurenden':'beiden Enden')+' je '+cm(end)+', damit Türen frei aufgehen.'+(n===2?' Bei so einem langen Flur wirken zwei Läufer mit etwa 35&nbsp;cm Abstand ruhiger als einer.':'')+(n===2&&end>60?' Für noch mehr Fläche gibt es Läufer auch als Meterware.':'')+' Leg eine rutschfeste Unterlage darunter. '+amz('Läufer '+w+'x'+l,'Läufer '+w+' × '+l+' cm ansehen');
+  return {html:html}}
+
+window.SD={R:R,rug:{living:living,dining:dining,bed:bed},curtain:curtain,picture:picture,pendant:pendant,paint:paint,wallpaper:wallpaper,coffee:coffee,tv:tv,bedroom:bedroom,runner:runner,f:f,cm:cm};
 })();
