@@ -57,7 +57,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('farben.html', 'Wandfarbe wählen und kombinieren', 'Wirkung, 60-30-10-Regel, Kombinierer', 'farben', 'start'),
         ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'essen'),
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'start'),
-        ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Bilder, Lampe, Farbe, Tapete', 'rechner', 'essen'),
+        ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
 GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */\n"
@@ -314,7 +314,7 @@ def llms(metas):
     order = ['index'] + [g[3] for g in GRID]
     ms = sorted([m for m in metas if not m['noindex'] and m['key'] not in ('impressum', 'datenschutz', '404')],
                 key=lambda m: (order.index(m['key']) if m['key'] in order else 99, m['file']))
-    lines = ['# Stil-Daheim', '', '> Ratgeber-Website zum Einrichten in Deutschland: Wohnstile mit Farbkarten, Stil-Finder, Raum-Rechner (Teppich, Vorhang, Bilder, Lampe, Wandfarbe, Tapete) und schöner wohnen zur Miete. Mit Quellen und Prüfdatum. Finanziert über gekennzeichnete Amazon-Partnerlinks.', '', '## Ratgeber und Rechner', '']
+    lines = ['# Stil-Daheim', '', '> Ratgeber-Website zum Einrichten in Deutschland: Wohnstile mit Farbkarten, Stil-Finder, Raum-Rechner (Teppich, Vorhang, Bilder, Lampe, Wandfarbe, Tapete, Couchtisch, Fernseher-Abstand, Bett, Flurläufer) und schöner wohnen zur Miete. Mit Quellen und Prüfdatum. Finanziert über gekennzeichnete Amazon-Partnerlinks.', '', '## Ratgeber und Rechner', '']
     for m in ms:
         lines.append('- [%s](%s%s): %s' % (m['title'].replace(' – Stil-Daheim', ''), DOMAIN, '' if m['key'] == 'index' else m['file'], m['desc']))
     (OUT / 'llms.txt').write_text('\n'.join(lines) + '\n')
