@@ -55,7 +55,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('boho.html', 'Boho einrichten', 'Rattan, Muster, Pflanzen und Handgemachtes', 'boho', 'boho'),
         ('kleine-raeume.html', 'Kleine Räume größer wirken lassen', '8 Tricks und eine Checkliste', 'kleine-raeume', 'kleine-raeume'),
         ('farben.html', 'Wandfarbe wählen und kombinieren', 'Wirkung, 60-30-10-Regel, Kombinierer', 'farben', 'farben'),
-        ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'essen'),
+        ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'licht'),
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'start'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'gemuetlich'),
