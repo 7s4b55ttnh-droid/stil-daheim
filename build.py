@@ -336,6 +336,7 @@ if __name__ == '__main__':
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
     (OUT / '.nojekyll').write_text('')
+    (OUT / 'bc5564f7c1405d082c6e3b0873cb208a.txt').write_text('bc5564f7c1405d082c6e3b0873cb208a')  # IndexNow-Schlüssel (Bing), nicht entfernen
     (OUT / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: %ssitemap.xml\n' % DOMAIN)
     metas = []
     for n in names:
