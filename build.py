@@ -246,7 +246,7 @@ def page(src):
             '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind mit KI erzeugte Beispielbilder. '
             'Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. '
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
-            '<div class="ft-links"><span>© 2026 Stil-Daheim · Alex Noel, Leinach</span>%(flinks)s<a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div>%(badge)s</div></footer>\n'
+            '<div class="ft-links"><span>© 2026 Stil-Daheim</span>%(flinks)s<a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
                                                   title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=ogimg(meta), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
