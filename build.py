@@ -60,6 +60,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'gemuetlich'),
         ('arbeitsecke.html', 'Arbeitsecke im Wohnzimmer', 'Platz, Maße, Licht', 'arbeitsecke', 'arbeitsecke'),
+        ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'gemuetlich'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
@@ -249,6 +250,7 @@ def page(src):
                                                   title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=meta.get('og', 'assets/start.jpg'), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
                                                   close=CLOSE, grid=grid, main=main, flinks=flinks, end=end)
+    html = html.replace('{{amzdeals}}', 'https://www.amazon.de/deals?tag=%s' % TAG)
     html = html.replace('{{PRINT}}', PRINT).replace('{{SHARE}}', SHARE).replace('{{ARROW}}', ARROW).replace('{{EXT}}', EXT)
     html = html.replace('{{STRIPS}}', strips()).replace('{{STYLES_JSON}}', styles_json())
     html = re.sub(r'\{\{PALETTE:(\w+)\}\}', lambda m: palette(m.group(1)), html)

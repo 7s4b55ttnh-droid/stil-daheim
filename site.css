@@ -406,3 +406,11 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 @media (max-width:760px){.hero.sub.plain .ill{top:62px;right:12px;width:150px;transform:none;opacity:.9}.hero.sub.plain .wrap{padding-top:210px!important}}
 @media (prefers-reduced-motion:reduce){.hero.sub.plain .ill g{animation:none}}
 @media print{.hero.sub.plain .ill{display:none}}
+
+/* Black-Friday-Leiste (bis 30.11.2026) */
+.bfbar{display:flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:0 4px 0 12px;background:#14110a;border-top:1px solid rgba(207,174,106,.4);font-size:.86rem}
+.bfbar a{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;min-height:36px;color:#cfae6a;text-decoration:none;text-align:center}
+.bfbar a b{font-weight:700}.bfbar .bfx{color:#f3efe6}
+.bfbar button{flex:none;width:40px;height:36px;border:0;background:none;color:#f3efe6;font-size:1rem;cursor:pointer}
+@media (max-width:420px){.bfbar .bfx{display:none}}
+@media (max-width:760px){.bf-on .hero .ill,.bf-on .hero .bfbig{top:102px!important}}
