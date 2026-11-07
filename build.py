@@ -224,6 +224,7 @@ def page(src):
     html = ('<!doctype html><html lang="de"><head><meta charset="utf-8">'
             '<script>try{var t=localStorage.getItem("sdth");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
+            '<meta name="p:domain_verify" content="ad440d6123f283fdf603af68f7587653"/>\n'
             '<title>%(title)s</title><meta name="description" content="%(desc)s">\n'
             '<meta property="og:title" content="%(title)s"><meta property="og:description" content="%(desc)s"><meta property="og:type" content="website">'
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
