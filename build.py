@@ -247,7 +247,7 @@ def page(src):
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
             '<div class="ft-links"><span>© 2026 Stil-Daheim · Alex Noel, Leinach</span>%(flinks)s<a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
-                                                  title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=meta.get('og', 'assets/start.jpg'), stand=stand,
+                                                  title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=ogimg(meta), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
                                                   close=CLOSE, grid=grid, main=main, flinks=flinks, end=end)
     html = html.replace('{{amzdeals}}', 'https://www.amazon.de/deals?tag=%s' % TAG)
@@ -278,13 +278,48 @@ def _txt(s):
     return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', s))).strip()
 
 
+def ogimg(meta):
+    """Teilen-Bild: assets/og/<key>.jpg (1200x630, mit Titel), sonst das Foto aus meta og."""
+    if (OUT / 'assets' / 'og' / (meta['key'] + '.jpg')).exists():
+        return 'assets/og/%s.jpg' % meta['key']
+    return meta.get('og', 'assets/start.jpg')
+
+
+def toc(main):
+    """Inhaltsverzeichnis mit Lesezeit unter „Kurz gesagt“."""
+    items = []
+    for sid, body in re.findall(r'<section[^>]*\bid="([^"]+)"[^>]*>(.*?)</section>', main, re.S):
+        if sid in ('quellen', 'kurz-gesagt'):
+            continue
+        m = re.search(r'<h2[^>]*>(.*?)</h2>', body, re.S)
+        if m:
+            items.append((sid, re.sub(r'<[^>]+>', '', m.group(1)).strip().rstrip('.')))
+    if len(items) < 3:
+        return ''
+    words = len(re.sub(r'<script.*?</script>|<style.*?</style>|<svg.*?</svg>|<[^>]+>', ' ', main, flags=re.S).split())
+    lis = ''.join('<li><a href="#%s">%s</a></li>' % (i, t) for i, t in items)
+    return '<details class="toc"><summary><span>Inhalt</span><span class="toc-t">%d Min. Lesezeit</span></summary><ol>%s</ol></details>' % (max(1, round(words / 200)), lis)
+
+
+def suche(metas):
+    """Suchindex suche.json für die Suche im Menü."""
+    idx = []
+    for m in metas:
+        if m['noindex'] or m['key'] in ('impressum', 'datenschutz', '404'):
+            continue
+        h = (OUT / m['file']).read_text()
+        hs = ' '.join(re.sub(r'<[^>]+>', '', x) for x in re.findall(r'<h2[^>]*>(.*?)</h2>', h, re.S))
+        idx.append({'u': 'index.html' if m['key'] == 'index' else m['file'], 't': m['title'].split(' – ')[0], 'd': m['desc'], 'k': hs[:400]})
+    (OUT / 'suche.json').write_text(json.dumps(idx, ensure_ascii=False, separators=(',', ':')))
+
+
 def seo(html, meta, path):
     """Kasten „Kurz gesagt“ (meta kurz) und strukturierte Daten (Article, FAQPage, BreadcrumbList) für Suchmaschinen und KI-Assistenten."""
     if meta['noindex'] or meta['key'] in ('impressum', 'datenschutz', '404'):
         return html
     i0 = html.index('<main')
     if meta.get('kurz'):
-        box = '<section class="kurz-s"><div class="wrap narrow"><div class="kurz" id="kurz-gesagt"><b>Kurz gesagt</b><p>%s</p></div></div></section>\n' % meta['kurz']
+        box = '<section class="kurz-s"><div class="wrap narrow"><div class="kurz" id="kurz-gesagt"><b>Kurz gesagt</b><p>%s</p></div>%s</div></section>\n' % (meta['kurz'], toc(html[i0:html.index('</main>')]))
         i = html.index('<section', i0)
         html = html[:i] + box + html[i:]
     main = html[i0:html.index('</main>')]
@@ -296,7 +331,7 @@ def seo(html, meta, path):
         h1 = re.search(r'<h1[^>]*>(.*?)</h1>', main, re.S)
         art = {'@type': 'Article', 'headline': _txt(h1.group(1))[:110] if h1 else meta['title'], 'name': meta['title'], 'description': meta['desc'],
                'inLanguage': 'de-DE', 'url': url, 'mainEntityOfPage': url, 'dateModified': meta['updated'], 'author': org, 'publisher': org,
-               'image': DOMAIN + meta.get('og', 'assets/start.jpg')}
+               'image': DOMAIN + ogimg(meta)}
         if meta.get('kurz'):
             art['abstract'] = _txt(meta['kurz'])
         graph = [art]
@@ -350,4 +385,5 @@ if __name__ == '__main__':
     if not sys.argv[1:]:
         sitemap(metas)
         llms(metas)
+        suche(metas)
         print('sitemap.xml:', sum(1 for m in metas if not m['noindex']), 'Seiten')
