@@ -59,6 +59,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'schlafzimmer'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
+        ('geschenke.html', 'Geschenke fürs Zuhause', 'Kleine Ideen für Nikolaus und Weihnachten', 'geschenke', 'geschenke'),
         ('arbeitsecke.html', 'Arbeitsecke im Wohnzimmer', 'Platz, Maße, Licht', 'arbeitsecke', 'arbeitsecke'),
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'gemuetlich'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
