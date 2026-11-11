@@ -433,3 +433,69 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .sq ul{list-style:none;margin:8px 0 0;padding:0}.sq li a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;color:inherit}.sq li a:hover,.sq li a:focus{background:var(--pan)}
 .sq li b{display:block}.sq li small{color:var(--mut)}.sq .none{padding:10px 12px;color:var(--mut)}
 .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== Seit 11.11.2026: Seitenübergänge. Seiten blenden weich ineinander; das angetippte Kachelbild wächst zum Titelbild.
+   Greift nur in Browsern mit View Transitions, alle anderen wechseln wie bisher. Steuerung in site.js. ===== */
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.26s}
+.hero.sub{view-transition-name:vt-hero}
+#hd{view-transition-name:vt-head}
+::view-transition-group(vt-hero){animation-duration:.48s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+::view-transition-old(vt-hero),::view-transition-new(vt-hero){height:100%;object-fit:cover}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none}}
+
+/* Zusatzfoto zwischen zwei Abschnitten, aus {{FIG:name|Alt-Text|Bildunterschrift}} */
+.fig{margin:clamp(34px,5vw,64px) auto;max-width:1180px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.fig picture{display:block;max-width:900px;border-radius:14px;overflow:hidden;background:var(--band)}
+.fig img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.fig figcaption{margin-top:12px;font-size:.92rem;line-height:1.45;color:var(--mut);max-width:60ch}
+@media print{.fig{display:none}}
+
+/* Vorher/Nachher-Regler (Startseite): zwei deckungsgleiche Fotos, das linke wird bis zur Reglerposition gezeigt.
+   Bedient wird ein unsichtbarer Schieberegler über dem Bild, deshalb geht es auch mit Tastatur. */
+.ba-sec .wrap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.ba{position:relative;aspect-ratio:1600/1092;border-radius:14px;overflow:hidden;background:var(--band);--p:50%;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ba picture,.ba img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.ba .ba-b{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.ba-h{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;pointer-events:none}
+.ba-h i{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1f1d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 7-5 5 5 5M15 7l5 5-5 5'/%3E%3C/svg%3E") 50%/22px no-repeat;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+.ba-l{position:absolute;top:14px;padding:4px 11px;border-radius:4px;background:rgba(16,18,17,.62);color:#f6f3ea;font-size:.88rem;font-weight:600;font-stretch:88%;pointer-events:none}
+.ba-l1{left:14px}.ba-l2{right:14px}
+.ba-r{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y;-webkit-appearance:none;appearance:none}
+.ba:has(.ba-r:focus-visible){outline:3px solid var(--grn);outline-offset:3px}
+.ba-cap{margin:10px 0 0;font-size:.85rem;color:var(--mut)}
+.ba-list{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.ba-list li{padding:14px 0;border-bottom:1px solid var(--line);font-size:1rem;line-height:1.45;color:var(--mut)}
+.ba-list b{display:block;color:var(--ink);font-size:1.12rem;font-stretch:88%}
+.ba-list a{color:var(--grn);font-weight:600;white-space:nowrap}
+@media (max-width:900px){.ba-sec .wrap{grid-template-columns:1fr}.ba-sec .ba-fig{order:2}.ba-sec .ba-txt{display:contents}.ba-sec .ba-txt>.ba-head{order:1}.ba-sec .ba-txt>.ba-list{order:3;margin-top:0}}
+
+/* Alle Ratgeber (Startseite): Suchfeld, Themen-Filter und Fotokarten, aus {{ALLE}} */
+.hubf{display:grid;gap:12px;margin:0 0 clamp(20px,3vw,30px);max-width:760px}
+.hubf input{width:100%;height:50px;border-radius:8px;border:1.5px solid var(--line);background:var(--pan) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237a7d79' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") 16px 50%/18px no-repeat;color:var(--ink);font:inherit;font-size:1rem;padding:0 16px 0 44px;-webkit-appearance:none;appearance:none}
+.hubf input::placeholder{color:var(--mut)}
+.hubf input:focus-visible{outline:3px solid color-mix(in srgb,var(--grn) 45%,transparent);outline-offset:1px;border-color:var(--grn)}
+.hubc{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.hubc::-webkit-scrollbar{display:none}
+.hubc button{flex:none;min-height:40px;padding:0 15px;border-radius:8px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.95rem;font-weight:600;font-stretch:92%;white-space:nowrap;cursor:pointer;transition:background .18s,color .18s,border-color .18s,transform .12s}
+.hubc button:active{transform:scale(.97)}
+.hubc button[aria-pressed="true"]{background:var(--grn);color:var(--on-grn);border-color:var(--grn)}
+.hub.rel.all{grid-template-columns:repeat(4,minmax(0,1fr))}
+.hub.rel.all a{padding:0 0 18px}
+.hub.rel.all .rimg{aspect-ratio:3/2;margin-bottom:14px}
+.hub.rel.all a>b{font-size:1.16rem;padding-inline:16px;margin-bottom:6px}
+.hub.rel.all a>span:not(.rimg){padding-inline:16px;font-size:.9rem}
+.hub.rel.all a[hidden]{display:none!important}
+.hubn{grid-column:1/-1;margin:0;padding:22px 0 4px;color:var(--mut)}
+@media (max-width:1040px){.hub.rel.all{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:700px){.hub.rel.all{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hub.rel.all a{display:block;padding:0 0 14px}
+.hub.rel.all .rimg{grid-row:auto;aspect-ratio:3/2;margin:0 0 10px;border-radius:0}
+.hub.rel.all a>b{font-size:1.02rem;padding-inline:12px;margin-bottom:4px;align-self:auto}
+.hub.rel.all a>span:not(.rimg){padding-inline:12px;font-size:.84rem;line-height:1.35;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.hubc{margin:0 -20px;padding:2px 20px}}
+::view-transition-group(*){animation-duration:.32s}
+/* Knöpfe geben beim Drücken leicht nach */
+.btn{transition:transform .12s ease,filter .15s}
+.btn:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.btn,.hubc button{transition:none}.btn:active,.hubc button:active{transform:none}}

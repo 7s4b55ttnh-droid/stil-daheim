@@ -151,3 +151,83 @@ inp.addEventListener('focus',load,{once:true});
 inp.addEventListener('input',()=>{const q=norm(inp.value.trim());if(q.length<2){out.innerHTML='';return}
 load().then(L=>{const ws=q.split(/\s+/);const r=L.filter(e=>ws.every(x=>e.n.includes(x))).sort((a,b)=>(norm(b.t).includes(ws[0])?1:0)-(norm(a.t).includes(ws[0])?1:0)).slice(0,8);
 out.innerHTML=r.length?r.map(e=>'<li><a href="'+e.u+'"><b>'+e.t.replace(/</g,'&lt;')+'</b><small>'+e.d.slice(0,90).replace(/</g,'&lt;')+'…</small></a></li>').join(''):'<li class="none">Nichts gefunden. Probier ein anderes Wort.</li>'})});})();
+window.__VTHERO='.hero.sub';
+/* ===== Seit 11.11.2026 ===== */
+/* Seitenübergang: Seiten blenden weich ineinander, das angetippte Kachelbild wächst zum Titelbild der Zielseite
+   (View Transitions; Browser ohne diese Technik wechseln wie bisher). Regeln dazu in site.css. */
+(function(){
+  if(!('onpagereveal' in window)||!window.CSS||!CSS.supports('view-transition-name','x'))return;
+  var d=document,cur=null,HS=window.__VTHERO||'.hero';
+  function hero(){return d.querySelector(HS)}
+  function clear(){if(cur){cur.style.viewTransitionName='';cur=null}}
+  function thumb(a){return a.querySelector('.ic.th,picture,img')}
+  function mark(el){clear();var h=hero();if(h)h.style.viewTransitionName='none';el.style.viewTransitionName='vt-hero';cur=el}
+  d.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(!a||a.target||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.origin!==location.origin||a.pathname===location.pathname)return;
+    var h=hero();if(h&&h.contains(a))return;
+    var t=thumb(a);if(t)mark(t);else clear();
+  },true);
+  addEventListener('pagereveal',function(e){
+    var h=hero();if(h)h.style.viewTransitionName='';
+    if(!e.viewTransition){clear();return}
+    if(!h){var f=window.navigation&&navigation.activation&&navigation.activation.from;
+      if(f){try{var p=new URL(f.url).pathname,L=d.querySelectorAll('a[href="'+p+'"],a[href="'+p.slice(1)+'"]');
+        for(var i=0;i<L.length;i++){var t=thumb(L[i]);if(!t)continue;var r=t.getBoundingClientRect();
+          if(r.width>0&&r.bottom>0&&r.top<innerHeight){mark(t);break}}}catch(x){}}}
+    e.viewTransition.finished.then(clear,clear);
+  });
+})();
+
+/* Vorladen: Der Browser holt eine Seite schon, wenn man den Finger auf den Link legt oder mit der Maus darüber bleibt (wo vorhanden). */
+(function(){try{if(!(HTMLScriptElement.supports&&HTMLScriptElement.supports('speculationrules')))return;
+  var s=document.createElement('script');s.type='speculationrules';
+  s.textContent=JSON.stringify({prefetch:[{where:{and:[{href_matches:'/*'},{not:{href_matches:'/*.xml'}},{not:{href_matches:'/*.json'}}]},eagerness:'moderate'}]});
+  document.head.appendChild(s)}catch(e){}})();
+
+/* Rechner-Ergebnisse leuchten kurz in der Akzentfarbe auf, wenn sie sich durch eine Eingabe ändern. */
+(function(){
+  if(!('MutationObserver' in window)||!Element.prototype.animate||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var sel=(window.__MOTION&&window.__MOTION.tick)||'.res b';
+  addEventListener('load',function(){setTimeout(function(){
+    var root=document.documentElement,V=(window.__MOTION&&window.__MOTION.tickVar)||'--sun';
+    var mo=new MutationObserver(function(ms){var seen=[],now=performance.now();ms.forEach(function(m){
+      var el=m.target.nodeType===1?m.target:m.target.parentElement;el=el&&el.closest(sel);
+      if(!el||seen.indexOf(el)>=0||(el.__c||0)>now)return;seen.push(el);
+      var c=getComputedStyle(root).getPropertyValue(V).trim();if(!c)return;
+      if(el.__tk)el.__tk.cancel();el.__tk=el.animate([{color:c},{color:c,offset:.3},{}],{duration:800,easing:'ease-out'})})});
+    [].forEach.call(document.querySelectorAll(sel),function(el){mo.observe(el,{childList:true,characterData:true,subtree:true})});
+  },1500)});
+})();
+
+/* Vorher/Nachher-Regler: der unsichtbare Schieberegler setzt --p; beim ersten Sichtbarwerden bewegt sich der Regler einmal kurz, damit man sieht, dass er sich ziehen lässt. */
+(function(){
+  var ba=document.getElementById('ba');if(!ba)return;var r=ba.querySelector('.ba-r'),used=false,raf=0;
+  function set(v){ba.style.setProperty('--p',v+'%')}
+  r.addEventListener('input',function(){used=true;cancelAnimationFrame(raf);set(r.value)});
+  ['pointerdown','keydown','touchstart'].forEach(function(e){r.addEventListener(e,function(){used=true;cancelAnimationFrame(raf)},{passive:true})});
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();
+    var t0=performance.now(),K=[[0,50],[.28,24],[.7,74],[1,50]];
+    (function step(n){if(used)return;var p=Math.min(1,(n-t0)/2200),i=1;while(K[i][0]<p)i++;
+      var a=K[i-1],b=K[i],q=(p-a[0])/(b[0]-a[0]);q=q<.5?2*q*q:1-Math.pow(-2*q+2,2)/2;var v=a[1]+(b[1]-a[1])*q;
+      set(v);r.value=v;if(p<1)raf=requestAnimationFrame(step)})(t0)},{threshold:.55});
+  io.observe(ba);
+})();
+
+/* Alle Ratgeber: Suchfeld und Themen-Filter. Kacheln tragen data-k (Themen aus KAT in build.py). */
+(function(){
+  var bar=document.getElementById('hubf'),hub=document.getElementById('huball');if(!bar||!hub)return;
+  var T=[].slice.call(hub.querySelectorAll('a')),inp=bar.querySelector('input'),B=[].slice.call(bar.querySelectorAll('button')),none=document.getElementById('hubn'),f='';
+  function norm(s){return s.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/­/g,'')}
+  T.forEach(function(a){a.__n=norm(a.textContent)});
+  function apply(){var q=norm(inp.value.trim()).split(/\s+/).filter(Boolean),n=0;
+    T.forEach(function(a){var ok=(!f||(' '+(a.dataset.k||'')+' ').indexOf(' '+f+' ')>=0)&&q.every(function(w){return a.__n.indexOf(w)>=0});a.hidden=!ok;if(ok)n++});
+    none.hidden=n>0}
+  function go(){if(!document.startViewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches){apply();return}
+    T.forEach(function(a,i){a.style.viewTransitionName='hk'+i});
+    function done(){T.forEach(function(a){a.style.viewTransitionName=''})}
+    try{document.startViewTransition(apply).finished.then(done,done)}catch(e){done();apply()}}
+  B.forEach(function(b){b.addEventListener('click',function(){f=b.dataset.f||'';B.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});go()})});
+  inp.addEventListener('input',apply);
+})();
