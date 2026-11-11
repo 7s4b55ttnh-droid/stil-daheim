@@ -65,6 +65,18 @@
   window.sdToast=function(msg){if(!toastEl){toastEl=d.createElement('div');toastEl.className='toast';toastEl.setAttribute('role','status');d.body.appendChild(toastEl)}
     toastEl.textContent=msg;toastEl.classList.add('on');clearTimeout(tT);tT=setTimeout(function(){toastEl.classList.remove('on')},2600)};
 
+  /* Farbkarte: Antippen einer Farbe kopiert ihren Farbwert (data-hex), die Karte hebt sich kurz und zeigt einen Haken (seit 11.11.2026) */
+  function copyOld(s){return new Promise(function(ok,no){var ta=d.createElement('textarea');ta.value=s;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';d.body.appendChild(ta);ta.select();
+      try{d.execCommand('copy')?ok():no()}catch(x){no()}ta.remove()})}
+  function copyText(s){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(s).catch(function(){return copyOld(s)});return copyOld(s)}
+  d.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('button[data-hex]');if(!b)return;
+    var hex=b.getAttribute('data-hex'),it=b.parentElement,nm=(b.getAttribute('aria-label')||'').split(',')[0];
+    function mark(){it.style.transitionDelay='0s';it.classList.remove('cpd');void it.offsetWidth;it.classList.add('cpd');clearTimeout(it.__cp);it.__cp=setTimeout(function(){it.classList.remove('cpd')},1500)}
+    copyText(hex).then(function(){mark();window.sdToast((nm?nm+': ':'')+hex+' kopiert')},
+      function(){mark();window.sdToast((nm?nm+': ':'')+'Farbwert '+hex)});
+  });
+
   /* Teilen: Text aus dem Element mit der angegebenen ID plus Link */
   d.addEventListener('click',function(e){
     var b=e.target.closest('[data-share]');if(!b)return;
