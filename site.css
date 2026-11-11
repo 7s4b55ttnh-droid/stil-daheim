@@ -454,14 +454,15 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 /* Vorher/Nachher-Regler (Startseite): zwei deckungsgleiche Fotos, das linke wird bis zur Reglerposition gezeigt.
    Bedient wird ein unsichtbarer Schieberegler über dem Bild, deshalb geht es auch mit Tastatur. */
 .ba-sec .wrap{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
-.ba{position:relative;aspect-ratio:1600/1092;border-radius:14px;overflow:hidden;background:var(--band);--p:50%;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ba{position:relative;aspect-ratio:1600/1092;border-radius:14px;overflow:hidden;background:var(--band);--p:50%;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:pan-y;cursor:ew-resize;-webkit-tap-highlight-color:transparent}
+.ba img{-webkit-user-drag:none;pointer-events:none}
 .ba picture,.ba img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
 .ba .ba-b{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
 .ba-h{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;pointer-events:none}
 .ba-h i{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1f1d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 7-5 5 5 5M15 7l5 5-5 5'/%3E%3C/svg%3E") 50%/22px no-repeat;box-shadow:0 2px 16px rgba(0,0,0,.35)}
 .ba-l{position:absolute;top:14px;padding:4px 11px;border-radius:4px;background:rgba(16,18,17,.62);color:#f6f3ea;font-size:.88rem;font-weight:600;font-stretch:88%;pointer-events:none}
 .ba-l1{left:14px}.ba-l2{right:14px}
-.ba-r{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y;-webkit-appearance:none;appearance:none}
+.ba-r{position:absolute;left:0;right:0;bottom:0;width:100%;height:1px;margin:0;opacity:0;pointer-events:none;-webkit-appearance:none;appearance:none}
 .ba:has(.ba-r:focus-visible){outline:3px solid var(--grn);outline-offset:3px}
 .ba-cap{margin:10px 0 0;font-size:.85rem;color:var(--mut)}
 .ba-list{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
