@@ -13,6 +13,8 @@ Platzhalter in den Seiten:
   {{STARTS:stil}}          Die drei Startstücke eines Stils mit Amazon-Suchlinks
   {{PIC:name|Alt-Text|sizes}}  Foto aus assets/ als <picture> mit WebP und JPEG
   {{HERO:name|Alt-Text}}   großes Foto oben auf der Seite (lädt sofort)
+  {{FIG:name|Alt-Text|Bildunterschrift}}  Zusatzfoto zwischen zwei Abschnitten (assets/name.jpg und name-m.jpg, 3:2)
+  {{ALLE}}                 Startseite: alle Ratgeber aus GRID mit Suchfeld und Filter (Themen in KAT)
   {{RELATED:a,b=bild,c}}   Abschnitt „Passt dazu“ mit Foto-Kacheln (Schlüssel aus GRID, Bild optional;
                            mit |plain am Ende ohne farbigen Hintergrund, wenn der Abschnitt davor schon farbig ist)
   {{TILES:a,b,c}}          nur die Foto-Kacheln
@@ -46,7 +48,7 @@ NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stil
        ('rechner.html', 'Raum-Rechner', 'rechner'), ('mieten.html', 'Zur Miete', 'mieten')]
 # (Link, Titel, Kurztext, Schlüssel, Foto)
 GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
-        ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'skandi'),
+        ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'start'),
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
@@ -64,7 +66,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('flur.html', 'Flur und Eingang einrichten', 'Maße, Garderobe, Licht, Flur-Check', 'flur', 'flur'),
         ('pflanzen.html', 'Zimmerpflanzen im Winter', 'Licht, Gießen, Heizungsluft, Gieß-Check', 'pflanzen', 'pflanzen'),
         ('arbeitsecke.html', 'Arbeitsecke im Wohnzimmer', 'Platz, Maße, Licht', 'arbeitsecke', 'arbeitsecke'),
-        ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'gemuetlich'),
+        ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
 CUR = ' aria-current="page"'
@@ -138,6 +140,48 @@ def pic(name, alt, sizes='100vw', lazy=True, extra=''):
     return ('<picture><source type="image/webp" srcset="assets/%(n)s-m.webp %(wm)dw, assets/%(n)s.webp %(wl)dw" sizes="%(s)s">'
             '<img src="assets/%(n)s.jpg" srcset="assets/%(n)s-m.jpg %(wm)dw, assets/%(n)s.jpg %(wl)dw" sizes="%(s)s" alt="%(a)s"%(load)s%(x)s></picture>'
             % dict(n=name, wm=wm, wl=wl, s=sizes, a=alt, load=load, x=extra))
+
+
+def fig(name, alt, cap):
+    """Zusatzfoto zwischen zwei Abschnitten: {{FIG:name|Alt-Text|Bildunterschrift}} (assets/<name>.jpg, 3:2)."""
+    ph = pic(name, alt, '(max-width:1180px) 100vw, 1140px')
+    return ('<figure class="fig">%s<figcaption>%s</figcaption></figure>' % (ph, cap)) if ph else ''
+
+
+# Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
+KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
+       'kleine-raeume': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum',
+       'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
+       'weihnachten': 'saison', 'tischdeko': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
+       'rechner': 'werkzeug'}
+FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Rechner')]
+
+
+def thumb(name):
+    """Kleines Vorschaubild assets/<name>-t.webp (560 px breit); wird beim Bauen angelegt, wenn es fehlt oder älter ist als das Foto."""
+    src, dst = OUT / 'assets' / (name + '.jpg'), OUT / 'assets' / (name + '-t.webp')
+    if not src.exists():
+        return ''
+    if not dst.exists() or dst.stat().st_mtime < src.stat().st_mtime:
+        from PIL import Image
+        im = Image.open(src).convert('RGB')
+        im.resize((560, round(im.height * 560 / im.width)), Image.LANCZOS).save(dst, quality=74, method=6)
+    return 'assets/%s-t.webp' % name
+
+
+def alle():
+    """Startseite: alle Ratgeber aus GRID als Fotokarten, mit Suchfeld und Themen-Filter (Skript in site.js)."""
+    btn = ''.join('<button type="button" aria-pressed="%s" data-f="%s">%s</button>' % ('true' if not k else 'false', k, t) for k, t in FILTER)
+    out = []
+    for href, title, desc, key, img in GRID:
+        if key == 'finder':
+            continue
+        t = thumb(img) if img else ''
+        ph = ('<span class="rimg"><img src="%s" alt="" width="560" height="315" loading="lazy" decoding="async"></span>' % t) if t else ''
+        out.append('<a href="%s" data-k="%s">%s<b>%s</b><span>%s</span></a>' % (href, KAT.get(key, ''), ph, title, desc))
+    return ('<div class="hubf" id="hubf"><input type="search" id="hubq" placeholder="Ratgeber suchen, zum Beispiel Teppich" aria-label="Ratgeber durchsuchen" autocomplete="off" enterkeyhint="search">'
+            '<div class="hubc" role="group" aria-label="Nach Thema filtern">%s</div></div>'
+            '<div class="hub rel all" id="huball">%s<p class="hubn" id="hubn" hidden>Dazu haben wir noch nichts. Probier ein anderes Wort oder wähle „Alle“.</p></div>' % (btn, ''.join(out)))
 
 
 def palette(key, cls='palette'):
@@ -262,6 +306,8 @@ def page(src):
     html = re.sub(r'\{\{STARTS:(\w+)\}\}', lambda m: starts(m.group(1)), html)
     html = re.sub(r'\{\{PIC:([^|}]+)\|([^|}]*)\|([^}]*)\}\}', lambda m: pic(m.group(1), m.group(2), m.group(3)), html)
     html = re.sub(r'\{\{HERO:([^|}]+)\|([^}]*)\}\}', lambda m: pic(m.group(1), m.group(2), '100vw', lazy=False), html)
+    html = re.sub(r'\{\{FIG:([^|}]+)\|([^|}]*)\|([^}]*)\}\}', lambda m: fig(m.group(1), m.group(2), m.group(3)), html)
+    html = html.replace('{{ALLE}}', alle()) if '{{ALLE}}' in html else html
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
