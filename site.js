@@ -200,12 +200,27 @@ window.__VTHERO='.hero.sub';
   },1500)});
 })();
 
-/* Vorher/Nachher-Regler: der unsichtbare Schieberegler setzt --p; beim ersten Sichtbarwerden bewegt sich der Regler einmal kurz, damit man sieht, dass er sich ziehen lässt. */
+/* Vorher/Nachher-Regler: Finger oder Maus irgendwo auf dem Bild ansetzen und seitlich ziehen (Zeigerereignisse auf dem Bild selbst,
+   weil iPhones einen unsichtbaren Schieberegler nur am winzigen Griff greifen lassen). Der Schieberegler bleibt für die Tastatur.
+   Beim ersten Sichtbarwerden bewegt sich der Regler einmal kurz, damit man sieht, dass er sich ziehen lässt. */
 (function(){
-  var ba=document.getElementById('ba');if(!ba)return;var r=ba.querySelector('.ba-r'),used=false,raf=0;
-  function set(v){ba.style.setProperty('--p',v+'%')}
-  r.addEventListener('input',function(){used=true;cancelAnimationFrame(raf);set(r.value)});
-  ['pointerdown','keydown','touchstart'].forEach(function(e){r.addEventListener(e,function(){used=true;cancelAnimationFrame(raf)},{passive:true})});
+  var ba=document.getElementById('ba');if(!ba)return;var r=ba.querySelector('.ba-r'),used=false,raf=0,drag=false;
+  function set(v){v=Math.max(0,Math.min(100,v));ba.style.setProperty('--p',v+'%');return v}
+  function stop(){used=true;cancelAnimationFrame(raf)}
+  function at(x){var b=ba.getBoundingClientRect();r.value=set((x-b.left)/b.width*100)}
+  r.addEventListener('input',function(){stop();set(+r.value)});
+  r.addEventListener('keydown',stop);
+  if(window.PointerEvent){
+    ba.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button!==0)return;stop();drag=true;try{ba.setPointerCapture(e.pointerId)}catch(x){}at(e.clientX)});
+    ba.addEventListener('pointermove',function(e){if(drag)at(e.clientX)});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(function(n){ba.addEventListener(n,function(){drag=false})});
+  }else{
+    var tm=function(e){var t=e.touches[0];if(t){stop();at(t.clientX)}};
+    ba.addEventListener('touchstart',tm,{passive:true});ba.addEventListener('touchmove',tm,{passive:true});
+    ba.addEventListener('mousedown',function(e){stop();drag=true;at(e.clientX)});
+    addEventListener('mousemove',function(e){if(drag)at(e.clientX)});addEventListener('mouseup',function(){drag=false});
+  }
+  ba.addEventListener('dragstart',function(e){e.preventDefault()});
   if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   var io=new IntersectionObserver(function(es){if(!es[0].isIntersecting)return;io.disconnect();
     var t0=performance.now(),K=[[0,50],[.28,24],[.7,74],[1,50]];

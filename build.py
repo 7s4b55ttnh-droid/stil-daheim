@@ -291,7 +291,7 @@ def page(src):
             '<p class="m-h">Ratgeber und Rechner</p><nav class="m-grid" aria-label="Alle Ratgeber">%(grid)s</nav>'
             '<p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>\n'
             '<main id="main">\n%(main)s\n</main>\n'
-            '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind mit KI erzeugte Beispielbilder. '
+            '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. '
             'Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. '
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
             '<div class="ft-links"><span>© 2026 Stil-Daheim</span>%(flinks)s<a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div>%(badge)s</div></footer>\n'
