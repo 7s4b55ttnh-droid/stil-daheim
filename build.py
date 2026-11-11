@@ -157,6 +157,18 @@ KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch':
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Rechner')]
 
 
+def fcols(cur):
+    """Fußzeile in Spalten nach Themen (seit 11.11.2026): jede Seite aus GRID landet unter ihrem ersten Thema aus KAT
+    (ohne Eintrag unter „Rechner“). Neue Seiten erscheinen automatisch, sobald sie in GRID und KAT stehen."""
+    cols = []
+    for f, label in FILTER[1:]:
+        links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == cur else '', n) for h, n, s, k, p in GRID
+                        if (KAT.get(k, 'werkzeug').split() or ['werkzeug'])[0] == f)
+        if links:
+            cols.append('<div><p class="fc-h">%s</p>%s</div>' % (label, links))
+    return ''.join(cols)
+
+
 def thumb(name):
     """Kleines Vorschaubild assets/<name>-t.webp (560 px breit); wird beim Bauen angelegt, wenn es fehlt oder älter ist als das Foto."""
     src, dst = OUT / 'assets' / (name + '.jpg'), OUT / 'assets' / (name + '-t.webp')
@@ -186,8 +198,10 @@ def alle():
 
 def palette(key, cls='palette'):
     s = STYLE[key]
-    return '<div class="%s" role="list" aria-label="Farbkarte %s">%s</div>' % (cls, s['name'], ''.join(
-        '<span class="chip" role="listitem"><i style="background:%s"></i><span><b>%s</b>%s</span></span>' % (h, n, h.upper()) for n, h, t in s['pal']))
+    # Seit 11.11.2026: jede Farbe ist ein Knopf, Antippen kopiert den Farbwert (Skript in site.js, data-hex)
+    return ('<div class="%s" role="list" aria-label="Farbkarte %s">%s</div><p class="pal-h">Tipp auf eine Farbe, dann ist ihr Farbwert kopiert.</p>' % (cls, s['name'], ''.join(
+        '<span class="chip" role="listitem"><button type="button" data-hex="%s" aria-label="%s, Farbwert %s kopieren"><i style="background:%s"></i><span><b>%s</b><em>%s</em></span></button></span>'
+        % (h.upper(), n, h.upper(), h, n, h.upper()) for n, h, t in s['pal'])))
 
 
 def starts(key):
@@ -267,7 +281,7 @@ def page(src):
     navkey = 'stile' if key in STYLE else key   # Stil-Ratgeber gehören zu „Stile“
     links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == navkey else '', n) for h, n, k in NAV)
     grid = ''.join('<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s) for h, n, s, k, p in GRID)
-    flinks = ''.join('<a href="%s">%s</a>' % (h, n) for h, n, s, k, p in GRID[1:])
+    flinks = fcols(key)
     stand = '' if key == '404' else '<p class="stand">Stand: %s</p>' % de_date(meta['updated'])
     html = ('<!doctype html><html lang="de"><head><meta charset="utf-8">'
             '<script>try{var t=localStorage.getItem("sdth");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>\n'
@@ -294,7 +308,7 @@ def page(src):
             '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. '
             'Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. '
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
-            '<div class="ft-links"><span>© 2026 Stil-Daheim</span>%(flinks)s<a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div>%(badge)s</div></footer>\n'
+            '<nav class="ft-links fc" aria-label="Alle Seiten">%(flinks)s<div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
                                                   title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=ogimg(meta), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
