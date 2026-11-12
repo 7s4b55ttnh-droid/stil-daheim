@@ -526,7 +526,9 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .btn:active{transform:scale(.97)}
 @media (prefers-reduced-motion:reduce){.btn,.hubc button{transition:none}.btn:active,.hubc button:active{transform:none}}
 
-/* KI-Kennzeichnung: Marke "KI-generiert" auf jedem Foto, gesetzt von site.js. Nicht entfernen. */
-.ki-marke{position:absolute!important;z-index:4!important;display:block!important;top:auto!important;left:auto!important;width:auto!important;height:auto!important;margin:0!important;padding:4px 7px!important;font:600 11px/1 system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:#fff!important;background:rgba(12,12,12,.62)!important;border:0!important;border-radius:99px!important;opacity:1!important;filter:none!important;transform:none!important;overflow:visible!important;-webkit-line-clamp:unset!important;pointer-events:none;user-select:none;-webkit-user-select:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);white-space:nowrap!important;view-transition-name:none}
-.ki-marke.k{font-size:9px!important;font-weight:500!important;padding:2px 5px!important;color:rgba(255,255,255,.88)!important;background:rgba(0,0,0,.34)!important}
+/* KI-Kennzeichnung, gesetzt von site.js (Marke in der Bildecke, Zeile über Galerien, Zusatz in Bildunterschriften). Nicht entfernen. */
+.ki-marke{position:absolute!important;z-index:4!important;display:block!important;top:auto!important;left:auto!important;width:auto!important;height:auto!important;margin:0!important;padding:4px 7px!important;font:500 10.5px/1 system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:.01em!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:rgba(0,0,0,.4)!important;border:0!important;border-radius:99px!important;opacity:1!important;filter:none!important;transform:none!important;overflow:visible!important;-webkit-line-clamp:unset!important;pointer-events:none;user-select:none;-webkit-user-select:none;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);white-space:nowrap!important;view-transition-name:none}
 @media print{.ki-marke{background:#fff;color:#000;border:1px solid #000}}
+
+.ki-hinweis{margin:0 0 10px;font-size:.8rem;line-height:1.4;color:var(--mut)}
+.ki-cap{opacity:.85}
