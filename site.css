@@ -531,4 +531,4 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 @media print{.ki-marke{background:#fff;color:#000;border:1px solid #000}}
 
 .ki-hinweis{margin:0 0 10px;font-size:.8rem;line-height:1.4;color:var(--mut)}
-.ki-cap{opacity:.85}
+.ki-cap{font-style:italic}

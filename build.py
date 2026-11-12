@@ -62,6 +62,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
         ('tischdeko.html', 'Weihnachtliche Tischdeko', 'Festlich decken mit Maßen und Ideen', 'tischdeko', 'tischdeko'),
+        ('adventskranz.html', 'Adventskranz binden', 'Frische-Check, Anleitung, sicher mit Kerzen', 'adventskranz', 'adventskranz'),
         ('geschenke.html', 'Geschenke fürs Zuhause', 'Kleine Ideen für Nikolaus und Weihnachten', 'geschenke', 'geschenke'),
         ('flur.html', 'Flur und Eingang einrichten', 'Maße, Garderobe, Licht, Flur-Check', 'flur', 'flur'),
         ('pflanzen.html', 'Zimmerpflanzen im Winter', 'Licht, Gießen, Heizungsluft, Gieß-Check', 'pflanzen', 'pflanzen'),
@@ -152,7 +153,7 @@ def fig(name, alt, cap):
 KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
        'kleine-raeume': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum',
        'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
-       'weihnachten': 'saison', 'tischdeko': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
+       'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug'}
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Rechner')]
 
