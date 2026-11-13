@@ -18,6 +18,23 @@
 .st-body .kv{margin-top:26px}
 .style .go{margin-top:26px}
 @media (max-width:800px){.st-ph{aspect-ratio:16/10}.st-body{grid-template-columns:1fr;gap:0}.fan{position:static;grid-template-rows:none;grid-template-columns:repeat(4,1fr)}.fan span{height:62px}.fan button{flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:0;padding:7px 9px;font-size:.84rem;line-height:1.2;min-width:0}.fan small{font-size:.74rem}}
+/* Stile auf einen Blick (Design-Agent 13.11.2026) */
+.stw-s{padding-block:clamp(28px,5vw,56px) 0}
+.stw{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.stw a{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--pan);color:var(--ink);text-decoration:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .2s}
+.stw a:hover{transform:translateY(-3px);border-color:var(--brass)}
+.stw-i{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--band)}
+.stw-i img{width:100%;height:100%;object-fit:cover;display:block}
+.stw-p{display:grid;grid-template-columns:repeat(4,1fr);height:8px}
+.stw b{display:block;padding:10px 12px 12px;font-size:1.02rem;font-stretch:85%;line-height:1.15}
+.stw a.stw-f{justify-content:center;gap:4px;padding:14px;background:var(--grn);color:var(--on-grn);border-color:var(--grn)}
+.stw-f span{font-size:.86rem;line-height:1.3;opacity:.9}
+.stw-f b{padding:0;font-size:1.15rem}
+.stw-f em{font-style:normal;font-weight:600;font-size:.86rem;margin-top:4px}
+@media (max-width:900px){.stw{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.stw a.stw-f{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:10px;padding:16px 18px}.stw-f span{flex:1 0 100%}.stw-f em{margin:0 0 0 auto}.stw b{padding:8px 10px 10px;font-size:.92rem;font-stretch:78%}.stw a.stw-f b{padding:0;font-size:1.1rem}}
+@media (max-width:380px){.stw b{font-size:.86rem}}
+@media (prefers-reduced-motion:reduce){.stw a{transition:none}.stw a:hover{transform:none}}
+@media print{.stw-s{display:none}}
 </style>
 <!--MAIN-->
 <div class="hero sub">
@@ -30,6 +47,10 @@
     </nav>
   </div>
 </div>
+
+<section class="stw-s" aria-label="Die sechs Stile auf einen Blick"><div class="wrap">
+  <div class="stw"><a href="#vintage"><span class="stw-i"><img src="assets/vintage-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#8F5530"></i><i style="background:#C49A3A"></i><i style="background:#1F5560"></i><i style="background:#6D6A36"></i></span><b>Vintage</b></a><a href="#modern"><span class="stw-i"><img src="assets/modern-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#EEEDE9"></i><i style="background:#B9B6AE"></i><i style="background:#D6C7AD"></i><i style="background:#3A3B3C"></i></span><b>Modern</b></a><a href="#skandinavisch"><span class="stw-i"><img src="assets/skandi-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#F4F4F1"></i><i style="background:#E3D3B5"></i><i style="background:#A9B7C0"></i><i style="background:#A3AE97"></i></span><b>Skandinavisch</b></a><a href="#japandi"><span class="stw-i"><img src="assets/japandi-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#EFE8DC"></i><i style="background:#B78C6B"></i><i style="background:#6F7558"></i><i style="background:#2B2A27"></i></span><b>Japandi</b></a><a href="#industrial"><span class="stw-i"><img src="assets/industrial-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#A7A5A0"></i><i style="background:#4A4F53"></i><i style="background:#8E4B2C"></i><i style="background:#6B4429"></i></span><b>Industrial</b></a><a href="#boho"><span class="stw-i"><img src="assets/boho-t.webp" alt="" width="560" height="315" loading="lazy" decoding="async"></span><span class="stw-p" aria-hidden="true"><i style="background:#E2CBA7"></i><i style="background:#C29A5B"></i><i style="background:#A8552F"></i><i style="background:#6F6F3D"></i></span><b>Boho</b></a><a class="stw-f" href="index.html#stil-finder"><span>Unsicher, welcher passt?</span><b>Meinen Stil finden</b><em aria-hidden="true">5 Fragen →</em></a></div>
+</div></section>
 
 <section id="alle-stile" aria-label="Die sechs Stile"><div class="wrap">
 <article class="style" id="vintage" aria-labelledby="h-vintage">
