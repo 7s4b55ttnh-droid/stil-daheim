@@ -286,3 +286,11 @@ window.__VTHERO='.hero.sub';
   all();addEventListener('load',function(){all();list.forEach(put)});
   if(window.MutationObserver)new MutationObserver(all).observe(document.body,{childList:true,subtree:true});
 })();
+
+/* Schritt-Weg (Design-Agent 13.11.2026): Schritte in ol.steps werden beim Vorbeiscrollen markiert (.on, bleibt stehen). */
+(function(){
+  var li=[].slice.call(document.querySelectorAll('ol.steps>li'));if(!li.length)return;
+  if(!('IntersectionObserver' in window)){li.forEach(function(x){x.classList.add('on')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{rootMargin:'0px 0px -42% 0px'});
+  li.forEach(function(x){io.observe(x)});
+})();

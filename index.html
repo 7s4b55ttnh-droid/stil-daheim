@@ -52,6 +52,17 @@
 .bigpal span{display:flex;flex-direction:column;justify-content:flex-end;min-height:84px;padding:8px 10px;font-weight:600;font-size:.86rem;font-stretch:90%;line-height:1.2}
 .bigpal small{font-weight:500;font-variant-numeric:tabular-nums;font-size:.74rem}
 @media (max-width:720px){.q-opts{grid-template-columns:1fr}.q-res{grid-template-columns:1fr}.q-vis{order:-1}}
+.q-mix{margin:22px 0 4px;padding:16px 0 4px;border-top:1px solid var(--line)}
+.q-mix-h{margin:0 0 10px;font-weight:600}
+.q-mix-h span{font-weight:400;color:var(--mut);font-size:.9rem}
+.q-mix ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.q-mix li{display:grid;grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 3.2em;gap:12px;align-items:center;font-variant-numeric:tabular-nums}
+.q-mix li>a,.q-mix li>b{font-weight:600}
+.q-mix li>span:last-child{text-align:right;color:var(--mut);font-size:.93rem}
+.q-mix .mbar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.q-mix .mbar i{display:block;height:100%;width:var(--w);border-radius:3px;background:var(--brass)}
+.q-mix li:first-child .mbar i{background:var(--grn)}
+@media (min-width:721px){.q-vis{position:sticky;top:96px}}
 /* Ausmessen */
 .measure{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(28px,5vw,72px);align-items:start}
 .mist{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--line)}
@@ -169,21 +180,35 @@ const Q=[
 const ORDER=Object.keys(S),box=document.getElementById('quiz');let step=0,ans=[];
 try{const s=JSON.parse(localStorage.getItem('sdquiz')||'null');if(s&&Array.isArray(s)&&s.length===Q.length){ans=s;step=Q.length}}catch(e){}
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]*(1+i*0.01)});return ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b))}
+function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]*(1+i*0.01)});const r=ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b));r.p=p;return r}
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;let dir=1;
 function render(focus){
   if(step<Q.length){const q=Q[step];
     box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
     const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p><div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
+  if(focus){anim();const t=box.getBoundingClientRect().top;if(t<0||t>innerHeight*.6)scrollTo({top:scrollY+t-80,behavior:RM?'auto':'smooth'})}
 }
+function mix(r){const p=r.p,tot=ORDER.reduce((s,k)=>s+p[k],0);if(!tot)return '';
+  const top=r.slice(0,3).filter(k=>p[k]>0),pc=top.map(k=>Math.round(p[k]/tot*100));
+  return `<div class="q-mix"><p class="q-mix-h">Dein Stil-Mix <span>aus deinen fünf Antworten</span></p><ol>${top.map((k,i)=>`<li><${i?'a href="'+S[k].href+'"':'b'}>${esc(S[k].name)}</${i?'a':'b'}><span class="mbar" aria-hidden="true"><i style="--w:${pc[i]}%"></i></span><span>${pc[i]}&nbsp;%</span></li>`).join('')}</ol></div>`}
+function anim(){if(RM||!Element.prototype.animate)return;const res=box.querySelector('.q-res');
+  if(!res){box.querySelectorAll('.q-q,.q-opts').forEach((el,i)=>el.animate([{opacity:0,transform:`translateX(${dir*28}px)`},{opacity:1,transform:'none'}],{duration:320,delay:i*50,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));return}
+  const img=res.querySelector('.q-vis img');if(img)img.animate([{opacity:0,transform:'scale(1.06)'},{opacity:1,transform:'none'}],{duration:900,easing:'cubic-bezier(.2,.8,.2,1)'});
+  res.querySelectorAll('.bigpal span').forEach((el,i)=>el.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:420,delay:260+i*90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
+  res.querySelectorAll('.q-mix .mbar i').forEach((el,i)=>el.animate([{width:0},{width:getComputedStyle(el).width}],{duration:800,delay:400+i*140,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
+  [res.querySelector('.kicker'),res.querySelector('h3')].forEach((el,i)=>el&&el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:420,delay:120+i*80,easing:'ease-out',fill:'backwards'}))}
 function lt(h){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>140}
-box.addEventListener('click',e=>{const o=e.target.closest('[data-i]');
-  if(o){ans[step]=+o.dataset.i;step++;if(step===Q.length){ans=ans.slice(0,Q.length);try{localStorage.setItem('sdquiz',JSON.stringify(ans))}catch(x){}}render(true);return}
-  if(e.target.closest('[data-back]')){step=Math.max(0,step-1);render(true);return}
-  if(e.target.closest('[data-again]')){step=0;ans=[];try{localStorage.removeItem('sdquiz')}catch(x){}render(true)}});
+let busy=0;box.addEventListener('click',e=>{const o=e.target.closest('[data-i]');if(busy)return;
+  if(o&&!RM){busy=1;box.querySelectorAll('[data-i]').forEach(x=>x.setAttribute('aria-pressed',x===o));setTimeout(()=>{busy=0;pick(o)},170);return}
+  if(o){pick(o);return}
+  if(e.target.closest('[data-back]')){dir=-1;step=Math.max(0,step-1);render(true);return}
+  if(e.target.closest('[data-again]')){dir=1;step=0;ans=[];try{localStorage.removeItem('sdquiz')}catch(x){}render(true)}});
+function pick(o){dir=1;
+  {ans[step]=+o.dataset.i;step++;if(step===Q.length){ans=ans.slice(0,Q.length);try{localStorage.setItem('sdquiz',JSON.stringify(ans))}catch(x){}}render(true)}}
 render(false);
 })();
 </script>
