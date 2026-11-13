@@ -532,3 +532,18 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 
 .ki-hinweis{margin:0 0 10px;font-size:.8rem;line-height:1.4;color:var(--mut)}
 .ki-cap{font-style:italic}
+
+/* Schritt-Weg (Design-Agent 13.11.2026): Nummern als Messing-Kreise, verbunden durch eine Linie.
+   site.js setzt .on, sobald ein Schritt die Bildschirmmitte erreicht: Kreis füllt sich, Linie wird kräftig. */
+.steps{border-top:0;padding-top:6px}
+.steps>li{position:relative;border-bottom:0;padding:0 0 34px;grid-template-columns:46px minmax(0,1fr)}
+.steps>li::before{width:46px;height:46px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--brass);display:grid;place-items:center;font-size:1.4rem;line-height:1;letter-spacing:0;transition:background-color .45s,color .45s,border-color .45s}
+.steps>li::after{content:"";position:absolute;left:22.25px;top:52px;bottom:6px;width:1.5px;border-radius:1px;background:var(--brass);opacity:.35;transition:opacity .6s}
+.steps>li:last-child{padding-bottom:6px}
+.steps>li:last-child::after{display:none}
+.steps>li>h3:first-of-type{margin-top:10px}
+.steps>li.on::before{background:var(--brass-t);border-color:var(--brass-t);color:var(--bg)}
+.steps>li.on::after{opacity:.9}
+@media (max-width:640px){.steps>li{grid-template-columns:38px minmax(0,1fr);padding:0 0 28px}.steps>li::before{width:38px;height:38px;font-size:1.15rem}.steps>li::after{left:18.25px;top:44px}.steps>li>h3:first-of-type{margin-top:6px}}
+@media (prefers-reduced-motion:reduce){.steps>li::before,.steps>li::after{transition:none}}
+@media print{.steps>li::after{display:none}}
