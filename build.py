@@ -7,6 +7,10 @@ Jede Quelldatei beginnt mit einem Kommentar <!--meta {json} --> (key, title, des
 und hat die Teile <!--HEAD--> (zusätzliches im <head>), <!--MAIN--> (Inhalt von <main>) und
 <!--END--> (Skripte am Ende).
 
+Für Suchmaschinen: title ohne „ – Stil-Daheim“ höchstens 60 Zeichen (wichtigstes Suchwort vorn), desc 120 bis 160 Zeichen.
+Ist desc länger, kürzt der Build die Beschreibung im Suchergebnis auf ganze Sätze (og:description behält den vollen Text) oder
+meldet einen HINWEIS. Den Tag der ersten Veröffentlichung merkt sich der Build in erstdatum.json (bitte mit einchecken).
+
 Platzhalter in den Seiten:
   {{amz:Suchbegriff}}      Amazon-Suchlink mit Partner-Tag (immer mit „Anzeige“ kennzeichnen)
   {{PALETTE:stil}}         Farbkarte eines Stils
@@ -22,7 +26,7 @@ Platzhalter in den Seiten:
 Aufruf: python3 build.py            (alle Seiten)
         PREVIEW=1 python3 build.py  (Hinweis „Vorschau“ in der Fußzeile)
 """
-import json, re, pathlib, urllib.parse, sys, os, shutil
+import json, re, pathlib, urllib.parse, sys, os, shutil, datetime
 
 HERE = pathlib.Path(__file__).resolve().parent
 SRC = HERE / 'pages'
@@ -32,6 +36,8 @@ BRAND = 'Stil-Daheim'
 DOMAIN = 'https://stil-daheim.de/'
 PREVIEW = os.environ.get('PREVIEW') == '1'
 DEFAULT_UPDATED = '2026-10-25'
+ERST_DATEI = HERE / 'erstdatum.json'   # Tag der ersten Veröffentlichung je Seite (für datePublished); neue Seiten trägt der Build selbst ein
+ERST = json.loads(ERST_DATEI.read_text()) if ERST_DATEI.exists() else {}
 
 LAMP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v5"/><path d="M4.5 15.5a7.5 7.5 0 0 1 15 0z"/><path d="M9.8 18.4a2.3 2.3 0 0 0 4.4 0"/></svg>'
 SUN = '<svg class="th-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>'
@@ -268,6 +274,18 @@ def mini(js):
     return '\n'.join(l.strip() for l in js.split('\n') if l.strip()) + '\n'
 
 
+def kurz_desc(d, mx=160, mn=90):
+    """Beschreibung fürs Suchergebnis: höchstens mx Zeichen, an einer Satzgrenze gekürzt. Geht das nicht, bleibt sie, wie sie ist."""
+    if len(d) <= mx:
+        return d
+    out = ''
+    for part in re.split(r'(?<=[.!?])\s+', d):
+        if len(out) + len(part) + (1 if out else 0) > mx:
+            break
+        out = (out + ' ' + part).strip()
+    return out if len(out) >= mn else d
+
+
 def de_date(iso):
     y, m, d = iso.split('-')
     return '%s.%s.%s' % (d, m, y)
@@ -279,6 +297,7 @@ def read_page(src):
     head = t.split('<!--HEAD-->')[1].split('<!--MAIN-->')[0].strip() if '<!--HEAD-->' in t else ''
     main = t.split('<!--MAIN-->')[1].split('<!--END-->')[0].strip()
     end = t.split('<!--END-->')[1].strip() if '<!--END-->' in t else ''
+    meta['_datiert'] = 'updated' in meta
     meta.setdefault('updated', DEFAULT_UPDATED)
     meta['noindex'] = 'noindex' in head
     return meta, head, main, end
@@ -293,14 +312,23 @@ def page(src):
     grid = ''.join('<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s) for h, n, s, k, p in GRID)
     flinks = fcols(key)
     stand = '' if key == '404' else '<p class="stand">Stand: %s</p>' % de_date(meta['updated'])
+    # Suchergebnis: Titel ohne Marke höchstens 60 Zeichen, Beschreibung höchstens 160 (og:description behält den vollen Text)
+    sdesc = kurz_desc(meta['desc'])
+    suchbar = not meta['noindex'] and key not in ('impressum', 'datenschutz', '404')
+    core = meta['title'].replace(' – Stil-Daheim', '')
+    if suchbar and len(core) > 60:
+        print('HINWEIS %s: Titel ohne Marke %d Zeichen (höchstens 60), bitte kürzen: %s' % (src.name, len(core), core))
+    if suchbar and len(sdesc) > 160:
+        print('HINWEIS %s: Beschreibung %d Zeichen (höchstens 160) und der erste Satz ist zu lang zum Kürzen, bitte desc kürzen' % (src.name, len(sdesc)))
+    robots = '<meta name="robots" content="max-image-preview:large">' if suchbar else ''   # große Bildvorschau bei Google erlauben
     html = ('<!doctype html><html lang="de"><head><meta charset="utf-8">'
             '<script>try{var t=localStorage.getItem("sdth");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
             '<meta name="p:domain_verify" content="ad440d6123f283fdf603af68f7587653"/>\n'
-            '<title>%(title)s</title><meta name="description" content="%(desc)s">\n'
+            '<title>%(title)s</title><meta name="description" content="%(sdesc)s">\n'
             '<meta property="og:title" content="%(title)s"><meta property="og:description" content="%(desc)s"><meta property="og:type" content="website">'
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
-            '<link rel="canonical" href="%(dom)s%(path)s"><meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
+            '<link rel="canonical" href="%(dom)s%(path)s">%(robots)s<meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
             '<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>'
             '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">'
             '<link rel="stylesheet" href="site.css">\n%(head)s\n<script src="site.js" defer></script></head><body>\n'
@@ -320,7 +348,7 @@ def page(src):
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
             '<nav class="ft-links fc" aria-label="Alle Seiten">%(flinks)s<div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
-                                                  title=meta['title'], desc=meta['desc'], dom=DOMAIN, og=ogimg(meta), stand=stand,
+                                                  title=meta['title'], desc=meta['desc'], sdesc=sdesc, robots=robots, dom=DOMAIN, og=ogimg(meta), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
                                                   close=CLOSE, grid=grid, main=main, flinks=flinks, end=end)
     html = html.replace('{{amzdeals}}', 'https://www.amazon.de/deals?tag=%s' % TAG)
@@ -401,12 +429,14 @@ def seo(html, meta, path):
     main = html[i0:html.index('</main>')]
     url = DOMAIN + path
     org = {'@type': 'Organization', 'name': 'Stil-Daheim', 'url': DOMAIN}
+    erst = ERST.setdefault(meta['key'], meta['updated'] if meta['_datiert'] else datetime.date.today().isoformat())
     if meta['key'] == 'index':
-        graph = [{'@type': 'WebSite', 'name': 'Stil-Daheim', 'url': DOMAIN, 'inLanguage': 'de-DE', 'description': meta['desc'], 'publisher': org}]
+        graph = [{'@type': 'WebSite', 'name': 'Stil-Daheim', 'url': DOMAIN, 'inLanguage': 'de-DE', 'description': meta['desc'],
+                  'publisher': dict(org, logo=DOMAIN + 'apple-touch-icon.png')}]
     else:
         h1 = re.search(r'<h1[^>]*>(.*?)</h1>', main, re.S)
         art = {'@type': 'Article', 'headline': _txt(h1.group(1))[:110] if h1 else meta['title'], 'name': meta['title'], 'description': meta['desc'],
-               'inLanguage': 'de-DE', 'url': url, 'mainEntityOfPage': url, 'dateModified': meta['updated'], 'author': org, 'publisher': org,
+               'inLanguage': 'de-DE', 'url': url, 'mainEntityOfPage': url, 'datePublished': erst, 'dateModified': max(meta['updated'], erst), 'author': org, 'publisher': org,
                'image': DOMAIN + ogimg(meta)}
         if meta.get('kurz'):
             art['abstract'] = _txt(meta['kurz'])
@@ -459,6 +489,7 @@ if __name__ == '__main__':
         m['file'] = n
         metas.append(m)
         print('gebaut:', n)
+    ERST_DATEI.write_text(json.dumps(ERST, ensure_ascii=False, indent=1, sort_keys=True) + '\n')
     if not sys.argv[1:]:
         sitemap(metas)
         llms(metas)
