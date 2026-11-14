@@ -43,6 +43,14 @@ let bad = 0; const ok = (c, t) => { console.log((c ? 'ok ' : 'FEHLER ') + t); if
   ok(ext === 0, 'keine Abrufe bei fremden Servern (' + ext + ')');
   const m = await ctx.newPage(); await m.setViewportSize({ width: 390, height: 844 }); await m.goto(U); await m.waitForTimeout(900);
   ok(await m.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Handy: kein seitliches Scrollen');
+  // Beispielzimmer
+  const w0 = await m.evaluate(() => getComputedStyle(document.querySelector('#fp-room .r-wall')).fill);
+  await m.click('#fp-rw button[data-w="2"]'); await m.waitForTimeout(900);
+  const w2 = await m.evaluate(() => getComputedStyle(document.querySelector('#fp-room .r-wall')).fill);
+  ok(w0 !== w2 && /rgb/.test(w2), 'Beispielzimmer: dunkle Wand färbt die Wand um (' + w0 + ' → ' + w2 + ')');
+  ok(await m.evaluate(() => { const s = document.getElementById('fp-room').style; return /^#/.test(s.getPropertyValue('--r-sofa')) && /^#/.test(s.getPropertyValue('--r-acc')); }), 'Sofa und Akzent tragen Farben aus dem Foto');
+  await m.click('#fp-eve'); await m.waitForTimeout(900);
+  ok((await m.getAttribute('#fp-eve', 'aria-checked')) === 'true' && await m.evaluate(() => +getComputedStyle(document.querySelector('#fp-room .r-night')).opacity > .3), 'Abendlicht dunkelt den Raum ab');
   ok(e.length === 0, 'keine Skriptfehler ' + e.join('|'));
   await b.close(); console.log(bad ? '\n' + bad + ' FEHLER' : '\nALLE TESTS BESTANDEN'); process.exit(bad ? 1 : 0);
 })();
