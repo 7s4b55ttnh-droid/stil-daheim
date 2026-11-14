@@ -500,6 +500,8 @@ if __name__ == '__main__':
     for f in ('site.css', 'site.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
+    for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest
+        shutil.copyfile(f, OUT / 'assets' / f.name)
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
     (OUT / '.nojekyll').write_text('')
     (OUT / 'bc5564f7c1405d082c6e3b0873cb208a.txt').write_text('bc5564f7c1405d082c6e3b0873cb208a')  # IndexNow-Schlüssel (Bing), nicht entfernen
