@@ -58,6 +58,22 @@
 .fp-drop.own>.ki-marke,.fp-demo .ki-marke{display:none!important}
 .fp-demo small{flex-basis:100%;font-size:.8rem}
 @media (prefers-reduced-motion:reduce){.fp-drop{transition:none}}
+.fp-room svg{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line);background:#eee}
+.fp-room svg *{transition:fill .6s ease,opacity .6s ease}
+.fp-room .r-wall{fill:var(--r-wall,#e9e4da)}.fp-room .r-floor{fill:#b89f82}.fp-room .r-sky{fill:#cfe3f1}
+.fp-room .r-sofa{fill:var(--r-sofa,#8a9a8f)}.fp-room .r-dk{filter:brightness(.88)}.fp-room .r-acc{fill:var(--r-acc,#c46a3f)}.fp-room .r-main{fill:var(--r-main,#eee8dc)}
+.fp-room .r-rug{fill:var(--r-rug,#d8cfbf)}.fp-room .r-curt{fill:var(--r-curt,#e3ddd0)}.fp-room .r-lamp{fill:#f3ead8}.fp-room .r-pot{filter:brightness(.9)}
+.fp-room .r-night{fill:#151029;opacity:0;pointer-events:none}.fp-room .r-glow{opacity:0;pointer-events:none}
+.fp-room.eve .r-night{opacity:.5}.fp-room.eve .r-glow{opacity:1}.fp-room.eve .r-sky{fill:#27304f}.fp-room.eve .r-lamp{fill:#ffe2a6}
+.fp-rc{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-top:12px}
+.fp-seg{display:flex;flex-wrap:wrap;gap:6px}
+.fp-seg button{font:inherit;font-size:.9rem;font-weight:600;padding:9px 14px;min-height:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.fp-seg button[aria-pressed="true"]{background:var(--grn);color:var(--on-grn);border-color:var(--grn)}
+.fp-eve{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:.9rem;font-weight:600;min-height:44px;padding:6px 4px;border:0;background:none;color:var(--ink);cursor:pointer;margin-left:auto}
+.fp-eve i{width:44px;height:26px;border-radius:13px;background:var(--line);position:relative;transition:background .25s}
+.fp-eve i::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0004;transition:transform .25s}
+.fp-eve[aria-checked="true"] i{background:var(--brass)}.fp-eve[aria-checked="true"] i::after{transform:translateX(18px)}
+@media (prefers-reduced-motion:reduce){.fp-room svg *,.fp-eve i,.fp-eve i::after{transition:none}}
 </style>
 <script src="site.js" defer></script><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Farbpalette aus deinem Foto", "name": "Farbpalette aus Foto erstellen: Farben fürs Zimmer finden – Stil-Daheim", "description": "Farbpalette aus deinem Foto: Bild auswählen und sofort die wichtigsten Farben mit Farbwert sehen, dazu Vorschläge für die Wand. Das Foto bleibt auf deinem Gerät.", "inLanguage": "de-DE", "url": "https://stil-daheim.de/farbpalette.html", "mainEntityOfPage": "https://stil-daheim.de/farbpalette.html", "datePublished": "2026-11-14", "dateModified": "2026-11-14", "author": {"@type": "Organization", "name": "Stil-Daheim", "url": "https://stil-daheim.de/"}, "publisher": {"@type": "Organization", "name": "Stil-Daheim", "url": "https://stil-daheim.de/"}, "image": "https://stil-daheim.de/assets/og/farbpalette.jpg", "abstract": "Wähle ein Foto von deinem Zimmer, einem Lieblingsbild oder einem Stoff aus. Das Werkzeug zieht die fünf bis sechs wichtigsten Farben heraus, zeigt ihren Farbwert und verteilt sie nach der 60-30-10-Regel auf Hauptfarbe, Nebenfarbe und Akzent. Dazu kommen drei Vorschläge für die Wand und der Wohnstil, dessen Farbkarte am nächsten liegt. Das Foto verlässt dein Gerät nicht."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Wird mein Foto hochgeladen?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Das Foto wird nur in deinem Browser geöffnet und dort ausgewertet. Es wird nicht an uns oder andere übertragen und nicht gespeichert."}}, {"@type": "Question", "name": "Wie werden die Farben gefunden?", "acceptedAnswer": {"@type": "Answer", "text": "Das Bild wird verkleinert, ähnliche Bildpunkte werden zu Gruppen zusammengefasst. Die größten Gruppen sind deine Farben, der Anteil zeigt, wie viel Fläche sie im Foto haben."}}, {"@type": "Question", "name": "Warum sehen die Farben anders aus als im Zimmer?", "acceptedAnswer": {"@type": "Answer", "text": "Kamera und Licht verändern Farben. Abendlicht macht alles wärmer, Blitz macht es kälter. Fotografier bei Tageslicht und nimm die Werte als Richtung, nicht als Messung."}}, {"@type": "Question", "name": "Was fange ich mit dem Farbwert an?", "acceptedAnswer": {"@type": "Answer", "text": "Der Farbwert, zum Beispiel #A8B49C, beschreibt die Farbe für Bildschirme. Du kannst ihn in Einrichtungs- und Zeichenprogrammen eingeben oder im Markt mit Farbkarten vergleichen."}}, {"@type": "Question", "name": "Welches Foto eignet sich?", "acceptedAnswer": {"@type": "Answer", "text": "Jedes, auf dem das zu sehen ist, was du magst: dein Zimmer, ein Stoff, ein Gemälde, ein Urlaubsbild. Je weniger Nebensachen im Bild sind, desto klarer wird die Palette."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Stil-Daheim", "item": "https://stil-daheim.de/"}, {"@type": "ListItem", "position": 2, "name": "Farbpalette aus deinem Foto", "item": "https://stil-daheim.de/farbpalette.html"}]}]}</script>
 </head><body>
@@ -109,6 +125,30 @@
         <h3 class="fp-h">Drei Vorschläge für die Wand</h3>
         <div class="fp-wall" id="fp-wall"></div>
         <p class="fp-note">Aus deinen Farben gerechnet: einmal hell, einmal mittel, einmal dunkel. Am Bildschirm wirkt Farbe anders als an der Wand, mach vor dem Streichen einen Probeanstrich.</p>
+      </div>
+      <div class="fp-block">
+        <h3 class="fp-h">So wirkt es im Raum</h3>
+        <div class="fp-room" id="fp-room">
+          <svg viewBox="0 0 400 260" role="img" aria-label="Gezeichnetes Beispielzimmer in deinen Farben: Wand, Sofa, Kissen, Teppich und Vorhang">
+            <defs><radialGradient id="fp-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffd98a" stop-opacity=".95"/><stop offset=".45" stop-color="#ffc864" stop-opacity=".35"/><stop offset="1" stop-color="#ffc864" stop-opacity="0"/></radialGradient></defs>
+            <rect class="r-wall" x="0" y="0" width="400" height="190"/>
+            <rect class="r-floor" x="0" y="190" width="400" height="70"/><path d="M0 190h400" stroke="#0002" stroke-width="2"/>
+            <rect class="r-sky" x="40" y="34" width="84" height="104" rx="2"/><path d="M40 34h84v104H40zM82 34v104M40 86h84" fill="none" stroke="#fbfbf8" stroke-width="5"/>
+            <path class="r-curt" d="M22 26h26c-4 44 6 88-4 150H22zM116 26h26v150h-22c-10-62 0-106-4-150z"/><path d="M16 26h132" stroke="#3a3a36" stroke-width="3" stroke-linecap="round"/>
+            <rect x="262" y="48" width="56" height="42" rx="2" fill="#fbfbf8" stroke="#3a3a36" stroke-width="2"/><rect class="r-acc" x="272" y="57" width="20" height="24"/><rect class="r-sofa" x="294" y="63" width="14" height="18"/>
+            <ellipse class="r-rug" cx="214" cy="226" rx="150" ry="22"/>
+            <path class="r-sofa" d="M150 150c0-10 8-16 18-16h112c10 0 18 6 18 16v36H150z"/><path class="r-sofa r-dk" d="M138 166c0-7 5-12 12-12s12 5 12 12v38h-24zM286 166c0-7 5-12 12-12s12 5 12 12v38h-24z"/><rect class="r-sofa r-dk" x="160" y="184" width="128" height="20" rx="4"/>
+            <path d="M152 204v10M296 204v10" stroke="#3a3a36" stroke-width="4" stroke-linecap="round"/>
+            <rect class="r-acc" x="170" y="150" width="34" height="32" rx="6" transform="rotate(-8 187 166)"/><rect class="r-main" x="246" y="152" width="32" height="30" rx="6" transform="rotate(7 262 167)"/>
+            <path d="M352 214V112" stroke="#3a3a36" stroke-width="3"/><path d="M340 214h24" stroke="#3a3a36" stroke-width="4" stroke-linecap="round"/><path class="r-lamp" d="M336 112h32l-7-30h-18z"/>
+            <path d="M84 214c-2-18 2-30 0-44M84 190c-10-6-16-16-16-26M84 182c8-6 14-14 14-24M84 172c-6-8-6-18-4-26" fill="none" stroke="#3f6b4f" stroke-width="4" stroke-linecap="round"/><path class="r-acc r-pot" d="M72 214h24l-3 24H75z"/>
+            <rect class="r-night" x="0" y="0" width="400" height="260"/>
+            <circle class="r-glow" cx="352" cy="100" r="120" fill="url(#fp-glow)"/>
+          </svg>
+          <div class="fp-rc"><div class="fp-seg" id="fp-rw" role="group" aria-label="Wandfarbe im Beispielzimmer"><button type="button" data-w="0" aria-pressed="true">Helle Wand</button><button type="button" data-w="1" aria-pressed="false">Farbige Wand</button><button type="button" data-w="2" aria-pressed="false">Dunkle Wand</button></div>
+          <button type="button" class="fp-eve" id="fp-eve" role="switch" aria-checked="false"><i aria-hidden="true"></i>Abendlicht</button></div>
+        </div>
+        <p class="fp-note">Eine Zeichnung zum Ausprobieren, kein Abbild deines Zimmers. Sofa und Vorhang tragen die Nebenfarbe, Kissen und Bild den Akzent.</p>
       </div>
       <div class="fp-block">
         <h3 class="fp-h">Welcher Wohnstil passt dazu?</h3>
@@ -217,6 +257,16 @@
     return best;
   }
   window.FP={palette:palette,roles:roles,walls:walls,style:style,lab:lab,rgb:rgb,hex:hex};
+  /* Beispielzimmer: Farben als CSS-Variablen an die Zeichnung geben */
+  var ROOM={w:0,eve:0};
+  function room(){var R=roles(PAL),el=$('fp-room');if(!R||!el)return;var W=walls(R),st=el.style,sofa=tone(R.sec,Math.min(62,Math.max(40,R.sec.lab[0])),34,.9);
+    st.setProperty('--r-wall',W[ROOM.w].c.hex);st.setProperty('--r-sofa',sofa.hex);st.setProperty('--r-acc',R.acc.hex);st.setProperty('--r-main',tone(R.main,88,12,.5).hex);
+    st.setProperty('--r-rug',tone(R.main,Math.min(80,Math.max(62,R.main.lab[0])),16,.6).hex);st.setProperty('--r-curt',tone(R.sec,84,14,.5).hex);
+    el.classList.toggle('eve',!!ROOM.eve);
+    [].forEach.call($('fp-rw').children,function(b){b.setAttribute('aria-pressed',+b.dataset.w===ROOM.w?'true':'false')});$('fp-eve').setAttribute('aria-checked',ROOM.eve?'true':'false')}
+  $('fp-rw').onclick=function(e){var b=e.target.closest('button');if(b){ROOM.w=+b.dataset.w;room()}};
+  $('fp-eve').onclick=function(){ROOM.eve=ROOM.eve?0:1;room()};
+  window.FP.room=function(){return ROOM};
 
   var PAL=[],IMG=null,NAMES=['Hauptfarbe','Nebenfarbe','Akzent'];
   function toast(t){if(window.sdToast)window.sdToast(t)}
@@ -230,6 +280,7 @@
     $('fp-bar').setAttribute('aria-label','Aufteilung: 60 Prozent '+R.main.hex+', 30 Prozent '+R.sec.hex+', 10 Prozent '+R.acc.hex);
     $('fp-wall').innerHTML=walls(R).map(function(w){return'<button type="button" data-hex="'+w.c.hex+'" aria-label="'+w.n+', Farbwert '+w.c.hex+' kopieren"><i style="background:'+w.c.hex+'"></i><span><b>'+w.n+'</b><em>'+w.c.hex+'</em></span></button>'}).join('');
     var st=style(PAL),S=STYLES[st.key];
+    room();
     $('fp-stil').innerHTML='<span class="dots" aria-hidden="true">'+S.pal.map(function(p){return'<i style="background:'+p[1]+'"></i>'}).join('')+'</span><p>Am nächsten liegt <b>'+S.name+'</b>. '+S.desc+' <a href="'+S.href+'">Zum Stil</a></p>';
   }
   function analyse(img){
