@@ -4,6 +4,16 @@
   function $(s,c){return (c||d).querySelector(s)}
   function $$(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s))}
 
+  /* Einbett-Modus (?einbetten=1): zeigt nur das Werkzeug, für fremde Websites per iframe (Anleitung: einbetten.html).
+     Das Werkzeug ist der main>section, in dem ein Element mit data-emb liegt. Partnerlinks bleiben dort ausgeblendet. */
+  if(/[?&]einbetten=1/.test(location.search)){
+    var ek=null;$$('[data-emb]').forEach(function(x){var s=x.closest('main>section');if(s){s.classList.add('emb-keep');ek=s}});
+    if(ek){root.classList.add('emb');
+      var ec=d.createElement('p');ec.className='emb-cr';
+      ec.innerHTML='Ein Werkzeug von <a href="'+location.origin+location.pathname+'">Stil-Daheim</a>';ek.appendChild(ec);
+      $$('.emb-keep a[href]').forEach(function(a){if(a.getAttribute('href').charAt(0)!=='#'){a.target='_blank';a.rel='noopener'}})}
+  }
+
   /* In einer eingebetteten Vorschau gibt es keinen Druckdialog: Druckknöpfe dort ausblenden */
   try{if(window.top!==window.self)root.classList.add('framed')}catch(e){root.classList.add('framed')}
 

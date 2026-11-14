@@ -547,3 +547,12 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 @media (max-width:640px){.steps>li{grid-template-columns:38px minmax(0,1fr);padding:0 0 28px}.steps>li::before{width:38px;height:38px;font-size:1.15rem}.steps>li::after{left:18.25px;top:44px}.steps>li>h3:first-of-type{margin-top:6px}}
 @media (prefers-reduced-motion:reduce){.steps>li::before,.steps>li::after{transition:none}}
 @media print{.steps>li::after{display:none}}
+
+/* Einbett-Modus (?einbetten=1, siehe site.js): nur das Werkzeug */
+.emb body>*:not(main):not(script):not(style){display:none!important}
+.emb main>*:not(.emb-keep){display:none!important}
+.emb body{background:var(--bg)}
+.emb .emb-keep{padding-block:14px 10px!important;margin:0!important;min-height:0!important}
+.emb a[href*="amazon."],.emb [data-print],.emb .emb-no{display:none!important}
+.emb-cr{font-size:.82rem;opacity:.75;margin:14px 0 0;text-align:right}
+.emb-cr a{text-decoration:underline}
