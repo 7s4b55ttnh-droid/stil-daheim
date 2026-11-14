@@ -47,3 +47,12 @@ Impressum und Datenschutz nennen bewusst keine Straße. Bitte so lassen.
 - Nach jeder Änderung am Skript: `node tests/raumplaner-kern.js` (muss mit „harte Fehler 0 | Räume mit bad 0“ enden), dann bauen und `node tests/raumplaner-test.js` (muss „ALLE TESTS BESTANDEN“ melden).
 - Der Plan liegt nur im Browser (`localStorage` „sdrp“) oder im geteilten Link (`?p=…`). Es gibt keinen Server und keine Übertragung, so steht es auch auf der Seite.
 - Keine Zeilenkommentare (`//`) und keine mehrzeiligen Zeichenketten im Skript, sonst bricht die Verkleinerung in `build.py` (`mini`).
+
+## Weitere Werkzeuge (seit 14.11.2026)
+
+- `pages/bilderwand.html`: Bilderwand-Planer (Skript in der Seite, Kern `window.BW`). Test: `node tests/bilderwand-test.js [Basisadresse]`.
+- `pages/farbpalette.html`: Farbpalette aus Foto (Skript in der Seite, Kern `window.FP`; das Foto bleibt im Browser). Test: `node tests/farbpalette-test.js [Basisadresse]`.
+- 3D-Ansicht im Raumplaner (`raumplaner.js`, Abschnitt „3D-Ansicht“): nur zum Ansehen, Höhen in `HK` sind Richtwerte. Neue Möbelart im Katalog: prüfen, ob `parts3()` eine passende Form liefert. Test: `node tests/raumplaner-3d-test.js [Basisadresse]`.
+- Einbett-Modus: `?einbetten=1` zeigt nur den Abschnitt mit `data-emb` (site.js, site.css). Anleitung für fremde Websites: `pages/einbetten.html`.
+
+Alle Tests müssen mit „ALLE TESTS BESTANDEN“ enden.

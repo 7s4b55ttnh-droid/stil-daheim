@@ -1,0 +1,63 @@
+<!--meta {"key":"einbetten","title":"Werkzeuge einbetten: Raumplaner und Co. für deine Website – Stil-Daheim","desc":"Raumplaner, Bilderwand-Planer und Farbpalette aus Foto kostenlos auf der eigenen Website einbinden: Code kopieren, einfügen, fertig. Mit Bedingungen und Datenschutz.","og":"assets/raumplaner.jpg","updated":"2026-11-14"} -->
+<!--HEAD-->
+<style>
+.top{padding-block:calc(env(safe-area-inset-top,0px) + 120px) clamp(40px,6vw,72px)}
+.top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}
+.top h1{font-size:clamp(2.4rem,6.4vw,4.2rem)}
+.eb-list{display:grid;gap:18px;margin-top:22px}
+.eb-tool{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:18px}
+.eb-tool h3{margin:0 0 4px;font-size:1.12rem}.eb-tool p{margin:0 0 12px;font-size:.96rem}
+.eb-code{display:block;width:100%;box-sizing:border-box;font:500 .82rem/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;resize:vertical;white-space:pre-wrap;word-break:break-all}
+.eb-copy{margin-top:10px;min-height:44px;padding:9px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font-weight:650}
+.eb-copy:hover{border-color:var(--grn)}
+.eb-ul{padding-left:20px}.eb-ul li{margin:8px 0}
+</style>
+<!--MAIN-->
+<section class="top" id="oben"><div class="wrap narrow">
+  <p class="eyebrow">Für Websites und Blogs</p>
+  <h1>Unsere Werkzeuge auf deiner Seite.</h1>
+  <p class="lede">Du schreibst über Wohnen und Einrichten? Dann kannst du unsere Werkzeuge kostenlos einbinden. Deine Leser planen direkt bei dir.</p>
+</div></section>
+
+<section class="band" id="werkzeuge"><div class="wrap narrow">
+<h2>Drei Werkzeuge zur Auswahl.</h2>
+<p>Kopier den Code an die Stelle deiner Seite, an der das Werkzeug erscheinen soll. Die Zeile mit dem Link gehört dazu und bleibt sichtbar.</p>
+<div class="eb-list">
+<div class="eb-tool"><h3>Raumplaner</h3><p>Zimmer im Maßstab planen, Abstände prüfen, 3D-Ansicht. <a href="raumplaner.html?einbetten=1" target="_blank" rel="noopener">Vorschau öffnen</a></p><textarea class="eb-code" readonly rows="4" aria-label="Code zum Einbetten: Raumplaner">&lt;iframe src=&quot;https://stil-daheim.de/raumplaner.html?einbetten=1&quot; title=&quot;Raumplaner von Stil-Daheim&quot; loading=&quot;lazy&quot; style=&quot;width:100%;height:1500px;border:0&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://stil-daheim.de/raumplaner.html&quot;&gt;Raumplaner von Stil-Daheim&lt;/a&gt;&lt;/p&gt;</textarea><button type="button" class="eb-copy">Code kopieren</button></div>
+<div class="eb-tool"><h3>Bilderwand-Planer</h3><p>Rahmen anordnen und Nagelpunkte ausmessen. <a href="bilderwand.html?einbetten=1" target="_blank" rel="noopener">Vorschau öffnen</a></p><textarea class="eb-code" readonly rows="4" aria-label="Code zum Einbetten: Bilderwand-Planer">&lt;iframe src=&quot;https://stil-daheim.de/bilderwand.html?einbetten=1&quot; title=&quot;Bilderwand-Planer von Stil-Daheim&quot; loading=&quot;lazy&quot; style=&quot;width:100%;height:1500px;border:0&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://stil-daheim.de/bilderwand.html&quot;&gt;Bilderwand-Planer von Stil-Daheim&lt;/a&gt;&lt;/p&gt;</textarea><button type="button" class="eb-copy">Code kopieren</button></div>
+<div class="eb-tool"><h3>Farbpalette aus Foto</h3><p>Farben aus einem Foto ziehen, mit Vorschlägen für die Wand. <a href="farbpalette.html?einbetten=1" target="_blank" rel="noopener">Vorschau öffnen</a></p><textarea class="eb-code" readonly rows="4" aria-label="Code zum Einbetten: Farbpalette aus Foto">&lt;iframe src=&quot;https://stil-daheim.de/farbpalette.html?einbetten=1&quot; title=&quot;Farbpalette aus Foto von Stil-Daheim&quot; loading=&quot;lazy&quot; style=&quot;width:100%;height:1400px;border:0&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://stil-daheim.de/farbpalette.html&quot;&gt;Farbpalette aus Foto von Stil-Daheim&lt;/a&gt;&lt;/p&gt;</textarea><button type="button" class="eb-copy">Code kopieren</button></div>
+</div>
+</div></section>
+
+<section id="hoehe"><div class="wrap narrow">
+<h2>Automatische Höhe.</h2>
+<p>Der Rahmen hat eine feste Höhe. Soll er sich von selbst an das Werkzeug anpassen, füg einmal pro Seite diese Zeile dazu. Sie liest nur die Höhe, die das Werkzeug meldet.</p>
+<textarea class="eb-code" readonly rows="4" aria-label="Zusatz für die automatische Höhe">&lt;script&gt;addEventListener(&quot;message&quot;,function(e){if(e.origin===&quot;https://stil-daheim.de&quot;&amp;&amp;e.data&amp;&amp;e.data.daheimHoehe){var f=document.querySelectorAll(&#x27;iframe[src^=&quot;https://stil-daheim.de/&quot;]&#x27;);for(var i=0;i&lt;f.length;i++)if(f[i].contentWindow===e.source)f[i].style.height=e.data.daheimHoehe+&quot;px&quot;}})&lt;/script&gt;</textarea>
+<button type="button" class="eb-copy">Code kopieren</button>
+</div></section>
+
+<section class="band" id="regeln"><div class="wrap narrow">
+<h2>Was gilt.</h2>
+<ul class="eb-ul">
+<li><b>Kostenlos:</b> Du darfst die Werkzeuge auf privaten und gewerblichen Seiten einbinden.</li>
+<li><b>Mit Link:</b> Der Link zu Stil-Daheim unter dem Rahmen bleibt sichtbar und anklickbar.</li>
+<li><b>Unverändert:</b> Die Werkzeuge werden so gezeigt, wie sie sind, ohne Überlagerungen und ohne eigene Werbung im Rahmen.</li>
+<li><b>Ohne Partnerlinks:</b> Im eingebetteten Werkzeug blenden wir unsere Partnerlinks aus.</li>
+<li><b>Ohne Garantie:</b> Wir verbessern die Werkzeuge laufend. Dabei können sich Aussehen und Höhe ändern.</li>
+</ul>
+</div></section>
+
+<section id="daten"><div class="wrap narrow">
+<h2>Was beim Einbetten passiert.</h2>
+<p>Das Werkzeug wird beim Aufruf deiner Seite von stil-daheim.de geladen. Dabei erfährt unser Server technisch bedingt die IP-Adresse des Besuchers, so wie bei jedem Seitenaufruf. Das Werkzeug setzt keine Cookies. Eingaben merkt es sich nur im Browser des Besuchers. Für das eingebettete Werkzeug gilt unsere <a href="datenschutz.html">Datenschutzerklärung</a>. Was du in deiner eigenen Datenschutzerklärung dazu schreibst, liegt bei dir.</p>
+</div></section>
+<!--END-->
+<script>
+/* Code kopieren */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.eb-copy');if(!b)return;var t=b.previousElementSibling,old=b.textContent;
+ function ok(){b.textContent='Kopiert';setTimeout(function(){b.textContent=old},1600)}
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t.value).then(ok,function(){t.select()});else{t.select();try{document.execCommand('copy');ok()}catch(x){}}});
+</script>

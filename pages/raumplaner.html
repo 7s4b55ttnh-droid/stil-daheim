@@ -15,7 +15,14 @@
 .rp-dims .vin{width:4.6em}
 .rp-note{font-size:.92rem;color:var(--mut);margin:8px 0 0;line-height:1.45}
 .rp-lab{font-weight:600;margin:20px 0 8px}
-.rp-sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.rp-sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:relative}
+.rp-sheet.v3 .rp-plan{position:absolute;left:0;right:0;visibility:hidden;pointer-events:none}
+.rp-3d svg{display:block;width:100%;height:auto}
+.rp-3d[hidden],.rp-tool[hidden],.rp-bar button[hidden]{display:none}
+.rp-3d-n{margin:0;padding:8px 14px 10px;font-size:.86rem;color:var(--mut);border-top:1px solid var(--line)}
+.rp-3d-n[hidden]{display:none}
+.rp-bar button[aria-pressed="true"]{background:var(--grn);color:#fff}
+.rp-bar button[aria-pressed="true"]:hover{background:var(--grn)}
 .rp-bar{display:flex;align-items:center;gap:2px;padding:6px 8px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .rp-bar button{min-height:42px;padding:6px 11px;border-radius:8px;font-weight:600;font-size:.92rem;color:var(--ink);display:inline-flex;align-items:center;gap:7px}
 .rp-bar button:hover:not(:disabled){background:var(--band)}
@@ -203,10 +210,15 @@
         <div class="rp-bar">
           <button type="button" id="rp-undo" disabled aria-label="Rückgängig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg><span class="t">Rückgängig</span></button>
           <button type="button" id="rp-again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Neu einrichten</button>
+          <button type="button" id="rp-3d-btn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>3D-Ansicht</button>
+          <button type="button" id="rp-3d-rot" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>Drehen</button>
+          <button type="button" id="rp-3d-pic" hidden aria-label="3D-Ansicht als Bild speichern"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg><span class="t">Bild</span></button>
           <span class="sp"></span>
           <button type="button" class="rp-stat" id="rp-stat"></button>
         </div>
         <div class="rp-plan" id="rp-plan"></div>
+        <div class="rp-3d" id="rp-3d" hidden></div>
+        <p class="rp-3d-n" id="rp-3d-n" hidden>Ansicht von schräg oben. Die Höhen der Möbel sind Richtwerte. Zum Verschieben wechselst du zurück zum Plan.</p>
         <dl class="rp-tb"><div><dt>Raum</dt><dd id="rp-tb-n">Wohnzimmer</dd></div><div><dt>Maße</dt><dd id="rp-tb-m">4,20 × 3,60 m</dd></div><div><dt>Fläche</dt><dd id="rp-tb-a">15,1 m²</dd></div></dl>
       </div>
       <div class="rp-tool empty" id="rp-tool"><p>Tipp ein Möbel an, um es zu drehen oder seine Maße zu ändern. Ein Kästchen im Raster ist 50&nbsp;cm breit.</p></div>
@@ -252,6 +264,7 @@
     </div>
     <details class="rp-more"><summary>Möbel als Liste zeigen</summary><div class="rp-tabw"><table id="rp-tab"></table></div></details>
   </div>
+  <p class="tip emb-no">Eigene Website? <a href="einbetten.html">Dieses Werkzeug bei dir einbinden</a></p>
 </div></section>
 
 {{FIG:raumplaner-2|Handgezeichneter Grundriss eines Wohnzimmers auf Karopapier, daneben Zollstock, Bleistift und Stoffmuster|Früher Karopapier und Radiergummi. Der Zollstock bleibt.}}
@@ -290,6 +303,7 @@
   <div class="sec-h"><h2>Häufige Fragen.</h2></div>
   <div class="faq">
     <details><summary>Ist der Raumplaner kostenlos?</summary><div><p>Ja. Du brauchst kein Konto und keine App. Der Planer läuft im Browser, auf dem Handy genauso wie am Rechner.</p></div></details>
+    <details><summary>Kann ich das Zimmer auch in 3D sehen?</summary><div><p>Ja. Der Knopf „3D-Ansicht“ über dem Plan zeigt den Raum von schräg oben, mit „Drehen“ siehst du ihn von allen vier Seiten. Verschoben wird weiter im Plan. Die Höhen der Möbel sind dabei Richtwerte.</p></div></details>
     <details><summary>Wo wird mein Plan gespeichert?</summary><div><p>Nur auf deinem Gerät. Der Planer merkt sich den letzten Stand im Browser, hochgeladen wird nichts. Löschst du die Browserdaten, ist auch der Plan weg.</p></div></details>
     <details><summary>Kann ich den Plan teilen oder mitnehmen?</summary><div><p>Ja. „Plan teilen“ erzeugt einen Link, in dem der ganze Plan steckt. Wer ihn öffnet, sieht deinen Raum und kann weiterplanen. „Als Bild speichern“ legt den Grundriss als Bild ab, zum Beispiel für den Möbelkauf.</p></div></details>
     <details><summary>Wie viel Platz brauche ich zwischen den Möbeln?</summary><div><p>Als Richtwert gelten 70&nbsp;cm für Laufwege. Zwischen Sofa und Couchtisch reichen 40 bis 50&nbsp;cm, neben dem Bett und vor dem Kleiderschrank sind 80&nbsp;cm bequem.</p></div></details>

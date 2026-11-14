@@ -1335,6 +1335,167 @@
   if (bs) bs.addEventListener('click', share);
   if (bi) bi.addEventListener('click', picture);
   addEventListener('beforeprint', function () { if (sel) select(null); });
+  /* ---------- 3D-Ansicht: der Plan von schräg oben, nur zum Ansehen ----------
+     Jedes Möbel wird aus Quadern und Zylindern gebaut und von hinten nach vorn gezeichnet.
+     Die Höhen in HK sind Richtwerte für das Bild. Sie gehen in keine Prüfung ein. Wandhöhe im Bild: 250 cm. */
+  var V3 = { on: false, q: 0 }, WALLH = 250, C3 = 0.866, S3 = 0.5;
+  var HK = { sofa: 80, eck: 80, sessel: 80, hocker: 42, tisch: 45, rund: 45, ess: 75, essr: 75, schreib: 75, tv: 50, kasten: 80, regal: 190, schrank: 210, bett: 50, teppich: 1.5, teppichr: 1.5, pflanze: 130, lampe: 160, block: 100 };
+  var MAT = { stoff: '#cdc5b6', holz: '#b38b5d', hell: '#ece8df', dunkel: '#3b3c3d', teppich: '#d8c8a6', gruen: '#5f8160', ton: '#b96a41', licht: '#f0deaa', decke: '#8aa39b', grau: '#c4c4c0' };
+  function shade(c, f) {
+    var m = /^rgb\((\d+),(\d+),(\d+)\)$/.exec(c), n = m ? 0 : parseInt(c.slice(1), 16), r = m ? +m[1] : n >> 16, g = m ? +m[2] : n >> 8 & 255, b = m ? +m[3] : n & 255;
+    return 'rgb(' + Math.min(255, Math.round(r * f)) + ',' + Math.min(255, Math.round(g * f)) + ',' + Math.min(255, Math.round(b * f)) + ')';
+  }
+  function dims3() { return V3.q % 2 ? [S.d, S.w] : [S.w, S.d]; }
+  /* Rechteck im Raum in die gedrehte Ansicht bringen (q Vierteldrehungen) */
+  function rot3(x, y, w, h) {
+    switch (V3.q) {
+      case 1: return { u: y, v: S.w - x - w, w: h, h: w };
+      case 2: return { u: S.w - x - w, v: S.d - y - h, w: w, h: h };
+      case 3: return { u: S.d - y - h, v: x, w: h, h: w };
+      default: return { u: x, v: y, w: w, h: h };
+    }
+  }
+  function part(it, lx, ly, lw, lh, z0, z1, c, o) {
+    var a = RP.abs(it, lx, ly), b = RP.abs(it, lx + lw, ly + lh), r = rot3(Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
+    var p = { u0: r.u, v0: r.v, u1: r.u + r.w, v1: r.v + r.h, z0: z0, z1: z1, c: c };
+    if (o) for (var k in o) p[k] = o[k];
+    return p;
+  }
+  function parts3(it) {
+    var c = CAT[it.t], k = c.k, w = it.w, h = it.h, H = HK[k] || 60, P = [], rnd = RP.isRound(it), i;
+    if (k === 'kasten') H = c.tall ? 180 : c.small ? 50 : it.t === 'schuh' ? 100 : 80;
+    if (k === 'tisch' && it.t === 'eigen') H = 75;
+    if (k === 'sofa' || k === 'sessel') {
+      var bd = Math.min(24, h * 0.26), aw = Math.min(18, w * 0.12);
+      P.push(part(it, 0, 0, w, bd, 0, H, MAT.stoff), part(it, aw, bd, w - 2 * aw, h - bd, 0, 42, shade(MAT.stoff, 1.04)), part(it, 0, bd, aw, h - bd, 0, 58, MAT.stoff), part(it, w - aw, bd, aw, h - bd, 0, 58, MAT.stoff));
+    } else if (k === 'eck') {
+      var l = RP.legOf(it), b2 = Math.min(24, l * 0.26), lx = it.flip ? 0 : w - l;
+      P.push(part(it, 0, 0, w, b2, 0, H, MAT.stoff), part(it, 0, b2, w, l - b2, 0, 42, shade(MAT.stoff, 1.04)), part(it, lx, l, l, h - l, 0, 42, shade(MAT.stoff, 1.04)), part(it, it.flip ? 0 : w - b2, b2, b2, h - b2, 0, H, MAT.stoff));
+    } else if (k === 'hocker') P.push(part(it, 0, 0, w, h, 0, H, MAT.stoff, { cyl: rnd }));
+    else if (k === 'rund' || k === 'essr' || (rnd && (k === 'tisch' || k === 'ess'))) {
+      P.push(part(it, w * 0.36, h * 0.36, w * 0.28, h * 0.28, 0, H - 5, shade(MAT.holz, 0.8), { cyl: 1, noTop: 1 }), part(it, 0, 0, w, h, H - 5, H, MAT.holz, { cyl: 1 }));
+    } else if (k === 'tisch' || k === 'ess' || k === 'schreib') {
+      var q = Math.min(6, w * 0.08, h * 0.12), ins = 4;
+      [[ins, ins], [w - ins - q, ins], [ins, h - ins - q], [w - ins - q, h - ins - q]].forEach(function (p) { P.push(part(it, p[0], p[1], q, q, 0, H - 5, shade(MAT.holz, 0.82), { noTop: 1 })); });
+      P.push(part(it, 0, 0, w, h, H - 5, H, MAT.holz));
+    } else if (k === 'tv') {
+      P.push(part(it, 0, 0, w, h, 0, H, MAT.holz));
+      P.push(part(it, w * 0.1, Math.max(2, h / 2 - 3), w * 0.8, 5, H + 4, H + 4 + w * 0.45, MAT.dunkel));
+    } else if (k === 'bett') {
+      P.push(part(it, 0, 0, w, 8, 0, 95, MAT.holz), part(it, 0, 8, w, h - 8, 0, 30, MAT.holz), part(it, 3, 10, w - 6, h - 13, 30, 50, MAT.hell));
+      P.push(part(it, 3, 10 + (h - 13) * 0.36, w - 6, (h - 13) * 0.64, 50, 54, MAT.decke));
+      if (w >= 140) P.push(part(it, w * 0.08, 16, w * 0.36, 42, 50, 60, MAT.hell), part(it, w * 0.56, 16, w * 0.36, 42, 50, 60, MAT.hell));
+      else P.push(part(it, w * 0.14, 16, w * 0.72, 42, 50, 60, MAT.hell));
+    } else if (k === 'teppich' || k === 'teppichr') P.push(part(it, 0, 0, w, h, 0, H, MAT.teppich, { cyl: rnd, flat: 1 }));
+    else if (k === 'pflanze') P.push(part(it, w * 0.2, h * 0.2, w * 0.6, h * 0.6, 0, 34, MAT.ton, { cyl: 1 }), part(it, 0, 0, w, h, 40, 130, MAT.gruen, { ball: 1 }));
+    else if (k === 'lampe') P.push(part(it, w * 0.1, h * 0.1, w * 0.8, h * 0.8, 0, 3, MAT.dunkel, { cyl: 1 }), part(it, w * 0.46, h * 0.46, w * 0.08, h * 0.08, 3, 136, MAT.dunkel, { cyl: 1, noTop: 1 }), part(it, 0, 0, w, h, 134, 164, MAT.licht, { cyl: 1 }));
+    else P.push(part(it, 0, 0, w, h, 0, H, k === 'block' ? MAT.grau : k === 'schrank' ? MAT.hell : MAT.holz, { cyl: rnd }));
+    return P;
+  }
+  /* Reihenfolge: was weiter hinten steht, zuerst. A steht vor B, wenn es in u oder v ganz dahinter beginnt. */
+  function order3(items) {
+    var rest = items.slice(), out = [];
+    function vor(a, b) { return a.u0 >= b.u1 - 0.5 || a.v0 >= b.v1 - 0.5; }
+    while (rest.length) {
+      var pick = -1, i, j;
+      for (i = 0; i < rest.length && pick < 0; i++) {
+        var frei = true;
+        for (j = 0; j < rest.length; j++) if (i !== j && vor(rest[i], rest[j]) && !vor(rest[j], rest[i])) { frei = false; break; }
+        if (frei) pick = i;
+      }
+      if (pick < 0) { pick = 0; for (i = 1; i < rest.length; i++) if (rest[i].u0 + rest[i].u1 + rest[i].v0 + rest[i].v1 < rest[pick].u0 + rest[pick].u1 + rest[pick].v0 + rest[pick].v1) pick = i; }
+      out.push(rest.splice(pick, 1)[0]);
+    }
+    return out;
+  }
+  function draw3d() {
+    var box = $('rp-3d'); if (!box || !V3.on) return;
+    S = RP.state();
+    var dm = dims3(), W = dm[0], D = dm[1], PW = Math.max(280, box.clientWidth || 600), mg = 14;
+    var minX = -D * C3, maxX = W * C3, minY = -WALLH, maxY = (W + D) * S3, k = (PW - 2 * mg) / (maxX - minX), maxH = Math.max(300, innerHeight - 250);
+    if ((maxY - minY) * k + 2 * mg > maxH) k = (maxH - 2 * mg) / (maxY - minY);
+    var PH = Math.round((maxY - minY) * k + 2 * mg), ox = (PW - (maxX - minX) * k) / 2;
+    var cs = getComputedStyle(root), sheet = (cs.getPropertyValue('--sheet') || '').trim() || '#fbfbf8', line = (cs.getPropertyValue('--line') || '').trim() || '#d9d8d1';
+    function P(u, v, z) { return [((u - v) * C3 - minX) * k + ox, ((u + v) * S3 - z - minY) * k + mg]; }
+    function pts(a) { return a.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '); }
+    var sv = E('svg', { viewBox: '0 0 ' + PW + ' ' + PH, width: PW, height: PH, role: 'img', 'aria-label': 'Ansicht des Zimmers von schräg oben mit ' + S.items.length + ' Möbeln. Zum Bearbeiten zurück zum Plan wechseln.' });
+    E('rect', { x: 0, y: 0, width: PW, height: PH, fill: sheet }, sv);
+    function poly(a, fill, stroke, sw) { return E('polygon', { points: pts(a), fill: fill, stroke: stroke || 'rgba(0,0,0,.28)', 'stroke-width': sw || 0.8, 'stroke-linejoin': 'round' }, sv); }
+    /* Boden mit 50-cm-Raster, dann die zwei hinteren Wände */
+    poly([P(0, 0, 0), P(W, 0, 0), P(W, D, 0), P(0, D, 0)], '#e9e1d0', line, 1);
+    var g;
+    for (g = 50; g < W; g += 50) E('line', { x1: P(g, 0, 0)[0], y1: P(g, 0, 0)[1], x2: P(g, D, 0)[0], y2: P(g, D, 0)[1], stroke: 'rgba(0,0,0,.07)', 'stroke-width': 1 }, sv);
+    for (g = 50; g < D; g += 50) E('line', { x1: P(0, g, 0)[0], y1: P(0, g, 0)[1], x2: P(W, g, 0)[0], y2: P(W, g, 0)[1], stroke: 'rgba(0,0,0,.07)', 'stroke-width': 1 }, sv);
+    poly([P(0, 0, 0), P(0, D, 0), P(0, D, WALLH), P(0, 0, WALLH)], '#f1eee6', line, 1);
+    poly([P(0, 0, 0), P(W, 0, 0), P(W, 0, WALLH), P(0, 0, WALLH)], '#f7f5ef', line, 1);
+    function opening(o, door) {
+      var r = o.wall === 'N' ? rot3(o.pos, 0, o.size, 0) : o.wall === 'S' ? rot3(o.pos, S.d, o.size, 0) : o.wall === 'W' ? rot3(0, o.pos, 0, o.size) : rot3(S.w, o.pos, 0, o.size);
+      var z0 = door ? 0 : 92, z1 = door ? 205 : 215, fill = door ? '#cfc6b4' : '#d5e5ee', a, m;
+      if (Math.abs(r.u) < 0.5 && r.w < 0.5) { a = [P(0, r.v, z0), P(0, r.v + r.h, z0), P(0, r.v + r.h, z1), P(0, r.v, z1)]; poly(a, fill, 'rgba(0,0,0,.4)', 1.2); if (!door) { m = r.v + r.h / 2; E('line', { x1: P(0, m, z0)[0], y1: P(0, m, z0)[1], x2: P(0, m, z1)[0], y2: P(0, m, z1)[1], stroke: 'rgba(0,0,0,.35)', 'stroke-width': 1 }, sv); } }
+      else if (Math.abs(r.v) < 0.5 && r.h < 0.5) { a = [P(r.u, 0, z0), P(r.u + r.w, 0, z0), P(r.u + r.w, 0, z1), P(r.u, 0, z1)]; poly(a, fill, 'rgba(0,0,0,.4)', 1.2); if (!door) { m = r.u + r.w / 2; E('line', { x1: P(m, 0, z0)[0], y1: P(m, 0, z0)[1], x2: P(m, 0, z1)[0], y2: P(m, 0, z1)[1], stroke: 'rgba(0,0,0,.35)', 'stroke-width': 1 }, sv); } }
+      else { var e1 = P(r.u, r.v, 0), e2 = P(r.u + r.w, r.v + r.h, 0); E('line', { x1: e1[0], y1: e1[1], x2: e2[0], y2: e2[1], stroke: door ? '#a8853c' : '#6f9db5', 'stroke-width': 5, 'stroke-linecap': 'round' }, sv); }
+    }
+    S.wins.forEach(function (o) { opening(o, false); }); S.doors.forEach(function (o) { opening(o, true); });
+    /* Möbel */
+    var items = S.items.map(function (it) {
+      var b = RP.box(it), r = rot3(b.x, b.y, b.w, b.h);
+      return { u0: r.u, v0: r.v, u1: r.u + r.w, v1: r.v + r.h, flat: !!CAT[it.t].flat, parts: parts3(it).sort(function (a, c) { return a.z0 - c.z0 || (a.u0 + a.u1 + a.v0 + a.v1) - (c.u0 + c.u1 + c.v0 + c.v1); }) };
+    });
+    var list = items.filter(function (i) { return i.flat; }).concat(order3(items.filter(function (i) { return !i.flat; })));
+    list.forEach(function (it) {
+      it.parts.forEach(function (p) {
+        var cu = (p.u0 + p.u1) / 2, cv = (p.v0 + p.v1) / 2, r = Math.min(p.u1 - p.u0, p.v1 - p.v0) / 2, rx = r * 1.2247 * k, ry = r * 0.7071 * k, a, b;
+        if (p.ball) { a = P(cu, cv, (p.z0 + p.z1) / 2); var rr = (p.z1 - p.z0) / 2 * k * 0.8; E('circle', { cx: a[0], cy: a[1], r: rr, fill: p.c, stroke: 'rgba(0,0,0,.25)', 'stroke-width': 0.8 }, sv); E('circle', { cx: a[0] - rr * 0.28, cy: a[1] - rr * 0.3, r: rr * 0.45, fill: shade(p.c, 1.16) }, sv); return; }
+        if (p.cyl) {
+          a = P(cu, cv, p.z0); b = P(cu, cv, p.z1);
+          if (p.z1 - p.z0 > 2) E('path', { d: 'M' + (b[0] - rx).toFixed(1) + ' ' + b[1].toFixed(1) + 'V' + a[1].toFixed(1) + 'A' + rx.toFixed(1) + ' ' + ry.toFixed(1) + ' 0 0 0 ' + (a[0] + rx).toFixed(1) + ' ' + a[1].toFixed(1) + 'V' + b[1].toFixed(1) + 'z', fill: shade(p.c, 0.84), stroke: 'rgba(0,0,0,.28)', 'stroke-width': 0.8 }, sv);
+          if (!p.noTop) E('ellipse', { cx: b[0], cy: b[1], rx: rx, ry: ry, fill: p.c, stroke: 'rgba(0,0,0,.28)', 'stroke-width': 0.8 }, sv);
+          return;
+        }
+        poly([P(p.u1, p.v0, p.z0), P(p.u1, p.v1, p.z0), P(p.u1, p.v1, p.z1), P(p.u1, p.v0, p.z1)], shade(p.c, 0.88));
+        poly([P(p.u0, p.v1, p.z0), P(p.u1, p.v1, p.z0), P(p.u1, p.v1, p.z1), P(p.u0, p.v1, p.z1)], shade(p.c, 0.74));
+        if (!p.noTop) poly([P(p.u0, p.v0, p.z1), P(p.u1, p.v0, p.z1), P(p.u1, p.v1, p.z1), P(p.u0, p.v1, p.z1)], p.c);
+      });
+    });
+    box.textContent = ''; box.appendChild(sv); V3.svg = sv; V3.w = PW; V3.h = PH;
+  }
+  function toggle3d(on) {
+    V3.on = on; if (on && sel) select(null);
+    var sh = host.parentNode; sh.classList.toggle('v3', on);
+    $('rp-3d').hidden = !on; $('rp-3d-rot').hidden = !on; $('rp-3d-pic').hidden = !on; $('rp-tool').hidden = on; if ($('rp-3d-n')) $('rp-3d-n').hidden = !on;
+    var b = $('rp-3d-btn'); b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.lastChild.nodeValue = on ? 'Zum Plan' : '3D-Ansicht';
+    if (on) draw3d(); else { renderAll(); overlays(); }
+  }
+  function picture3d() {
+    function fail() { toast('Das Bild klappt in diesem Browser nicht. Nimm einen Screenshot.'); }
+    function down(blob) { var a = d.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = 'zimmer-3d.png'; d.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 4000); toast('Bild gespeichert'); }
+    try {
+      var cl = V3.svg.cloneNode(true), W = V3.w, H = V3.h + 30; cl.setAttribute('xmlns', NS); cl.setAttribute('viewBox', '0 0 ' + W + ' ' + H); cl.setAttribute('width', W); cl.setAttribute('height', H);
+      var bg = cl.firstChild.getAttribute('fill'); E('rect', { x: 0, y: V3.h, width: W, height: 30, fill: bg }, cl);
+      var t = E('text', { x: W - 12, y: V3.h + 18, 'text-anchor': 'end', fill: '#5c605d', 'font-family': 'Helvetica,Arial,sans-serif', 'font-size': 12 }, cl); t.textContent = 'stil-daheim.de/raumplaner';
+      var img = new Image(), sc = Math.max(2, Math.min(4, 1600 / W));
+      img.onload = function () {
+        try {
+          var cv = d.createElement('canvas'); cv.width = Math.round(W * sc); cv.height = Math.round(H * sc); cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          cv.toBlob(function (blob) {
+            if (!blob) return fail();
+            var file = null; try { file = new File([blob], 'zimmer-3d.png', { type: 'image/png' }); } catch (x) { }
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) { navigator.share({ files: [file], title: 'Mein Zimmer' }).catch(function (err) { if (!err || err.name !== 'AbortError') down(blob); }); return; }
+            down(blob);
+          }, 'image/png');
+        } catch (x) { fail(); }
+      };
+      img.onerror = fail; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(cl));
+    } catch (x) { fail(); }
+  }
+  if ($('rp-3d-btn')) {
+    var renderPlan = renderAll;
+    renderAll = function () { renderPlan(); if (V3.on) draw3d(); };
+    $('rp-3d-btn').addEventListener('click', function () { toggle3d(!V3.on); });
+    $('rp-3d-rot').addEventListener('click', function () { V3.q = (V3.q + 1) % 4; draw3d(); });
+    $('rp-3d-pic').addEventListener('click', picture3d);
+    window.RP3 = { on: function () { return V3.on; }, parts: parts3, view: function () { return V3.q; } };
+  }
   renderCat(); renderAll(); commit(); renderTool();
   if (undo.length) $('rp-undo').disabled = false;
   if (shared) setTimeout(function () { toast('Geteilter Plan geöffnet. „Rückgängig“ holt deinen eigenen zurück.'); }, 900);
