@@ -568,3 +568,20 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 @keyframes lx-in{from{opacity:0;transform:translateY(4px)}}
 @media (prefers-reduced-motion:reduce){.lx-pop{animation:none}}
 @media print{.lx{text-decoration:none}.lx-pop{display:none}}
+
+/* Dialog (Anleitung „Als App“) */
+.mz-dlg{border:0;border-radius:20px;padding:0;max-width:min(92vw,420px);width:100%;background:var(--bg);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.35)}
+.mz-dlg::backdrop{background:rgba(0,0,0,.5)}
+.mz-dlg form{padding:24px;display:grid;gap:14px}
+.mz-dlg h2{font-size:1.3rem;margin:0}.mz-dlg p{margin:0;font-size:.9rem;color:var(--mut)}
+.mz-dlg label{display:grid;gap:6px;font-size:.88rem;font-weight:600}
+.mz-dlg input{font:inherit;font-size:1rem;font-weight:400;padding:11px 12px;min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.mz-dlg .mz-err{color:#b3261e}
+.mz-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.mz-b button{font:inherit;font-size:.92rem;font-weight:600;padding:11px 16px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.mz-b .mz-ok{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.mz-b .mz-del{margin-left:auto;border-color:transparent;color:var(--mut);text-decoration:underline}
+/* Knopf „Als App installieren“ in der Fußzeile (site.js) */
+.app-i{margin:14px 0 0}.app-i button{font:inherit;font-size:.86rem;font-weight:600;padding:9px 16px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:none;color:inherit;cursor:pointer}
+.app-i button:hover{border-color:currentColor}
+@media print{.app-i{display:none}}

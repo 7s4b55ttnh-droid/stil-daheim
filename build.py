@@ -239,7 +239,7 @@ LEX = sorted(json.loads((HERE / 'lexikon.json').read_text(encoding='utf-8'))['be
 
 
 def lexikon_liste():
-    return ''.join('<article class="lx-item" id="%s"><h3>%s</h3><p class="lx-k">%s</p><p>%s</p><p class="lx-l">%s</p></article>'
+    return ''.join('<article class="lx-item" id="%s"><h2>%s</h2><p class="lx-k">%s</p><p>%s</p><p class="lx-l">%s</p></article>'
                    % (b['slug'], b['name'], b['kurz'], b['text'], ''.join('<a href="%s">%s</a>' % (h, t) for h, t in b['links'])) for b in LEX)
 
 
@@ -348,7 +348,7 @@ def page(src):
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
             '<link rel="canonical" href="%(dom)s%(path)s">%(robots)s<meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
             '<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>'
-            '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">'
+            '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">'
             '<link rel="stylesheet" href="site.css">\n%(head)s\n<script src="site.js" defer></script></head><body>\n'
             '<a class="skip" href="#main">Zum Inhalt springen</a>\n'
             '<header class="hd" id="hd"><div class="hd-in"><a class="logo" href="index.html">%(lamp)s<span>Stil-Daheim</span></a>'
@@ -497,7 +497,7 @@ if __name__ == '__main__':
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
-    for f in ('site.css', 'site.js'):
+    for f in ('site.css', 'site.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
