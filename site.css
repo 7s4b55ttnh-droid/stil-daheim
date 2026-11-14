@@ -556,3 +556,15 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .emb a[href*="amazon."],.emb [data-print],.emb .emb-no{display:none!important}
 .emb-cr{font-size:.82rem;opacity:.75;margin:14px 0 0;text-align:right}
 .emb-cr a{text-decoration:underline}
+
+/* Lexikon im Text (site.js): gepunktet unterstrichener Begriff und Erklärung beim Antippen */
+.lx{text-decoration:underline dotted;text-decoration-thickness:1.5px;text-underline-offset:3px;text-decoration-color:var(--brass);cursor:help;border-radius:3px}
+.lx:hover,.lx[aria-expanded="true"]{background:color-mix(in srgb,var(--brass) 20%,transparent)}
+.lx:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.lx-pop{position:absolute;z-index:60;box-sizing:border-box;background:var(--ink);color:var(--bg);border-radius:14px;padding:14px 16px;font-size:.92rem;line-height:1.45;box-shadow:0 14px 40px rgba(0,0,0,.35);animation:lx-in .16s ease-out}
+.lx-pop[hidden]{display:none}
+.lx-pop b{display:block;margin-bottom:4px}.lx-pop p{margin:0 0 8px}
+.lx-pop a{color:inherit;font-weight:600;text-decoration:underline}
+@keyframes lx-in{from{opacity:0;transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.lx-pop{animation:none}}
+@media print{.lx{text-decoration:none}.lx-pop{display:none}}
