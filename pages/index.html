@@ -78,7 +78,7 @@
   <div class="wrap">
     <h1>Mit Gefühl einrichten. Und mit Zollstock.</h1>
     <p>Finde deinen Wohnstil, miss richtig aus und kauf das Passende. Auch in der Mietwohnung.</p>
-    <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div>
+    <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div>
   </div>
 </div>
 
@@ -126,13 +126,13 @@
       <li><b>Bilder zu hoch</b><span>Die Bildmitte gehört auf 140 bis 160 cm.</span></li>
       <li><b>Lampe zu hoch</b><span>Über dem Esstisch 60 bis 80 cm über der Platte.</span></li>
     </ul>
-    <div class="btns desk-only"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
+    <div class="btns desk-only"><a class="btn" href="raumplaner.html">Ganzen Raum planen</a><a class="btn ghost" href="rechner.html">Zum Raum-Rechner</a></div>
   </div>
   <div class="mini">
     <div class="sheet" id="mini-sheet" role="img" aria-label="Zeichnung: Sofa und Teppich von oben"></div>
     <div class="field"><label for="mini-sofa">Wie breit ist dein Sofa?</label><div class="frow"><input type="range" id="mini-sofa" min="140" max="320" step="10" value="220"><span class="vbox"><input class="vin" id="mini-sofa-n" type="text" inputmode="numeric" autocomplete="off" value="220" aria-label="Sofabreite in Zentimetern"><span class="vu">cm</span></span></div><p class="clampmsg" id="mini-msg" aria-live="polite"></p></div>
     <p class="result" id="mini-res" aria-live="polite"></p>
-    <div class="btns mob-only"><a class="btn" href="rechner.html">Zum Raum-Rechner</a></div>
+    <div class="btns mob-only"><a class="btn" href="raumplaner.html">Ganzen Raum planen</a><a class="btn ghost" href="rechner.html">Zum Raum-Rechner</a></div>
   </div>
 </div></section>
 
@@ -176,7 +176,7 @@ function render(focus){
     box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
     const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="rechner.html">Raum ausmessen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
   if(focus){anim();const t=box.getBoundingClientRect().top;if(t<0||t>innerHeight*.6)scrollTo({top:scrollY+t-80,behavior:RM?'auto':'smooth'})}

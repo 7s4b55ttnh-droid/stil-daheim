@@ -1,9 +1,9 @@
 """Baut die Seiten von Stil-Daheim aus den Bausteinen in pages/.
 
-Quellen (Branch quellen):  build.py, pages/*.html, draw.js, site.css, site.js
+Quellen (Branch quellen):  build.py, pages/*.html, draw.js, raumplaner.js, site.css, site.js
 Ausgabe (Branch main):     ../stil-daheim  (oder Umgebungsvariable STIL_OUT)
 
-Jede Quelldatei beginnt mit einem Kommentar <!--meta {json} --> (key, title, desc, og, updated)
+Jede Quelldatei beginnt mit einem Kommentar <!--meta {json} --> (key, title, desc, og, updated, kurz; kurz_nach = Abschnitts-ID, hinter der „Kurz gesagt“ steht)
 und hat die Teile <!--HEAD--> (zusätzliches im <head>), <!--MAIN--> (Inhalt von <main>) und
 <!--END--> (Skripte am Ende).
 
@@ -44,11 +44,12 @@ ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-
 EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
 
 # Hauptnavigation (Kopfzeile) und alle Ratgeber (Menü, Fußzeile, „Passt dazu“)
-NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'),
+NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'), ('raumplaner.html', 'Raumplaner', 'raumplaner'),
        ('rechner.html', 'Raum-Rechner', 'rechner'), ('mieten.html', 'Zur Miete', 'mieten')]
 # (Link, Titel, Kurztext, Schlüssel, Foto)
 GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
         ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'start'),
+        ('raumplaner.html', 'Raumplaner', 'Möbel verschieben, Abstände prüfen', 'raumplaner', 'raumplaner'),
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
@@ -155,8 +156,8 @@ KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch':
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum',
        'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
-       'rechner': 'werkzeug'}
-FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Rechner')]
+       'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum'}
+FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Planer und Rechner')]
 
 
 def fcols(cur):
@@ -258,6 +259,13 @@ def sources(m):
     return ('<details class="src"><summary>%s</summary>%s</details>%s' % (
         'Alle %d Quellen anzeigen' % n if n > 1 else 'Quelle anzeigen', inner,
         '<p class="src checked">%s</p>' % checked.group(1) if checked else ''))
+
+
+def mini(js):
+    """Skript für die Auslieferung schlanker machen: Blockkommentare, Einrückung und Leerzeilen entfernen.
+    Der lesbare Quelltext bleibt im Branch quellen. Voraussetzung: keine Zeilenkommentare und keine mehrzeiligen Zeichenketten im Skript."""
+    js = re.sub(r'/\*.*?\*/', '', js, flags=re.S)
+    return '\n'.join(l.strip() for l in js.split('\n') if l.strip()) + '\n'
 
 
 def de_date(iso):
@@ -387,8 +395,9 @@ def seo(html, meta, path):
     i0 = html.index('<main')
     if meta.get('kurz'):
         box = '<section class="kurz-s"><div class="wrap narrow"><div class="kurz" id="kurz-gesagt"><b>Kurz gesagt</b><p>%s</p></div>%s</div></section>\n' % (meta['kurz'], toc(html[i0:html.index('</main>')]))
-        i = html.index('<section', i0)
-        html = html[:i] + box + html[i:]
+        after = meta.get('kurz_nach')   # Werkzeug-Seiten: Kasten erst nach dem genannten Abschnitt, damit das Werkzeug oben steht
+        i = html.index('</section>', html.index('<section id="%s"' % after, i0)) + len('</section>') if after else html.index('<section', i0)
+        html = html[:i] + ('\n' if after else '') + box + html[i:]
     main = html[i0:html.index('</main>')]
     url = DOMAIN + path
     org = {'@type': 'Organization', 'name': 'Stil-Daheim', 'url': DOMAIN}
@@ -437,6 +446,7 @@ def sitemap(metas):
 if __name__ == '__main__':
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
+    (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     for f in ('site.css', 'site.js'):
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
