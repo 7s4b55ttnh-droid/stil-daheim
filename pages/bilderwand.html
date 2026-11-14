@@ -1,0 +1,381 @@
+<!--meta {"key":"bilderwand","title":"Bilderwand planen: Abstände, Höhe und Nagelpunkte berechnen – Stil-Daheim","desc":"Bilderwand-Planer: Rahmen wählen, Wand und Sofa eintragen und sofort sehen, wie die Bilder hängen. Mit Abständen, Bildmitte und einer Liste aller Nagelpunkte.","og":"assets/bilderwand.jpg","updated":"2026-11-14","kurz_nach":"planer","kurz":"Die Mitte einer Bilderwand hängt auf etwa 140 bis 150&nbsp;cm Höhe. Über dem Sofa bleiben 15 bis 20&nbsp;cm bis zur Rahmenunterkante, über dem Sideboard 10 bis 15&nbsp;cm, und die Gruppe ist zwei Drittel bis drei Viertel so breit wie das Möbel. Der Planer rechnet aus deinen Rahmen alle Abstände und sagt für jeden Nagel, wie weit er von der Wandkante und vom Boden entfernt sitzt."} -->
+<!--HEAD-->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bilderwand-Planer von Stil-Daheim","url":"https://stil-daheim.de/bilderwand.html","applicationCategory":"DesignApplication","operatingSystem":"Alle, läuft im Browser","inLanguage":"de-DE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Bilderwand planen: Rahmen anordnen, Abstände prüfen und die Nagelpunkte ausmessen."}</script>
+<style>
+.hero.sub img{object-position:62% 50%}
+.bw{display:grid;gap:28px;align-items:start}
+.bw>*{min-width:0}
+@media (min-width:980px){.bw{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:34px}.bw-plan{position:sticky;top:84px}}
+.bw-h{display:flex;align-items:center;gap:12px;font-size:1.22rem;font-weight:700;font-stretch:84%;line-height:1.15;margin:0 0 14px}
+.bw-h i{flex:none;width:30px;height:30px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--brass);display:grid;place-items:center;font-style:normal;font-size:.95rem;color:var(--ink)}
+.bw-step+.bw-step{margin-top:30px}
+.bw-row{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+.bw-row label{display:flex;align-items:center;gap:9px;font-weight:600}
+.bw-row .vin{width:4.6em}
+.bw-row[hidden]{display:none}
+.bw-note{font-size:.92rem;color:var(--mut);margin:8px 0 0;line-height:1.45}
+.bw-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.bw-chips button{min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font-weight:600;font-size:.94rem}
+.bw-chips button[aria-pressed="true"]{background:var(--grn);border-color:var(--grn);color:#fff}
+.bw-chips button:hover{border-color:var(--grn)}
+.bw-cols{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.bw-cols li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;gap:8px;align-items:center;background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.bw-cols li>b{width:1.7em;height:1.7em;border-radius:50%;background:var(--band);display:grid;place-items:center;font-size:.86rem}
+.bw-cols select{min-height:44px;font:inherit;font-weight:600;color:var(--ink);background:var(--pan);border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;min-width:0;width:100%}
+.bw-cols button{min-width:44px;min-height:44px;border-radius:8px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font-weight:700;display:grid;place-items:center}
+.bw-cols button:hover{border-color:var(--grn)}
+.bw-cols button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bw-cols .n{font-size:.92rem;padding-inline:10px;white-space:nowrap}
+.bw-add{margin-top:10px;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px dashed var(--line);color:var(--ink);font-weight:600}
+.bw-add:disabled{opacity:.4}
+.bw-sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bw-sheet svg{display:block;width:100%;height:auto}
+.bw-tb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);font-size:.86rem}
+.bw-tb div{padding:9px 12px;border-left:1px solid var(--line);min-width:0}
+.bw-tb div:first-child{border-left:0}
+.bw-tb span{display:block;color:var(--mut)}
+.bw-tb b{display:block;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bw-ck{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.bw-ck li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:.97rem;line-height:1.4}
+.bw-ck i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;color:#fff;background:var(--grn);margin-top:1px}
+.bw-ck .warn i{background:var(--brass);color:#1c1f1d}.bw-ck .bad i{background:#b3402e}
+.bw-out{margin-top:30px}
+.bw-tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--pan)}
+.bw-t{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.97rem}
+.bw-t th,.bw-t td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.bw-t th:nth-child(-n+2),.bw-t td:nth-child(-n+2){text-align:left}
+.bw-t tr:last-child td{border-bottom:0}
+.bw-t th{font-size:.84rem;color:var(--mut);font-weight:600}
+.bw-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.bw-btns button{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font-weight:650}
+.bw-btns button:hover{border-color:var(--grn)}
+.bw-btns svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bw-arten{display:grid;gap:14px;margin-top:26px}
+@media (min-width:720px){.bw-arten{grid-template-columns:repeat(3,1fr)}}
+.bw-arten div{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:18px}
+.bw-arten svg{display:block;width:100%;max-width:150px;height:auto;margin-bottom:12px;color:var(--grn)}
+.bw-arten h3{margin:0 0 6px;font-size:1.08rem}
+.bw-arten p{margin:0;font-size:.96rem;color:var(--mut)}
+.bw-rt{width:100%;border-collapse:collapse;margin-top:22px;font-size:.98rem}
+.bw-rt th,.bw-rt td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.bw-rt th{font-size:.84rem;color:var(--mut)}
+@media (max-width:560px){.bw-cols li{grid-template-columns:auto minmax(0,1fr) auto auto;row-gap:6px}.bw-cols li .n{grid-column:2/4;justify-self:start}.bw-tb{font-size:.78rem}.bw-tb div{padding:8px}}
+@media print{.bw-in,.bw-btns,.bw-chips{display:none!important}.bw{display:block}.bw-sheet{break-inside:avoid}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:bilderwand|Bilderwand mit sieben gerahmten Drucken über einem hellen Leinensofa im Abendlicht}}
+  <div class="wrap">
+    <h1>Bilderwand planen</h1>
+    <p>Rahmen wählen, Wand ausmessen. Der Planer zeigt, wie die Bilder hängen und wo jeder Nagel sitzt.</p>
+    <div class="btns"><a class="btn" href="#planer">Bilderwand planen</a><a class="btn ghost" href="#arten">Hängungen ansehen</a></div>
+  </div>
+</div>
+
+<section id="planer"><div class="wrap" data-emb>
+  <h2>Deine Wand im Maßstab.</h2>
+  <p class="lede">Drei Angaben, dann steht der Plan: Wand, Rahmen, Abstände.</p>
+  <div class="bw" style="margin-top:30px">
+    <div class="bw-plan">
+      <div class="bw-sheet">
+        <div id="bw-draw" role="img" aria-label="Zeichnung der Bilderwand"></div>
+        <div class="bw-tb"><div><span>Gruppe</span><b id="bw-t1">–</b></div><div><span>Bildmitte</span><b id="bw-t2">–</b></div><div><span>Rahmen</span><b id="bw-t3">–</b></div></div>
+      </div>
+      <ul class="bw-ck" id="bw-ck" aria-live="polite"></ul>
+    </div>
+    <div class="bw-in">
+      <div class="bw-step">
+        <h3 class="bw-h"><i>1</i>Wo hängen die Bilder?</h3>
+        <div class="bw-chips" id="bw-mode" role="group" aria-label="Ort der Bilderwand"><button type="button" data-m="sofa" aria-pressed="true">Über dem Sofa</button><button type="button" data-m="board" aria-pressed="false">Über dem Sideboard</button><button type="button" data-m="frei" aria-pressed="false">Freie Wand</button></div>
+        <div class="bw-row">
+          <label for="bw-w">Wand breit <input class="vin" id="bw-w" type="text" inputmode="numeric" autocomplete="off" value="360" aria-label="Breite der Wand in Zentimetern"> cm</label>
+          <label for="bw-hh">hoch <input class="vin" id="bw-hh" type="text" inputmode="numeric" autocomplete="off" value="250" aria-label="Höhe der Wand in Zentimetern"> cm</label>
+        </div>
+        <div class="bw-row" id="bw-moebel" style="margin-top:10px">
+          <label for="bw-mw"><span id="bw-mwl">Sofa</span> breit <input class="vin" id="bw-mw" type="text" inputmode="numeric" autocomplete="off" value="220" aria-label="Breite des Möbels in Zentimetern"> cm</label>
+          <label for="bw-mh"><span id="bw-mhl">Lehne</span> hoch <input class="vin" id="bw-mh" type="text" inputmode="numeric" autocomplete="off" value="85" aria-label="Höhe der Oberkante des Möbels in Zentimetern"> cm</label>
+        </div>
+        <div class="bw-row" id="bw-frei" style="margin-top:10px" hidden>
+          <label for="bw-mid">Bildmitte auf <input class="vin" id="bw-mid" type="text" inputmode="numeric" autocomplete="off" value="150" aria-label="Höhe der Bildmitte in Zentimetern"> cm</label>
+        </div>
+        <p class="bw-note" id="bw-n1">Miss die Lehne vom Boden bis zur Oberkante. Das Möbel steht im Plan mittig an der Wand.</p>
+      </div>
+      <div class="bw-step">
+        <h3 class="bw-h"><i>2</i>Welche Rahmen?</h3>
+        <div class="bw-chips" id="bw-pre" role="group" aria-label="Vorlage wählen"></div>
+        <ol class="bw-cols" id="bw-cols"></ol>
+        <button type="button" class="bw-add" id="bw-add">+ Spalte dazu</button>
+        <p class="bw-note">Jede Zeile ist eine Spalte an der Wand. Mit „übereinander“ hängen in einer Spalte bis zu drei gleiche Rahmen. Gemeint ist das Außenmaß des Rahmens, Breite mal Höhe.</p>
+      </div>
+      <div class="bw-step">
+        <h3 class="bw-h"><i>3</i>Abstände</h3>
+        <div class="bw-row">
+          <label for="bw-gap">Zwischen den Rahmen <input class="vin" id="bw-gap" type="text" inputmode="decimal" autocomplete="off" value="5" aria-label="Abstand zwischen den Rahmen in Zentimetern"> cm</label>
+          <label for="bw-hang">Aufhänger unter der Oberkante <input class="vin" id="bw-hang" type="text" inputmode="decimal" autocomplete="off" value="3" aria-label="Abstand des Aufhängers zur Oberkante des Rahmens in Zentimetern"> cm</label>
+        </div>
+        <p class="bw-note">Dreh einen Rahmen um und miss von der Oberkante bis zum Aufhänger oder bis zum gespannten Draht. Haben deine Rahmen verschiedene Aufhänger, zieh den Unterschied beim Messen an der Wand ab.</p>
+      </div>
+    </div>
+  </div>
+  <div class="bw-out">
+    <h3 class="bw-h" style="margin-bottom:6px">Hier kommen die Nägel hin</h3>
+    <p class="bw-note" style="margin:0 0 14px">Gemessen von der linken Wandkante und vom Boden. Die Nummern stehen auch in der Zeichnung.</p>
+    <div class="bw-tw"><table class="bw-t"><thead><tr><th scope="col">Nr.</th><th scope="col">Rahmen</th><th scope="col">von links</th><th scope="col">vom Boden</th></tr></thead><tbody id="bw-tab"></tbody></table></div>
+    <div class="bw-btns"><button type="button" id="bw-share">{{SHARE}}Plan teilen</button><button type="button" id="bw-img">Als Bild speichern</button><button type="button" data-print>{{PRINT}}Drucken</button></div>
+    <p class="tip">Vor dem ersten Nagel: Kleb die Umrisse mit Kreppband an die Wand und schau sie dir aus ein paar Metern Entfernung an. Ob das Sofa selbst gut steht, prüft der <a href="raumplaner.html">Raumplaner</a>.</p>
+  </div>
+</div></section>
+
+<section class="band" id="arten"><div class="wrap">
+  <h2>Sechs Hängungen, kurz erklärt.</h2>
+  <p class="lede">Alle lassen sich im Planer nachbauen.</p>
+  <div class="bw-arten">
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="8" y="14" width="36" height="46"/><rect x="57" y="14" width="36" height="46"/><rect x="106" y="14" width="36" height="46"/></svg><h3>Reihenhängung</h3><p>Gleiche Rahmen nebeneinander, mit gleichem Abstand. Gut für Serien und Bilder, die zusammengehören.</p></div>
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="20" y="4" width="30" height="28"/><rect x="60" y="4" width="30" height="28"/><rect x="100" y="4" width="30" height="28"/><rect x="20" y="40" width="30" height="28"/><rect x="60" y="40" width="30" height="28"/><rect x="100" y="40" width="30" height="28"/></svg><h3>Rasterhängung</h3><p>Viele gleich große Bilder in Reihen und Spalten. Wirkt ruhig, wenn alle Abstände gleich sind.</p></div>
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="8" y="20" width="30" height="30"/><rect x="48" y="6" width="44" height="58"/><rect x="102" y="14" width="40" height="42"/><path d="M0 35h150" stroke-width="1.5" stroke-dasharray="4 4"/></svg><h3>Mittellinie</h3><p>Verschieden große Rahmen, deren Mitten auf einer gedachten Linie liegen. Der Planer richtet jede Spalte so aus.</p></div>
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="14" y="6" width="50" height="58"/><rect x="74" y="6" width="62" height="24"/><rect x="74" y="40" width="26" height="24"/><rect x="110" y="40" width="26" height="24"/></svg><h3>Gedachter Rahmen</h3><p>Die äußeren Kanten aller Bilder schließen bündig ab. So entsteht eine klare Kontur, auch mit gemischten Größen.</p></div>
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="10" y="22" width="26" height="34"/><rect x="44" y="6" width="38" height="30"/><rect x="44" y="44" width="22" height="20"/><rect x="74" y="44" width="30" height="20"/><rect x="90" y="8" width="20" height="28"/><rect x="118" y="18" width="24" height="38"/></svg><h3>Petersburger Hängung</h3><p>Locker gemischt, verschiedene Größen und Rahmen. Zusammen hält sie ein gemeinsames Thema oder ein Farbton.</p></div>
+    <div><svg viewBox="0 0 150 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3"><rect x="14" y="10" width="34" height="46"/><rect x="56" y="26" width="26" height="30"/><rect x="92" y="18" width="40" height="38"/><path d="M4 58h142" stroke-width="4"/></svg><h3>Bilderleiste</h3><p>Die Bilder stehen auf einer schmalen Leiste. Du kannst sie tauschen, ohne neu zu bohren.</p></div>
+  </div>
+</div></section>
+
+<section id="schritte"><div class="wrap narrow">
+  <h2>So kommt der Plan an die Wand.</h2>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Auf dem Boden auslegen</h3><p>Leg alle Rahmen so auf den Boden, wie sie hängen sollen. Tausch so lange, bis es stimmt, und trag die Reihenfolge in den Planer ein.</p></li>
+    <li><h3>Mit Kreppband testen</h3><p>Kleb die Umrisse mit Kreppband an die Wand und geh ein paar Meter zurück. Jetzt siehst du, ob Höhe und Breite passen.</p></li>
+    <li><h3>Nagelpunkte anzeichnen</h3><p>Miss für jeden Rahmen die zwei Werte aus der Liste: von der linken Wandkante und vom Boden. Ein Bleistiftkreuz reicht.</p></li>
+    <li><h3>Passend befestigen</h3><p>Bilder bis 10&nbsp;kg halten oft an Nägeln, die du schräg im 45-Grad-Winkel einschlägst. Schwerere Bilder und poröse Wände brauchen Schrauben und Dübel.</p></li>
+    <li><h3>Große Bilder doppelt halten</h3><p>Große Rahmen und Querformate bekommen zwei Aufhänger. Dann hängen sie gerade und rutschen nicht.</p></li>
+    <li><h3>Ausrichten</h3><p>Leg zum Schluss die Wasserwaage auf jeden Rahmen. Kleine Filzpunkte an den unteren Ecken halten ihn in Position.</p></li>
+  </ol>
+  <p class="tip">Du wohnst zur Miete? Was bei Dübellöchern gilt, steht im Ratgeber <a href="mieten.html">Mietwohnung einrichten</a>.</p>
+</div></section>
+
+<section class="band" id="regeln"><div class="wrap narrow">
+  <h2>Die Regeln hinter dem Planer.</h2>
+  <table class="bw-rt"><thead><tr><th scope="col">Regel</th><th scope="col">Maß</th><th scope="col">Quelle</th></tr></thead><tbody>
+    <tr><td>Bildmitte an freier Wand</td><td>140 bis 150&nbsp;cm über dem Boden, der Planer nimmt 150&nbsp;cm</td><td>toom, immowelt</td></tr>
+    <tr><td>Abstand über dem Sofa</td><td>15 bis 20&nbsp;cm bis zur Rahmenunterkante, der Planer nimmt 20&nbsp;cm</td><td>toom</td></tr>
+    <tr><td>Abstand über Sideboard oder Kommode</td><td>10 bis 15&nbsp;cm, der Planer nimmt 15&nbsp;cm</td><td>toom</td></tr>
+    <tr><td>Breite der Bildgruppe</td><td>zwei Drittel bis drei Viertel der Möbelbreite</td><td>toom</td></tr>
+    <tr><td>Abstand zwischen den Rahmen</td><td>überall gleich, zum Beispiel 5&nbsp;cm</td><td>immowelt</td></tr>
+    <tr><td>Nagelhöhe</td><td>Oberkante des Rahmens minus Abstand des Aufhängers</td><td>eigene Rechnung</td></tr>
+  </tbody></table>
+  <p class="tip">Einzelne Bilder rechnet der <a href="rechner.html#bilder">Raum-Rechner</a> mit denselben Regeln.</p>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für die Bilderwand.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Bilderrahmen Set Eiche 30x40}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Bilderrahmen im Set</b><span>Gleiche Rahmen für Reihe und Raster</span><span class="chk">Achte auf: Außenmaß in der Beschreibung und Aufhänger für Hoch- und Querformat</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Bilderleiste Holz 90 cm}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Bilderleiste</b><span>Bilder tauschen ohne neue Löcher</span><span class="chk">Achte auf: Rille oder Kante, damit nichts rutscht</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Bildaufhänger Set Nägel Haken}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Bildaufhänger und Nägel</b><span>Haken, Stahlnägel, Zackenaufhänger</span><span class="chk">Achte auf: Tragkraft passend zum Gewicht deiner Rahmen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Kreuzlinienlaser selbstnivellierend}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Kreuzlinienlaser</b><span>Zeichnet die Mittellinie an die Wand</span><span class="chk">Achte auf: selbstnivellierend und mit Halterung</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Auf welcher Höhe hängt eine Bilderwand?</summary><div><p>An einer freien Wand liegt die Mitte der ganzen Gruppe auf etwa 140 bis 150&nbsp;cm. Über einem Sofa oder Sideboard zählt der Abstand zum Möbel: 15 bis 20&nbsp;cm über dem Sofa, 10 bis 15&nbsp;cm über dem Sideboard.</p></div></details>
+    <details><summary>Wie viel Abstand lässt man zwischen Bildern?</summary><div><p>Wichtig ist, dass der Abstand überall gleich ist. Ein gängiger Wert sind 5&nbsp;cm. Im Planer stellst du ihn selbst ein.</p></div></details>
+    <details><summary>Wie breit darf eine Bilderwand über dem Sofa sein?</summary><div><p>Zwei Drittel bis drei Viertel der Sofabreite. Bei einem 220&nbsp;cm breiten Sofa sind das etwa 147 bis 165&nbsp;cm.</p></div></details>
+    <details><summary>Wie finde ich den Punkt für den Nagel?</summary><div><p>Miss am Rahmen den Abstand von der Oberkante bis zum Aufhänger. Der Nagel sitzt um diesen Wert tiefer als die Oberkante des Rahmens und in der Mitte der Rahmenbreite. Der Planer rechnet beide Werte für jeden Rahmen aus.</p></div></details>
+    <details><summary>Nagel oder Dübel?</summary><div><p>Bilder bis 10&nbsp;kg halten oft an Nägeln, die schräg eingeschlagen werden. Schwerere Bilder und poröse Wände brauchen Schrauben und Dübel.</p></div></details>
+    <details><summary>Bleibt mein Plan gespeichert?</summary><div><p>Ja, auf deinem Gerät. Der Planer merkt sich deine Angaben im Browser. Mit „Plan teilen“ bekommst du einen Link, der genau diesen Plan öffnet.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>toom: Bilder aufhängen, Höhe, Abstände zu Möbeln, Hängungsarten und Befestigung <a href="https://toom.de/selbermachen/wohnen-haushalt/raumgestaltung/bilder-aufhaengen/" target="_blank" rel="noopener">toom.de</a></li>
+    <li>immowelt: Bilder aufhängen wie ein Profi, Bildmitte, Rasterhängung mit gleichen Abständen, Petersburger Hängung (29.09.2025) <a href="https://www.immowelt.de/ratgeber/news/bilder-aufhaengen-wie-ein-profi-kreative-ideen-tipps-fuer-die-perfekte-haengung" target="_blank" rel="noopener">immowelt.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 14.11.2026.</p></div>
+</div></section>
+
+{{RELATED:raumplaner,rechner,wohnzimmer}}
+<!--END-->
+<script>
+/* Bilderwand-Planer. Modell: Spalten nebeneinander, in jeder Spalte 1 bis 3 gleiche Rahmen übereinander, jede Spalte mittig auf der Bildmitte.
+   Regeln (stehen auch in der Tabelle #regeln, bei Änderungen beides anpassen): Bildmitte 150 cm (140 bis 150), über dem Sofa 20 cm (15 bis 20),
+   über dem Sideboard 15 cm (10 bis 15), Gruppe 2/3 bis 3/4 der Möbelbreite. */
+(function(){
+  'use strict';
+  var d=document,$=function(i){return d.getElementById(i)},NS='http://www.w3.org/2000/svg',KEY='sdbw';
+  var RULE={mid:150,midLo:140,midHi:150,sofa:20,sofaR:[15,20],board:15,boardR:[10,15],share:[2/3,3/4]};
+  var FORM=[[13,18],[18,24],[21,30],[30,40],[40,50],[50,70],[60,80],[70,100]];
+  var PRE=[['3 in Reihe','50x70x1,50x70x1,50x70x1'],['Raster 2 × 3','40x50x2,40x50x2,40x50x2'],['Groß in der Mitte','40x50x1,60x80x1,40x50x1'],['Fünf ums große Bild','30x40x2,60x80x1,30x40x2'],['Gemischt','40x50x1,21x30x2,50x70x1,21x30x2'],['Zwei große','70x100x1,70x100x1']];
+  var DEF={W:360,H:250,mode:'sofa',mw:220,mh:85,mid:150,gap:5,hang:3,cols:parseCols(PRE[2][1])},S=clone(DEF);
+  function clone(o){return JSON.parse(JSON.stringify(o))}
+  function parseCols(t){return t.split(',').map(function(x){var a=x.split('x');return{w:+a[0],h:+a[1],n:+a[2]||1}}).filter(function(c){return c.w>=5&&c.w<=200&&c.h>=5&&c.h<=200&&c.n>=1&&c.n<=3}).slice(0,7)}
+  function colsText(c){return c.map(function(x){return x.w+'x'+x.h+'x'+x.n}).join(',')}
+  function num(el,lo,hi,def){var t=String(el.value).trim().replace(/\s|cm/gi,'').replace(',','.'),n=parseFloat(t);return isFinite(n)?Math.min(hi,Math.max(lo,n)):def}
+  function f(n,k){return n.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:k==null?1:k})}
+  function cm(n){return f(Math.round(n*2)/2)+' cm'}
+
+  /* Rechnet die Lage aller Rahmen. Maße in cm, x von der linken Wandkante, y vom Boden nach oben. */
+  function layout(s){
+    var gw=0,gh=0,i,j;
+    s.cols.forEach(function(c,k){gw+=c.w+(k?s.gap:0);gh=Math.max(gh,c.n*c.h+(c.n-1)*s.gap)});
+    var furn=s.mode!=='frei',fx=(s.W-s.mw)/2,gx=furn?fx+(s.mw-gw)/2:(s.W-gw)/2;
+    var dist=s.mode==='sofa'?RULE.sofa:RULE.board,bottom=furn?s.mh+dist:s.mid-gh/2,cy=bottom+gh/2,x=gx,frames=[];
+    for(i=0;i<s.cols.length;i++){var c=s.cols[i],ch=c.n*c.h+(c.n-1)*s.gap,top=cy+ch/2;
+      for(j=0;j<c.n;j++){var t=top-j*(c.h+s.gap);frames.push({col:i,x:x,top:t,w:c.w,h:c.h,nx:x+c.w/2,ny:t-Math.min(s.hang,c.h)})}
+      x+=c.w+s.gap}
+    frames.sort(function(a,b){return a.col-b.col||b.top-a.top});      /* Nummern spaltenweise von links, in der Spalte von oben */
+    frames.forEach(function(fr,k){fr.no=k+1});
+    return{gw:gw,gh:gh,gx:gx,bottom:bottom,top:bottom+gh,cy:cy,fx:fx,furn:furn,dist:dist,frames:frames};
+  }
+  function checks(s,L){
+    var o=[],name=s.mode==='sofa'?'Sofa':'Sideboard';
+    if(L.gx<0||L.gx+L.gw>s.W)o.push({st:'bad',t:'Die Gruppe ist '+cm(L.gw)+' breit und damit '+cm(L.gw-s.W)+' breiter als die Wand. Nimm kleinere Rahmen oder eine Spalte weniger.'});
+    else{var m=Math.min(L.gx,s.W-L.gx-L.gw);o.push({st:m<10?'warn':'ok',t:m<10?'Bis zur Wandkante bleiben nur '+cm(m)+'. Mit mehr Luft an den Seiten wirkt die Gruppe ruhiger.':'Links und rechts bleiben '+cm(L.gx)+' bis zur Wandkante.'})}
+    if(L.top>s.H)o.push({st:'bad',t:'Die Gruppe ragt '+cm(L.top-s.H)+' über die Decke hinaus. Weniger Rahmen übereinander oder kleinere Formate.'});
+    else if(s.H-L.top<10)o.push({st:'warn',t:'Bis zur Decke bleiben nur '+cm(s.H-L.top)+'.'});
+    if(L.bottom<0)o.push({st:'bad',t:'Die Gruppe reicht bis unter den Boden. Setz die Bildmitte höher oder nimm weniger Rahmen übereinander.'});
+    if(L.furn){
+      var lo=s.mw*RULE.share[0],hi=s.mw*RULE.share[1];
+      if(L.gw>s.mw)o.push({st:'warn',t:'Die Gruppe ist breiter als das '+name+' ('+cm(L.gw)+' zu '+cm(s.mw)+'). Ruhiger wirken '+cm(lo)+' bis '+cm(hi)+'.'});
+      else if(L.gw<lo-0.5)o.push({st:'warn',t:'Die Gruppe ist '+cm(L.gw)+' breit. Zum '+name+' passen '+cm(lo)+' bis '+cm(hi)+', also zwei Drittel bis drei Viertel seiner Breite.'});
+      else if(L.gw>hi+0.5)o.push({st:'ok',t:'Die Gruppe ist '+cm(L.gw)+' breit, etwas mehr als drei Viertel des Möbels ('+cm(hi)+'). Das geht, wenn an den Seiten Luft bleibt.'});
+      else o.push({st:'ok',t:'Breite passt: '+cm(L.gw)+' liegen zwischen zwei Dritteln und drei Vierteln des Möbels.'});
+      o.push({st:'ok',t:'Unterkante '+cm(L.dist)+' über '+(s.mode==='sofa'?'der Sofalehne':'dem Sideboard')+', die Bildmitte liegt damit auf '+cm(L.cy)+'.'});
+      if(L.cy>170)o.push({st:'warn',t:'Die Bildmitte liegt hoch. Mit niedrigeren Rahmen oder nur einer Reihe kommt sie näher an die Augenhöhe.'});
+    }else o.push({st:s.mid>=RULE.midLo&&s.mid<=RULE.midHi+10?'ok':'warn',t:'Bildmitte auf '+cm(L.cy)+'. Üblich sind '+RULE.midLo+' bis '+RULE.midHi+' cm.'});
+    o.push({st:'ok',t:'Alle Abstände zwischen den Rahmen: '+cm(s.gap)+'.'});
+    return o;
+  }
+  function encode(s){return[s.W,s.H,s.mode,s.mw,s.mh,s.mid,String(s.gap).replace('.','_'),String(s.hang).replace('.','_')].join('.')+'~'+colsText(s.cols)}
+  function decode(t){
+    try{var p=String(t).split('~'),a=p[0].split('.');if(p.length!==2||a.length!==8)return null;
+      var s={W:+a[0],H:+a[1],mode:a[2],mw:+a[3],mh:+a[4],mid:+a[5],gap:+a[6].replace('_','.'),hang:+a[7].replace('_','.'),cols:parseCols(p[1])};
+      if(!(s.W>=60&&s.W<=1500&&s.H>=150&&s.H<=500)||['sofa','board','frei'].indexOf(s.mode)<0||!s.cols.length)return null;
+      s.mw=Math.min(600,Math.max(40,s.mw||220));s.mh=Math.min(200,Math.max(20,s.mh||85));s.mid=Math.min(200,Math.max(100,s.mid||150));
+      s.gap=Math.min(20,Math.max(1,s.gap||5));s.hang=Math.min(40,Math.max(0,isFinite(s.hang)?s.hang:3));return s}catch(e){return null}
+  }
+  window.BW={layout:layout,checks:checks,encode:encode,decode:decode,RULE:RULE,state:function(){return S}};
+
+  /* ---------- Zeichnung ---------- */
+  function E(n,a,p,t){var e=d.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;if(p)p.appendChild(e);return e}
+  function col(v,def){return(getComputedStyle(d.documentElement).getPropertyValue(v)||'').trim()||def}
+  var SVG=null,GEO=null;
+  function draw(){
+    var box=$('bw-draw'),L=layout(S),PW=Math.max(280,box.clientWidth||600),m=PW<420?26:40,k=(PW-2*m)/S.W,PH=Math.round(S.H*k+m+34);
+    var ink=col('--ink','#1c1f1d'),mut=col('--mut','#5c605d'),line=col('--line','#d9d8d1'),pan=col('--pan','#fff'),band=col('--band','#ecebe6'),brass=col('--brass','#a8853c'),grn=col('--grn','#1e4a3a'),sheet=col('--sheet','#fbfbf8');
+    var X=function(x){return m+x*k},Y=function(y){return m+(S.H-y)*k},FS=PW<420?10:12;
+    var svg=E('svg',{xmlns:NS,viewBox:'0 0 '+PW+' '+PH,width:PW,height:PH,'font-family':'system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif','font-size':FS});
+    E('rect',{x:0,y:0,width:PW,height:PH,fill:sheet},svg);
+    E('rect',{x:X(0),y:Y(S.H),width:S.W*k,height:S.H*k,fill:pan,stroke:line,'stroke-width':1},svg);
+    E('line',{x1:X(0)-12,y1:Y(0),x2:X(S.W)+12,y2:Y(0),stroke:ink,'stroke-width':2},svg);
+    if(L.furn){var fy=Y(S.mh),fw=S.mw*k,fh=S.mh*k,fx=X(L.fx);
+      if(S.mode==='sofa'){var arm=Math.min(22*k,fw*.12),seat=fh*.52;
+        E('rect',{x:fx,y:fy,width:fw,height:fh-4*k,rx:6*k,fill:band,stroke:mut,'stroke-width':1.2},svg);
+        E('rect',{x:fx,y:fy+fh*.3,width:arm,height:fh*.7-4*k,rx:4*k,fill:band,stroke:mut,'stroke-width':1.2},svg);
+        E('rect',{x:fx+fw-arm,y:fy+fh*.3,width:arm,height:fh*.7-4*k,rx:4*k,fill:band,stroke:mut,'stroke-width':1.2},svg);
+        E('rect',{x:fx+arm,y:fy+seat,width:fw-2*arm,height:fh-seat-4*k,rx:3*k,fill:band,stroke:mut,'stroke-width':1.2},svg);
+        E('line',{x1:fx+fw/2,y1:fy+seat,x2:fx+fw/2,y2:fy+fh-4*k,stroke:mut,'stroke-width':1},svg);
+      }else{E('rect',{x:fx,y:fy,width:fw,height:fh-8*k,rx:2*k,fill:band,stroke:mut,'stroke-width':1.2},svg);
+        for(var q=1;q<4;q++)E('line',{x1:fx+fw*q/4,y1:fy+3*k,x2:fx+fw*q/4,y2:fy+fh-8*k,stroke:mut,'stroke-width':1},svg);
+        E('line',{x1:fx+8*k,y1:fy+fh-8*k,x2:fx+8*k,y2:fy+fh,stroke:mut,'stroke-width':2},svg);E('line',{x1:fx+fw-8*k,y1:fy+fh-8*k,x2:fx+fw-8*k,y2:fy+fh,stroke:mut,'stroke-width':2},svg)}
+    }
+    /* Mittellinie */
+    E('line',{x1:X(0),y1:Y(L.cy),x2:X(S.W),y2:Y(L.cy),stroke:brass,'stroke-width':1,'stroke-dasharray':'5 4'},svg);
+    L.frames.forEach(function(fr){
+      var x=X(fr.x),y=Y(fr.top),w=fr.w*k,h=fr.h*k,mat=Math.min(w,h)*.14;
+      E('rect',{x:x,y:y,width:w,height:h,fill:sheet,stroke:ink,'stroke-width':Math.max(1.5,2.2*k)},svg);
+      E('rect',{x:x+mat,y:y+mat,width:w-2*mat,height:h-2*mat,fill:band,stroke:line,'stroke-width':1},svg);
+      var r=Math.max(7,Math.min(11,w*.22));
+      E('circle',{cx:x+w/2,cy:y+h/2,r:r,fill:grn},svg);
+      E('text',{x:x+w/2,y:y+h/2+r*.36,'text-anchor':'middle','font-size':r*1.05,'font-weight':700,fill:'#fff'},svg,String(fr.no));
+      var nx=X(fr.nx),ny=Y(fr.ny);
+      E('path',{d:'M'+(nx-3.5)+' '+ny+'h7M'+nx+' '+(ny-3.5)+'v7',stroke:brass,'stroke-width':1.6,'stroke-linecap':'round'},svg);
+    });
+    /* Maße: Gruppenbreite oben, Rand links, Höhe der Bildmitte */
+    function dimH(x1,x2,y,t){E('path',{d:'M'+x1+' '+(y-4)+'v8M'+x2+' '+(y-4)+'v8M'+x1+' '+y+'H'+x2,stroke:mut,'stroke-width':1,fill:'none'},svg);
+      var tw=t.length*FS*.56;if(x2-x1>tw+8){E('rect',{x:(x1+x2)/2-tw/2-3,y:y-FS*.7,width:tw+6,height:FS*1.4,fill:pan},svg);E('text',{x:(x1+x2)/2,y:y+FS*.36,'text-anchor':'middle',fill:ink,'font-weight':600},svg,t)}}
+    var dy=Math.max(Y(S.H)+12,Y(L.top)-14);
+    if(L.gx>=0&&L.gx+L.gw<=S.W){dimH(X(L.gx),X(L.gx+L.gw),dy,cm(L.gw).replace(' ',' '));if(L.gx*k>44)dimH(X(0),X(L.gx),dy,f(Math.round(L.gx)));if((S.W-L.gx-L.gw)*k>44)dimH(X(L.gx+L.gw),X(S.W),dy,f(Math.round(S.W-L.gx-L.gw)))}
+    E('text',{x:X(0)+5,y:Y(L.cy)-5,fill:brass,'font-weight':700},svg,'Bildmitte '+cm(L.cy).replace(' ',' '));
+    E('text',{x:X(S.W/2),y:PH-10,'text-anchor':'middle',fill:mut},svg,'Wand '+cm(S.W).replace(' ',' ')+' breit, '+cm(S.H).replace(' ',' ')+' hoch');
+    box.textContent='';box.appendChild(svg);SVG=svg;GEO={PW:PW,PH:PH};
+    box.setAttribute('aria-label','Zeichnung der Bilderwand: '+L.frames.length+' Rahmen, Gruppe '+f(L.gw)+' Zentimeter breit, Bildmitte auf '+f(Math.round(L.cy))+' Zentimetern.');
+    return L;
+  }
+
+  /* ---------- Oberfläche ---------- */
+  function fname(c){return c.w+' × '+c.h}
+  function renderCols(){
+    var ol=$('bw-cols');ol.textContent='';
+    S.cols.forEach(function(c,i){
+      var li=d.createElement('li'),opt='',known=false;
+      FORM.forEach(function(F){[[F[0],F[1],'hoch'],[F[1],F[0],'quer']].forEach(function(v){var sel=v[0]===c.w&&v[1]===c.h;if(sel)known=true;opt+='<option value="'+v[0]+'x'+v[1]+'"'+(sel?' selected':'')+'>'+v[0]+' × '+v[1]+' cm '+v[2]+'</option>'})});
+      if(!known)opt='<option value="'+c.w+'x'+c.h+'" selected>'+c.w+' × '+c.h+' cm</option>'+opt;
+      li.innerHTML='<b aria-hidden="true">'+(i+1)+'</b><select aria-label="Rahmen in Spalte '+(i+1)+', Breite mal Höhe">'+opt+'</select>'+
+        '<button type="button" class="n" data-a="n" aria-label="Spalte '+(i+1)+': Anzahl übereinander ändern, jetzt '+c.n+'">'+c.n+' übereinander</button>'+
+        '<button type="button" data-a="x" aria-label="Spalte '+(i+1)+' entfernen"'+(S.cols.length<2?' disabled':'')+'><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
+      li.querySelector('select').onchange=function(){var a=this.value.split('x');c.w=+a[0];c.h=+a[1];update(true)};
+      li.querySelector('[data-a=n]').onclick=function(){c.n=c.n%3+1;update(true);var b=$('bw-cols').children[i];if(b)b.querySelector('[data-a=n]').focus()};
+      li.querySelector('[data-a=x]').onclick=function(){if(S.cols.length>1){S.cols.splice(i,1);update(true)}};
+      ol.appendChild(li);
+    });
+    $('bw-add').disabled=S.cols.length>=7;
+    var cur=colsText(S.cols);[].forEach.call($('bw-pre').children,function(b,i){b.setAttribute('aria-pressed',PRE[i][1]===cur?'true':'false')});
+  }
+  function read(){
+    S.W=num($('bw-w'),60,1500,DEF.W);S.H=num($('bw-hh'),150,500,DEF.H);S.mw=num($('bw-mw'),40,600,DEF.mw);S.mh=num($('bw-mh'),20,200,DEF.mh);
+    S.mid=num($('bw-mid'),100,200,DEF.mid);S.gap=num($('bw-gap'),1,20,DEF.gap);S.hang=num($('bw-hang'),0,40,DEF.hang);
+  }
+  function fill(){
+    $('bw-w').value=S.W;$('bw-hh').value=S.H;$('bw-mw').value=S.mw;$('bw-mh').value=S.mh;$('bw-mid').value=S.mid;$('bw-gap').value=String(S.gap).replace('.',',');$('bw-hang').value=String(S.hang).replace('.',',');
+    [].forEach.call($('bw-mode').children,function(b){b.setAttribute('aria-pressed',b.dataset.m===S.mode?'true':'false')});
+    var fr=S.mode==='frei';$('bw-moebel').hidden=fr;$('bw-frei').hidden=!fr;
+    $('bw-mwl').textContent=S.mode==='board'?'Sideboard':'Sofa';$('bw-mhl').textContent=S.mode==='board'?'Oberkante':'Lehne';
+    $('bw-n1').textContent=fr?'An einer freien Wand hängt die Mitte der Gruppe auf etwa 140 bis 150 cm. Die Gruppe sitzt im Plan mittig auf der Wand.':S.mode==='board'?'Miss das Sideboard vom Boden bis zur Oberkante. Es steht im Plan mittig an der Wand.':'Miss die Lehne vom Boden bis zur Oberkante. Das Sofa steht im Plan mittig an der Wand.';
+  }
+  function update(cols){
+    if(cols)renderCols();
+    var L=draw(),ck=checks(S,L);
+    $('bw-t1').textContent=f(L.gw)+' × '+f(L.gh)+' cm';$('bw-t2').textContent=f(Math.round(L.cy*2)/2)+' cm';$('bw-t3').textContent=L.frames.length+' Stück';
+    $('bw-ck').innerHTML=ck.map(function(c){return'<li class="'+c.st+'"><i aria-hidden="true">'+(c.st==='ok'?'✓':'!')+'</i><span>'+c.t+'</span></li>'}).join('');
+    $('bw-tab').innerHTML=L.frames.map(function(fr){return'<tr><td>'+fr.no+'</td><td>'+fr.w+' × '+fr.h+' cm</td><td>'+cm(fr.nx)+'</td><td>'+cm(fr.ny)+'</td></tr>'}).join('');
+    try{localStorage.setItem(KEY,encode(S))}catch(e){}
+  }
+  function toast(t){if(window.sdToast)window.sdToast(t)}
+  function share(){
+    var url=location.origin+location.pathname+'?b='+encode(S);
+    if(navigator.share){navigator.share({title:'Meine Bilderwand',url:url}).catch(function(){});return}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){toast('Link kopiert')},function(){prompt('Link zum Plan:',url)})}else prompt('Link zum Plan:',url);
+  }
+  function picture(){
+    function fail(){toast('Das Bild klappt in diesem Browser nicht. Nimm Drucken oder einen Screenshot.')}
+    try{var clone=SVG.cloneNode(true),foot=30,W=GEO.PW,H=GEO.PH+foot;clone.setAttribute('viewBox','0 0 '+W+' '+H);clone.setAttribute('width',W);clone.setAttribute('height',H);
+      E('rect',{x:0,y:GEO.PH,width:W,height:foot,fill:col('--sheet','#fbfbf8')},clone);E('text',{x:W-12,y:GEO.PH+18,'text-anchor':'end',fill:col('--mut','#5c605d'),'font-size':12},clone,'stil-daheim.de/bilderwand');
+      var img=new Image(),sc=Math.max(2,Math.min(4,1600/W));
+      img.onload=function(){try{var cv=d.createElement('canvas');cv.width=Math.round(W*sc);cv.height=Math.round(H*sc);cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+        cv.toBlob(function(blob){if(!blob)return fail();var file=null;try{file=new File([blob],'bilderwand.png',{type:'image/png'})}catch(x){}
+          if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Bilderwand'}).catch(function(err){if(!err||err.name!=='AbortError')down(blob)});return}
+          down(blob)},'image/png')}catch(x){fail()}};
+      img.onerror=fail;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(clone));
+    }catch(x){fail()}
+    function down(blob){var a=d.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download='bilderwand.png';d.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Bild gespeichert')}
+  }
+
+  /* Start: Link vor gespeichertem Plan vor Vorgabe */
+  var init=null;try{init=decode(new URLSearchParams(location.search).get('b')||'')}catch(e){}
+  if(!init){try{init=decode(localStorage.getItem(KEY)||'')}catch(e){}}
+  if(init)S=init;
+  $('bw-pre').innerHTML=PRE.map(function(p,i){return'<button type="button" data-i="'+i+'" aria-pressed="false">'+p[0]+'</button>'}).join('');
+  $('bw-pre').onclick=function(e){var b=e.target.closest('button');if(!b)return;S.cols=parseCols(PRE[+b.dataset.i][1]);update(true)};
+  $('bw-mode').onclick=function(e){var b=e.target.closest('button');if(!b)return;S.mode=b.dataset.m;if(S.mode==='board'&&S.mh===85)S.mh=75;if(S.mode==='sofa'&&S.mh===75)S.mh=85;fill();update()};
+  $('bw-add').onclick=function(){if(S.cols.length<7){var l=S.cols[S.cols.length-1];S.cols.push({w:l.w,h:l.h,n:1});update(true)}};
+  ['bw-w','bw-hh','bw-mw','bw-mh','bw-mid','bw-gap','bw-hang'].forEach(function(id){$(id).addEventListener('input',function(){read();update()});$(id).addEventListener('change',function(){read();fill();update()})});
+  $('bw-share').onclick=share;$('bw-img').onclick=picture;
+  var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(draw,150)});
+  window.addEventListener('beforeprint',draw);
+  fill();update(true);
+})();
+</script>

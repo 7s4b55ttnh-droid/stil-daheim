@@ -56,6 +56,7 @@ NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stil
 GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
         ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'start'),
         ('raumplaner.html', 'Raumplaner', 'Möbel verschieben, Abstände prüfen', 'raumplaner', 'raumplaner'),
+        ('bilderwand.html', 'Bilderwand-Planer', 'Rahmen anordnen, Nagelpunkte messen', 'bilderwand', 'bilderwand'),
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
@@ -162,7 +163,7 @@ KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch':
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum',
        'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
-       'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum'}
+       'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum'}
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Planer und Rechner')]
 
 
