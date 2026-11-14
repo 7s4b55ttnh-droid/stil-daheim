@@ -80,7 +80,8 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('arbeitsecke.html', 'Arbeitsecke im Wohnzimmer', 'Platz, Maße, Licht', 'arbeitsecke', 'arbeitsecke'),
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
-        ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete')]
+        ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete'),
+        ('lexikon.html', 'Lexikon', 'Wohn-Begriffe von Akzentfarbe bis Zonieren', 'lexikon', 'start')]
 CUR = ' aria-current="page"'
 GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */\n"
         "(function(){if(location.hostname!=='stil-daheim.de')return;var E='https://stildaheim.goatcounter.com/count';\n"
@@ -165,7 +166,7 @@ KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch':
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum',
        'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
-       'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile'}
+       'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'lexikon': 'stile licht'}
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Planer und Rechner')]
 
 
@@ -231,6 +232,20 @@ def strips():
         out.append('<a class="pstrip" href="%s">%s<span class="sws" aria-hidden="true">%s</span><span class="pn"><b>%s</b><small>%s</small></span></a>'
                    % (s['href'], ('<span class="pimg">%s</span>' % ph) if ph else '', sw, s['name'], s['desc']))
     return '<div class="strips">%s</div>' % ''.join(out)
+
+
+LEX = sorted(json.loads((HERE / 'lexikon.json').read_text(encoding='utf-8'))['begriffe'],
+             key=lambda b: b['name'].lower().replace('ä', 'a').replace('ö', 'o').replace('ü', 'u'))   # Lexikon: Liste auf lexikon.html und Erklärungen im Text
+
+
+def lexikon_liste():
+    return ''.join('<article class="lx-item" id="%s"><h3>%s</h3><p class="lx-k">%s</p><p>%s</p><p class="lx-l">%s</p></article>'
+                   % (b['slug'], b['name'], b['kurz'], b['text'], ''.join('<a href="%s">%s</a>' % (h, t) for h, t in b['links'])) for b in LEX)
+
+
+def lexikon_json():
+    return json.dumps([{'n': b['name'], 'k': b['kurz'], 'u': 'lexikon.html#' + b['slug'], 'w': b['w'], 'l': ['/' + h for h, t in b['links']]} for b in LEX if b['w']],
+                      ensure_ascii=False, separators=(',', ':'))
 
 
 def styles_json():
@@ -357,6 +372,8 @@ def page(src):
     html = html.replace('{{amzdeals}}', 'https://www.amazon.de/deals?tag=%s' % TAG)
     html = html.replace('{{PRINT}}', PRINT).replace('{{SHARE}}', SHARE).replace('{{ARROW}}', ARROW).replace('{{EXT}}', EXT)
     html = html.replace('{{STRIPS}}', strips()).replace('{{STYLES_JSON}}', styles_json())
+    if '{{LEXIKON}}' in html:
+        html = html.replace('{{LEXIKON}}', lexikon_liste())
     html = re.sub(r'\{\{PALETTE:(\w+)\}\}', lambda m: palette(m.group(1)), html)
     html = re.sub(r'\{\{STARTS:(\w+)\}\}', lambda m: starts(m.group(1)), html)
     html = re.sub(r'\{\{PIC:([^|}]+)\|([^|}]*)\|([^}]*)\}\}', lambda m: pic(m.group(1), m.group(2), m.group(3)), html)
@@ -482,6 +499,7 @@ if __name__ == '__main__':
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     for f in ('site.css', 'site.js'):
         shutil.copyfile(HERE / f, OUT / f)
+    (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
     (OUT / '.nojekyll').write_text('')
     (OUT / 'bc5564f7c1405d082c6e3b0873cb208a.txt').write_text('bc5564f7c1405d082c6e3b0873cb208a')  # IndexNow-Schlüssel (Bing), nicht entfernen

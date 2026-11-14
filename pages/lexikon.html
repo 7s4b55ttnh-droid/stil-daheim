@@ -1,0 +1,38 @@
+<!--meta {"key":"lexikon","title":"Lexikon: Wohn-Begriffe einfach erklärt – Stil-Daheim","desc":"Was bedeuten Japandi, Petersburger Hängung, Farbtemperatur oder die 60-30-10-Regel? Begriffe rund ums Einrichten kurz erklärt, mit passenden Ratgebern.","og":"assets/start.jpg","updated":"2026-11-14"} -->
+<!--HEAD-->
+<style>
+.top{padding-block:calc(env(safe-area-inset-top,0px) + 120px) clamp(30px,5vw,56px)}
+.top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}
+.top h1{font-size:clamp(2.4rem,6.4vw,4.2rem)}
+.lx-find{display:block;width:100%;max-width:420px;box-sizing:border-box;font:inherit;font-size:1.02rem;padding:13px 16px;min-height:50px;border-radius:14px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);margin:22px 0 0}
+.lx-list{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));align-items:start}
+.lx-item{background:var(--pan);border:1px solid var(--line);border-radius:18px;padding:20px 22px;scroll-margin-top:96px}
+.lx-item[hidden]{display:none}
+.lx-item:target{border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 30%,transparent)}
+.lx-item h3{margin:0 0 6px;font-size:1.22rem}
+.lx-item .lx-k{font-weight:600;margin:0 0 8px}
+.lx-item p{margin:0 0 10px;font-size:.98rem}
+.lx-item .lx-l{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0;font-size:.94rem}
+.lx-none{color:var(--mut)}
+</style>
+<!--MAIN-->
+<section class="top" id="oben"><div class="wrap narrow">
+  <p class="eyebrow">Lexikon</p>
+  <h1>Wohn-Begriffe, einfach erklärt.</h1>
+  <p class="lede">Von Akzentfarbe bis Zonieren: jeder Begriff in einem Satz, dazu der passende Ratgeber.</p>
+  <input class="lx-find" id="lx-find" type="search" placeholder="Begriff suchen" aria-label="Begriff suchen" autocomplete="off">
+</div></section>
+<section class="band" id="begriffe"><div class="wrap">
+  <div class="lx-list" data-nolx>{{LEXIKON}}</div>
+  <p class="lx-none" id="lx-none" hidden>Dazu haben wir noch keinen Eintrag.</p>
+</div></section>
+<section id="hinweis"><div class="wrap narrow">
+  <h2>Im Text antippen.</h2>
+  <p>In unseren Ratgebern sind Fachbegriffe gepunktet unterstrichen. Tipp darauf, dann erscheint die Erklärung in einem Satz, ohne dass du die Seite verlässt.</p>
+</div></section>
+<!--END-->
+<script>
+(function(){var f=document.getElementById('lx-find');if(!f)return;f.addEventListener('input',function(){var q=f.value.trim().toLowerCase(),n=0;
+ [].forEach.call(document.querySelectorAll('.lx-item'),function(a){var on=!q||a.textContent.toLowerCase().indexOf(q)>=0;a.hidden=!on;if(on)n++});
+ document.getElementById('lx-none').hidden=n>0})})();
+</script>
