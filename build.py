@@ -348,7 +348,7 @@ def page(src):
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
             '<link rel="canonical" href="%(dom)s%(path)s">%(robots)s<meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
             '<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>'
-            '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">'
+            '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="alternate" type="application/rss+xml" title="Stil-Daheim: neue Ratgeber" href="feed.xml">'
             '<link rel="stylesheet" href="site.css">\n%(head)s\n<script src="site.js" defer></script></head><body>\n'
             '<a class="skip" href="#main">Zum Inhalt springen</a>\n'
             '<header class="hd" id="hd"><div class="hd-in"><a class="logo" href="index.html">%(lamp)s<span>Stil-Daheim</span></a>'
@@ -486,6 +486,17 @@ def llms(metas):
     (OUT / 'llms.txt').write_text('\n'.join(lines) + '\n')
 
 
+def feed(metas):
+    """feed.xml: die 30 neuesten Seiten als RSS (Tag der ersten Veröffentlichung aus erstdatum.json)."""
+    import email.utils, html as H
+    ms = [m for m in metas if not m['noindex'] and m['key'] not in ('index', 'impressum', 'datenschutz', '404', 'einbetten') and ERST.get(m['key'])]
+    ms.sort(key=lambda m: (ERST[m['key']], m['file']), reverse=True); x = lambda v: H.escape(H.unescape(v), quote=False)
+    body = ''.join('<item><title>%s</title><link>%s%s</link><guid isPermaLink="true">%s%s</guid><pubDate>%s</pubDate><description>%s</description></item>'
+                   % (x(m['title'].replace(' – ' + BRAND, '')), DOMAIN, m['file'], DOMAIN, m['file'], email.utils.format_datetime(datetime.datetime.fromisoformat(ERST[m['key']] + 'T08:00:00+01:00')), x(m['desc'])) for m in ms[:30])
+    (OUT / 'feed.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>%s: neue Ratgeber und Planer</title><link>%s</link>'
+                                  '<description>Neue Ratgeber und Werkzeuge rund ums Einrichten.</description><language>de-DE</language><atom:link href="%sfeed.xml" rel="self" type="application/rss+xml"/>%s</channel></rss>\n' % (BRAND, DOMAIN, DOMAIN, body), encoding='utf-8')
+
+
 def sitemap(metas):
     order = ['index'] + [g[3] for g in GRID]
     ms = sorted([m for m in metas if not m['noindex']], key=lambda m: (order.index(m['key']) if m['key'] in order else 99, m['file']))
@@ -515,6 +526,7 @@ if __name__ == '__main__':
     ERST_DATEI.write_text(json.dumps(ERST, ensure_ascii=False, indent=1, sort_keys=True) + '\n')
     if not sys.argv[1:]:
         sitemap(metas)
+        feed(metas)
         llms(metas)
         suche(metas)
         print('sitemap.xml:', sum(1 for m in metas if not m['noindex']), 'Seiten')
