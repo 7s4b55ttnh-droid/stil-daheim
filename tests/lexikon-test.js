@@ -10,7 +10,7 @@ let bad = 0; const ok = (c, t) => { console.log((c ? 'ok   ' : 'FEHLER ') + t); 
   ok(await p.locator('.lx').count() === 0, 'im Lexikon selbst keine Markierungen');
   await p.fill('#lx-find', 'hängung'); ok(await p.locator('.lx-item:visible').count() === 2, 'Suche filtert auf zwei Hängungen');
   await p.fill('#lx-find', 'xyzxyz'); ok(await p.isVisible('#lx-none'), 'Suche ohne Treffer: Hinweis');
-  let dead = 0; for (const h of new Set(await p.locator('.lx-l a').evaluateAll(a => a.map(x => x.getAttribute('href'))))) if ((await p.request.get(BASE + '/' + h)).status() !== 200) dead++;
+  let dead = 0; for (const h of new Set(await p.locator('.lx-l a').evaluateAll(a => a.map(x => x.getAttribute('href'))))) if ((await p.evaluate(u => fetch(u).then(r => r.status).catch(() => 0), BASE + '/' + h)) !== 200) dead++;
   ok(dead === 0, 'alle Links im Lexikon gehen');
   ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Handy: kein seitliches Scrollen');
   await p.goto(BASE + '/wohnzimmer.html'); await p.waitForTimeout(1300);
