@@ -1,0 +1,282 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><script>try{var t=localStorage.getItem("sdth");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="p:domain_verify" content="ad440d6123f283fdf603af68f7587653"/>
+<title>Farbpalette aus Foto erstellen: Farben fürs Zimmer finden – Stil-Daheim</title><meta name="description" content="Farbpalette aus deinem Foto: Bild auswählen und sofort die wichtigsten Farben mit Farbwert sehen, dazu Vorschläge für die Wand.">
+<meta property="og:title" content="Farbpalette aus Foto erstellen: Farben fürs Zimmer finden – Stil-Daheim"><meta property="og:description" content="Farbpalette aus deinem Foto: Bild auswählen und sofort die wichtigsten Farben mit Farbwert sehen, dazu Vorschläge für die Wand. Das Foto bleibt auf deinem Gerät."><meta property="og:type" content="website"><meta property="og:image" content="https://stil-daheim.de/assets/og/farbpalette.jpg"><meta property="og:url" content="https://stil-daheim.de/farbpalette.html"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://stil-daheim.de/farbpalette.html"><meta name="robots" content="max-image-preview:large"><meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">
+<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Farbpalette aus Foto von Stil-Daheim","url":"https://stil-daheim.de/farbpalette.html","applicationCategory":"DesignApplication","operatingSystem":"Alle, läuft im Browser","inLanguage":"de-DE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Zieht aus einem Foto die wichtigsten Farben und schlägt Wandfarben vor. Das Foto bleibt auf dem Gerät."}</script>
+<style>
+.hero.sub img{object-position:66% 50%}
+.fp{display:grid;gap:26px;align-items:start;margin-top:30px}
+.fp>*{min-width:0}
+@media (min-width:940px){.fp{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px}.fp>div:first-child{position:sticky;top:84px}}
+.fp-drop{position:relative;border:2px dashed var(--line);border-radius:16px;background:var(--pan);overflow:hidden;transition:border-color .15s}
+.fp-drop.over{border-color:var(--grn)}
+.fp-pic{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--band)}
+.fp-act{display:flex;flex-wrap:wrap;gap:10px;padding:14px}
+.fp-up{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--grn);color:#fff;font-weight:650;cursor:pointer}
+.fp-up:focus-within{outline:3px solid var(--brass);outline-offset:2px}
+.fp-up input{position:absolute;width:1px;height:1px;opacity:0}
+.fp-up svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fp-demo{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 14px 14px;font-size:.92rem;color:var(--mut)}
+.fp-demo button{width:58px;height:44px;border-radius:8px;overflow:hidden;border:2px solid transparent;padding:0}
+.fp-demo button[aria-pressed="true"]{border-color:var(--grn)}
+.fp-demo img{width:100%;height:100%;object-fit:cover;display:block}
+.fp-note{font-size:.92rem;color:var(--mut);margin:10px 2px 0;line-height:1.45}
+.fp-h{font-size:1.16rem;font-weight:700;font-stretch:84%;margin:0 0 12px}
+.fp-block+.fp-block{margin-top:28px}
+.fp-sw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (min-width:560px){.fp-sw{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.fp-sw button{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--pan);color:var(--ink)}
+.fp-sw button:hover{border-color:var(--grn)}
+.fp-sw i{display:block;aspect-ratio:1/1.05}
+.fp-sw span{display:block;padding:8px 9px 9px;font-size:.8rem;line-height:1.3}
+.fp-sw b{display:block;font-size:.84rem}
+.fp-sw em{display:block;font-style:normal;color:var(--mut);font-variant-numeric:tabular-nums}
+.fp-bar{display:flex;height:64px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.fp-bar i{display:block}
+.fp-leg{display:grid;grid-template-columns:6fr 3fr 1.6fr;gap:8px;font-size:.84rem;color:var(--mut);margin-top:8px}
+.fp-leg b{display:block;color:var(--ink)}
+.fp-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.fp-wall button{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--pan);color:var(--ink)}
+.fp-wall i{display:block;height:84px}
+.fp-wall span{display:block;padding:9px 10px 10px;font-size:.84rem;line-height:1.3}
+.fp-wall b{display:block}
+.fp-wall em{font-style:normal;color:var(--mut)}
+.fp-stil{display:flex;gap:14px;align-items:center;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:14px}
+.fp-stil .dots{display:flex;flex:none}
+.fp-stil .dots i{width:30px;height:30px;border-radius:50%;border:2px solid var(--pan);margin-left:-8px}
+.fp-stil .dots i:first-child{margin-left:0}
+.fp-stil p{margin:0;font-size:.97rem}
+.fp-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.fp-btns button{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font-weight:650}
+.fp-btns button:hover{border-color:var(--grn)}
+.fp-btns svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fp-err{color:#b3402e;font-weight:600}
+/* Die Marke gilt den Beispielfotos: bei eigenem Foto weg; bei den Mini-Vorschauen steht der Hinweis als Text daneben */
+.fp-drop.own>.ki-marke,.fp-demo .ki-marke{display:none!important}
+.fp-demo small{flex-basis:100%;font-size:.8rem}
+@media (prefers-reduced-motion:reduce){.fp-drop{transition:none}}
+</style>
+<script src="site.js" defer></script><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Farbpalette aus deinem Foto", "name": "Farbpalette aus Foto erstellen: Farben fürs Zimmer finden – Stil-Daheim", "description": "Farbpalette aus deinem Foto: Bild auswählen und sofort die wichtigsten Farben mit Farbwert sehen, dazu Vorschläge für die Wand. Das Foto bleibt auf deinem Gerät.", "inLanguage": "de-DE", "url": "https://stil-daheim.de/farbpalette.html", "mainEntityOfPage": "https://stil-daheim.de/farbpalette.html", "datePublished": "2026-11-14", "dateModified": "2026-11-14", "author": {"@type": "Organization", "name": "Stil-Daheim", "url": "https://stil-daheim.de/"}, "publisher": {"@type": "Organization", "name": "Stil-Daheim", "url": "https://stil-daheim.de/"}, "image": "https://stil-daheim.de/assets/og/farbpalette.jpg", "abstract": "Wähle ein Foto von deinem Zimmer, einem Lieblingsbild oder einem Stoff aus. Das Werkzeug zieht die fünf bis sechs wichtigsten Farben heraus, zeigt ihren Farbwert und verteilt sie nach der 60-30-10-Regel auf Hauptfarbe, Nebenfarbe und Akzent. Dazu kommen drei Vorschläge für die Wand und der Wohnstil, dessen Farbkarte am nächsten liegt. Das Foto verlässt dein Gerät nicht."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Wird mein Foto hochgeladen?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Das Foto wird nur in deinem Browser geöffnet und dort ausgewertet. Es wird nicht an uns oder andere übertragen und nicht gespeichert."}}, {"@type": "Question", "name": "Wie werden die Farben gefunden?", "acceptedAnswer": {"@type": "Answer", "text": "Das Bild wird verkleinert, ähnliche Bildpunkte werden zu Gruppen zusammengefasst. Die größten Gruppen sind deine Farben, der Anteil zeigt, wie viel Fläche sie im Foto haben."}}, {"@type": "Question", "name": "Warum sehen die Farben anders aus als im Zimmer?", "acceptedAnswer": {"@type": "Answer", "text": "Kamera und Licht verändern Farben. Abendlicht macht alles wärmer, Blitz macht es kälter. Fotografier bei Tageslicht und nimm die Werte als Richtung, nicht als Messung."}}, {"@type": "Question", "name": "Was fange ich mit dem Farbwert an?", "acceptedAnswer": {"@type": "Answer", "text": "Der Farbwert, zum Beispiel #A8B49C, beschreibt die Farbe für Bildschirme. Du kannst ihn in Einrichtungs- und Zeichenprogrammen eingeben oder im Markt mit Farbkarten vergleichen."}}, {"@type": "Question", "name": "Welches Foto eignet sich?", "acceptedAnswer": {"@type": "Answer", "text": "Jedes, auf dem das zu sehen ist, was du magst: dein Zimmer, ein Stoff, ein Gemälde, ein Urlaubsbild. Je weniger Nebensachen im Bild sind, desto klarer wird die Palette."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Stil-Daheim", "item": "https://stil-daheim.de/"}, {"@type": "ListItem", "position": 2, "name": "Farbpalette aus deinem Foto", "item": "https://stil-daheim.de/farbpalette.html"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="hd" id="hd"><div class="hd-in"><a class="logo" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v5"/><path d="M4.5 15.5a7.5 7.5 0 0 1 15 0z"/><path d="M9.8 18.4a2.3 2.3 0 0 0 4.4 0"/></svg><span>Stil-Daheim</span></a><nav class="nav" aria-label="Hauptmenü"><a href="./#stil-finder">Stil-Finder</a><a href="stile.html">Stile</a><a href="raumplaner.html">Raumplaner</a><a href="rechner.html">Raum-Rechner</a><a href="mieten.html">Zur Miete</a></nav><button class="ic" id="th" type="button" aria-label="Hell oder dunkel umschalten"><svg class="th-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="th-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button><button class="ic mb" id="mb" type="button" aria-expanded="false" aria-controls="msheet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menü</span></button></div></header>
+<div class="sheet-m" id="msheet" hidden role="dialog" aria-modal="true" aria-label="Menü"><div class="sheet-in"><div class="sheet-top"><b>Stil-Daheim</b><button class="ic" id="mclose" type="button" aria-label="Menü schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="mtoc-wrap" hidden><p class="m-h">Auf dieser Seite</p><nav class="m-toc" id="mtoc" aria-label="Auf dieser Seite"></nav></div><p class="m-h">Ratgeber und Rechner</p><nav class="m-grid" aria-label="Alle Ratgeber"><a href="./#stil-finder"><b>Welcher Stil passt zu mir?</b><small>Der Stil-Finder mit fünf Fragen</small></a><a href="stile.html"><b>Wohnstile im Überblick</b><small>Sechs Stile, jeder mit Farbkarte</small></a><a href="raumplaner.html"><b>Raumplaner</b><small>Möbel verschieben, Abstände prüfen</small></a><a href="bilderwand.html"><b>Bilderwand-Planer</b><small>Rahmen anordnen, Nagelpunkte messen</small></a><a href="farbpalette.html" aria-current="page"><b>Farbpalette aus Foto</b><small>Farben aus deinem Zimmerfoto ziehen</small></a><a href="vintage.html"><b>Vintage einrichten</b><small>Fundstücke aus fünf Jahrzehnten kombinieren</small></a><a href="modern.html"><b>Modern einrichten</b><small>Klar, ruhig und gut verstaut</small></a><a href="skandinavisch.html"><b>Skandinavisch einrichten</b><small>Hell, gemütlich und praktisch</small></a><a href="japandi.html"><b>Japandi einrichten</b><small>Ruhig, natürlich und warm</small></a><a href="industrial.html"><b>Industrial einrichten</b><small>Loft-Gefühl mit Stahl, Holz und Leder</small></a><a href="boho.html"><b>Boho einrichten</b><small>Rattan, Muster, Pflanzen und Handgemachtes</small></a><a href="kleine-raeume.html"><b>Kleine Räume größer wirken lassen</b><small>8 Tricks und eine Checkliste</small></a><a href="farben.html"><b>Wandfarbe wählen und kombinieren</b><small>Wirkung, 60-30-10-Regel, Kombinierer</small></a><a href="licht.html"><b>Licht planen</b><small>Lichtebenen, Kelvin, Lumen-Rechner</small></a><a href="schlafzimmer.html"><b>Schlafzimmer einrichten</b><small>Abstände, Farben, Licht, Raumklima</small></a><a href="gemuetlich.html"><b>Gemütlich im Winter</b><small>Licht, Textilien, Leseecke</small></a><a href="weihnachten.html"><b>Weihnachtlich dekorieren</b><small>Ohne Kitsch, mit Holz und Licht</small></a><a href="tischdeko.html"><b>Weihnachtliche Tischdeko</b><small>Festlich decken mit Maßen und Ideen</small></a><a href="adventskranz.html"><b>Adventskranz binden</b><small>Frische-Check, Anleitung, sicher mit Kerzen</small></a><a href="geschenke.html"><b>Geschenke fürs Zuhause</b><small>Kleine Ideen für Nikolaus und Weihnachten</small></a><a href="wohnzimmer.html"><b>Wohnzimmer einrichten</b><small>Maße, Anordnung, Licht, Wohnzimmer-Check</small></a><a href="flur.html"><b>Flur und Eingang einrichten</b><small>Maße, Garderobe, Licht, Flur-Check</small></a><a href="pflanzen.html"><b>Zimmerpflanzen im Winter</b><small>Licht, Gießen, Heizungsluft, Gieß-Check</small></a><a href="arbeitsecke.html"><b>Arbeitsecke im Wohnzimmer</b><small>Platz, Maße, Licht</small></a><a href="black-friday.html"><b>Black Friday 2026</b><small>Clever einrichten, echte Angebote</small></a><a href="rechner.html"><b>Raum-Rechner</b><small>Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer</small></a><a href="mieten.html"><b>Schöner wohnen zur Miete</b><small>Was erlaubt ist und was ohne Bohren geht</small></a></nav><p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>
+<main id="main">
+<div class="hero sub">
+  <picture><source type="image/webp" srcset="assets/farbpalette-m.webp 960w, assets/farbpalette.webp 1672w" sizes="100vw"><img src="assets/farbpalette.jpg" srcset="assets/farbpalette-m.jpg 960w, assets/farbpalette.jpg 1672w" sizes="100vw" alt="Fächer aus fünf Farbkarten in Salbei, Terrakotta, Sand, Creme und Petrol auf einem Eichentisch, daneben Pinsel und Leinenstoff" fetchpriority="high"></picture>
+  <div class="wrap">
+    <h1>Farbpalette aus deinem Foto</h1>
+    <p>Ein Foto vom Zimmer, vom Lieblingsbild oder vom Sofastoff. Du bekommst die Farben, die darin stecken.</p>
+    <div class="btns"><a class="btn" href="#palette">Foto auswählen</a><a class="btn ghost" href="#nutzen">So nutzt du die Farben</a></div>
+  </div>
+</div>
+
+<section id="palette"><div class="wrap" data-emb>
+  <h2>Deine Farben.</h2>
+  <p class="lede">Das Foto wird nur in deinem Browser ausgewertet. Es wird nirgends hochgeladen.</p>
+  <div class="fp">
+    <div>
+      <div class="fp-drop" id="fp-drop">
+        <img class="fp-pic" id="fp-pic" alt="Dein ausgewähltes Foto" width="800" height="600" decoding="async">
+        <div class="fp-act">
+          <label class="fp-up"><input type="file" id="fp-file" accept="image/*"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>Eigenes Foto wählen</label>
+        </div>
+        <div class="fp-demo"><span>Oder probier ein Beispiel:</span>
+          <button type="button" data-src="assets/skandi-m.webp" aria-pressed="true" aria-label="Beispielfoto skandinavisches Wohnzimmer"><img src="assets/skandi-t.webp" alt="" width="58" height="44" loading="lazy"></button>
+          <button type="button" data-src="assets/boho-m.webp" aria-pressed="false" aria-label="Beispielfoto Boho"><img src="assets/boho-t.webp" alt="" width="58" height="44" loading="lazy"></button>
+          <button type="button" data-src="assets/japandi-m.webp" aria-pressed="false" aria-label="Beispielfoto Japandi"><img src="assets/japandi-t.webp" alt="" width="58" height="44" loading="lazy"></button>
+          <small>Beispielfotos, mit Hilfe von KI erstellt.</small>
+        </div>
+      </div>
+      <p class="fp-note" id="fp-msg" aria-live="polite">Am besten klappt es mit einem Foto bei Tageslicht, ohne Blitz.</p>
+    </div>
+    <div id="fp-out" aria-live="polite">
+      <div class="fp-block">
+        <h3 class="fp-h">Die Farben im Foto</h3>
+        <div class="fp-sw" id="fp-sw"></div>
+        <p class="fp-note">Tipp auf eine Farbe, dann ist ihr Farbwert kopiert.</p>
+      </div>
+      <div class="fp-block">
+        <h3 class="fp-h">So verteilst du sie</h3>
+        <div class="fp-bar" id="fp-bar" role="img" aria-label="Aufteilung nach der 60-30-10-Regel"></div>
+        <div class="fp-leg"><span><b>60&nbsp;% Hauptfarbe</b>Wände, großer Teppich</span><span><b>30&nbsp;% Nebenfarbe</b>Vorhänge, Polster</span><span><b>10&nbsp;%</b>Akzent</span></div>
+        <p class="fp-note">Die 60-30-10-Regel erklärt der Ratgeber <a href="farben.html">Wandfarbe wählen</a>.</p>
+      </div>
+      <div class="fp-block">
+        <h3 class="fp-h">Drei Vorschläge für die Wand</h3>
+        <div class="fp-wall" id="fp-wall"></div>
+        <p class="fp-note">Aus deinen Farben gerechnet: einmal hell, einmal mittel, einmal dunkel. Am Bildschirm wirkt Farbe anders als an der Wand, mach vor dem Streichen einen Probeanstrich.</p>
+      </div>
+      <div class="fp-block">
+        <h3 class="fp-h">Welcher Wohnstil passt dazu?</h3>
+        <div class="fp-stil" id="fp-stil"></div>
+        <p class="fp-note">Verglichen wird nur der Abstand der Farben zu unseren sechs Farbkarten. Ein Stil ist mehr als Farbe.</p>
+      </div>
+      <div class="fp-btns"><button type="button" id="fp-img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>Palette als Bild speichern</button><button type="button" id="fp-copy">Alle Farbwerte kopieren</button></div>
+    </div>
+  </div>
+</div></section>
+<section class="kurz-s"><div class="wrap narrow"><div class="kurz" id="kurz-gesagt"><b>Kurz gesagt</b><p>Wähle ein Foto von deinem Zimmer, einem Lieblingsbild oder einem Stoff aus. Das Werkzeug zieht die fünf bis sechs wichtigsten Farben heraus, zeigt ihren Farbwert und verteilt sie nach der 60-30-10-Regel auf Hauptfarbe, Nebenfarbe und Akzent. Dazu kommen drei Vorschläge für die Wand und der Wohnstil, dessen Farbkarte am nächsten liegt. Das Foto verlässt dein Gerät nicht.</p></div><details class="toc"><summary><span>Inhalt</span><span class="toc-t">3 Min. Lesezeit</span></summary><ol><li><a href="#palette">Deine Farben</a></li><li><a href="#nutzen">So nutzt du die Farben</a></li><li><a href="#fragen">Häufige Fragen</a></li><li><a href="#weiter">Passt dazu</a></li></ol></details></div></section>
+
+
+<section class="band" id="nutzen"><div class="wrap narrow">
+  <h2>So nutzt du die Farben.</h2>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Vom Lieblingsstück ausgehen</h3><p>Fotografier, was bleibt: das Sofa, den Teppich, ein Bild. Die Palette zeigt, welche Farben schon im Raum sind.</p></li>
+    <li><h3>Die ruhigste Farbe für die großen Flächen</h3><p>Die Hauptfarbe gehört an Wände, auf große Teppiche und wichtige Möbel. Meist ist es der hellste, ruhigste Ton der Palette.</p></li>
+    <li><h3>Die Nebenfarbe wiederholen</h3><p>Vorhänge, Polster oder eine einzelne Wand nehmen die zweite Farbe auf. Taucht sie an zwei oder drei Stellen auf, wirkt der Raum geplant.</p></li>
+    <li><h3>Den Akzent sparsam setzen</h3><p>Kissen, Bilder und Deko dürfen kräftig sein. Ein Zehntel reicht.</p></li>
+    <li><h3>Im Raum prüfen</h3><p>Nimm die Farbwerte als Richtung und vergleich sie im Markt mit echten Farbkarten. Streich ein Probestück und sieh es dir morgens und abends an.</p></li>
+  </ol>
+  <p class="tip">Passende Bilder für die Wand ordnest du im <a href="bilderwand.html">Bilderwand-Planer</a> an.</p>
+</div></section>
+
+<section id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wird mein Foto hochgeladen?</summary><div><p>Nein. Das Foto wird nur in deinem Browser geöffnet und dort ausgewertet. Es wird nicht an uns oder andere übertragen und nicht gespeichert.</p></div></details>
+    <details><summary>Wie werden die Farben gefunden?</summary><div><p>Das Bild wird verkleinert, ähnliche Bildpunkte werden zu Gruppen zusammengefasst. Die größten Gruppen sind deine Farben, der Anteil zeigt, wie viel Fläche sie im Foto haben.</p></div></details>
+    <details><summary>Warum sehen die Farben anders aus als im Zimmer?</summary><div><p>Kamera und Licht verändern Farben. Abendlicht macht alles wärmer, Blitz macht es kälter. Fotografier bei Tageslicht und nimm die Werte als Richtung, nicht als Messung.</p></div></details>
+    <details><summary>Was fange ich mit dem Farbwert an?</summary><div><p>Der Farbwert, zum Beispiel #A8B49C, beschreibt die Farbe für Bildschirme. Du kannst ihn in Einrichtungs- und Zeichenprogrammen eingeben oder im Markt mit Farbkarten vergleichen.</p></div></details>
+    <details><summary>Welches Foto eignet sich?</summary><div><p>Jedes, auf dem das zu sehen ist, was du magst: dein Zimmer, ein Stoff, ein Gemälde, ein Urlaubsbild. Je weniger Nebensachen im Bild sind, desto klarer wird die Palette.</p></div></details>
+  </div>
+</div></section>
+
+<section class="band" id="quellen"><div class="wrap narrow">
+  <h2>So rechnet das Werkzeug.</h2>
+  <details class="src"><summary>Alle 5 Quellen anzeigen</summary><ol>
+    <li>Farben finden: Das Foto wird auf etwa 120 Bildpunkte Kantenlänge verkleinert und im Farbraum CIELAB in bis zu sechs Gruppen geteilt (k-Means). Sehr ähnliche Gruppen werden zusammengelegt, Gruppen unter 2&nbsp;% Fläche entfallen.</li>
+    <li>Rollen: Hauptfarbe ist die größte Fläche, Akzent die kräftigste der übrigen Farben, Nebenfarbe die größte der restlichen.</li>
+    <li>Wand-Vorschläge: Farbton aus Hauptfarbe, Nebenfarbe und Akzent, Helligkeit und Sättigung auf feste Werte für eine helle, eine mittlere und eine dunkle Wand gesetzt.</li>
+    <li>Wohnstil: mittlerer Farbabstand zwischen deinen Farben und den Farbkarten der sechs Stile auf <a href="stile.html">Wohnstile im Überblick</a>.</li>
+    <li>Die 60-30-10-Regel und ihre Quellen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen</a>.</li>
+  </ol></details><p class="src checked">Geprüft am 14.11.2026.</p>
+</div></section>
+
+<section class="band" id="weiter"><div class="wrap"><div class="sec-h"><h2>Passt dazu.</h2></div><div class="hub rel"><a href="farben.html"><span class="rimg"><picture><source type="image/webp" srcset="assets/farben-m.webp 960w, assets/farben.webp 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px"><img src="assets/farben.jpg" srcset="assets/farben-m.jpg 960w, assets/farben.jpg 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px" alt="" loading="lazy" decoding="async"></picture></span><b>Wandfarbe wählen und kombinieren</b><span>Wirkung, 60-30-10-Regel, Kombinierer</span></a><a href="stile.html"><span class="rimg"><picture><source type="image/webp" srcset="assets/start-m.webp 960w, assets/start.webp 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px"><img src="assets/start.jpg" srcset="assets/start-m.jpg 960w, assets/start.jpg 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px" alt="" loading="lazy" decoding="async"></picture></span><b>Wohnstile im Überblick</b><span>Sechs Stile, jeder mit Farbkarte</span></a><a href="bilderwand.html"><span class="rimg"><picture><source type="image/webp" srcset="assets/bilderwand-m.webp 960w, assets/bilderwand.webp 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px"><img src="assets/bilderwand.jpg" srcset="assets/bilderwand-m.jpg 960w, assets/bilderwand.jpg 1672w" sizes="(max-width:540px) 100vw, (max-width:860px) 50vw, 380px" alt="" loading="lazy" decoding="async"></picture></span><b>Bilderwand-Planer</b><span>Rahmen anordnen, Nagelpunkte messen</span></a></div></div></section>
+</main>
+<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p><p class="stand">Stand: 14.11.2026</p><nav class="ft-links fc" aria-label="Alle Seiten"><div><p class="fc-h">Wohnstile</p><a href="stile.html">Wohnstile im Überblick</a><a href="vintage.html">Vintage einrichten</a><a href="modern.html">Modern einrichten</a><a href="skandinavisch.html">Skandinavisch einrichten</a><a href="japandi.html">Japandi einrichten</a><a href="industrial.html">Industrial einrichten</a><a href="boho.html">Boho einrichten</a></div><div><p class="fc-h">Räume</p><a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a><a href="schlafzimmer.html">Schlafzimmer einrichten</a><a href="wohnzimmer.html">Wohnzimmer einrichten</a><a href="flur.html">Flur und Eingang einrichten</a><a href="arbeitsecke.html">Arbeitsecke im Wohnzimmer</a><a href="mieten.html">Schöner wohnen zur Miete</a></div><div><p class="fc-h">Licht und Farbe</p><a href="farben.html">Wandfarbe wählen und kombinieren</a><a href="licht.html">Licht planen</a><a href="gemuetlich.html">Gemütlich im Winter</a></div><div><p class="fc-h">Saison</p><a href="weihnachten.html">Weihnachtlich dekorieren</a><a href="tischdeko.html">Weihnachtliche Tischdeko</a><a href="adventskranz.html">Adventskranz binden</a><a href="geschenke.html">Geschenke fürs Zuhause</a><a href="pflanzen.html">Zimmerpflanzen im Winter</a><a href="black-friday.html">Black Friday 2026</a></div><div><p class="fc-h">Planer und Rechner</p><a href="./#stil-finder">Welcher Stil passt zu mir?</a><a href="raumplaner.html">Raumplaner</a><a href="bilderwand.html">Bilderwand-Planer</a><a href="farbpalette.html" aria-current="page">Farbpalette aus Foto</a><a href="rechner.html">Raum-Rechner</a></div><div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p></div></footer>
+<script>
+/* Farbpalette aus Foto. Alles läuft im Browser, das Foto wird nirgends hingeschickt.
+   Kern (window.FP): palette(pixels) -> Farben mit Anteil, roles(), walls(), style(). Beschreibung im Abschnitt #quellen, bei Änderungen beides anpassen. */
+(function(){
+  'use strict';
+  var d=document,$=function(i){return d.getElementById(i)},STYLES={"vintage": {"name": "Vintage", "desc": "Gebraucht, mindestens 20 Jahre alt und mit Geschichte. Teak, Messing und warme Farben.", "pal": [["Cognac", "#8f5530"], ["Senfgelb", "#c49a3a"], ["Petrol", "#1f5560"], ["Oliv", "#6d6a36"]], "start": [["Ein Sideboard aus Teak oder Nussbaum", "https://www.amazon.de/s?k=Sideboard+Teak+Mid+Century&tag=stildaheim-21"], ["Ein Sessel mit Samt- oder Cordbezug", "https://www.amazon.de/s?k=Sessel+Samt+Retro&tag=stildaheim-21"], ["Eine Leuchte aus Messing oder Glas", "https://www.amazon.de/s?k=Tischleuchte+Messing+Glas&tag=stildaheim-21"]], "href": "vintage.html", "img": "vintage", "alt": "Wohnzimmer im Vintage-Stil mit Teak-Sideboard, Samtsessel und Orientteppich"}, "modern": {"name": "Modern", "desc": "Klare Linien, ruhige Farben, wenig Deko. Alles hat seinen Platz.", "pal": [["Kreide", "#eeede9"], ["Kiesel", "#b9b6ae"], ["Travertin", "#d6c7ad"], ["Graphit", "#3a3b3c"]], "start": [["Ein Sofa mit klarer, gerader Linie", "https://www.amazon.de/s?k=Sofa+3-Sitzer+modern+grau&tag=stildaheim-21"], ["Ein Couchtisch aus Stein, Holz oder Glas", "https://www.amazon.de/s?k=Couchtisch+Travertin&tag=stildaheim-21"], ["Ein großes, ruhiges Bild statt vieler kleiner", "https://www.amazon.de/s?k=gro%C3%9Fes+Wandbild+abstrakt+gerahmt&tag=stildaheim-21"]], "href": "modern.html", "img": "modern", "alt": "Modernes Wohnzimmer mit Bouclé-Sofa, Couchtisch aus Travertin und großem Bild"}, "skandinavisch": {"name": "Skandinavisch", "desc": "Hell, gemütlich und praktisch. Viel Weiß, helles Holz, weiche Stoffe.", "pal": [["Schnee", "#f4f4f1"], ["Birke", "#e3d3b5"], ["Nebelblau", "#a9b7c0"], ["Salbei", "#a3ae97"]], "start": [["Möbel aus heller Eiche oder Birke", "https://www.amazon.de/s?k=Couchtisch+Eiche+hell&tag=stildaheim-21"], ["Wolldecken und ein Fell", "https://www.amazon.de/s?k=Wolldecke+Grobstrick&tag=stildaheim-21"], ["Eine Leuchte mit Stoff- oder Papierschirm", "https://www.amazon.de/s?k=Stehleuchte+Stoffschirm&tag=stildaheim-21"]], "href": "skandinavisch.html", "img": "skandi", "alt": "Heller Wohnraum mit Eichenholz, Leinen und Papierleuchte"}, "japandi": {"name": "Japandi", "desc": "Japanische Ruhe trifft skandinavische Gemütlichkeit. Natur, Handwerk, viel Luft.", "pal": [["Reispapier", "#efe8dc"], ["Ton", "#b78c6b"], ["Moos", "#6f7558"], ["Tusche", "#2b2a27"]], "start": [["Ein niedriges Sofa oder Bodenkissen", "https://www.amazon.de/s?k=Bodenkissen+Leinen+gro%C3%9F&tag=stildaheim-21"], ["Eine Papierleuchte", "https://www.amazon.de/s?k=Papierleuchte+Stehleuchte+Reispapier&tag=stildaheim-21"], ["Handgemachte Keramik", "https://www.amazon.de/s?k=Keramik+Vase+handgemacht&tag=stildaheim-21"]], "href": "japandi.html", "img": "japandi", "alt": "Japandi-Wohnzimmer mit Papier-Stehleuchte, niedrigem Leinensofa, Juteteppich und Holzlamellen"}, "industrial": {"name": "Industrial", "desc": "Loft-Gefühl mit Stahl, Holz und Leder vor rohen Wänden.", "pal": [["Beton", "#a7a5a0"], ["Stahl", "#4a4f53"], ["Rost", "#8e4b2c"], ["Leder", "#6b4429"]], "start": [["Ein Regal aus Stahl und Massivholz", "https://www.amazon.de/s?k=Regal+Metall+Massivholz+Industrial&tag=stildaheim-21"], ["Ein Sessel aus Leder", "https://www.amazon.de/s?k=Ledersessel+cognac&tag=stildaheim-21"], ["Eine Pendelleuchte aus Metall", "https://www.amazon.de/s?k=Pendelleuchte+Metall+schwarz+Industrial&tag=stildaheim-21"]], "href": "industrial.html", "img": "industrial", "alt": "Loft mit Backsteinwand, Ledersessel, Couchtisch aus Altholz und Fabrikleuchten"}, "boho": {"name": "Boho", "desc": "Lässig und gesammelt: Rattan, Muster, Pflanzen und Handgemachtes.", "pal": [["Sand", "#e2cba7"], ["Rattan", "#c29a5b"], ["Terrakotta", "#a8552f"], ["Olive", "#6f6f3d"]], "start": [["Ein Sessel aus Rattan oder Korb", "https://www.amazon.de/s?k=Rattansessel&tag=stildaheim-21"], ["Ein Teppich mit Muster", "https://www.amazon.de/s?k=Kelim+Teppich&tag=stildaheim-21"], ["Viele Pflanzen in Körben", "https://www.amazon.de/s?k=Pflanzkorb+Seegras&tag=stildaheim-21"]], "href": "boho.html", "img": "boho", "alt": "Boho-Wohnzimmer mit Rattansessel, Kelim-Teppich, Makramee und vielen Pflanzen"}};
+  function lin(c){c/=255;return c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4)}
+  function fl(t){return t>.008856?Math.cbrt(t):7.787*t+16/116}
+  function lab(r,g,b){r=lin(r);g=lin(g);b=lin(b);var x=(r*.4124+g*.3576+b*.1805)/.95047,y=r*.2126+g*.7152+b*.0722,z=(r*.0193+g*.1192+b*.9505)/1.08883;
+    x=fl(x);y=fl(y);z=fl(z);return[116*y-16,500*(x-y),200*(y-z)]}
+  function rgb(L,a,b){var y=(L+16)/116,x=a/500+y,z=y-b/200,f=function(t){return t*t*t>.008856?t*t*t:(t-16/116)/7.787};
+    x=f(x)*.95047;y=f(y);z=f(z)*1.08883;var r=x*3.2406+y*-1.5372+z*-.4986,g=x*-.9689+y*1.8758+z*.0415,bl=x*.0557+y*-.204+z*1.057,
+      c=function(v){v=v<=.0031308?12.92*v:1.055*Math.pow(v,1/2.4)-.055;return Math.round(Math.min(1,Math.max(0,v))*255)};return[c(r),c(g),c(bl)]}
+  function hex(c){return'#'+c.map(function(v){return('0'+v.toString(16)).slice(-2)}).join('').toUpperCase()}
+  function unhex(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+  function dE(p,q){var a=p[0]-q[0],b=p[1]-q[1],c=p[2]-q[2];return Math.sqrt(a*a+b*b+c*c)}
+  function chroma(l){return Math.sqrt(l[1]*l[1]+l[2]*l[2])}
+
+  /* pixels: Uint8ClampedArray RGBA. Ergebnis: [{lab,rgb,hex,share}] nach Anteil sortiert, höchstens 6 */
+  function palette(px){
+    var P=[],i,j,k,it;
+    for(i=0;i<px.length;i+=4)if(px[i+3]>200)P.push(lab(px[i],px[i+1],px[i+2]));
+    if(P.length<16)return[];
+    var K=Math.min(6,P.length),C=[P[Math.floor(P.length/2)]];
+    while(C.length<K){var best=-1,bd=-1,step=Math.max(1,Math.floor(P.length/2000));           /* weitester Punkt als nächste Startfarbe */
+      for(i=0;i<P.length;i+=step){var m=1e9;for(j=0;j<C.length;j++)m=Math.min(m,dE(P[i],C[j]));if(m>bd){bd=m;best=i}}
+      C.push(P[best])}
+    var A=new Uint8Array(P.length),N;
+    for(it=0;it<14;it++){var S=C.map(function(){return[0,0,0]});N=C.map(function(){return 0});
+      for(i=0;i<P.length;i++){var bi=0,bm=1e9;for(j=0;j<C.length;j++){var q=dE(P[i],C[j]);if(q<bm){bm=q;bi=j}}A[i]=bi;N[bi]++;S[bi][0]+=P[i][0];S[bi][1]+=P[i][1];S[bi][2]+=P[i][2]}
+      C=C.map(function(c,j){return N[j]?[S[j][0]/N[j],S[j][1]/N[j],S[j][2]/N[j]]:c})}
+    var G=C.map(function(c,j){return{lab:c,n:N[j]}}).filter(function(g){return g.n>0});
+    for(var merged=true;merged;){merged=false;                                                   /* sehr ähnliche Gruppen zusammenlegen */
+      for(j=0;j<G.length&&!merged;j++)for(k=j+1;k<G.length;k++)if(dE(G[j].lab,G[k].lab)<9){var a=G[j],b=G[k],n=a.n+b.n;
+        a.lab=[(a.lab[0]*a.n+b.lab[0]*b.n)/n,(a.lab[1]*a.n+b.lab[1]*b.n)/n,(a.lab[2]*a.n+b.lab[2]*b.n)/n];a.n=n;G.splice(k,1);merged=true;break}}
+    var tot=P.length;G=G.filter(function(g){return g.n/tot>=.02});G.sort(function(a,b){return b.n-a.n});
+    var sum=G.reduce(function(s,g){return s+g.n},0);
+    return G.map(function(g){var c=rgb(g.lab[0],g.lab[1],g.lab[2]);return{lab:g.lab,rgb:c,hex:hex(c),share:g.n/sum}});
+  }
+  function roles(pal){
+    if(!pal.length)return null;var main=pal[0],rest=pal.slice(1),acc=null,sec=null;
+    rest.forEach(function(p){if(!acc||chroma(p.lab)>chroma(acc.lab))acc=p});
+    rest.forEach(function(p){if(p!==acc&&!sec)sec=p});
+    if(!sec){sec=acc||main;}if(!acc)acc=sec;
+    return{main:main,sec:sec,acc:acc};
+  }
+  function tone(src,L,cmax,cf){var l=src.lab,c=chroma(l),t=c?Math.min(cmax,c*cf)/c:0,r=rgb(L,l[1]*t,l[2]*t);return{rgb:r,hex:hex(r)}}
+  function walls(R){return[{n:'Helle Wand',t:'aus der Hauptfarbe',c:tone(R.main,92,9,.4)},{n:'Farbige Wand',t:'aus der Nebenfarbe',c:tone(R.sec,Math.min(74,Math.max(58,R.sec.lab[0])),26,.75)},{n:'Dunkle Akzentwand',t:'aus dem Akzent',c:tone(R.acc,34,30,.8)}]}
+  function style(pal){
+    var best=null,top=pal.slice(0,4);
+    Object.keys(STYLES).forEach(function(k){var sp=STYLES[k].pal.map(function(p){var c=unhex(p[1]);return lab(c[0],c[1],c[2])}),a=0,b=0;
+      sp.forEach(function(s){var m=1e9;pal.forEach(function(p){m=Math.min(m,dE(s,p.lab))});a+=m});
+      top.forEach(function(p){var m=1e9;sp.forEach(function(s){m=Math.min(m,dE(s,p.lab))});b+=m});
+      var sc=a/sp.length*.5+b/top.length*.5;if(!best||sc<best.score)best={key:k,score:sc}});
+    return best;
+  }
+  window.FP={palette:palette,roles:roles,walls:walls,style:style,lab:lab,rgb:rgb,hex:hex};
+
+  var PAL=[],IMG=null,NAMES=['Hauptfarbe','Nebenfarbe','Akzent'];
+  function toast(t){if(window.sdToast)window.sdToast(t)}
+  function pct(v){return Math.max(1,Math.round(v*100))+' %'}
+  function sw(c,name,sub){return'<button type="button" data-hex="'+c.hex+'" aria-label="'+name+', Farbwert '+c.hex+' kopieren"><i style="background:'+c.hex+'"></i><span><b>'+name+'</b><em>'+c.hex+'</em>'+(sub?'<em>'+sub+'</em>':'')+'</span></button>'}
+  function render(){
+    var R=roles(PAL);if(!R){$('fp-msg').innerHTML='<span class="fp-err">In diesem Bild waren keine Farben zu erkennen. Nimm ein anderes Foto.</span>';return}
+    var order=[R.main,R.sec,R.acc].filter(function(x,i,a){return a.indexOf(x)===i}).concat(PAL.filter(function(p){return p!==R.main&&p!==R.sec&&p!==R.acc}));
+    $('fp-sw').innerHTML=order.map(function(p,i){return sw(p,p===R.main?NAMES[0]:p===R.acc&&p!==R.sec?NAMES[2]:p===R.sec?NAMES[1]:'Dazu',pct(p.share))}).join('');
+    $('fp-bar').innerHTML='<i style="flex:6;background:'+R.main.hex+'"></i><i style="flex:3;background:'+R.sec.hex+'"></i><i style="flex:1;background:'+R.acc.hex+'"></i>';
+    $('fp-bar').setAttribute('aria-label','Aufteilung: 60 Prozent '+R.main.hex+', 30 Prozent '+R.sec.hex+', 10 Prozent '+R.acc.hex);
+    $('fp-wall').innerHTML=walls(R).map(function(w){return'<button type="button" data-hex="'+w.c.hex+'" aria-label="'+w.n+', Farbwert '+w.c.hex+' kopieren"><i style="background:'+w.c.hex+'"></i><span><b>'+w.n+'</b><em>'+w.c.hex+'</em></span></button>'}).join('');
+    var st=style(PAL),S=STYLES[st.key];
+    $('fp-stil').innerHTML='<span class="dots" aria-hidden="true">'+S.pal.map(function(p){return'<i style="background:'+p[1]+'"></i>'}).join('')+'</span><p>Am nächsten liegt <b>'+S.name+'</b>. '+S.desc+' <a href="'+S.href+'">Zum Stil</a></p>';
+  }
+  function analyse(img){
+    try{var s=120/Math.max(img.naturalWidth,img.naturalHeight),w=Math.max(1,Math.round(img.naturalWidth*Math.min(1,s))),h=Math.max(1,Math.round(img.naturalHeight*Math.min(1,s)));
+      var cv=d.createElement('canvas');cv.width=w;cv.height=h;var cx=cv.getContext('2d',{willReadFrequently:true});cx.drawImage(img,0,0,w,h);
+      PAL=palette(cx.getImageData(0,0,w,h).data);IMG=img;render();
+    }catch(e){$('fp-msg').innerHTML='<span class="fp-err">Dieses Bild lässt sich hier nicht auswerten. Nimm ein anderes Foto.</span>'}
+  }
+  function show(src,own){
+    var pic=$('fp-pic');pic.onload=function(){analyse(pic);if(own){$('fp-msg').textContent='Dein Foto ist ausgewertet. Es ist nur auf deinem Gerät geblieben.';try{URL.revokeObjectURL(src)}catch(e){}}};
+    pic.onerror=function(){$('fp-msg').innerHTML='<span class="fp-err">Dieses Bild kann dein Browser nicht öffnen. Nimm ein JPG oder PNG.</span>'};
+    pic.alt=own?'Dein ausgewähltes Foto':'Beispielfoto';$('fp-drop').classList.toggle('own',!!own);pic.src=src;
+    [].forEach.call(d.querySelectorAll('.fp-demo button'),function(b){b.setAttribute('aria-pressed',!own&&b.dataset.src===src?'true':'false')});
+  }
+  function take(file){if(!file)return;if(!/^image\//.test(file.type||'image/')){$('fp-msg').innerHTML='<span class="fp-err">Das ist kein Bild. Nimm ein Foto als JPG oder PNG.</span>';return}show(URL.createObjectURL(file),true)}
+  $('fp-file').onchange=function(){take(this.files&&this.files[0]);this.value=''};
+  var drop=$('fp-drop');
+  ['dragenter','dragover'].forEach(function(n){drop.addEventListener(n,function(e){e.preventDefault();drop.classList.add('over')})});
+  ['dragleave','drop'].forEach(function(n){drop.addEventListener(n,function(e){e.preventDefault();drop.classList.remove('over')})});
+  drop.addEventListener('drop',function(e){take(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0])});
+  d.querySelector('.fp-demo').onclick=function(e){var b=e.target.closest('button');if(b)show(b.dataset.src,false)};
+  $('fp-copy').onclick=function(){var t=PAL.map(function(p){return p.hex}).join(', ');
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(function(){toast('Farbwerte kopiert')},function(){prompt('Farbwerte:',t)});else prompt('Farbwerte:',t)};
+  /* Bild für Pinterest und Co.: Foto oben, Farben darunter (1000 × 1500) */
+  $('fp-img').onclick=function(){
+    try{var W=1000,H=1500,cv=d.createElement('canvas'),x=cv.getContext('2d'),R=roles(PAL);cv.width=W;cv.height=H;if(!R||!IMG)throw 0;
+      x.fillStyle='#fbfbf8';x.fillRect(0,0,W,H);
+      var ih=880,ir=IMG.naturalWidth/IMG.naturalHeight,sw_=W,sh=W/ir;if(sh<ih){sh=ih;sw_=ih*ir}x.save();x.beginPath();x.rect(0,0,W,ih);x.clip();x.drawImage(IMG,(W-sw_)/2,(ih-sh)/2,sw_,sh);x.restore();
+      var n=PAL.length,gap=14,m=50,cw=(W-2*m-(n-1)*gap)/n;
+      PAL.forEach(function(p,i){var cx=m+i*(cw+gap);x.fillStyle=p.hex;x.fillRect(cx,ih+50,cw,330);x.strokeStyle='#d9d8d1';x.strokeRect(cx+.5,ih+50.5,cw-1,329);
+        x.fillStyle='#1c1f1d';x.font='600 '+Math.min(26,cw/5.2)+'px system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif';x.textAlign='center';x.fillText(p.hex,cx+cw/2,ih+420)});
+      x.fillStyle='#1c1f1d';x.textAlign='left';x.font='700 34px system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif';x.fillText('Meine Farbpalette',m,H-58);
+      x.fillStyle='#5c605d';x.textAlign='right';x.font='500 24px system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif';x.fillText('stil-daheim.de/farbpalette',W-m,H-58);
+      cv.toBlob(function(blob){if(!blob)return fail();var file=null;try{file=new File([blob],'farbpalette.png',{type:'image/png'})}catch(e){}
+        if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Meine Farbpalette'}).catch(function(err){if(!err||err.name!=='AbortError')down(blob)});return}down(blob)},'image/png');
+    }catch(e){fail()}
+    function down(blob){var a=d.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download='farbpalette.png';d.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Bild gespeichert')}
+    function fail(){toast('Das Bild klappt in diesem Browser nicht. Nimm einen Screenshot.')}
+  };
+  show('assets/skandi-m.webp',false);
+})();
+</script>
+<script>
+/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */
+(function(){if(location.hostname!=='stil-daheim.de')return;var E='https://stildaheim.goatcounter.com/count';
+function send(q){var u=E+'?'+q+'&rnd='+Math.random().toString(36).slice(2);if(navigator.sendBeacon){try{if(navigator.sendBeacon(u))return}catch(e){}}new Image().src=u}
+var e=encodeURIComponent;send('p='+e(location.pathname)+'&t='+e(document.title)+'&r='+e(document.referrer));
+document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a[href*="amazon.de"]');if(!a)return;var m=a.href.match(/[?&]k=([^&]+)/),l=m?decodeURIComponent(m[1].replace(/\+/g,' ')):(a.textContent||'amazon').trim().slice(0,60);
+send('p='+e('amazon: '+l)+'&t='+e('Klick von '+location.pathname)+'&e=true')},true)})();
+</script>
+</body></html>
