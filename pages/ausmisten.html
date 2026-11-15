@@ -1,0 +1,214 @@
+<!--meta {"key":"ausmisten","title":"Wohnung ausmisten: Plan, Vier-Kisten-Methode, wohin damit – Stil-Daheim","desc":"Wohnung ausmisten mit Plan: Vier-Kisten-Methode, kurze Einheiten am Tag und ein Ausmist-Planer bis zum Stichtag. Dazu: wohin mit Kleidung, Geräten und Verkäufen.","og":"assets/ausmisten.jpg","updated":"2026-11-15","kurz":"Miste nach Kategorien statt nach Zimmern aus: zuerst Kleidung, dann Bücher, Papiere und Kleinkram, Erinnerungsstücke zuletzt. Sortiere alles in vier Kisten: behalten, weggeben, wegwerfen, unsicher. Was ein Jahr lang in der Unsicher-Kiste liegt, ohne dass du es vermisst, darf gehen. Gut erhaltene Kleidung kommt in den Altkleidercontainer, kleine Elektrogeräte unter 25&nbsp;cm nehmen viele Händler kostenlos zurück."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:62% 50%}
+.masse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}
+.masse div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:16px}
+.masse b{display:block;font-size:1.9rem;font-stretch:80%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.masse span{font-size:.92rem;color:var(--mut)}
+.skizze{margin:28px 0 0;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:16px}
+.skizze svg{display:block;width:100%;height:auto}
+.skizze .t{fill:none;stroke:var(--ink);stroke-width:2;opacity:.75}
+.skizze .f{fill:var(--brass-t);opacity:.12}
+.skizze .m{stroke:var(--brass-t);stroke-width:1.8;fill:none}
+.skizze text{fill:var(--brass-t);font:600 32px Archivo,system-ui,sans-serif}
+.skizze .s{fill:var(--mut);font:500 24px Archivo,system-ui,sans-serif}
+.skizze figcaption{font-size:.9rem;color:var(--mut);margin-top:10px}
+.aplan{display:grid;gap:18px;margin-top:28px}
+.aplan fieldset{border:0;padding:0;margin:0}
+.aplan legend{font-weight:700;margin-bottom:10px}
+.zonen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.zonen label{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 12px;background:var(--pan);border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:600}
+.zonen input{width:22px;height:22px;accent-color:var(--brass-t);flex:none}
+.zonen small{margin-left:auto;color:var(--mut);font-weight:500;white-space:nowrap}
+.aplan .in{display:flex;flex-wrap:wrap;gap:14px 22px}
+.aplan .in label{display:flex;align-items:center;gap:10px;font-weight:600}
+.aplan select,.aplan input[type=date]{min-height:44px;font:inherit;font-weight:700;padding:4px 10px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.ares{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ares div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.ares b{display:block;font-size:1.4rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums}
+.ares span{font-size:.85rem;color:var(--mut)}
+.tage{list-style:none;padding:0;margin:0;display:grid;gap:6px;counter-reset:t}
+.tage li{display:flex;gap:12px;align-items:baseline;padding:10px 14px;background:var(--pan);border:1px solid var(--line);border-radius:10px}
+.tage li b{min-width:7.5em;font-variant-numeric:tabular-nums;color:var(--brass-t)}
+.rechte{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+.rechte li{background:var(--pan);border:1px solid var(--line);border-left:3px solid var(--brass-t);border-radius:10px;padding:14px 16px}
+@media (max-width:760px){.masse{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.zonen,.ares{grid-template-columns:1fr}.tage li{flex-direction:column;gap:2px}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:ausmisten|Ruhiges Altbauzimmer am Abend mit hellem Holzregal voller Körbe, davor offene Kartons mit gefalteter Kleidung beim Aussortieren}}
+  <div class="wrap">
+    <h1>Wohnung ausmisten mit Plan</h1>
+    <p>Weniger Dinge, mehr Platz, mehr Ruhe. Mit vier Kisten, kurzen Einheiten und der richtigen Reihenfolge schaffst du es, ohne ein ganzes Wochenende zu opfern.</p>
+    <div class="btns"><a class="btn" href="#planer">Zum Ausmist-Planer</a><a class="btn ghost" href="#wohin">Wohin damit?</a></div>
+  </div>
+</div>
+
+<section id="kisten"><div class="wrap narrow">
+  <h2>Die Vier-Kisten-Methode.</h2>
+  <p class="lede">Stell vier Kisten auf, bevor du anfängst. Jedes Teil geht durch deine Hand und landet in genau einer.</p>
+  <div class="masse">
+    <div><b>Behalten</b><span>Du nutzt es oder liebst es. Es bekommt einen festen Platz.</span></div>
+    <div><b>Weggeben</b><span>Gut erhalten: verschenken, spenden oder verkaufen.</span></div>
+    <div><b>Wegwerfen</b><span>Kaputt, abgelaufen, verschmutzt. Richtig trennen.</span></div>
+    <div><b>Unsicher</b><span>Zukleben, Datum drauf, ab in Keller oder Schrank.</span></div>
+  </div>
+  <figure class="skizze">
+    <svg viewBox="0 0 640 430" role="img" aria-label="Skizze: vier Kisten mit den Aufschriften Behalten, Weggeben, Wegwerfen und Unsicher. Die Unsicher-Kiste ist zugeklebt und trägt ein Datum: nach 12 Monaten nicht vermisst, dann darf es gehen.">
+      <rect class="f" x="20" y="40" width="280" height="120" rx="8"/><rect class="t" x="20" y="40" width="280" height="120" rx="8"/><path class="t" d="M20 40l24-30h232l24 30"/><text x="160" y="104" text-anchor="middle">Behalten</text><rect class="t" x="340" y="40" width="280" height="120" rx="8"/><path class="t" d="M340 40l24-30h232l24 30"/><text x="480" y="104" text-anchor="middle">Weggeben</text>
+      <rect class="t" x="20" y="230" width="280" height="120" rx="8"/><path class="t" d="M20 230l24-30h232l24 30"/><text x="160" y="294" text-anchor="middle">Wegwerfen</text><rect class="t" x="340" y="230" width="280" height="120" rx="8"/><path class="m" d="M340 230h280"/><text x="480" y="288" text-anchor="middle">Unsicher</text><text class="s" x="480" y="325" text-anchor="middle">15.11.2026</text>
+      <text class="s" x="320" y="410" text-anchor="middle">Nach 12 Monaten nicht vermisst? Dann darf es gehen.</text>
+    </svg>
+    <figcaption>Die Unsicher-Kiste nimmt dir die schwersten Entscheidungen ab. Was du ein Jahr lang nicht gesucht hast, fehlt dir meist auch später nicht.</figcaption>
+  </figure>
+</div></section>
+
+<section class="band" id="planer"><div class="wrap narrow">
+  <h2>Der Ausmist-Planer.</h2>
+  <p class="lede">Wähle, was du dir vornimmst, und wie viel Zeit du am Tag hast. Der Plan sagt dir, wann du fertig bist und was an welchem Tag dran ist.</p>
+  <div class="aplan">
+    <fieldset><legend>Was willst du ausmisten?</legend>
+      <div class="zonen" id="zonen"></div>
+    </fieldset>
+    <div class="in">
+      <label for="amin">Zeit am Tag <select id="amin" aria-label="Minuten pro Tag"><option value="15">15 Minuten</option><option value="30" selected>30 Minuten</option><option value="45">45 Minuten</option><option value="60">1 Stunde</option><option value="120">2 Stunden</option></select></label>
+      <label for="atage">Tage pro Woche <select id="atage" aria-label="Ausmist-Tage pro Woche"><option value="7">jeden Tag</option><option value="5" selected>5 Tage</option><option value="3">3 Tage</option><option value="2">am Wochenende</option></select></label>
+      <label for="astart">Start <input id="astart" type="date" aria-label="Startdatum"></label>
+    </div>
+    <div class="ares" aria-live="polite"><div><b id="a1"></b><span>Zeit insgesamt (Richtwert)</span></div><div><b id="a2"></b><span>Ausmist-Tage</span></div><div><b id="a3"></b><span>fertig am</span></div></div>
+    <p id="atxt" style="margin:0;color:var(--mut)"></p>
+    <ol class="tage" id="aplan" aria-label="Dein Plan Tag für Tag"></ol>
+  </div>
+  <p class="tip">Die Zeiten sind unsere Richtwerte für eine durchschnittliche Wohnung. Ein voller Keller oder ein großer Kleiderschrank dauern länger. Plane lieber zu viel Zeit ein als zu wenig. Was nach dem Ausmisten neu an seinen Platz soll, kannst du vorher im <a href="raumplaner.html">Raumplaner</a> ausprobieren.</p>
+</div></section>
+
+<section id="reihenfolge"><div class="wrap narrow">
+  <h2>In sechs Schritten zu mehr Platz.</h2>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Klein anfangen</h3><p>Eine Schublade, ein Fach, eine Kiste. Feste kurze Einheiten halten länger durch als ein großer Aufräumtag, nach dem du erschöpft bist.</p></li>
+    <li><h3>Nach Kategorien, nicht nach Zimmern</h3><p>Hol alle Pullover aus allen Schränken zusammen, nicht nur die aus dem Schlafzimmer. Erst dann siehst du, wie viele es wirklich sind.</p></li>
+    <li><h3>Mit dem Leichten beginnen</h3><p>Kleidung zuerst, dann Bücher, Papiere und Kleinkram aus Küche, Bad und Keller. Fotos und Erinnerungsstücke kommen ganz zum Schluss, wenn du geübt bist.</p></li>
+    <li><h3>Ehrliche Fragen stellen</h3><p>Habe ich es im letzten Jahr benutzt? Würde ich es heute wieder kaufen? Habe ich mehrere davon? Wenn alles Nein ist, darf es gehen.</p></li>
+    <li><h3>Sofort raus damit</h3><p>Die Weggeben-Kiste kommt noch am selben Tag ins Auto oder in den Flur, die Wegwerfen-Kiste in die Tonne. Sonst wandern die Sachen zurück in die Schränke.</p></li>
+    <li><h3>Jedem Ding einen Platz</h3><p>Was bleibt, bekommt einen festen Ort. Gleiches zu Gleichem, oft Gebrauchtes nach vorn und in Griffhöhe, Seltenes nach oben oder unters Bett.</p></li>
+  </ol>
+</div></section>
+
+{{FIG:ausmisten-2|Schublade mit aufrecht gefalteten Pullovern und T-Shirts in Leinen-Einsätzen, daneben kleine Körbe mit Socken|Aufrecht gefaltet und in Fächern sortiert: So siehst du jedes Teil auf einen Blick.}}
+
+<section class="band" id="wohin"><div class="wrap narrow">
+  <h2>Wohin damit?</h2>
+  <p class="lede">Weggeben ist der Teil, an dem es oft hängt. So wirst du die Sachen richtig los.</p>
+  <ul class="rechte">
+    <li><b>Kleidung und Schuhe:</b> Gut Erhaltenes kommt in den Altkleidercontainer, zu Kleiderkammern oder Sozialkaufhäusern. Seit 1.&nbsp;Januar 2025 müssen Alttextilien in der EU getrennt gesammelt werden. Die Verbraucherzentrale Hamburg rät trotzdem: Stark verschmutzte oder kaputte Textilien weiter in den Restmüll, weil es für sie noch keine sinnvolle Verwertung gibt. Frag im Zweifel bei deiner Stadt nach.</li>
+    <li><b>Kleine Elektrogeräte:</b> Geräte mit höchstens 25&nbsp;cm Kantenlänge nehmen Elektrohändler ab 400&nbsp;m² Verkaufsfläche und Supermärkte ab 800&nbsp;m², die Elektrogeräte verkaufen, kostenlos zurück. Du brauchst keinen Kassenbon und musst nichts Neues kaufen. Batterien vorher herausnehmen, wenn das geht, und Handys und Festplatten selbst löschen.</li>
+    <li><b>Große Geräte:</b> Der Händler nimmt sie beim Kauf eines gleichartigen Neugeräts mit. Ohne Neukauf geht es kostenlos zum Wertstoffhof.</li>
+    <li><b>Möbel:</b> Verschenken über Nachbarschaftsgruppen oder Kleinanzeigen, sonst Sperrmüll. Ob die Abholung etwas kostet, regelt deine Kommune.</li>
+    <li><b>Verkaufen:</b> Wer seine eigenen gebrauchten Sachen verkauft, muss darauf in der Regel keine Steuern zahlen. Plattformen melden dem Finanzamt allerdings, wer im Jahr 30 oder mehr Verkäufe oder 2.000&nbsp;€ Umsatz erreicht. Die Meldung allein bedeutet keine Steuerpflicht. Wer gezielt kauft, um weiterzuverkaufen, handelt gewerblich.</li>
+    <li><b>Bücher und Spiele:</b> Öffentliche Bücherschränke, Büchereien, Kitas und Schulen freuen sich oft über gut erhaltene Sachen. Frag vorher kurz nach.</li>
+  </ul>
+  <p class="tip">Das ist keine Steuer- oder Rechtsberatung. Bei vielen Verkäufen oder wertvollen Stücken wie Schmuck, Uhren oder Kunst lohnt sich ein Blick in die <a href="#quellen">Quellen</a> oder ein Gespräch mit dem Steuerbüro.</p>
+</div></section>
+
+<section id="stauraum"><div class="wrap narrow">
+  <h2>Stauraum, der Ordnung hält.</h2>
+  <ul class="rechte">
+    <li><b>Geschlossen statt offen:</b> Körbe, Boxen und Fronten machen den Raum ruhig. Offene Regale zeigen nur ausgewählte Dinge. Mehr Ideen stehen unter <a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a>.</li>
+    <li><b>Die Höhe nutzen:</b> Ein Regal bis unter die Decke, Fächer über der Tür, Boxen auf dem Schrank für Saisonsachen.</li>
+    <li><b>Unter dem Bett:</b> Flache Rollboxen mit Deckel für Bettwäsche und Winterkleidung. Miss vorher die freie Höhe unter dem Bettrahmen.</li>
+    <li><b>Aufrecht falten:</b> In Schubladen stehen T-Shirts und Pullover nebeneinander statt gestapelt. Du siehst alles und ziehst nichts von unten heraus.</li>
+    <li><b>Der Flur als Schleuse:</b> Nur was du täglich brauchst, bleibt im Eingang. Wie das geht, steht unter <a href="flur.html">Flur einrichten</a>.</li>
+    <li><b>Eine rein, eine raus:</b> Kommt ein neuer Pullover, geht ein alter. So bleibt der gewonnene Platz frei.</li>
+  </ul>
+</div></section>
+
+<section class="band" id="fehler"><div class="wrap narrow">
+  <h2>Häufige Fehler.</h2>
+  <ul class="rechte">
+    <li><b>Zuerst Aufbewahrung kaufen:</b> Erst ausmisten, dann messen, dann Boxen kaufen. Sonst verstaust du nur ordentlich, was du gar nicht brauchst.</li>
+    <li><b>Alles an einem Tag:</b> Nach ein paar Stunden lässt die Entscheidungskraft nach und alles landet in der Unsicher-Kiste.</li>
+    <li><b>Mit Erinnerungsstücken beginnen:</b> Briefe und Fotos kosten die meiste Kraft. Heb sie dir für das Ende auf.</li>
+    <li><b>Für andere entscheiden:</b> Miste deine eigenen Sachen aus. Bei Mitbewohnern und Familie zählt ihre Entscheidung, sonst gibt es Streit.</li>
+    <li><b>Kisten stehen lassen:</b> Eine volle Spendenkiste im Flur ist nur umgezogenes Chaos. Gleich einen Abgabetermin festlegen.</li>
+  </ul>
+</div></section>
+
+<section id="checkliste"><div class="wrap narrow">
+  <h2>Checkliste.</h2>
+  <p class="lede">Hak ab, was erledigt ist. Der Stand bleibt nur in deinem Browser.</p>
+  <div class="ck" id="ck" style="margin-top:26px"></div>
+</div></section>
+
+<section class="band" id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für Ordnung und Stauraum.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Umzugskartons stabil Set}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Stabile Kartons</b><span>Für die vier Kisten und die Spenden</span><span class="chk">Achte auf: doppelte Wellpappe und Griffe</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Aufbewahrungskorb Seegras mit Griffen}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Körbe aus Seegras</b><span>Ruhe im offenen Regal</span><span class="chk">Achte auf: Maße passend zur Regaltiefe</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Unterbettkommode mit Rollen Deckel}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Unterbett-Box</b><span>Platz für Bettwäsche und Winterkleidung</span><span class="chk">Achte auf: Höhe unter deinem Bettrahmen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Schubladen Organizer Kleidung faltbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Schubladen-Einsätze</b><span>Für aufrecht gefaltete Kleidung</span><span class="chk">Achte auf: Innenmaße der Schublade messen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Vakuumbeutel Kleidung Bettdecken}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Vakuumbeutel</b><span>Saisonkleidung platzsparend lagern</span><span class="chk">Achte auf: nicht für Daunen auf Dauer, sie brauchen Luft</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Aufbewahrungsbox Deckel stapelbar transparent}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Stapelboxen mit Deckel</b><span>Für Keller und Abstellraum</span><span class="chk">Achte auf: gleiche Größe, damit sie sicher stapeln</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Dokumentenbox Ordner Hängeregister}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Hängeregister</b><span>Papiere sortiert statt gestapelt</span><span class="chk">Achte auf: Platz für die Fächer, die du wirklich brauchst</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Etikettiergerät}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Etiketten</b><span>Damit jede Box sagt, was drin ist</span><span class="chk">Achte auf: ablösbare Etiketten für Wechselinhalte</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Womit fange ich beim Ausmisten an?</summary><div><p>Mit etwas Kleinem und Leichtem, zum Beispiel einer Schublade oder deinen Socken. Kleidung ist ein guter Start, weil die Entscheidungen leichter fallen als bei Fotos oder Briefen.</p></div></details>
+    <details><summary>Was ist die Vier-Kisten-Methode?</summary><div><p>Du sortierst jedes Teil in eine von vier Kisten: behalten, weggeben, wegwerfen und unsicher. Die Unsicher-Kiste bekommt ein Datum. Hast du nach einem Jahr nichts daraus vermisst, kann sie weg.</p></div></details>
+    <details><summary>Wohin mit kaputter Kleidung?</summary><div><p>Gut erhaltene Kleidung gehört in den Altkleidercontainer. Stark verschmutzte oder kaputte Textilien rät die Verbraucherzentrale Hamburg weiter über den Restmüll zu entsorgen. Manche Städte haben eigene Regeln, frag im Zweifel bei der Abfallberatung.</p></div></details>
+    <details><summary>Muss ich Steuern zahlen, wenn ich Sachen verkaufe?</summary><div><p>Für deine eigenen gebrauchten Alltagsgegenstände in der Regel nicht. Plattformen melden zwar Verkäufer ab 30 Verkäufen oder 2.000&nbsp;€ im Jahr ans Finanzamt, die Meldung bedeutet aber noch keine Steuer. Das ist keine Steuerberatung.</p></div></details>
+    <details><summary>Wie lange dauert es, eine Wohnung auszumisten?</summary><div><p>Das hängt von der Menge ab. Mit 30 Minuten an fünf Tagen pro Woche schaffst du eine normale Wohnung in einigen Wochen. Der <a href="#planer">Ausmist-Planer</a> rechnet es für dich aus.</p></div></details>
+  </div>
+</div></section>
+
+<section class="band" id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>Bosch Home Magazin: Ausmisten, Tipps mit Kisten-Methode und 12-Monate-Regel <a href="https://www.bosch-home.com/de/bosch-erleben/magazin/haushaltstipps/ausmisten-tipps" target="_blank" rel="noopener">bosch-home.com</a></li>
+    <li>Verbraucherzentrale Hamburg: Verwirrung um Getrenntsammlungspflicht für Altkleider (20.02.2025) <a href="https://www.vzhh.de/presse/verwirrung-um-getrenntsammlungspflicht-fuer-altkleider" target="_blank" rel="noopener">vzhh.de</a></li>
+    <li>Berlin.de, Senatsverwaltung für Umwelt: Service Alttextilien <a href="https://www.berlin.de/sen/uvk/umwelt/kreislaufwirtschaft/service/privathaushalte/alttextilien/" target="_blank" rel="noopener">berlin.de</a></li>
+    <li>Stiftung Warentest: FAQ Elektroschrott, so entsorgen Sie alte Elektrogeräte korrekt (01.12.2025) <a href="https://www.test.de/FAQ-Elektroschrott-So-entsorgen-Sie-alte-Elektrogeraete-korrekt-5074797-0/" target="_blank" rel="noopener">test.de</a></li>
+    <li>Umweltbundesamt: Elektroaltgeräte richtig entsorgen <a href="https://www.umweltbundesamt.de/node/106990" target="_blank" rel="noopener">umweltbundesamt.de</a></li>
+    <li>smartsteuer: Neue Meldepflicht, das weiß das Finanzamt jetzt über dich (20.09.2026) <a href="https://www.smartsteuer.de/online/blog/neue-meldepflicht-das-weiss-das-finanzamt-jetzt-ueber-dich/" target="_blank" rel="noopener">smartsteuer.de</a></li>
+    <li>Finanztip: Steuerfolgen beim Onlineverkauf <a href="https://www.finanztip.de/steuerfolgen-onlineverkauf/" target="_blank" rel="noopener">finanztip.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 15.11.2026. Die Zeiten im Planer sind eigene Richtwerte.</p></div>
+</div></section>
+
+{{RELATED:kleine-raeume,flur,raumplaner}}
+<!--END-->
+<script>
+/* Ausmist-Planer: Zonen (Reihenfolge nach Kategorien: Kleidung zuerst, Erinnerungen zuletzt) mit Richtzeiten in Minuten,
+   Minuten pro Tag, Tage pro Woche, Start → Gesamtzeit, Zahl der Ausmist-Tage, Enddatum und Plan Tag für Tag. */
+(function(){var Z=[['kleidung','Kleiderschrank',120,1],['schuhe','Schuhe und Taschen',30,1],['buecher','Bücher und Medien',60,1],['papiere','Papiere und Ordner',90,1],
+ ['kueche','Küche',120,1],['bad','Bad und Kosmetik',45,1],['flur','Flur und Garderobe',30,1],['wohnen','Wohnzimmer und Deko',60,0],
+ ['kinder','Kinderzimmer und Spielzeug',90,0],['keller','Keller und Abstellraum',180,0],['erinnerung','Fotos und Erinnerungen',90,0]],
+ box=document.getElementById('zonen'),$=function(i){return document.getElementById(i)},S=$('astart');
+ box.innerHTML=Z.map(function(z){return '<label><input type="checkbox" value="'+z[0]+'"'+(z[3]?' checked':'')+'> '+z[1]+' <small>'+(z[2]>=60?(z[2]/60).toLocaleString('de-DE')+' h':z[2]+' min')+'</small></label>'}).join('');
+ var t=new Date();S.value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+ function h(m){return m<60?m+' min':(Math.round(m/6)/10).toLocaleString('de-DE')+' h'}
+ function dd(d){return d.toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'numeric'})}
+ function ok(d,w){var g=d.getDay();return w==7||(w==5&&g>0&&g<6)||(w==3&&(g==1||g==3||g==5))||(w==2&&(g==0||g==6))}
+ function up(){var sel=[].slice.call(box.querySelectorAll('input:checked')).map(function(i){return i.value}),m=+$('amin').value,w=+$('atage').value,
+   zs=Z.filter(function(z){return sel.indexOf(z[0])>-1}),sum=zs.reduce(function(a,z){return a+z[2]},0),L=$('aplan');
+  if(!zs.length){$('a1').textContent='–';$('a2').textContent='–';$('a3').textContent='–';$('atxt').textContent='Wähle mindestens einen Bereich aus.';L.innerHTML='';return}
+  var p=S.value.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]);if(isNaN(d))d=new Date();
+  var days=[],rest=zs.map(function(z){return [z[1],z[2]]}),i=0;
+  while(i<rest.length&&days.length<400){while(!ok(d,w))d.setDate(d.getDate()+1);var left=m,parts=[];
+   while(left>0&&i<rest.length){var take=Math.min(left,rest[i][1]);parts.push(i);rest[i][1]-=take;left-=take;if(rest[i][1]<=0)i++}
+   days.push([new Date(d),parts]);d.setDate(d.getDate()+1)}
+  var n={},k={};days.forEach(function(x){x[1].forEach(function(j){n[j]=(n[j]||0)+1})});days.forEach(function(x){x[1]=x[1].map(function(j){k[j]=(k[j]||0)+1;return rest[j][0]+(n[j]>1?' (Teil '+k[j]+' von '+n[j]+')':'')})});
+  var end=days[days.length-1][0];$('a1').textContent=h(sum);$('a2').textContent=days.length;$('a3').textContent=end.toLocaleDateString('de-DE',{day:'numeric',month:'long'});
+  var wk=Math.max(1,Math.round((end-days[0][0])/864e5/7));$('atxt').textContent='Etwa '+(wk<1?'eine Woche':wk==1?'eine Woche':wk+' Wochen')+'. Reihenfolge nach Kategorien: Leichtes zuerst, Erinnerungen zuletzt.'+(m<30?' Bei 15 Minuten lohnt es sich, große Bereiche wie den Keller auf ein Wochenende zu legen.':'');
+  L.innerHTML=days.slice(0,40).map(function(x){return '<li><b>'+dd(x[0])+'</b><span>'+x[1].join(', ')+'</span></li>'}).join('')+(days.length>40?'<li><b>…</b><span>und '+(days.length-40)+' weitere Tage</span></li>':'')}
+ box.addEventListener('change',up);$('amin').addEventListener('change',up);$('atage').addEventListener('change',up);S.addEventListener('change',up);up()})();
+/* Checkliste, gespeichert nur im Browser */
+document.addEventListener('DOMContentLoaded',()=>{const L=[['Vier Kisten bereit','Behalten, weggeben, wegwerfen, unsicher.'],['Plan steht','Feste Zeit am Tag, im Kalender eingetragen.'],['Kleidung sortiert','Alles aus allen Schränken auf einen Haufen.'],['Bücher und Medien','Nur was du wieder liest oder liebst.'],['Papiere','Wichtiges abgeheftet, Rest geschreddert.'],['Küche und Bad','Abgelaufenes weg, Doppeltes raus.'],['Keller und Abstellraum','Saisonsachen in beschriftete Boxen.'],['Erinnerungen','Zum Schluss, in Ruhe, mit einer schönen Kiste.'],['Weggeben erledigt','Container, Spende, Verkauf oder Wertstoffhof.'],['Alles hat einen Platz','Unsicher-Kiste mit Datum verstaut.']];
+sdChecklist('ck',L,'sdam',{verb:'erledigt',done:'Geschafft! Genieß den Platz.'})});
+</script>
