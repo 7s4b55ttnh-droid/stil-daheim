@@ -82,7 +82,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete'),
-        ('wandfarben.html', 'Welche Wandfarbe passt?', '20 Antworten mit Beispielzimmer zum Umschalten', 'wandfarben', 'farben'),
+        ('wandfarben.html', 'Welche Wandfarbe passt?', '20 Antworten mit Beispielzimmer zum Umschalten', 'wandfarben', 'wandfarben'),
         ('lexikon.html', 'Lexikon', 'Wohn-Begriffe von Akzentfarbe bis Zonieren', 'lexikon', 'start')]
 CUR = ' aria-current="page"'
 GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */\n"
