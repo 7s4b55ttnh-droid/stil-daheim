@@ -21,6 +21,26 @@ CSS = '''<style>
 .wf-room{margin-top:22px}
 .wf-ph{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--band)}
 .wf-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-lay2{clip-path:inset(0 0 0 var(--cut,100%))}.wf-lay2 i{background:var(--w2)}
+.wf-ph.cmp .wf-lay:not(.wf-lay2){clip-path:inset(0 calc(100% - var(--cut,50%)) 0 0)}
+.wf-k,.wf-d{position:absolute;inset:0;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat;transition:background-color .6s ease;background:transparent}
+.wf-k{mix-blend-mode:color}.wf-d{mix-blend-mode:multiply}
+.wf-eve{position:absolute;inset:0;mix-blend-mode:multiply;background:linear-gradient(180deg,#e9b98a,#d79c6c);opacity:0;transition:opacity .7s ease;pointer-events:none}
+.wf-ph.eve .wf-eve{opacity:.72}
+.wf-cut{position:absolute;inset:0}.wf-cut[hidden]{display:none}
+.wf-cut span{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.wf-cut span::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;margin:-19px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.wf-cut input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.wf-cut input:focus-visible+*{outline:2px solid var(--ink)}
+.wf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.wf-tools button,.wf-ch2 button{font:inherit;font-size:.92rem;font-weight:600;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.wf-tools button[aria-pressed="true"],.wf-ch2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wf-r2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:14px 0 0;font-size:.92rem;font-weight:600}.wf-r2[hidden]{display:none}
+.wf-ch2{margin:0}
+.wf-dots{display:flex;gap:8px}.wf-dots button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--pan);padding:0;cursor:pointer;display:grid;place-items:center}
+.wf-dots button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}.wf-dots button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.wf-msg{font-size:.9rem;color:var(--mut);margin:10px 0 0;min-height:1.3em}
+@media (prefers-reduced-motion:reduce){.wf-k,.wf-d,.wf-eve{transition:none}}
 .wf-ph .ki-marke{background:rgba(0,0,0,.66)!important}
 .wf-lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
 .wf-lay i{position:absolute;inset:0}
@@ -62,6 +82,54 @@ CSS = '''<style>
 .wf-buy{margin-top:18px;font-size:.96rem}
 @media (prefers-reduced-motion:reduce){.wf-room svg *{transition:none}}
 </style>'''
+
+
+ROOM_JS = '''<script>
+(function(){var r=document.getElementById('wf-room'),c=document.getElementById('wf-ch'),s=document.getElementById('wf-say');if(!r||!c)return;
+ var st={w:r.style.getPropertyValue('--w'),wn:'',w2:r.style.getPropertyValue('--w2'),cmp:0,cut:50,eve:0,k:{},d:{}};window.WF=st;
+ function press(g,b){[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})}
+ c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(c,b);
+  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));st.wn=b.textContent;
+  var n=document.getElementById('wf-neu');if(!n){r.style.setProperty('--w',b.dataset.c);return}
+  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',st.w);n.classList.remove('go')}
+  st.w=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
+  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)});
+ st.wn=(c.querySelector('[aria-pressed="true"]')||{}).textContent||'';
+ var eb=document.getElementById('wf-eveb'),cb=document.getElementById('wf-cmpb'),sv=document.getElementById('wf-save'),r2=document.getElementById('wf-r2'),cut=r.querySelector('.wf-cut'),msg=document.getElementById('wf-msg');
+ if(!eb)return;
+ eb.addEventListener('click',function(){st.eve=st.eve?0:1;r.classList.toggle('eve',!!st.eve);eb.setAttribute('aria-pressed',st.eve?'true':'false')});
+ function setcut(v){st.cut=+v;r.style.setProperty('--cut',v+'%')}
+ cb.addEventListener('click',function(){st.cmp=st.cmp?0:1;r.classList.toggle('cmp',!!st.cmp);cb.setAttribute('aria-pressed',st.cmp?'true':'false');cut.hidden=!st.cmp;r2.hidden=!st.cmp;
+  if(st.cmp)setcut(cut.querySelector('input').value);else r.style.removeProperty('--cut')});
+ cut.querySelector('input').addEventListener('input',function(){setcut(this.value)});
+ r2.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(r2,b);st.w2=b.dataset.c;r.style.setProperty('--w2',b.dataset.c)});
+ [].forEach.call(document.querySelectorAll('.wf-ch2'),function(g){g.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(g,b);var w=g.dataset.was;
+  st.k[w]=b.dataset.k;st.d[w]=b.dataset.d;r.querySelector('.wf-k.wf-'+w).style.background=b.dataset.k||'transparent';r.querySelector('.wf-d.wf-'+w).style.background=b.dataset.d||'transparent'})});
+ /* Bild speichern: dieselben Ebenen wie im Browser, auf einer Zeichenfläche zusammengesetzt (1280 x 720), mit Farbname, Seitenname und KI-Hinweis */
+ function lade(u){return new Promise(function(ok,no){var i=new Image();i.onload=function(){ok(i)};i.onerror=no;i.src=u})}
+ function url(v){return (v.match(/url\\(["']?([^"')]+)/)||[])[1]}
+ function schicht(x,W,H,mk,farbe,op,clip){var o=document.createElement('canvas');o.width=W;o.height=H;var y=o.getContext('2d');y.fillStyle=farbe;
+  if(clip)y.fillRect(clip[0],0,clip[1],H);else y.fillRect(0,0,W,H);
+  if(mk){y.globalCompositeOperation='destination-in';y.drawImage(mk,0,0,W,H)}x.globalCompositeOperation=op;x.drawImage(o,0,0);x.globalCompositeOperation='source-over'}
+ sv.addEventListener('click',function(){sv.disabled=true;msg.textContent='Bild wird erstellt …';
+  var im=r.querySelector('img'),W=1280,H=720,slug=r.dataset.slug,todo=[lade(im.currentSrc||im.src),lade(url(r.style.getPropertyValue('--mk')))],ws=['boden','sitz'].filter(function(w){return st.k[w]});
+  ws.forEach(function(w){todo.push(lade('assets/wf-'+slug+'-'+w+'.png'))});
+  Promise.all(todo).then(function(a){var cv=document.createElement('canvas');cv.width=W;cv.height=H+84;var x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H+84);x.drawImage(a[0],0,0,W,H);
+   var cx=Math.round(W*st.cut/100);
+   if(st.cmp){schicht(x,W,H,a[1],st.w,'multiply',[0,cx]);schicht(x,W,H,a[1],st.w2,'multiply',[cx,W-cx])}else schicht(x,W,H,a[1],st.w,'multiply');
+   ws.forEach(function(w,i){schicht(x,W,H,a[2+i],st.k[w],'color');schicht(x,W,H,a[2+i],st.d[w],'multiply')});
+   if(st.eve){x.globalAlpha=.72;x.globalCompositeOperation='multiply';var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#e9b98a');g.addColorStop(1,'#d79c6c');x.fillStyle=g;x.fillRect(0,0,W,H);x.globalAlpha=1;x.globalCompositeOperation='source-over'}
+   if(st.cmp){x.fillStyle='#fff';x.fillRect(cx-2,0,4,H)}
+   var n2=(r2.querySelector('[aria-pressed="true"]')||{}).title||'';
+   x.fillStyle='#1c1f1d';x.font='600 30px system-ui,-apple-system,Segoe UI,sans-serif';x.textBaseline='middle';x.fillText('Wandfarbe: '+st.wn.replace('Lieber nicht: ','')+(st.cmp&&n2?' und '+n2:''),28,H+42);
+   x.font='500 22px system-ui,-apple-system,Segoe UI,sans-serif';x.fillStyle='#5d615d';x.textAlign='right';x.fillText('stil-daheim.de · Beispielbild, mit KI erstellt',W-28,H+42);
+   cv.toBlob(function(bl){sv.disabled=false;if(!bl){msg.textContent='Das Bild konnte nicht erstellt werden.';return}
+    var f=new File([bl],'wandfarbe-'+slug+'.jpg',{type:'image/jpeg'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:document.title}).then(function(){msg.textContent='Bild geteilt.'},function(){msg.textContent=''});return}
+    var l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(l.href)},4000);msg.textContent='Bild gespeichert: '+f.name},'image/jpeg',.9)
+  }).catch(function(){sv.disabled=false;msg.textContent='Das Bild konnte nicht geladen werden. Bitte noch einmal versuchen.'})});
+})();
+</script>'''
 
 
 def e(s):
@@ -107,15 +175,50 @@ def foto(d):
     return (a / ('wf-' + d['slug'] + '.jpg')).exists() and (a / ('wf-' + d['slug'] + '-maske.png')).exists()
 
 
+SITZ = {'eichenboden': 'Sessel', 'grauer-boden': 'Sessel', 'roetlicher-boden': 'Sessel'}     # sonst „Sofa“
+# Umfärben von Sitzmöbel und Boden: [Name, Farbe für mix-blend-mode:color (Farbton), Grau für multiply (Helligkeit)]
+SITZFARBEN = [['Original', '', ''], ['Grau', '#8E9196', '#c4c4c4'], ['Beige', '#D8C7AE', '#f2f2f2'], ['Grün', '#5E7A64', '#9c9c9c'], ['Blau', '#3E5C7E', '#8c8c8c'], ['Cognac', '#A9683A', '#a6a6a6']]
+BODENFARBEN = [['Original', '', ''], ['Dunkles Holz', '#5A3D2B', '#6a6a6a'], ['Grau', '#9A9A98', '#cfcfcf'], ['Rötlich', '#B5703F', '#c6c6c6']]
+
+
+def hat(d, was):
+    """True, wenn im Ausgabe-Ordner die Zusatzmaske assets/wf-<slug>-<was>.png liegt (was: sitz oder boden)."""
+    return foto(d) and (AUS / 'assets' / ('wf-%s-%s.png' % (d['slug'], was))).exists()
+
+
 def room(d):
     """Beispielzimmer als Foto. Die Wand wird im Browser eingefärbt: Farbfläche mit mix-blend-mode:multiply, begrenzt durch die Wandmaske.
-    So bleiben Schatten und Licht erhalten, und beim Umschalten wischt die neue Farbe über die Wand. Ohne Foto: gezeichnetes Zimmer."""
+    So bleiben Schatten und Licht erhalten, und beim Umschalten wischt die neue Farbe über die Wand. Ohne Foto: gezeichnetes Zimmer.
+    Ebenen von unten nach oben: Foto, Wand links (.wf-lay), Wand rechts für den Vergleich (.wf-lay2), Boden und Sitzmöbel (je Farbton + Helligkeit),
+    Abendlicht (.wf-eve), Vergleichsregler. Alte und neue Wandfarbe liegen als normale Flächen in EINEM multiply-Behälter, sonst stimmt die Farbe im Wisch nicht."""
     if not foto(d):
         return room_svg(d)
     was = {'moebel': 'Zimmer mit ' + d['name'], 'sofa': 'Wohnzimmer mit ' + d['name'], 'boden': 'Zimmer mit ' + d['name'], 'raum': 'Beispiel zu ' + d['name']}[d['typ']]
-    return ('<div class="wf-room wf-ph" id="wf-room" style="--w:%s;--mk:url(assets/wf-%s-maske.png)">'
+    extra = ''.join('<div class="wf-k wf-%s" style="--mk:url(assets/wf-%s-%s.png)"></div><div class="wf-d wf-%s" style="--mk:url(assets/wf-%s-%s.png)"></div>' % (w, d['slug'], w, w, d['slug'], w)
+                    for w in ('boden', 'sitz') if hat(d, w))
+    return ('<div class="wf-room wf-ph" id="wf-room" data-slug="%s" style="--w:%s;--w2:%s;--mk:url(assets/wf-%s-maske.png)">'
             '<img src="assets/wf-%s.jpg" width="1280" height="720" alt="%s. Die Wandfarbe wechselt mit den Knöpfen darunter." decoding="async">'
-            '<div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div></div>') % (d['farben'][0][1], d['slug'], d['slug'], e(was))
+            '<div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div><div class="wf-lay wf-lay2" aria-hidden="true"><i></i></div>%s'
+            '<div class="wf-eve" aria-hidden="true"></div>'
+            '<div class="wf-cut" hidden><span></span><input type="range" min="5" max="95" value="50" aria-label="Trennlinie zwischen den zwei Wandfarben verschieben"></div></div>'
+            ) % (d['slug'], d['farben'][0][1], d['farben'][1][1], d['slug'], d['slug'], e(was), extra)
+
+
+def regler(d):
+    """Knöpfe unter dem Foto: Abendlicht, Vergleichen, Bild speichern, dazu Sofa- und Bodenfarben, wenn es die Masken gibt."""
+    if not foto(d):
+        return ''
+    alle = d['farben'] + [[d['nicht'][0], d['nicht'][1], '']]
+    r2 = ''.join('<button type="button" aria-pressed="%s" data-c="%s" title="%s" aria-label="Rechte Seite: %s"><i style="background:%s"></i></button>' % ('true' if i == 1 else 'false', c, e(n), e(n), c) for i, (n, c, t) in enumerate(alle))
+    out = ('<div class="wf-tools"><button type="button" id="wf-eveb" aria-pressed="false">Abendlicht</button>'
+           '<button type="button" id="wf-cmpb" aria-pressed="false">Zwei Farben vergleichen</button>'
+           '<button type="button" id="wf-save">Bild speichern</button></div>'
+           '<div class="wf-r2" id="wf-r2" hidden><span>Rechte Seite:</span><div class="wf-dots" role="group" aria-label="Wandfarbe für die rechte Seite">%s</div></div>') % r2
+    for w, name, farben in (('sitz', SITZ.get(d['slug'], 'Sofa'), SITZFARBEN), ('boden', 'Boden', BODENFARBEN)):
+        if hat(d, w):
+            out += '<div class="wf-r2"><span>%s:</span><div class="wf-ch wf-ch2" data-was="%s" role="group" aria-label="%s umfärben">%s</div></div>' % (
+                name, w, name, ''.join('<button type="button" aria-pressed="%s" data-k="%s" data-d="%s">%s</button>' % ('true' if i == 0 else 'false', k, g, n) for i, (n, k, g) in enumerate(farben)))
+    return out + '<p class="wf-msg" id="wf-msg" role="status"></p>'
 
 
 def unterseite(d):
@@ -146,6 +249,7 @@ def unterseite(d):
   %(room)s
   <div class="wf-ch" id="wf-ch" role="group" aria-label="Wandfarbe im Beispielzimmer wählen">%(chips)s</div>
   <p class="wf-say" id="wf-say" aria-live="polite"><b>%(w0)s</b>%(t0)s</p>
+  %(regler)s
   <p class="wf-note">%(hinw)s Farben sehen auf jedem Bildschirm etwas anders aus als an der Wand.</p>
 </div></section>
 <section id="farben"><div class="wrap">
@@ -177,18 +281,9 @@ def unterseite(d):
   <div class="wf-more">%(more)s</div>
   <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
   <p class="wf-note">Die Empfehlungen folgen den Regeln aus unserem Ratgeber <a href="farben.html">Wandfarbe wählen</a>: Farbkreis, 60-30-10-Regel und Lichtrichtung. Die Quellen stehen dort. Die Farbwerte sind Näherungen.</p>
-</div></section>''' % dict(hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
+</div></section>''' % dict(hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), regler=regler(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
                           ak=e(d['akzent'][0]), akt=d['akzenttext'], licht=d['licht'], faq=faq, more=more, n=len(D))
-    end = '''<script>
-(function(){var r=document.getElementById('wf-room'),c=document.getElementById('wf-ch'),s=document.getElementById('wf-say');if(!r||!c)return;
- c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
-  [].forEach.call(c.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));
-  var n=document.getElementById('wf-neu');if(!n){r.style.setProperty('--w',b.dataset.c);return}
-  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',r._c);n.classList.remove('go')}
-  r._c=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
-  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)})})();
-</script>'''
+    end = ROOM_JS
     (HERE / 'pages' / (key + '.html')).write_text('<!--meta %s -->\n<!--HEAD-->\n%s\n<!--MAIN-->\n%s\n<!--END-->\n%s\n' % (json.dumps(meta, ensure_ascii=False), CSS, main, end), encoding='utf-8')
     return key
 
