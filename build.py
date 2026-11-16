@@ -196,18 +196,29 @@ def thumb(name):
 
 
 def alle():
-    """Startseite: alle Ratgeber aus GRID als Fotokarten, mit Suchfeld und Themen-Filter (Skript in site.js)."""
-    btn = ''.join('<button type="button" aria-pressed="%s" data-f="%s">%s</button>' % ('true' if not k else 'false', k, t) for k, t in FILTER)
-    out = []
-    for href, title, desc, key, img in GRID:
-        if key == 'finder':
+    """Startseite (seit 16.11.2026): oben die Planer als Karten, darunter die Ratgeber als Fotokarten mit Suchfeld und Themen-Filter (Skript in site.js).
+    Die Ratgeber stehen nach Erscheinungstag (neueste zuerst) und zeigen zuerst nur 8 Kacheln; der Knopf darunter öffnet alle.
+    Sammelseiten mit vielen erzeugten Unterseiten bekommen EINE Kachel, die Unterseiten keine."""
+    btn = ''.join('<button type="button" aria-pressed="%s" data-f="%s">%s</button>' % ('true' if not k else 'false', k, t) for k, t in FILTER if k != 'werkzeug')
+    tools, out = [], []
+    for href, title, desc, key, img in sorted(GRID, key=lambda g: ERST.get(g[3], '2026-01-01'), reverse=True):
+        if key in ('finder', 'lexikon'):
             continue
         t = thumb(img) if img else ''
+        if 'werkzeug' in KAT.get(key, '').split():
+            continue
         ph = ('<span class="rimg"><img src="%s" alt="" width="560" height="315" loading="lazy" decoding="async"></span>' % t) if t else ''
         out.append('<a href="%s" data-k="%s">%s<b>%s</b><span>%s</span></a>' % (href, KAT.get(key, ''), ph, title, desc))
-    return ('<div class="hubf" id="hubf"><input type="search" id="hubq" placeholder="Ratgeber suchen, zum Beispiel Teppich" aria-label="Ratgeber durchsuchen" autocomplete="off" enterkeyhint="search">'
+    for href, title, desc, key, img in GRID:
+        if 'werkzeug' in KAT.get(key, '').split():
+            tools.append('<a href="%s"><span class="tl-i"><img src="%s" alt="" width="560" height="315" loading="lazy" decoding="async"></span><b>%s</b><span>%s</span></a>' % (href, thumb(img), title, desc))
+    return ('<h3 class="hh">Planer</h3><div class="tools">%s</div><h3 class="hh" id="ratgeber-liste">Ratgeber</h3>'
+            '<div class="hubf" id="hubf"><input type="search" id="hubq" placeholder="Ratgeber suchen, zum Beispiel Teppich" aria-label="Ratgeber durchsuchen" autocomplete="off" enterkeyhint="search">'
             '<div class="hubc" role="group" aria-label="Nach Thema filtern">%s</div></div>'
-            '<div class="hub rel all" id="huball">%s<p class="hubn" id="hubn" hidden>Dazu haben wir noch nichts. Probier ein anderes Wort oder wähle „Alle“.</p></div>' % (btn, ''.join(out)))
+            '<div class="hub rel all cl" id="huball">%s<p class="hubn" id="hubn" hidden>Dazu haben wir noch nichts. Probier ein anderes Wort oder wähle „Alle“.</p></div>'
+            '<p class="hubm"><button type="button" id="hubm" aria-controls="huball" aria-expanded="false">Alle Ratgeber zeigen</button></p>'
+            '<p class="hubl">Zum Nachschlagen: <a href="lexikon.html">Lexikon</a><a href="stile.html">Wohnstile im Überblick</a><a href="einbetten.html">Planer einbetten</a></p>'
+            % (''.join(tools), btn, ''.join(out)))
 
 
 def palette(key, cls='palette'):
@@ -328,7 +339,20 @@ def page(src):
     path = '' if key == 'index' else src.name
     navkey = 'stile' if key in STYLE else key   # Stil-Ratgeber gehören zu „Stile“
     links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == navkey else '', n) for h, n, k in NAV)
-    grid = ''.join('<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s) for h, n, s, k, p in GRID)
+    # Menü (seit 16.11.2026): Stil-Finder, Planer als Karten, Ratgeber nach Thema als kurze Listen (auf dem Handy aufklappbar)
+    istool = lambda k: 'werkzeug' in KAT.get(k, '').split()
+    grid = '<a class="m-go" href="./#finder"><span><b>Welcher Stil passt zu dir?</b><small>Fünf Fragen, dann dein Stil mit Farben</small></span><i aria-hidden="true">→</i></a>'
+    grid += '<p class="m-h">Planer</p><nav class="m-grid" aria-label="Planer">%s</nav>' % ''.join(
+        '<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s_) for h, n, s_, k, p in GRID if istool(k))
+    cols = ''
+    for fk, lab in FILTER:
+        if fk in ('', 'werkzeug'):
+            continue
+        hs = [(h, n, k) for h, n, s_, k, p in GRID if not istool(k) and k not in ('finder', 'lexikon') and KAT.get(k, '').split()[:1] == [fk]]
+        if hs:
+            cols += '<details class="m-d"%s><summary>%s</summary><div>%s</div></details>' % (' open' if any(k == key for h, n, k in hs) else '', lab, ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == key else '', n) for h, n, k in hs))
+    grid += '<p class="m-h">Ratgeber</p><nav class="m-cols" aria-label="Ratgeber nach Thema">%s</nav>' % cols
+    grid += '<p class="m-h">Nachschlagen</p><nav class="m-more" aria-label="Nachschlagen"><a href="lexikon.html"%s>Lexikon</a><a href="einbetten.html">Planer einbetten</a></nav>' % (CUR if key == 'lexikon' else '')
     flinks = fcols(key)
     stand = '' if key == '404' else '<p class="stand">Stand: %s</p>' % de_date(meta['updated'])
     # Suchergebnis: Titel ohne Marke höchstens 60 Zeichen, Beschreibung höchstens 160 (og:description behält den vollen Text)
@@ -359,7 +383,7 @@ def page(src):
             '<div class="sheet-m" id="msheet" hidden role="dialog" aria-modal="true" aria-label="Menü"><div class="sheet-in">'
             '<div class="sheet-top"><b>Stil-Daheim</b><button class="ic" id="mclose" type="button" aria-label="Menü schließen">%(close)s</button></div>'
             '<div id="mtoc-wrap" hidden><p class="m-h">Auf dieser Seite</p><nav class="m-toc" id="mtoc" aria-label="Auf dieser Seite"></nav></div>'
-            '<p class="m-h">Ratgeber und Rechner</p><nav class="m-grid" aria-label="Alle Ratgeber">%(grid)s</nav>'
+            '%(grid)s'
             '<p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>\n'
             '<main id="main">\n%(main)s\n</main>\n'
             '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. '
