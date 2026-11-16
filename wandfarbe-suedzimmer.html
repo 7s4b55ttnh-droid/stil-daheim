@@ -12,6 +12,26 @@
 .wf-room{margin-top:22px}
 .wf-ph{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--band)}
 .wf-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-lay2{clip-path:inset(0 0 0 var(--cut,100%))}.wf-lay2 i{background:var(--w2)}
+.wf-ph.cmp .wf-lay:not(.wf-lay2){clip-path:inset(0 calc(100% - var(--cut,50%)) 0 0)}
+.wf-k,.wf-d{position:absolute;inset:0;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat;transition:background-color .6s ease;background:transparent}
+.wf-k{mix-blend-mode:color}.wf-d{mix-blend-mode:multiply}
+.wf-eve{position:absolute;inset:0;mix-blend-mode:multiply;background:linear-gradient(180deg,#e9b98a,#d79c6c);opacity:0;transition:opacity .7s ease;pointer-events:none}
+.wf-ph.eve .wf-eve{opacity:.72}
+.wf-cut{position:absolute;inset:0}.wf-cut[hidden]{display:none}
+.wf-cut span{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.wf-cut span::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;margin:-19px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.wf-cut input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.wf-cut input:focus-visible+*{outline:2px solid var(--ink)}
+.wf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.wf-tools button,.wf-ch2 button{font:inherit;font-size:.92rem;font-weight:600;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.wf-tools button[aria-pressed="true"],.wf-ch2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wf-r2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:14px 0 0;font-size:.92rem;font-weight:600}.wf-r2[hidden]{display:none}
+.wf-ch2{margin:0}
+.wf-dots{display:flex;gap:8px}.wf-dots button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--pan);padding:0;cursor:pointer;display:grid;place-items:center}
+.wf-dots button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}.wf-dots button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.wf-msg{font-size:.9rem;color:var(--mut);margin:10px 0 0;min-height:1.3em}
+@media (prefers-reduced-motion:reduce){.wf-k,.wf-d,.wf-eve{transition:none}}
 .wf-ph .ki-marke{background:rgba(0,0,0,.66)!important}
 .wf-lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
 .wf-lay i{position:absolute;inset:0}
@@ -68,9 +88,10 @@
 
 <section class="band" id="zimmer"><div class="wrap narrow">
   <h2>Im Beispielzimmer ansehen.</h2>
-  <div class="wf-room wf-ph" id="wf-room" style="--w:#F4F0E6;--mk:url(assets/wf-suedzimmer-maske.png)"><img src="assets/wf-suedzimmer.jpg" width="1280" height="720" alt="Beispiel zu einem Zimmer nach Süden. Die Wandfarbe wechselt mit den Knöpfen darunter." decoding="async"><div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div></div>
+  <div class="wf-room wf-ph" id="wf-room" data-slug="suedzimmer" style="--w:#F4F0E6;--w2:#A8B5A0;--mk:url(assets/wf-suedzimmer-maske.png)"><img src="assets/wf-suedzimmer.jpg" width="1280" height="720" alt="Beispiel zu einem Zimmer nach Süden. Die Wandfarbe wechselt mit den Knöpfen darunter." decoding="async"><div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div><div class="wf-lay wf-lay2" aria-hidden="true"><i></i></div><div class="wf-eve" aria-hidden="true"></div><div class="wf-cut" hidden><span></span><input type="range" min="5" max="95" value="50" aria-label="Trennlinie zwischen den zwei Wandfarben verschieben"></div></div>
   <div class="wf-ch" id="wf-ch" role="group" aria-label="Wandfarbe im Beispielzimmer wählen"><button type="button" aria-pressed="true" data-c="#F4F0E6" data-t="Blendet weniger als Reinweiß und bleibt in der Sonne angenehm."><i style="background:#F4F0E6"></i>Gebrochenes Weiß</button><button type="button" aria-pressed="false" data-c="#A8B5A0" data-t="Wirkt im warmen Licht frisch und nie kalt."><i style="background:#A8B5A0"></i>Salbeigrün</button><button type="button" aria-pressed="false" data-c="#8A9BA8" data-t="Kühlt den Raum optisch ab. Die Sonne nimmt dem Blau die Strenge."><i style="background:#8A9BA8"></i>Graublau</button><button type="button" aria-pressed="false" data-c="#D9DCDD" data-t="Im Südlicht wirkt es neutral. In anderen Zimmern wäre es zu kühl."><i style="background:#D9DCDD"></i>Kühles Hellgrau</button><button type="button" class="no" aria-pressed="false" data-c="#F2C94C" data-t="So sieht es aus, wenn es nicht passt. Kräftiges Gelb, Orange und warmes Rot."><i style="background:#F2C94C"></i>Lieber nicht: Sonnengelb</button></div>
   <p class="wf-say" id="wf-say" aria-live="polite"><b>Gebrochenes Weiß</b>Blendet weniger als Reinweiß und bleibt in der Sonne angenehm.</p>
+  <div class="wf-tools"><button type="button" id="wf-eveb" aria-pressed="false">Abendlicht</button><button type="button" id="wf-cmpb" aria-pressed="false">Zwei Farben vergleichen</button><button type="button" id="wf-save">Bild speichern</button></div><div class="wf-r2" id="wf-r2" hidden><span>Rechte Seite:</span><div class="wf-dots" role="group" aria-label="Wandfarbe für die rechte Seite"><button type="button" aria-pressed="false" data-c="#F4F0E6" title="Gebrochenes Weiß" aria-label="Rechte Seite: Gebrochenes Weiß"><i style="background:#F4F0E6"></i></button><button type="button" aria-pressed="true" data-c="#A8B5A0" title="Salbeigrün" aria-label="Rechte Seite: Salbeigrün"><i style="background:#A8B5A0"></i></button><button type="button" aria-pressed="false" data-c="#8A9BA8" title="Graublau" aria-label="Rechte Seite: Graublau"><i style="background:#8A9BA8"></i></button><button type="button" aria-pressed="false" data-c="#D9DCDD" title="Kühles Hellgrau" aria-label="Rechte Seite: Kühles Hellgrau"><i style="background:#D9DCDD"></i></button><button type="button" aria-pressed="false" data-c="#F2C94C" title="Sonnengelb" aria-label="Rechte Seite: Sonnengelb"><i style="background:#F2C94C"></i></button></div></div><p class="wf-msg" id="wf-msg" role="status"></p>
   <p class="wf-note">Das Bild zeigt die Richtung, nicht den genauen Ton. Farben sehen auf jedem Bildschirm etwas anders aus als an der Wand.</p>
 </div></section>
 <section id="farben"><div class="wrap">
@@ -107,13 +128,49 @@
 <footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p><p class="stand">Stand: 16.11.2026</p><nav class="ft-links fc" aria-label="Alle Seiten"><div><p class="fc-h">Wohnstile</p><a href="stile.html">Wohnstile im Überblick</a><a href="vintage.html">Vintage einrichten</a><a href="modern.html">Modern einrichten</a><a href="skandinavisch.html">Skandinavisch einrichten</a><a href="japandi.html">Japandi einrichten</a><a href="industrial.html">Industrial einrichten</a><a href="boho.html">Boho einrichten</a><a href="lexikon.html">Lexikon</a></div><div><p class="fc-h">Räume</p><a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a><a href="schlafzimmer.html">Schlafzimmer einrichten</a><a href="esszimmer.html">Esszimmer einrichten</a><a href="wohnzimmer.html">Wohnzimmer einrichten</a><a href="flur.html">Flur und Eingang einrichten</a><a href="ausmisten.html">Wohnung ausmisten</a><a href="arbeitsecke.html">Arbeitsecke im Wohnzimmer</a><a href="mieten.html">Schöner wohnen zur Miete</a></div><div><p class="fc-h">Licht und Farbe</p><a href="farben.html">Wandfarbe wählen und kombinieren</a><a href="licht.html">Licht planen</a><a href="gemuetlich.html">Gemütlich im Winter</a><a href="wandfarben.html">Welche Wandfarbe passt?</a></div><div><p class="fc-h">Saison</p><a href="weihnachten.html">Weihnachtlich dekorieren</a><a href="tischdeko.html">Weihnachtliche Tischdeko</a><a href="silvester.html">Silvester-Tischdeko</a><a href="adventskranz.html">Adventskranz binden</a><a href="geschenke.html">Geschenke fürs Zuhause</a><a href="pflanzen.html">Zimmerpflanzen im Winter</a><a href="black-friday.html">Black Friday 2026</a></div><div><p class="fc-h">Planer und Rechner</p><a href="./#stil-finder">Welcher Stil passt zu mir?</a><a href="raumplaner.html">Raumplaner</a><a href="bilderwand.html">Bilderwand-Planer</a><a href="farbpalette.html">Farbpalette aus Foto</a><a href="rechner.html">Raum-Rechner</a></div><div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p></div></footer>
 <script>
 (function(){var r=document.getElementById('wf-room'),c=document.getElementById('wf-ch'),s=document.getElementById('wf-say');if(!r||!c)return;
- c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
-  [].forEach.call(c.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));
+ var st={w:r.style.getPropertyValue('--w'),wn:'',w2:r.style.getPropertyValue('--w2'),cmp:0,cut:50,eve:0,k:{},d:{}};window.WF=st;
+ function press(g,b){[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})}
+ c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(c,b);
+  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));st.wn=b.textContent;
   var n=document.getElementById('wf-neu');if(!n){r.style.setProperty('--w',b.dataset.c);return}
-  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',r._c);n.classList.remove('go')}
-  r._c=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
-  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)})})();
+  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',st.w);n.classList.remove('go')}
+  st.w=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
+  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)});
+ st.wn=(c.querySelector('[aria-pressed="true"]')||{}).textContent||'';
+ var eb=document.getElementById('wf-eveb'),cb=document.getElementById('wf-cmpb'),sv=document.getElementById('wf-save'),r2=document.getElementById('wf-r2'),cut=r.querySelector('.wf-cut'),msg=document.getElementById('wf-msg');
+ if(!eb)return;
+ eb.addEventListener('click',function(){st.eve=st.eve?0:1;r.classList.toggle('eve',!!st.eve);eb.setAttribute('aria-pressed',st.eve?'true':'false')});
+ function setcut(v){st.cut=+v;r.style.setProperty('--cut',v+'%')}
+ cb.addEventListener('click',function(){st.cmp=st.cmp?0:1;r.classList.toggle('cmp',!!st.cmp);cb.setAttribute('aria-pressed',st.cmp?'true':'false');cut.hidden=!st.cmp;r2.hidden=!st.cmp;
+  if(st.cmp)setcut(cut.querySelector('input').value);else r.style.removeProperty('--cut')});
+ cut.querySelector('input').addEventListener('input',function(){setcut(this.value)});
+ r2.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(r2,b);st.w2=b.dataset.c;r.style.setProperty('--w2',b.dataset.c)});
+ [].forEach.call(document.querySelectorAll('.wf-ch2'),function(g){g.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(g,b);var w=g.dataset.was;
+  st.k[w]=b.dataset.k;st.d[w]=b.dataset.d;r.querySelector('.wf-k.wf-'+w).style.background=b.dataset.k||'transparent';r.querySelector('.wf-d.wf-'+w).style.background=b.dataset.d||'transparent'})});
+ /* Bild speichern: dieselben Ebenen wie im Browser, auf einer Zeichenfläche zusammengesetzt (1280 x 720), mit Farbname, Seitenname und KI-Hinweis */
+ function lade(u){return new Promise(function(ok,no){var i=new Image();i.onload=function(){ok(i)};i.onerror=no;i.src=u})}
+ function url(v){return (v.match(/url\(["']?([^"')]+)/)||[])[1]}
+ function schicht(x,W,H,mk,farbe,op,clip){var o=document.createElement('canvas');o.width=W;o.height=H;var y=o.getContext('2d');y.fillStyle=farbe;
+  if(clip)y.fillRect(clip[0],0,clip[1],H);else y.fillRect(0,0,W,H);
+  if(mk){y.globalCompositeOperation='destination-in';y.drawImage(mk,0,0,W,H)}x.globalCompositeOperation=op;x.drawImage(o,0,0);x.globalCompositeOperation='source-over'}
+ sv.addEventListener('click',function(){sv.disabled=true;msg.textContent='Bild wird erstellt …';
+  var im=r.querySelector('img'),W=1280,H=720,slug=r.dataset.slug,todo=[lade(im.currentSrc||im.src),lade(url(r.style.getPropertyValue('--mk')))],ws=['boden','sitz'].filter(function(w){return st.k[w]});
+  ws.forEach(function(w){todo.push(lade('assets/wf-'+slug+'-'+w+'.png'))});
+  Promise.all(todo).then(function(a){var cv=document.createElement('canvas');cv.width=W;cv.height=H+84;var x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H+84);x.drawImage(a[0],0,0,W,H);
+   var cx=Math.round(W*st.cut/100);
+   if(st.cmp){schicht(x,W,H,a[1],st.w,'multiply',[0,cx]);schicht(x,W,H,a[1],st.w2,'multiply',[cx,W-cx])}else schicht(x,W,H,a[1],st.w,'multiply');
+   ws.forEach(function(w,i){schicht(x,W,H,a[2+i],st.k[w],'color');schicht(x,W,H,a[2+i],st.d[w],'multiply')});
+   if(st.eve){x.globalAlpha=.72;x.globalCompositeOperation='multiply';var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#e9b98a');g.addColorStop(1,'#d79c6c');x.fillStyle=g;x.fillRect(0,0,W,H);x.globalAlpha=1;x.globalCompositeOperation='source-over'}
+   if(st.cmp){x.fillStyle='#fff';x.fillRect(cx-2,0,4,H)}
+   var n2=(r2.querySelector('[aria-pressed="true"]')||{}).title||'';
+   x.fillStyle='#1c1f1d';x.font='600 30px system-ui,-apple-system,Segoe UI,sans-serif';x.textBaseline='middle';x.fillText('Wandfarbe: '+st.wn.replace('Lieber nicht: ','')+(st.cmp&&n2?' und '+n2:''),28,H+42);
+   x.font='500 22px system-ui,-apple-system,Segoe UI,sans-serif';x.fillStyle='#5d615d';x.textAlign='right';x.fillText('stil-daheim.de · Beispielbild, mit KI erstellt',W-28,H+42);
+   cv.toBlob(function(bl){sv.disabled=false;if(!bl){msg.textContent='Das Bild konnte nicht erstellt werden.';return}
+    var f=new File([bl],'wandfarbe-'+slug+'.jpg',{type:'image/jpeg'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:document.title}).then(function(){msg.textContent='Bild geteilt.'},function(){msg.textContent=''});return}
+    var l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(l.href)},4000);msg.textContent='Bild gespeichert: '+f.name},'image/jpeg',.9)
+  }).catch(function(){sv.disabled=false;msg.textContent='Das Bild konnte nicht geladen werden. Bitte noch einmal versuchen.'})});
+})();
 </script>
 <script>
 /* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */
