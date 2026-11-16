@@ -7,6 +7,7 @@ Jede neue Kombination braucht vier begründete Wandfarben, eine Farbe für „Li
 import json, pathlib, html
 
 HERE = pathlib.Path(__file__).resolve().parent
+AUS = pathlib.Path(__import__('os').environ.get('STIL_OUT') or HERE.parent / 'stil-daheim')   # Ausgabe-Ordner (Zweig main), dort liegen die Fotos
 D = json.loads((HERE / 'wandfarben.json').read_text(encoding='utf-8'))['seiten']
 BY = {d['slug']: d for d in D}
 STAND = '2026-11-16'
@@ -18,6 +19,15 @@ CSS = '''<style>
 .top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}.top .eyebrow a{color:inherit}
 .top h1{font-size:clamp(2.2rem,5.6vw,3.7rem)}
 .wf-room{margin-top:22px}
+.wf-ph{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--band)}
+.wf-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-ph .ki-marke{background:rgba(0,0,0,.66)!important}
+.wf-lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
+.wf-lay i{position:absolute;inset:0}
+#wf-alt{background:var(--w)}
+#wf-neu{background:var(--n,transparent);clip-path:polygon(0 0,0 0,-18% 100%,-18% 100%)}
+#wf-neu.go{transition:clip-path .9s cubic-bezier(.65,0,.25,1);clip-path:polygon(0 0,118% 0,100% 100%,-18% 100%)}
+@media (prefers-reduced-motion:reduce){#wf-neu.go{transition:none}}
 .wf-room svg{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line)}
 .wf-room svg *{transition:fill .5s ease}
 .wf-w{fill:var(--w)}.wf-f{fill:var(--f)}.wf-s{fill:var(--s)}.wf-m{fill:var(--m)}.wf-a{fill:var(--a)}.wf-dk{filter:brightness(.86)}.wf-lt{filter:brightness(1.08)}
@@ -65,8 +75,8 @@ def ink(hx):
     return '#1c1f1d' if .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(b) > .18 else '#ffffff'
 
 
-def room(d):
-    """Gezeichnetes Beispielzimmer. Fest ist das, worum es auf der Seite geht (Möbel, Sofa oder Boden), die Wand wechselt per Knopf."""
+def room_svg(d):
+    """Gezeichnetes Beispielzimmer (Ersatz, falls für die Seite kein Foto in assets/ liegt). Fest ist das, worum es auf der Seite geht (Möbel, Sofa oder Boden), die Wand wechselt per Knopf."""
     f = d['fix'] if d['typ'] == 'boden' else EICHE
     s = d['fix'] if d['typ'] == 'sofa' else SOFA
     m = d['fix'] if d['typ'] == 'moebel' else HOLZ
@@ -89,6 +99,23 @@ def room(d):
             '<rect x="198" y="184" width="5" height="9" fill="#2b2b2b"/><rect x="359" y="184" width="5" height="9" fill="#2b2b2b"/>'
             '<rect class="wf-m" x="226" y="200" width="88" height="9" rx="3"/><rect class="wf-m wf-dk" x="234" y="209" width="4" height="15"/><rect class="wf-m wf-dk" x="302" y="209" width="4" height="15"/>'
             '</svg></div>') % (d['farben'][0][1], f, s, m, d['akzent'][1], e(was))
+
+
+def foto(d):
+    """True, wenn im Ausgabe-Ordner Foto und Wandmaske liegen: assets/wf-<slug>.jpg und assets/wf-<slug>-maske.png (flach in assets/, sonst greift die KI-Kennzeichnung aus site.js nicht)."""
+    a = AUS / 'assets'
+    return (a / ('wf-' + d['slug'] + '.jpg')).exists() and (a / ('wf-' + d['slug'] + '-maske.png')).exists()
+
+
+def room(d):
+    """Beispielzimmer als Foto. Die Wand wird im Browser eingefärbt: Farbfläche mit mix-blend-mode:multiply, begrenzt durch die Wandmaske.
+    So bleiben Schatten und Licht erhalten, und beim Umschalten wischt die neue Farbe über die Wand. Ohne Foto: gezeichnetes Zimmer."""
+    if not foto(d):
+        return room_svg(d)
+    was = {'moebel': 'Zimmer mit ' + d['name'], 'sofa': 'Wohnzimmer mit ' + d['name'], 'boden': 'Zimmer mit ' + d['name'], 'raum': 'Beispiel zu ' + d['name']}[d['typ']]
+    return ('<div class="wf-room wf-ph" id="wf-room" style="--w:%s;--mk:url(assets/wf-%s-maske.png)">'
+            '<img src="assets/wf-%s.jpg" width="1280" height="720" alt="%s. Die Wandfarbe wechselt mit den Knöpfen darunter." decoding="async">'
+            '<div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div></div>') % (d['farben'][0][1], d['slug'], d['slug'], e(was))
 
 
 def unterseite(d):
@@ -119,7 +146,7 @@ def unterseite(d):
   %(room)s
   <div class="wf-ch" id="wf-ch" role="group" aria-label="Wandfarbe im Beispielzimmer wählen">%(chips)s</div>
   <p class="wf-say" id="wf-say" aria-live="polite"><b>%(w0)s</b>%(t0)s</p>
-  <p class="wf-note">Die Zeichnung zeigt die Richtung, nicht den genauen Ton. Farben sehen auf jedem Bildschirm etwas anders aus als an der Wand.</p>
+  <p class="wf-note">%(hinw)s Farben sehen auf jedem Bildschirm etwas anders aus als an der Wand.</p>
 </div></section>
 <section id="farben"><div class="wrap">
   <div class="sec-h"><h2>Vier Wandfarben, die passen.</h2></div>
@@ -150,13 +177,17 @@ def unterseite(d):
   <div class="wf-more">%(more)s</div>
   <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
   <p class="wf-note">Die Empfehlungen folgen den Regeln aus unserem Ratgeber <a href="farben.html">Wandfarbe wählen</a>: Farbkreis, 60-30-10-Regel und Lichtrichtung. Die Quellen stehen dort. Die Farbwerte sind Näherungen.</p>
-</div></section>''' % dict(h1=e(d['h1']), room=room(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
+</div></section>''' % dict(hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
                           ak=e(d['akzent'][0]), akt=d['akzenttext'], licht=d['licht'], faq=faq, more=more, n=len(D))
     end = '''<script>
 (function(){var r=document.getElementById('wf-room'),c=document.getElementById('wf-ch'),s=document.getElementById('wf-say');if(!r||!c)return;
  c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
   [].forEach.call(c.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-  r.style.setProperty('--w',b.dataset.c);s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t))})})();
+  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));
+  var n=document.getElementById('wf-neu');if(!n){r.style.setProperty('--w',b.dataset.c);return}
+  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',r._c);n.classList.remove('go')}
+  r._c=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
+  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)})})();
 </script>'''
     (HERE / 'pages' / (key + '.html')).write_text('<!--meta %s -->\n<!--HEAD-->\n%s\n<!--MAIN-->\n%s\n<!--END-->\n%s\n' % (json.dumps(meta, ensure_ascii=False), CSS, main, end), encoding='utf-8')
     return key
