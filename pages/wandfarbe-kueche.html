@@ -1,0 +1,161 @@
+<!--meta {"key": "wandfarbe-kueche", "title": "Welche Wandfarbe passt in die Küche? – Stil-Daheim", "desc": "In die Küche passen Warmweiß, Salbeigrün und Ocker, zu weißen Fronten auch ein dunkles Tannengrün an einer Wand. Mit Beispielzimmer zum Umschalten und vier begründeten Farben.", "og": "assets/farben.jpg", "updated": "2026-11-16", "kurz": "In die Küche passen Warmweiß, Salbeigrün und Ocker, zu weißen Fronten auch ein dunkles Tannengrün an einer Wand. Wichtig ist die Farbe selbst: Sie sollte abwaschbar sein, also Nassabriebklasse 1 oder 2.", "kurz_nach": "oben"} -->
+<!--HEAD-->
+<style>
+.top{padding-block:calc(env(safe-area-inset-top,0px) + 120px) clamp(24px,4vw,44px)}
+.top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}.top .eyebrow a{color:inherit}
+.top h1{font-size:clamp(2.2rem,5.6vw,3.7rem)}
+.wf-room{margin-top:22px}
+.wf-ph{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--band)}
+.wf-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-lay2{clip-path:inset(0 0 0 var(--cut,100%))}.wf-lay2 i{background:var(--w2)}
+.wf-ph.cmp .wf-lay:not(.wf-lay2){clip-path:inset(0 calc(100% - var(--cut,50%)) 0 0)}
+.wf-k,.wf-d{position:absolute;inset:0;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat;transition:background-color .6s ease;background:transparent}
+.wf-k{mix-blend-mode:color}.wf-d{mix-blend-mode:multiply}
+.wf-eve{position:absolute;inset:0;mix-blend-mode:multiply;background:linear-gradient(180deg,#e9b98a,#d79c6c);opacity:0;transition:opacity .7s ease;pointer-events:none}
+.wf-ph.eve .wf-eve{opacity:.72}
+.wf-cut{position:absolute;inset:0}.wf-cut[hidden]{display:none}
+.wf-cut span{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.wf-cut span::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;margin:-19px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.wf-cut input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.wf-cut input:focus-visible+*{outline:2px solid var(--ink)}
+.wf-tools{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.wf-tools button,.wf-ch2 button{font:inherit;font-size:.92rem;font-weight:600;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.wf-tools button[aria-pressed="true"],.wf-ch2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wf-r2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:14px 0 0;font-size:.92rem;font-weight:600}.wf-r2[hidden]{display:none}
+.wf-ch2{margin:0}
+.wf-dots{display:flex;gap:8px}.wf-dots button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--pan);padding:0;cursor:pointer;display:grid;place-items:center}
+.wf-dots button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}.wf-dots button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.wf-msg{font-size:.9rem;color:var(--mut);margin:10px 0 0;min-height:1.3em}
+@media (prefers-reduced-motion:reduce){.wf-k,.wf-d,.wf-eve{transition:none}}
+.wf-ph .ki-marke{background:rgba(0,0,0,.66)!important}
+.wf-lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
+.wf-lay i{position:absolute;inset:0}
+#wf-alt{background:var(--w)}
+#wf-neu{background:var(--n,transparent);clip-path:polygon(0 0,0 0,-18% 100%,-18% 100%)}
+#wf-neu.go{transition:clip-path .9s cubic-bezier(.65,0,.25,1);clip-path:polygon(0 0,118% 0,100% 100%,-18% 100%)}
+@media (prefers-reduced-motion:reduce){#wf-neu.go{transition:none}}
+.wf-room svg{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line)}
+.wf-room svg *{transition:fill .5s ease}
+.wf-w{fill:var(--w)}.wf-f{fill:var(--f)}.wf-s{fill:var(--s)}.wf-m{fill:var(--m)}.wf-a{fill:var(--a)}.wf-dk{filter:brightness(.86)}.wf-lt{filter:brightness(1.08)}
+.wf-ch{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+.wf-ch button{display:flex;align-items:center;gap:9px;min-height:46px;padding:6px 16px 6px 7px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.95rem;font-weight:600;cursor:pointer}
+.wf-ch button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.14);flex:none}
+.wf-ch button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.wf-ch button.no{border-style:dashed}
+.wf-say{margin:14px 0 0;min-height:3.2em;font-size:1.02rem;max-width:60ch}.wf-say b{display:block}
+.wf-note{font-size:.88rem;color:var(--mut);margin:10px 0 0;max-width:62ch}
+.wf-cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.wf-card{background:var(--pan);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.wf-card i{display:block;height:92px;border-bottom:1px solid var(--line)}
+.wf-card div{padding:16px 18px 18px}.wf-card h3{margin:0 0 2px;font-size:1.12rem}.wf-card small{color:var(--mut);font-size:.84rem;letter-spacing:.02em}
+.wf-card p{margin:8px 0 0;font-size:.96rem}
+.wf-bar{display:grid;grid-template-columns:6fr 3fr 1fr;height:118px;border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:22px 0 10px}
+.wf-bar span{display:flex;align-items:flex-end;padding:8px;font-size:.84rem;font-weight:650;line-height:1.2}
+.wf-bar span b{background:#fff;color:#1c1f1d;padding:2px 7px;border-radius:7px;font-weight:650}
+.wf-bar span:last-child{padding:8px 2px;justify-content:center}
+.wf-leg{display:grid;gap:6px;margin:0;padding:0;list-style:none;font-size:.96rem}
+.wf-more{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:8px}
+.wf-more a,.wf-hub a{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--pan);color:var(--ink);text-decoration:none;font-weight:600;min-height:72px}
+.wf-more a:hover,.wf-hub a:hover{border-color:var(--ink)}
+.wf-du{display:block;width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.14);background:linear-gradient(90deg,var(--c1) 50%,var(--c2) 50%)}
+.wf-more small,.wf-hub small{display:block;font-weight:400;color:var(--mut);font-size:.88rem;margin-top:2px}
+.wf-also{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:600}
+.wf-hub{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.wf-hub a[hidden]{display:none}
+.wf-fl{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.wf-fl button{font:inherit;font-size:.94rem;font-weight:600;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.wf-fl button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wf-buy{margin-top:18px;font-size:.96rem}
+@media (prefers-reduced-motion:reduce){.wf-room svg *{transition:none}}
+</style>
+<!--MAIN-->
+<section id="oben" class="top"><div class="wrap narrow">
+  <p class="eyebrow"><a href="wandfarben.html">Welche Wandfarbe passt?</a></p>
+  <h1>Welche Wandfarbe passt in die Küche?</h1>
+  <p class="lede">Vier Farben, die passen, und eine, die du besser lässt. Im Beispielzimmer kannst du sie umschalten.</p>
+</div></section>
+<section class="band" id="zimmer"><div class="wrap narrow">
+  <h2>Im Beispielzimmer ansehen.</h2>
+  <div class="wf-room wf-ph" id="wf-room" data-slug="kueche" style="--w:#F2ECE0;--w2:#A8B5A0;--mk:url(assets/wf-kueche-maske.png)"><img src="assets/wf-kueche.jpg" width="1280" height="720" alt="Beispiel zu einer Küche. Die Wandfarbe wechselt mit den Knöpfen darunter." decoding="async"><div class="wf-lay" aria-hidden="true"><i id="wf-alt"></i><i id="wf-neu"></i></div><div class="wf-lay wf-lay2" aria-hidden="true"><i></i></div><div class="wf-eve" aria-hidden="true"></div><div class="wf-cut" hidden><span></span><input type="range" min="5" max="95" value="50" aria-label="Trennlinie zwischen den zwei Wandfarben verschieben"></div></div>
+  <div class="wf-ch" id="wf-ch" role="group" aria-label="Wandfarbe im Beispielzimmer wählen"><button type="button" aria-pressed="true" data-c="#F2ECE0" data-t="Hell und freundlich, ohne die Kälte von Reinweiß. Passt zu jeder Front und jeder Arbeitsplatte."><i style="background:#F2ECE0"></i>Warmweiß</button><button type="button" aria-pressed="false" data-c="#A8B5A0" data-t="Wirkt frisch neben Holz und weißen Fronten und verzeiht kleine Spritzer besser als Weiß."><i style="background:#A8B5A0"></i>Salbeigrün</button><button type="button" aria-pressed="false" data-c="#D2A55A" data-t="Warm und appetitlich, für die Wand am Essplatz. Bringt Sonne in Küchen mit wenig Licht."><i style="background:#D2A55A"></i>Ocker</button><button type="button" aria-pressed="false" data-c="#3F5548" data-t="Für eine Wand, wenn Fronten und Arbeitsplatte hell sind. Gibt der Küche Tiefe."><i style="background:#3F5548"></i>Tannengrün</button><button type="button" class="no" aria-pressed="false" data-c="#B4B8BB" data-t="So sieht es aus, wenn es nicht passt. Kühles Grau und Reinweiß lassen die Küche schnell steril wirken, vor allem neben Edelstahl."><i style="background:#B4B8BB"></i>Lieber nicht: Kühles Grau</button></div>
+  <p class="wf-say" id="wf-say" aria-live="polite"><b>Warmweiß</b>Hell und freundlich, ohne die Kälte von Reinweiß. Passt zu jeder Front und jeder Arbeitsplatte.</p>
+  <div class="wf-tools"><button type="button" id="wf-eveb" aria-pressed="false">Abendlicht</button><button type="button" id="wf-cmpb" aria-pressed="false">Zwei Farben vergleichen</button><button type="button" id="wf-save">Bild speichern</button></div><div class="wf-r2" id="wf-r2" hidden><span>Rechte Seite:</span><div class="wf-dots" role="group" aria-label="Wandfarbe für die rechte Seite"><button type="button" aria-pressed="false" data-c="#F2ECE0" title="Warmweiß" aria-label="Rechte Seite: Warmweiß"><i style="background:#F2ECE0"></i></button><button type="button" aria-pressed="true" data-c="#A8B5A0" title="Salbeigrün" aria-label="Rechte Seite: Salbeigrün"><i style="background:#A8B5A0"></i></button><button type="button" aria-pressed="false" data-c="#D2A55A" title="Ocker" aria-label="Rechte Seite: Ocker"><i style="background:#D2A55A"></i></button><button type="button" aria-pressed="false" data-c="#3F5548" title="Tannengrün" aria-label="Rechte Seite: Tannengrün"><i style="background:#3F5548"></i></button><button type="button" aria-pressed="false" data-c="#B4B8BB" title="Kühles Grau" aria-label="Rechte Seite: Kühles Grau"><i style="background:#B4B8BB"></i></button></div></div><p class="wf-msg" id="wf-msg" role="status"></p>
+  <p class="wf-note">Das Bild zeigt die Richtung, nicht den genauen Ton. Farben sehen auf jedem Bildschirm etwas anders aus als an der Wand.</p>
+</div></section>
+<section id="farben"><div class="wrap">
+  <div class="sec-h"><h2>Vier Wandfarben, die passen.</h2></div>
+  <div class="wf-cards"><article class="wf-card"><i style="background:#F2ECE0"></i><div><h3>Warmweiß</h3><small>ungefähr #F2ECE0</small><p>Hell und freundlich, ohne die Kälte von Reinweiß. Passt zu jeder Front und jeder Arbeitsplatte.</p></div></article><article class="wf-card"><i style="background:#A8B5A0"></i><div><h3>Salbeigrün</h3><small>ungefähr #A8B5A0</small><p>Wirkt frisch neben Holz und weißen Fronten und verzeiht kleine Spritzer besser als Weiß.</p></div></article><article class="wf-card"><i style="background:#D2A55A"></i><div><h3>Ocker</h3><small>ungefähr #D2A55A</small><p>Warm und appetitlich, für die Wand am Essplatz. Bringt Sonne in Küchen mit wenig Licht.</p></div></article><article class="wf-card"><i style="background:#3F5548"></i><div><h3>Tannengrün</h3><small>ungefähr #3F5548</small><p>Für eine Wand, wenn Fronten und Arbeitsplatte hell sind. Gibt der Küche Tiefe.</p></div></article></div>
+</div></section>
+<section class="band" id="nicht"><div class="wrap narrow">
+  <h2>Lieber nicht.</h2>
+  <p>Kühles Grau und Reinweiß lassen die Küche schnell steril wirken, vor allem neben Edelstahl. Dunkle Töne an allen Wänden machen kleine Küchen eng.</p>
+</div></section>
+<section id="regel"><div class="wrap narrow">
+  <h2>So verteilst du die Farben.</h2>
+  <p>Nach der <a href="farben.html#regel">60-30-10-Regel</a> bekommt die Wandfarbe etwa 60 Prozent des Raums, die zweite Farbe 30 Prozent und ein Akzent 10 Prozent.</p>
+  <div class="wf-bar" role="img" aria-label="Verteilung der Farben: 60 Prozent Warmweiß, 30 Prozent Möbel und Boden, 10 Prozent Terrakotta"><span style="background:#F2ECE0"><b>60 % · Warmweiß</b></span><span style="background:#C9A66B"><b>30 %</b></span><span style="background:#C27B5A"><b>10</b></span></div>
+  <ul class="wf-leg"><li><b>60 Prozent:</b> Warmweiß an den Wänden</li><li><b>30 Prozent:</b> Möbel und Boden</li><li><b>10 Prozent:</b> Terrakotta. Geschirr, Töpfe mit Kräutern und Holzbretter in warmen Tönen reichen als Akzent.</li></ul>
+</div></section>
+<section class="band" id="pruefen"><div class="wrap narrow">
+  <h2>Vor dem Streichen prüfen.</h2>
+  <p>Unter Hängeschränken und Regalen liegt die Wand im Schatten. Dort wirkt jede Farbe dunkler. Halte das Muster an genau diese Stelle.</p>
+  <p>Streiche ein Stück Karton in der Größe eines Blatts Papier und halte es an zwei Wände. Schau morgens, mittags und abends bei Lampenlicht darauf. Wie das genau geht, steht unter <a href="farben.html#testen">Vor dem Streichen testen</a>.</p>
+  <p class="wf-buy">Kleine Probierdosen gibt es für wenige Euro: <a href="{{amz:Wandfarbe Tester Probierdose}}" rel="sponsored nofollow noopener" target="_blank">Probierfarben bei Amazon suchen</a> <span class="tag">Anzeige</span></p>
+</div></section>
+<section id="fragen"><div class="wrap narrow faq">
+  <h2>Häufige Fragen.</h2>
+  <details><summary>Welche Farbe hält in der Küche?</summary><div><p>Eine Wandfarbe mit Nassabriebklasse 1 oder 2. Sie lässt sich feucht abwischen. Die Klasse steht auf dem Eimer.</p></div></details><details><summary>Kann ich hinter dem Herd streichen?</summary><div><p>Direkt hinter Herd und Spüle hält ein Spritzschutz aus Glas, Fliesen oder einer Platte besser als jede Farbe.</p></div></details>
+</div></section>
+<section class="band" id="weiter"><div class="wrap">
+  <div class="sec-h"><h2>Ähnliche Fragen.</h2></div>
+  <div class="wf-more"><a href="wandfarbe-weisse-moebel.html"><span class="wf-du" style="--c1:#F3F1EC;--c2:#CFC6B8"></span><span>Weiße Möbel<small>Greige, Salbeigrün, Altrosa</small></span></a><a href="wandfarbe-eiche.html"><span class="wf-du" style="--c1:#C8A977;--c2:#F2ECE0"></span><span>Eichenmöbel<small>Warmweiß, Salbeigrün, Greige</small></span></a><a href="wandfarbe-bad.html"><span class="wf-du" style="--c1:#C9A66B;--c2:#F2ECE0"></span><span>Bad<small>Warmweiß, Sand, Salbeigrün</small></span></a></div>
+  <p class="wf-also"><a href="wandfarben.html">Alle 24 Kombinationen</a><a href="wandfarbe-testen.html?raum=kueche">Diesen Raum im Studio öffnen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
+  <p class="wf-note">Die Empfehlungen folgen den Regeln aus unserem Ratgeber <a href="farben.html">Wandfarbe wählen</a>: Farbkreis, 60-30-10-Regel und Lichtrichtung. Die Quellen stehen dort. Die Farbwerte sind Näherungen.</p>
+</div></section>
+<!--END-->
+<script>
+(function(){var r=document.getElementById('wf-room'),c=document.getElementById('wf-ch'),s=document.getElementById('wf-say');if(!r||!c)return;
+ var st={w:r.style.getPropertyValue('--w'),wn:'',w2:r.style.getPropertyValue('--w2'),cmp:0,cut:50,eve:0,k:{},d:{}};window.WF=st;
+ function press(g,b){[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})}
+ c.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(c,b);
+  s.innerHTML='<b></b>';s.firstChild.textContent=b.textContent;s.appendChild(document.createTextNode(b.dataset.t));st.wn=b.textContent;
+  var n=document.getElementById('wf-neu');if(!n){r.style.setProperty('--w',b.dataset.c);return}
+  clearTimeout(r._t);if(n.classList.contains('go')){r.style.setProperty('--w',st.w);n.classList.remove('go')}
+  st.w=b.dataset.c;r.style.setProperty('--n',b.dataset.c);void n.offsetWidth;n.classList.add('go');
+  r._t=setTimeout(function(){r.style.setProperty('--w',b.dataset.c);n.classList.remove('go')},950)});
+ st.wn=(c.querySelector('[aria-pressed="true"]')||{}).textContent||'';
+ var eb=document.getElementById('wf-eveb'),cb=document.getElementById('wf-cmpb'),sv=document.getElementById('wf-save'),r2=document.getElementById('wf-r2'),cut=r.querySelector('.wf-cut'),msg=document.getElementById('wf-msg');
+ if(!eb)return;
+ eb.addEventListener('click',function(){st.eve=st.eve?0:1;r.classList.toggle('eve',!!st.eve);eb.setAttribute('aria-pressed',st.eve?'true':'false')});
+ function setcut(v){st.cut=+v;r.style.setProperty('--cut',v+'%')}
+ cb.addEventListener('click',function(){st.cmp=st.cmp?0:1;r.classList.toggle('cmp',!!st.cmp);cb.setAttribute('aria-pressed',st.cmp?'true':'false');cut.hidden=!st.cmp;r2.hidden=!st.cmp;
+  if(st.cmp)setcut(cut.querySelector('input').value);else r.style.removeProperty('--cut')});
+ cut.querySelector('input').addEventListener('input',function(){setcut(this.value)});
+ r2.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(r2,b);st.w2=b.dataset.c;r.style.setProperty('--w2',b.dataset.c)});
+ [].forEach.call(document.querySelectorAll('.wf-ch2'),function(g){g.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;press(g,b);var w=g.dataset.was;
+  st.k[w]=b.dataset.k;st.d[w]=b.dataset.d;r.querySelector('.wf-k.wf-'+w).style.background=b.dataset.k||'transparent';r.querySelector('.wf-d.wf-'+w).style.background=b.dataset.d||'transparent'})});
+ /* Bild speichern: dieselben Ebenen wie im Browser, auf einer Zeichenfläche zusammengesetzt (1280 x 720), mit Farbname, Seitenname und KI-Hinweis */
+ function lade(u){return new Promise(function(ok,no){var i=new Image();i.onload=function(){ok(i)};i.onerror=no;i.src=u})}
+ function url(v){return (v.match(/url\(["']?([^"')]+)/)||[])[1]}
+ function schicht(x,W,H,mk,farbe,op,clip){var o=document.createElement('canvas');o.width=W;o.height=H;var y=o.getContext('2d');y.fillStyle=farbe;
+  if(clip)y.fillRect(clip[0],0,clip[1],H);else y.fillRect(0,0,W,H);
+  if(mk){y.globalCompositeOperation='destination-in';y.drawImage(mk,0,0,W,H)}x.globalCompositeOperation=op;x.drawImage(o,0,0);x.globalCompositeOperation='source-over'}
+ sv.addEventListener('click',function(){sv.disabled=true;msg.textContent='Bild wird erstellt …';
+  var im=r.querySelector('img'),W=1280,H=720,slug=r.dataset.slug,todo=[lade(im.currentSrc||im.src),lade(url(r.style.getPropertyValue('--mk')))],ws=['boden','sitz'].filter(function(w){return st.k[w]});
+  ws.forEach(function(w){todo.push(lade('assets/wf-'+slug+'-'+w+'.png'))});
+  Promise.all(todo).then(function(a){var cv=document.createElement('canvas');cv.width=W;cv.height=H+84;var x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H+84);x.drawImage(a[0],0,0,W,H);
+   var cx=Math.round(W*st.cut/100);
+   if(st.cmp){schicht(x,W,H,a[1],st.w,'multiply',[0,cx]);schicht(x,W,H,a[1],st.w2,'multiply',[cx,W-cx])}else schicht(x,W,H,a[1],st.w,'multiply');
+   ws.forEach(function(w,i){schicht(x,W,H,a[2+i],st.k[w],'color');schicht(x,W,H,a[2+i],st.d[w],'multiply')});
+   if(st.eve){x.globalAlpha=.72;x.globalCompositeOperation='multiply';var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#e9b98a');g.addColorStop(1,'#d79c6c');x.fillStyle=g;x.fillRect(0,0,W,H);x.globalAlpha=1;x.globalCompositeOperation='source-over'}
+   if(st.cmp){x.fillStyle='#fff';x.fillRect(cx-2,0,4,H)}
+   var n2=(r2.querySelector('[aria-pressed="true"]')||{}).title||'';
+   x.fillStyle='#1c1f1d';x.font='600 30px system-ui,-apple-system,Segoe UI,sans-serif';x.textBaseline='middle';x.fillText('Wandfarbe: '+st.wn.replace('Lieber nicht: ','')+(st.cmp&&n2?' und '+n2:''),28,H+42);
+   x.font='500 22px system-ui,-apple-system,Segoe UI,sans-serif';x.fillStyle='#5d615d';x.textAlign='right';x.fillText('stil-daheim.de · Beispielbild, mit KI erstellt',W-28,H+42);
+   cv.toBlob(function(bl){sv.disabled=false;if(!bl){msg.textContent='Das Bild konnte nicht erstellt werden.';return}
+    var f=new File([bl],'wandfarbe-'+slug+'.jpg',{type:'image/jpeg'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:document.title}).then(function(){msg.textContent='Bild geteilt.'},function(){msg.textContent=''});return}
+    var l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download=f.name;document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(l.href)},4000);msg.textContent='Bild gespeichert: '+f.name},'image/jpeg',.9)
+  }).catch(function(){sv.disabled=false;msg.textContent='Das Bild konnte nicht geladen werden. Bitte noch einmal versuchen.'})});
+})();
+</script>

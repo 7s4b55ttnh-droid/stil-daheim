@@ -84,7 +84,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete'),
-        ('wandfarben.html', 'Welche Wandfarbe passt?', '20 Antworten mit Beispielzimmer zum Umschalten', 'wandfarben', 'wandfarben'),
+        ('wandfarben.html', 'Welche Wandfarbe passt?', '24 Antworten mit Beispielzimmer zum Umschalten', 'wandfarben', 'wandfarben'),
         ('lexikon.html', 'Lexikon', 'Wohn-Begriffe von Akzentfarbe bis Zonieren', 'lexikon', 'start')]
 CUR = ' aria-current="page"'
 GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */\n"
@@ -537,7 +537,8 @@ if __name__ == '__main__':
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
-    for f in ('site.css', 'site.js', 'studio.css', 'studio.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
+    (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
+    for f in ('site.css', 'site.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest

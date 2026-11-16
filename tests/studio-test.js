@@ -5,7 +5,7 @@ const ok=(c,t)=>{console.log((c?'ok   ':'FEHLER ')+t);if(!c)bad++};
 await p.goto(B+'/wandfarbe-testen.html',{waitUntil:'networkidle'});await p.waitForTimeout(500);
 const S=()=>p.evaluate(()=>{const e=document.querySelector('.st'),ph=e.querySelector('.st-ph');return {raum:e.STUDIO.raum(),farbe:e.STUDIO.farbe(),art:e.STUDIO.art(),w:ph.style.getPropertyValue('--w'),img:ph.querySelector('img').naturalWidth,src:ph.querySelector('img').getAttribute('src')}});
 let s=await S();ok(s.raum==='graues-sofa'&&s.img>1000&&s.w,'Studio startet mit Raum und Farbe '+JSON.stringify(s));
-const nr=await p.locator('.st-rooms button').count();ok(nr>=20,nr+' Beispielräume in der Leiste');
+const nr=await p.locator('.st-rooms button').count();ok(nr>=24,nr+' Beispielräume in der Leiste');
 const th=await p.evaluate(async()=>{let n=0;for(const i of document.querySelectorAll('.st-rooms img')){const r=await fetch(i.getAttribute('src'));if(r.status===200)n++}return n});ok(th===nr,'Vorschaubilder laden ('+th+')');
 ok(await p.locator('.st-ki').isVisible(),'Beispielraum trägt den KI-Hinweis');
 // Farbe wechseln
@@ -38,6 +38,19 @@ ok(f.w[1]>f.w[0]+8&&f.so[0]>f.so[1]+30,'Wand ist grün, das Ledersofa bleibt bra
 ok(f.ki==='none'&&f.fein&&/Wand/.test(f.msg),'Eigenes Foto ohne KI-Hinweis, mit „Feiner einstellen“ und Hinweistext');
 await p.locator('.st-dots button[title="Petrol"]').first().click();await p.waitForTimeout(300);const p2=await p.evaluate(()=>{const c=document.querySelector('.st canvas'),w=c.getContext('2d').getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data;return [...w].slice(0,3)});ok(p2[2]>p2[0]+20,'Farbwechsel im eigenen Foto wirkt '+JSON.stringify(p2));
 await p.locator('.st-rooms button').nth(1).click();await p.waitForTimeout(700);const zr=await S();ok(zr.art==='raum'&&await p.locator('.st-ki').isVisible(),'Zurück zum Beispielraum');
+// Halbhoch, Teilen-Link, Kaufen
+await p.goto(B+'/wandfarbe-testen.html?raum=gruenes-sofa',{waitUntil:'networkidle'});await p.waitForTimeout(500);
+await p.click('[data-a="halb"]');ok(await p.evaluate(()=>{const ph=document.querySelector('.st-ph');return ph.classList.contains('halb')&&/inset\(4\d%/.test(getComputedStyle(ph.querySelector('.st-lay')).clipPath)}),'Halbhoch: Farbe nur auf der unteren Wandhälfte');
+await p.locator('.st-grp[data-was="sitz"] button[title="Blau"]').click();await p.locator('.st-dots button[title="Altrosa"]').first().click();await p.waitForTimeout(1300);
+const adr=await p.evaluate(()=>document.querySelector('.st').STUDIO.adresse());ok(/raum=gruenes-sofa&farbe=D4B2A7&sofa=3E5C7E&halb=1$/.test(adr),'Teilen-Link enthält Raum, Farbe, Sofa, halbhoch: '+adr.split('?')[1]);
+await p.evaluate(()=>localStorage.removeItem('sdst'));await p.goto(B+'/wandfarbe-testen.html?'+adr.split('?')[1],{waitUntil:'networkidle'});await p.waitForTimeout(900);
+const g=await p.evaluate(()=>{const e=document.querySelector('.st'),ph=e.querySelector('.st-ph');return {r:e.STUDIO.raum(),f:e.STUDIO.farbe()[1],k:ph.querySelector('.st-k.st-sitz').style.background,h:ph.classList.contains('halb'),pr:e.querySelector('.st-grp[data-was="sitz"] button[title="Blau"]').getAttribute('aria-pressed')}});
+ok(g.r==='gruenes-sofa'&&g.f==='#D4B2A7'&&/62, 92, 126/.test(g.k)&&g.h&&g.pr==='true','Geteilter Link stellt alles wieder her '+JSON.stringify(g));
+await p.click('.st-kauf summary');const kf=await p.evaluate(()=>{const k=document.querySelector('.st-kauf');return {ral:k.querySelector('.st-ral').textContent,l:k.querySelector('.st-lit b').textContent,links:[...k.querySelectorAll('.starts a')].map(a=>a.href),rel:k.querySelector('.starts a').rel,tag:!!k.querySelector('.tag')}});
+ok(/RAL \d{4}/.test(kf.ral)&&/Liter/.test(kf.l)&&kf.links.length===5&&kf.links.every(h=>/amazon\.de\/s\?k=.+&tag=stildaheim-21$/.test(h))&&/sponsored/.test(kf.rel)&&kf.tag,'Kaufen: RAL-Ton, Liter, 5 gekennzeichnete Partnerlinks '+kf.ral.replace(/\s+/g,' ')+' | '+kf.l);
+ok(await p.evaluate(()=>{const S=document.querySelector('.st').STUDIO;return S.ral('#F7F9EF').nr===9010&&S.ral('#26392F').nr===6009}),'RAL-Suche findet exakte Töne');
+await p.goto(B+'/wandfarbe-testen.html?mix=8f5530-Cognac,c49a3a-Senfgelb,1f5560-Petrol',{waitUntil:'networkidle'});await p.waitForTimeout(600);const mx=await p.evaluate(()=>{const e=document.querySelector('.st');return {f:e.STUDIO.farbe(),n:e.querySelectorAll('.st-dots button[data-t="stil"]').length,cap:e.querySelector('.st-cap span').textContent}});
+ok(mx.f[0]==='Cognac'&&mx.n===3&&/Stil/.test(mx.cap),'Stil-Finder-Link bringt die Stilfarben mit '+JSON.stringify(mx));
 // Link von einer Unterseite: ?raum=
 await p.goto(B+'/wandfarbe-testen.html?raum=nordzimmer',{waitUntil:'networkidle'});await p.waitForTimeout(400);ok((await S()).raum==='nordzimmer','?raum=nordzimmer öffnet diesen Raum');
 // Startseite: kurze Fassung

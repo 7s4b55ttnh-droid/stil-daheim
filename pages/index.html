@@ -72,6 +72,16 @@
 @media (max-width:900px){.measure{grid-template-columns:1fr}}
 /* Miete */
 </style>
+<style>
+/* Weitermachen: nur für Wiederkehrer sichtbar, Stand kommt aus dem Speicher des Browsers */
+.weiter{padding-block:22px 0;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.weiter[hidden]{display:none}
+.weiter p{margin:0;font-size:.98rem}
+.weiter-l{display:flex;flex-wrap:wrap;gap:8px}
+.weiter-l a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--pan);color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem}
+.weiter-l a i{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.16);flex:none}
+.weiter+#studio{margin-top:22px}
+</style>
 <!--MAIN-->
 <div class="hero">
   <picture><source type="image/webp" srcset="assets/start-m.webp 960w, assets/start.webp 1672w" sizes="100vw"><img src="assets/start.jpg" srcset="assets/start-m.jpg 960w, assets/start.jpg 1672w" sizes="100vw" alt="Ruhiges Wohnzimmer im Altbau im warmen Abendlicht, mit Leinensofa, Wollteppich und Pflanze" fetchpriority="high"></picture>
@@ -82,6 +92,8 @@
     <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div>
   </div>
 </div>
+
+<div class="wrap weiter" id="weiter" hidden><p><b>Schön, dass du wieder da bist.</b> Mach weiter, wo du warst:</p><div class="weiter-l"></div></div>
 
 <section class="band" id="studio"><div class="wrap">
   <div class="sec-h"><h2>Wie wirkt die Farbe an der Wand?</h2><p class="lede">Tipp eine Farbe an und schau zu, wie sich der Raum verändert. Ohne Pinsel, ohne Anmeldung.</p></div>
@@ -182,7 +194,7 @@ function render(focus){
     box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
     const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="wandfarbe-testen.html?mix=${a.pal.map(p=>p[1].slice(1)+'-'+encodeURIComponent(p[0])).join(',')}">Deine Farben im Raum ansehen</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
   if(focus){anim();const t=box.getBoundingClientRect().top;if(t<0||t>innerHeight*.6)scrollTo({top:scrollY+t-80,behavior:RM?'auto':'smooth'})}
@@ -221,3 +233,11 @@ up();
 })();
 </script>
 <script src="studio.js" defer></script>
+<script>
+/* Weitermachen, wo du warst: liest nur, was Studio (sdst), Stil-Finder (sdquiz) und Raumplaner (sdrp) im Browser abgelegt haben. Nichts wird übertragen. */
+(function(){try{var box=document.getElementById('weiter'),l=box.querySelector('.weiter-l'),h='',e=function(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+ var st=JSON.parse(localStorage.getItem('sdst')||'null');if(st&&st.c&&/^#[0-9a-fA-F]{6}$/.test(st.c[1]))h+='<a href="wandfarbe-testen.html"><i style="background:'+st.c[1]+'"></i>Studio: '+e(st.c[0])+'</a>';
+ if(localStorage.getItem('sdrp'))h+='<a href="raumplaner.html">Dein Raumplan</a>';
+ if(localStorage.getItem('sdquiz'))h+='<a href="#stil-finder">Dein Stil-Ergebnis</a>';
+ if(h){l.innerHTML=h;box.hidden=false}}catch(x){}})();
+</script>

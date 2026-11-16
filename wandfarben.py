@@ -324,7 +324,7 @@ def uebersicht():
 
 # Wandfarben-Studio (studio.js auf wandfarbe-testen.html und der Startseite): kurze Raumnamen und die Reihenfolge in der Raumleiste.
 # Vorn stehen die Räume, in denen sich Sofa UND Boden umfärben lassen. Neue Seite in wandfarben.json: hier einen kurzen Namen ergänzen.
-STUDIO = [('graues-sofa', 'Graues Sofa'), ('beiges-sofa', 'Beiges Sofa'), ('suedzimmer', 'Sonniges Zimmer'), ('gruenes-sofa', 'Grünes Sofa'), ('braunes-ledersofa', 'Ledersofa'), ('blaues-sofa', 'Blaues Sofa'),
+STUDIO = [('graues-sofa', 'Graues Sofa'), ('schlafzimmer', 'Schlafzimmer'), ('kueche', 'Küche'), ('beiges-sofa', 'Beiges Sofa'), ('kinderzimmer', 'Kinderzimmer'), ('bad', 'Bad'), ('suedzimmer', 'Sonniges Zimmer'), ('gruenes-sofa', 'Grünes Sofa'), ('braunes-ledersofa', 'Ledersofa'), ('blaues-sofa', 'Blaues Sofa'),
           ('nordzimmer', 'Zimmer nach Norden'), ('niedrige-decke', 'Niedrige Decke'), ('eiche', 'Eichenmöbel'), ('nussbaum', 'Dunkles Holz'), ('weisse-moebel', 'Weiße Möbel'), ('schwarze-moebel', 'Schwarze Möbel'),
           ('buche', 'Buchenmöbel'), ('kiefer', 'Kiefernmöbel'), ('eichenboden', 'Heller Holzboden'), ('dunkler-boden', 'Dunkler Boden'), ('grauer-boden', 'Grauer Boden'), ('roetlicher-boden', 'Rötlicher Boden'),
           ('kleine-raeume', 'Kleiner Raum'), ('flur-ohne-fenster', 'Flur ohne Fenster')]
