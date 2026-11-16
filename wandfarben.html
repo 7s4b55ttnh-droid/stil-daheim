@@ -10,6 +10,15 @@
 .top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}.top .eyebrow a{color:inherit}
 .top h1{font-size:clamp(2.2rem,5.6vw,3.7rem)}
 .wf-room{margin-top:22px}
+.wf-ph{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--band)}
+.wf-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.wf-ph .ki-marke{background:rgba(0,0,0,.66)!important}
+.wf-lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
+.wf-lay i{position:absolute;inset:0}
+#wf-alt{background:var(--w)}
+#wf-neu{background:var(--n,transparent);clip-path:polygon(0 0,0 0,-18% 100%,-18% 100%)}
+#wf-neu.go{transition:clip-path .9s cubic-bezier(.65,0,.25,1);clip-path:polygon(0 0,118% 0,100% 100%,-18% 100%)}
+@media (prefers-reduced-motion:reduce){#wf-neu.go{transition:none}}
 .wf-room svg{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line)}
 .wf-room svg *{transition:fill .5s ease}
 .wf-w{fill:var(--w)}.wf-f{fill:var(--f)}.wf-s{fill:var(--s)}.wf-m{fill:var(--m)}.wf-a{fill:var(--a)}.wf-dk{filter:brightness(.86)}.wf-lt{filter:brightness(1.08)}
