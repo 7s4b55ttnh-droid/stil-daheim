@@ -11,6 +11,7 @@ AUS = pathlib.Path(__import__('os').environ.get('STIL_OUT') or HERE.parent / 'st
 D = json.loads((HERE / 'wandfarben.json').read_text(encoding='utf-8'))['seiten']
 BY = {d['slug']: d for d in D}
 STAND = '2026-11-16'
+FEST = {'wandfarbe-testen'}     # von Hand geschriebene Seiten mit dem Anfang wandfarbe-, die beim Aufräumen NICHT gelöscht werden
 TYP = [('moebel', 'Möbel'), ('sofa', 'Sofa'), ('boden', 'Boden'), ('raum', 'Raum und Licht')]
 EICHE, SOFA, HOLZ = '#C9A66B', '#B9B4AA', '#C8A977'
 
@@ -178,7 +179,7 @@ def foto(d):
 SITZ = {'eichenboden': 'Sessel', 'grauer-boden': 'Sessel', 'roetlicher-boden': 'Sessel'}     # sonst „Sofa“
 # Umfärben von Sitzmöbel und Boden: [Name, Farbe für mix-blend-mode:color (Farbton), Grau für multiply (Helligkeit)]
 SITZFARBEN = [['Original', '', ''], ['Grau', '#8E9196', '#c4c4c4'], ['Beige', '#D8C7AE', '#f2f2f2'], ['Grün', '#5E7A64', '#9c9c9c'], ['Blau', '#3E5C7E', '#8c8c8c'], ['Cognac', '#A9683A', '#a6a6a6']]
-BODENFARBEN = [['Original', '', ''], ['Dunkles Holz', '#5A3D2B', '#6a6a6a'], ['Grau', '#9A9A98', '#cfcfcf'], ['Rötlich', '#B5703F', '#c6c6c6']]
+BODENFARBEN = [['Original', '', ''], ['Dunkles Holz', '#5A3D2B', '#6a6a6a'], ['Grau', '#9A9A98', '#cfcfcf'], ['Rötlich', '#A8623A', '#b8b8b8']]
 
 
 def hat(d, was):
@@ -279,7 +280,7 @@ def unterseite(d):
 <section class="band" id="weiter"><div class="wrap">
   <div class="sec-h"><h2>Ähnliche Fragen.</h2></div>
   <div class="wf-more">%(more)s</div>
-  <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
+  <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="wandfarbe-testen.html">Am eigenen Foto testen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
   <p class="wf-note">Die Empfehlungen folgen den Regeln aus unserem Ratgeber <a href="farben.html">Wandfarbe wählen</a>: Farbkreis, 60-30-10-Regel und Lichtrichtung. Die Quellen stehen dort. Die Farbwerte sind Näherungen.</p>
 </div></section>''' % dict(hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), regler=regler(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
                           ak=e(d['akzent'][0]), akt=d['akzenttext'], licht=d['licht'], faq=faq, more=more, n=len(D))
@@ -310,7 +311,7 @@ def uebersicht():
   <p><b>Abstand halten.</b> Die Wand sollte deutlich heller oder deutlich dunkler sein als das Sofa oder die Möbel davor. Gleiche Helligkeit lässt alles verschwimmen.</p>
   <p><b>Gegenspieler suchen.</b> Holz ist gelblich oder rötlich. Grün und Blau liegen im Farbkreis gegenüber und lassen es wärmer wirken. Gelb und Orange haben denselben Stich und machen den Raum einfarbig.</p>
   <p><b>Licht ausgleichen.</b> Zimmer nach Norden haben kühles Licht und vertragen warme Töne. Zimmer nach Süden haben warmes Licht und vertragen kühle.</p>
-  <p>Die Grundlagen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen und kombinieren</a>. Wenn du lieber von deinem eigenen Zimmer ausgehst: Die <a href="farbpalette.html">Farbpalette aus Foto</a> zieht die Farben aus einem Bild und schlägt Wandfarben vor.</p>
+  <p>Die Grundlagen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen und kombinieren</a>. Wenn du lieber von deinem eigenen Zimmer ausgehst: Mit <a href="wandfarbe-testen.html">Wandfarbe am Foto testen</a> färbst du die Wand auf deinem eigenen Bild ein. Die <a href="farbpalette.html">Farbpalette aus Foto</a> zieht die Farben aus einem Bild und schlägt Wandfarben vor.</p>
 </div></section>''' % (fl, cards)
     end = '''<script>
 (function(){var f=document.getElementById('wf-fl'),h=document.getElementById('wf-hub');if(!f||!h)return;
@@ -325,7 +326,7 @@ def main():
     keys = {unterseite(d) for d in D}
     uebersicht()
     for f in (HERE / 'pages').glob('wandfarbe-*.html'):    # entfernte Kombinationen aufräumen
-        if f.stem not in keys:
+        if f.stem not in keys and f.stem not in FEST:
             f.unlink()
     return len(keys)
 
