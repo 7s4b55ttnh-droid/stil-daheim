@@ -1,0 +1,43 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<!-- Vorlage für Pins (1000x1500) und Hochkant-Videos (1080x1920) der Wandfarben-Zimmer. Wird von social/wandfarben-social.py in den Ausgabe-Ordner kopiert und dort aufgenommen. Daten kommen als JSON hinter dem # -->
+<style>
+@font-face{font-family:"Archivo SD";src:url(assets/fonts/archivo.woff2) format("woff2");font-weight:400 750;font-stretch:78% 100%}
+*{box-sizing:border-box}html,body{margin:0}body{font-family:"Archivo SD",system-ui,sans-serif;background:#f6f6f3;color:#1c1f1d;overflow:hidden}
+.ph{position:relative;aspect-ratio:16/9;overflow:hidden}.ph img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.lay{position:absolute;inset:0;mix-blend-mode:multiply;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
+.lay i{position:absolute;inset:0}.lay .a{background:var(--w)}.lay .n{background:var(--n,transparent);clip-path:polygon(0 0,0 0,-18% 100%,-18% 100%)}
+.lay .n.go{transition:clip-path .9s cubic-bezier(.65,0,.25,1);clip-path:polygon(0 0,118% 0,100% 100%,-18% 100%)}
+.ki{position:absolute;right:14px;bottom:12px;font:500 17px system-ui,sans-serif;color:#fff;background:rgba(0,0,0,.62);padding:6px 12px;border-radius:99px}
+.tag{position:absolute;left:18px;top:18px;display:flex;align-items:center;gap:12px;background:#fff;border-radius:99px;padding:9px 22px 9px 10px;font-weight:650;font-size:30px;box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.tag i{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+/* Pin */
+body.pin{width:1000px;height:1500px}
+.pin .kopf{height:300px;padding:44px 48px 0}.pin .marke{font-size:26px;font-weight:650;color:#76591f;margin:0 0 14px}
+.pin h1{font-size:64px;line-height:1.04;font-weight:750;font-stretch:80%;margin:0;letter-spacing:-.01em}
+.pin .fuss{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;font-size:26px;font-weight:600}.pin .fuss span:last-child{color:#5d615d;font-weight:500;font-size:22px}
+/* Video */
+body.video{width:1080px;height:1920px}
+.video .kopf{height:520px;padding:150px 64px 0}.video .marke{font-size:34px;font-weight:650;color:#76591f;margin:0 0 22px}
+.video h1{font-size:84px;line-height:1.03;font-weight:750;font-stretch:80%;margin:0;letter-spacing:-.01em}
+.video .unten{padding:54px 64px 0}
+.video .name{font-size:76px;font-weight:750;font-stretch:80%;margin:0 0 16px;min-height:86px}.video .name.nein{color:#9c2f22}
+.video .warum{font-size:40px;line-height:1.3;margin:0;min-height:210px;color:#3a3e3b}
+.video .punkte{display:flex;gap:22px;margin:40px 0 0}.video .punkte i{width:96px;height:96px;border-radius:50%;border:2px solid rgba(0,0,0,.14);transition:transform .4s,box-shadow .4s}
+.video .punkte i.an{transform:scale(1.14);box-shadow:0 0 0 6px #f6f6f3,0 0 0 10px #1c1f1d}
+.video .seite{position:absolute;left:64px;bottom:120px;font-size:40px;font-weight:650;color:#76591f;margin:0}
+.video .ende{position:absolute;left:0;right:0;bottom:0;height:300px;background:#1e4a3d;color:#fff;padding:64px;transform:translateY(100%);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.video .ende.an{transform:none}.video .ende b{display:block;font-size:52px;font-stretch:80%;font-weight:750;margin:0 0 12px}.video .ende span{font-size:38px;opacity:.9}
+</style></head><body>
+<script>
+var D=JSON.parse(decodeURIComponent(location.hash.slice(1))),B=document.body;B.className=D.art;
+function foto(farbe,name){return '<div class="ph" style="--w:'+farbe+';--mk:url(assets/wf-'+D.slug+'-maske.png)"><img src="assets/wf-'+D.slug+'.jpg" alt=""><div class="lay"><i class="a"></i><i class="n"></i></div>'+(name?'<span class="tag"><i style="background:'+farbe+'"></i>'+name+'</span>':'')+'<span class="ki">Mit KI erstellt</span></div>'}
+if(D.art==='pin'){B.innerHTML='<div class="kopf"><p class="marke">Stil-Daheim</p><h1>'+D.h1+'</h1></div>'+foto(D.farben[D.a][1],D.farben[D.a][0])+foto(D.farben[D.b][1],D.farben[D.b][0])+'<div class="fuss"><span>4 Farben, die passen · stil-daheim.de</span><span>Beispielbilder, mit KI erstellt</span></div>'}
+else{B.innerHTML='<div class="kopf"><p class="marke">Stil-Daheim</p><h1>'+D.h1+'</h1></div>'+foto(D.farben[0][1],'')+'<div class="unten"><p class="name" id="n"></p><p class="warum" id="t"></p><div class="punkte" id="p">'+D.farben.map(function(f){return '<i style="background:'+f[1]+'"></i>'}).join('')+'</div></div><p class="seite">stil-daheim.de · 20 Zimmer zum Umschalten</p><div class="ende" id="e"><b>Alle 20 Kombinationen</b><span>stil-daheim.de · Beispielbilder, mit KI erstellt</span></div>';
+ var r=B.querySelector('.ph'),n=r.querySelector('.n'),P=document.getElementById('p').children;
+ function zeig(i,wisch){var f=D.farben[i];document.getElementById('n').textContent=f[3]?'Lieber nicht: '+f[0]:f[0];document.getElementById('n').className='name'+(f[3]?' nein':'');document.getElementById('t').textContent=f[2];
+  [].forEach.call(P,function(x,k){x.className=k===i?'an':''});if(!wisch){r.style.setProperty('--w',f[1]);return}
+  r.style.setProperty('--n',f[1]);n.classList.remove('go');void n.offsetWidth;n.classList.add('go');setTimeout(function(){r.style.setProperty('--w',f[1]);n.classList.remove('go')},950)}
+ window.los=function(){zeig(0,false);var t=1900;for(var i=1;i<D.farben.length;i++){(function(i,t){setTimeout(function(){zeig(i,true)},t)})(i,t);t+=2300}
+  setTimeout(function(){zeig(0,true)},t);setTimeout(function(){document.getElementById('e').classList.add('an')},t+1300);window.dauer=t+4200};
+ zeig(0,false)}
+</script></body></html>
