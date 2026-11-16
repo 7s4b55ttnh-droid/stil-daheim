@@ -620,3 +620,6 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
  .sheet-m .m-d summary::after{content:"";flex:none;width:9px;height:9px;border:0;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);border-radius:0;background:none;transform:rotate(45deg);transition:transform .2s;margin:0 8px 4px 0}
  .sheet-m .m-d[open] summary::after{transform:rotate(-135deg);margin-bottom:-4px}.m-d>div{padding:0 2px 12px}.m-d a,.m-more a{padding:10px 0;font-size:1.02rem}}
 @media (max-width:480px){.sheet-m .m-grid{grid-template-columns:1fr}}
+
+/* Silbentrennung nur bei langen Wörtern, damit kurze Wörter wie „Stücke“ nicht zerrissen werden */
+p,li,dd,td,.lede,h1,h2,h3{hyphenate-limit-chars:11 5 5}
