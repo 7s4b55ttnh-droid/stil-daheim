@@ -280,9 +280,9 @@ def unterseite(d):
 <section class="band" id="weiter"><div class="wrap">
   <div class="sec-h"><h2>Ähnliche Fragen.</h2></div>
   <div class="wf-more">%(more)s</div>
-  <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="wandfarbe-testen.html">Am eigenen Foto testen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
+  <p class="wf-also"><a href="wandfarben.html">Alle %(n)d Kombinationen</a><a href="wandfarbe-testen.html?raum=%(slug)s">Diesen Raum im Studio öffnen</a><a href="farbpalette.html">Farbpalette aus deinem Zimmerfoto</a><a href="farben.html">Wandfarbe wählen und kombinieren</a></p>
   <p class="wf-note">Die Empfehlungen folgen den Regeln aus unserem Ratgeber <a href="farben.html">Wandfarbe wählen</a>: Farbkreis, 60-30-10-Regel und Lichtrichtung. Die Quellen stehen dort. Die Farbwerte sind Näherungen.</p>
-</div></section>''' % dict(hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), regler=regler(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
+</div></section>''' % dict(slug=d['slug'], hinw='Das Bild zeigt die Richtung, nicht den genauen Ton.' if foto(d) else 'Die Zeichnung zeigt die Richtung, nicht den genauen Ton.', h1=e(d['h1']), room=room(d), regler=regler(d), chips=chips, w0=e(w[0]), t0=w[2], cards=cards, meiden=d['meiden'], bar=bar, mid=e(mid[0]),
                           ak=e(d['akzent'][0]), akt=d['akzenttext'], licht=d['licht'], faq=faq, more=more, n=len(D))
     end = ROOM_JS
     (HERE / 'pages' / (key + '.html')).write_text('<!--meta %s -->\n<!--HEAD-->\n%s\n<!--MAIN-->\n%s\n<!--END-->\n%s\n' % (json.dumps(meta, ensure_ascii=False), CSS, main, end), encoding='utf-8')
@@ -311,7 +311,7 @@ def uebersicht():
   <p><b>Abstand halten.</b> Die Wand sollte deutlich heller oder deutlich dunkler sein als das Sofa oder die Möbel davor. Gleiche Helligkeit lässt alles verschwimmen.</p>
   <p><b>Gegenspieler suchen.</b> Holz ist gelblich oder rötlich. Grün und Blau liegen im Farbkreis gegenüber und lassen es wärmer wirken. Gelb und Orange haben denselben Stich und machen den Raum einfarbig.</p>
   <p><b>Licht ausgleichen.</b> Zimmer nach Norden haben kühles Licht und vertragen warme Töne. Zimmer nach Süden haben warmes Licht und vertragen kühle.</p>
-  <p>Die Grundlagen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen und kombinieren</a>. Wenn du lieber von deinem eigenen Zimmer ausgehst: Mit <a href="wandfarbe-testen.html">Wandfarbe am Foto testen</a> färbst du die Wand auf deinem eigenen Bild ein. Die <a href="farbpalette.html">Farbpalette aus Foto</a> zieht die Farben aus einem Bild und schlägt Wandfarben vor.</p>
+  <p>Die Grundlagen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen und kombinieren</a>. Wenn du lieber von deinem eigenen Zimmer ausgehst: Im <a href="wandfarbe-testen.html">Wandfarben-Studio</a> wechselst du Raum, Sofa und Boden oder färbst die Wand auf deinem eigenen Foto ein. Die <a href="farbpalette.html">Farbpalette aus Foto</a> zieht die Farben aus einem Bild und schlägt Wandfarben vor.</p>
 </div></section>''' % (fl, cards)
     end = '''<script>
 (function(){var f=document.getElementById('wf-fl'),h=document.getElementById('wf-hub');if(!f||!h)return;
@@ -322,12 +322,46 @@ def uebersicht():
     (HERE / 'pages' / 'wandfarben.html').write_text('<!--meta %s -->\n<!--HEAD-->\n%s\n<!--MAIN-->\n%s\n<!--END-->\n%s\n' % (json.dumps(meta, ensure_ascii=False), CSS, main, end), encoding='utf-8')
 
 
+# Wandfarben-Studio (studio.js auf wandfarbe-testen.html und der Startseite): kurze Raumnamen und die Reihenfolge in der Raumleiste.
+# Vorn stehen die Räume, in denen sich Sofa UND Boden umfärben lassen. Neue Seite in wandfarben.json: hier einen kurzen Namen ergänzen.
+STUDIO = [('graues-sofa', 'Graues Sofa'), ('beiges-sofa', 'Beiges Sofa'), ('suedzimmer', 'Sonniges Zimmer'), ('gruenes-sofa', 'Grünes Sofa'), ('braunes-ledersofa', 'Ledersofa'), ('blaues-sofa', 'Blaues Sofa'),
+          ('nordzimmer', 'Zimmer nach Norden'), ('niedrige-decke', 'Niedrige Decke'), ('eiche', 'Eichenmöbel'), ('nussbaum', 'Dunkles Holz'), ('weisse-moebel', 'Weiße Möbel'), ('schwarze-moebel', 'Schwarze Möbel'),
+          ('buche', 'Buchenmöbel'), ('kiefer', 'Kiefernmöbel'), ('eichenboden', 'Heller Holzboden'), ('dunkler-boden', 'Dunkler Boden'), ('grauer-boden', 'Grauer Boden'), ('roetlicher-boden', 'Rötlicher Boden'),
+          ('kleine-raeume', 'Kleiner Raum'), ('flur-ohne-fenster', 'Flur ohne Fenster')]
+
+
+def studio():
+    """Schreibt assets/studio.json in den Ausgabe-Ordner: je Beispielraum Name, Frage, die vier passenden Farben und ob es Masken für Sitzmöbel und Boden gibt."""
+    by = {d['slug']: d for d in D}
+    namen = dict(STUDIO)
+    hell = json.loads((HERE / 'studio-hell.json').read_text(encoding='utf-8')) if (HERE / 'studio-hell.json').exists() else {}
+    folge = [s for s, _ in STUDIO if s in by] + [d['slug'] for d in D if d['slug'] not in namen]
+    out = []
+    for s in folge:
+        d = by[s]
+        if not foto(d) or not (AUS / 'assets' / ('wf-%s-k.jpg' % s)).exists():
+            continue                                    # ohne Foto oder Vorschaubild kein Studio-Raum
+        e = {'slug': s, 'name': namen.get(s, d['h1']), 'frage': d['h1'], 'farben': [[f[0], f[1]] for f in d['farben']]}
+        h = hell.get(s, {})                             # mittlere Helligkeit von Sitzmöbel und Boden im Foto (0 bis 1), studio.js rechnet damit beim Umfärben
+        if hat(d, 'sitz'):
+            e['sitz'] = 1
+            e['sitzname'] = SITZ.get(s, 'Sofa')
+            e['hs'] = h.get('sitz', .5)
+        if hat(d, 'boden'):
+            e['boden'] = 1
+            e['hb'] = h.get('boden', .5)
+        out.append(e)
+    (AUS / 'assets' / 'studio.json').write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+    return len(out)
+
+
 def main():
     keys = {unterseite(d) for d in D}
     uebersicht()
     for f in (HERE / 'pages').glob('wandfarbe-*.html'):    # entfernte Kombinationen aufräumen
         if f.stem not in keys and f.stem not in FEST:
             f.unlink()
+    studio()
     return len(keys)
 
 

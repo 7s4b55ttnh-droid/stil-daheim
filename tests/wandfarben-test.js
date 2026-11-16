@@ -17,11 +17,5 @@ await p.click('#wf-cmpb');ok(await p.evaluate(()=>!document.querySelector('.wf-c
 const zz=await p.evaluate(()=>{const o={};document.querySelectorAll('.wf-ch2').forEach(g=>{g.querySelectorAll('button')[2].click();o[g.dataset.was]=document.querySelector('.wf-k.wf-'+g.dataset.was).style.background});return o});
 ok(!!zz.sitz&&!!zz.boden&&zz.sitz!=='transparent'&&zz.boden!=='transparent','Sofa und Boden lassen sich umfärben '+JSON.stringify(zz));
 const mk=await p.evaluate(async()=>{const a=[];for(const w of ['maske','sitz','boden']){const r=await fetch('assets/wf-nordzimmer-'+w+'.png');a.push(r.status)}return a});ok(mk.every(x=>x===200),'Masken laden '+mk);
-await p.goto(B+'/wandfarbe-testen.html',{waitUntil:'networkidle'});await p.click('#wt-demo');await p.waitForTimeout(900);
-await p.waitForTimeout(600);const an=await p.evaluate(()=>WT.anteil());ok(an>.3&&an<.65,'Eigenes Foto: Wand im Beispielfoto von selbst erkannt ('+Math.round(an*100)+' %)');
-const px=await p.evaluate(()=>{const c=document.getElementById('wt-cv'),x=c.getContext('2d'),w=x.getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data,s=x.getImageData(Math.round(c.width*.5),Math.round(c.height*.52),1,1).data;return [[...w].slice(0,3),[...s].slice(0,3)]});
-ok(px[0][1]>px[0][0]+8&&px[1][0]>px[1][1]+30,'Wand ist grün eingefärbt, das Ledersofa bleibt braun '+JSON.stringify(px));
-await p.locator('#wt-ch button').nth(7).click();await p.waitForTimeout(300);const p2=await p.evaluate(()=>{const c=document.getElementById('wt-cv'),w=c.getContext('2d').getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data;return [...w].slice(0,3)});
-ok(p2[2]>p2[0]+20,'Farbwechsel auf Petrol wirkt '+JSON.stringify(p2));
-ok(await p.locator('#wt-ki').isVisible(),'Beispielfoto trägt den KI-Hinweis');
+// Das Wandfarben-Studio (wandfarbe-testen.html und Startseite) prüft tests/studio-test.js
 await b.close();console.log(bad?bad+' FEHLER':'ALLE TESTS BESTANDEN');process.exit(bad?1:0)})();

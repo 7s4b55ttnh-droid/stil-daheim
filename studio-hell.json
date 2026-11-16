@@ -1,0 +1,58 @@
+{
+"beiges-sofa": {
+"boden": 0.507,
+"sitz": 0.62
+},
+"blaues-sofa": {
+"boden": 0.502,
+"sitz": 0.313
+},
+"braunes-ledersofa": {
+"boden": 0.483,
+"sitz": 0.27
+},
+"dunkler-boden": {
+"sitz": 0.648
+},
+"eiche": {
+"boden": 0.573
+},
+"eichenboden": {
+"sitz": 0.635
+},
+"grauer-boden": {
+"sitz": 0.755
+},
+"graues-sofa": {
+"boden": 0.433,
+"sitz": 0.438
+},
+"gruenes-sofa": {
+"boden": 0.468,
+"sitz": 0.219
+},
+"niedrige-decke": {
+"boden": 0.512,
+"sitz": 0.462
+},
+"nordzimmer": {
+"boden": 0.363,
+"sitz": 0.577
+},
+"nussbaum": {
+"boden": 0.513
+},
+"roetlicher-boden": {
+"sitz": 0.48
+},
+"schwarze-moebel": {
+"boden": 0.556
+},
+"suedzimmer": {
+"boden": 0.664,
+"sitz": 0.734
+},
+"weisse-moebel": {
+"boden": 0.532
+}
+}

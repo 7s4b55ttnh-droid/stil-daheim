@@ -1,5 +1,6 @@
 <!--meta {"key":"index","title":"Stil-Daheim: Einrichten mit Gefühl und mit Zollstock","desc":"Finde deinen Wohnstil, miss Teppich, Vorhang, Bilder und Lampe richtig aus und richte deine Mietwohnung schön ein, ohne Ärger beim Auszug.","og":"assets/start.jpg"} -->
 <!--HEAD-->
+<link rel="stylesheet" href="studio.css">
 <style>
 /* Startseite */
 .hero .wrap{padding-bottom:clamp(52px,8vw,96px)}
@@ -81,6 +82,11 @@
     <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div>
   </div>
 </div>
+
+<section class="band" id="studio"><div class="wrap">
+  <div class="sec-h"><h2>Wie wirkt die Farbe an der Wand?</h2><p class="lede">Tipp eine Farbe an und schau zu, wie sich der Raum verändert. Ohne Pinsel, ohne Anmeldung.</p></div>
+  <div class="st" data-studio="kurz" data-raum="graues-sofa"><p><a href="wandfarbe-testen.html">Zum Wandfarben-Studio</a></p></div>
+</div></section>
 
 <section class="ba-sec" id="vorher-nachher"><div class="wrap">
   <div class="ba-fig">
@@ -214,3 +220,4 @@ n.addEventListener('change',()=>{let v=P(n.value);if(isNaN(v)){v=+r.value;msg.te
 up();
 })();
 </script>
+<script src="studio.js" defer></script>

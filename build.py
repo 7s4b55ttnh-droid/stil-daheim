@@ -58,7 +58,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('raumplaner.html', 'Raumplaner', 'Möbel verschieben, Abstände prüfen', 'raumplaner', 'raumplaner'),
         ('bilderwand.html', 'Bilderwand-Planer', 'Rahmen anordnen, Nagelpunkte messen', 'bilderwand', 'bilderwand'),
         ('farbpalette.html', 'Farbpalette aus Foto', 'Farben aus deinem Zimmerfoto ziehen', 'farbpalette', 'farbpalette'),
-        ('wandfarbe-testen.html', 'Wandfarbe am Foto testen', 'Eigenes Zimmer wählen, Wand antippen', 'wandfarbe-testen', 'wandfarben'),
+        ('wandfarbe-testen.html', 'Wandfarben-Studio', 'Farben, Sofa und Boden im Raum ausprobieren', 'wandfarbe-testen', 'wandfarben'),
         ('vintage.html', 'Vintage einrichten', 'Fundstücke aus fünf Jahrzehnten kombinieren', 'vintage', 'vintage'),
         ('modern.html', 'Modern einrichten', 'Klar, ruhig und gut verstaut', 'modern', 'modern'),
         ('skandinavisch.html', 'Skandinavisch einrichten', 'Hell, gemütlich und praktisch', 'skandinavisch', 'skandi'),
@@ -537,7 +537,7 @@ if __name__ == '__main__':
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
-    for f in ('site.css', 'site.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
+    for f in ('site.css', 'site.js', 'studio.css', 'studio.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest
