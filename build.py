@@ -82,6 +82,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
         ('rechner.html', 'Raum-Rechner', 'Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer', 'rechner', 'essen'),
         ('mieten.html', 'Schöner wohnen zur Miete', 'Was erlaubt ist und was ohne Bohren geht', 'mieten', 'miete'),
+        ('wandfarben.html', 'Welche Wandfarbe passt?', '20 Antworten mit Beispielzimmer zum Umschalten', 'wandfarben', 'farben'),
         ('lexikon.html', 'Lexikon', 'Wohn-Begriffe von Akzentfarbe bis Zonieren', 'lexikon', 'start')]
 CUR = ' aria-current="page"'
 GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskript. Zählt Seitenaufrufe und Klicks auf Partnerlinks. */\n"
@@ -165,7 +166,7 @@ def fig(name, alt, cap):
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
-       'farben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
+       'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'lexikon': 'stile licht'}
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Planer und Rechner')]
@@ -530,6 +531,7 @@ def sitemap(metas):
 
 
 if __name__ == '__main__':
+    import wandfarben; wandfarben.main()   # erzeugt pages/wandfarben.html und pages/wandfarbe-*.html aus wandfarben.json
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))

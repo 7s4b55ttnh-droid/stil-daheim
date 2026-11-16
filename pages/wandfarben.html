@@ -1,0 +1,65 @@
+<!--meta {"key": "wandfarben", "title": "Welche Wandfarbe passt? 20 Kombinationen – Stil-Daheim", "desc": "Welche Wandfarbe passt zu Eiche, zum grauen Sofa, zu dunklem Boden oder ins Nordzimmer? 20 Antworten mit Beispielzimmer zum Umschalten.", "og": "assets/farben.jpg", "updated": "2026-11-16", "kurz_nach": "kombinationen", "kurz": "Die Wand sollte deutlich heller oder dunkler sein als die größte Fläche davor. Farben, die dem Holz oder Sofa im Farbkreis gegenüberliegen, lassen es leuchten. Farben mit demselben Stich lassen es verschwinden. In Zimmern mit wenig Sonne helfen warme Töne, in sonnigen Zimmern kühle."} -->
+<!--HEAD-->
+<style>
+.top{padding-block:calc(env(safe-area-inset-top,0px) + 120px) clamp(24px,4vw,44px)}
+.top .eyebrow{font-size:.95rem;font-weight:600;color:var(--brass-t);margin:0 0 14px}.top .eyebrow a{color:inherit}
+.top h1{font-size:clamp(2.2rem,5.6vw,3.7rem)}
+.wf-room{margin-top:22px}
+.wf-room svg{display:block;width:100%;height:auto;border-radius:18px;border:1px solid var(--line)}
+.wf-room svg *{transition:fill .5s ease}
+.wf-w{fill:var(--w)}.wf-f{fill:var(--f)}.wf-s{fill:var(--s)}.wf-m{fill:var(--m)}.wf-a{fill:var(--a)}.wf-dk{filter:brightness(.86)}.wf-lt{filter:brightness(1.08)}
+.wf-ch{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+.wf-ch button{display:flex;align-items:center;gap:9px;min-height:46px;padding:6px 16px 6px 7px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);font:inherit;font-size:.95rem;font-weight:600;cursor:pointer}
+.wf-ch button i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.14);flex:none}
+.wf-ch button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.wf-ch button.no{border-style:dashed}
+.wf-say{margin:14px 0 0;min-height:3.2em;font-size:1.02rem;max-width:60ch}.wf-say b{display:block}
+.wf-note{font-size:.88rem;color:var(--mut);margin:10px 0 0;max-width:62ch}
+.wf-cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.wf-card{background:var(--pan);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.wf-card i{display:block;height:92px;border-bottom:1px solid var(--line)}
+.wf-card div{padding:16px 18px 18px}.wf-card h3{margin:0 0 2px;font-size:1.12rem}.wf-card small{color:var(--mut);font-size:.84rem;letter-spacing:.02em}
+.wf-card p{margin:8px 0 0;font-size:.96rem}
+.wf-bar{display:grid;grid-template-columns:6fr 3fr 1fr;height:118px;border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:22px 0 10px}
+.wf-bar span{display:flex;align-items:flex-end;padding:8px;font-size:.84rem;font-weight:650;line-height:1.2}
+.wf-bar span b{background:#fff;color:#1c1f1d;padding:2px 7px;border-radius:7px;font-weight:650}
+.wf-bar span:last-child{padding:8px 2px;justify-content:center}
+.wf-leg{display:grid;gap:6px;margin:0;padding:0;list-style:none;font-size:.96rem}
+.wf-more{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:8px}
+.wf-more a,.wf-hub a{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--pan);color:var(--ink);text-decoration:none;font-weight:600;min-height:72px}
+.wf-more a:hover,.wf-hub a:hover{border-color:var(--ink)}
+.wf-du{display:block;width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.14);background:linear-gradient(90deg,var(--c1) 50%,var(--c2) 50%)}
+.wf-more small,.wf-hub small{display:block;font-weight:400;color:var(--mut);font-size:.88rem;margin-top:2px}
+.wf-also{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px 18px;font-weight:600}
+.wf-hub{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.wf-hub a[hidden]{display:none}
+.wf-fl{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.wf-fl button{font:inherit;font-size:.94rem;font-weight:600;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--pan);color:var(--ink);cursor:pointer}
+.wf-fl button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wf-buy{margin-top:18px;font-size:.96rem}
+@media (prefers-reduced-motion:reduce){.wf-room svg *{transition:none}}
+</style>
+<!--MAIN-->
+<section id="oben" class="top"><div class="wrap narrow">
+  <p class="eyebrow">Wandfarben</p>
+  <h1>Welche Wandfarbe passt?</h1>
+  <p class="lede">Wähle, was schon da ist: Möbel, Sofa, Boden oder das Licht im Zimmer. Du bekommst vier Farben, die passen, und ein Beispielzimmer zum Umschalten.</p>
+  <div class="wf-fl" id="wf-fl" role="group" aria-label="Nach Art filtern"><button type="button" aria-pressed="true" data-f="">Alle</button><button type="button" aria-pressed="false" data-f="moebel">Möbel</button><button type="button" aria-pressed="false" data-f="sofa">Sofa</button><button type="button" aria-pressed="false" data-f="boden">Boden</button><button type="button" aria-pressed="false" data-f="raum">Raum und Licht</button></div>
+</div></section>
+<section id="kombinationen" class="band"><div class="wrap">
+  <div class="wf-hub" id="wf-hub"><a href="wandfarbe-eiche.html" data-t="moebel"><span class="wf-du" style="--c1:#C8A977;--c2:#F2ECE0"></span><span>Eichenmöbel<small>Warmweiß, Salbeigrün, Greige</small></span></a><a href="wandfarbe-nussbaum.html" data-t="moebel"><span class="wf-du" style="--c1:#5C4033;--c2:#F1E9DA"></span><span>Dunkle Holzmöbel<small>Cremeweiß, Sand, Olivgrün</small></span></a><a href="wandfarbe-buche.html" data-t="moebel"><span class="wf-du" style="--c1:#D9A066;--c2:#F4F0E6"></span><span>Buchenmöbel<small>Gebrochenes Weiß, Graugrün, Taubenblau</small></span></a><a href="wandfarbe-kiefer.html" data-t="moebel"><span class="wf-du" style="--c1:#D8A657;--c2:#EEEDE8"></span><span>Kiefernmöbel<small>Weiß mit Grauanteil, Blaugrau, Salbeigrün</small></span></a><a href="wandfarbe-weisse-moebel.html" data-t="moebel"><span class="wf-du" style="--c1:#F3F1EC;--c2:#CFC6B8"></span><span>Weiße Möbel<small>Greige, Salbeigrün, Altrosa</small></span></a><a href="wandfarbe-schwarze-moebel.html" data-t="moebel"><span class="wf-du" style="--c1:#2B2B2B;--c2:#F2ECE0"></span><span>Schwarze Möbel<small>Warmweiß, Helles Greige, Salbeigrün</small></span></a><a href="wandfarbe-graues-sofa.html" data-t="sofa"><span class="wf-du" style="--c1:#8E9196;--c2:#F2ECE0"></span><span>Graues Sofa<small>Warmweiß, Salbeigrün, Altrosa</small></span></a><a href="wandfarbe-beiges-sofa.html" data-t="sofa"><span class="wf-du" style="--c1:#D8C7AE;--c2:#F1E9DA"></span><span>Beiges Sofa<small>Cremeweiß, Taupe, Olivgrün</small></span></a><a href="wandfarbe-gruenes-sofa.html" data-t="sofa"><span class="wf-du" style="--c1:#5E7A64;--c2:#F1E9DA"></span><span>Grünes Sofa<small>Cremeweiß, Sand, Altrosa</small></span></a><a href="wandfarbe-blaues-sofa.html" data-t="sofa"><span class="wf-du" style="--c1:#3E5C7E;--c2:#F2ECE0"></span><span>Blaues Sofa<small>Warmweiß, Sand, Greige</small></span></a><a href="wandfarbe-braunes-ledersofa.html" data-t="sofa"><span class="wf-du" style="--c1:#7A4E2D;--c2:#F1E9DA"></span><span>Braunes Ledersofa<small>Cremeweiß, Salbeigrün, Graublau</small></span></a><a href="wandfarbe-eichenboden.html" data-t="boden"><span class="wf-du" style="--c1:#C9A66B;--c2:#F2ECE0"></span><span>Heller Holzboden<small>Warmweiß, Greige, Salbeigrün</small></span></a><a href="wandfarbe-dunkler-boden.html" data-t="boden"><span class="wf-du" style="--c1:#4A372B;--c2:#F1E9DA"></span><span>Dunkler Boden<small>Cremeweiß, Helles Sand, Warmes Hellgrau</small></span></a><a href="wandfarbe-grauer-boden.html" data-t="boden"><span class="wf-du" style="--c1:#9A9A98;--c2:#F1E9DA"></span><span>Grauer Boden<small>Cremeweiß, Sand, Salbeigrün</small></span></a><a href="wandfarbe-roetlicher-boden.html" data-t="boden"><span class="wf-du" style="--c1:#B5703F;--c2:#F4F0E6"></span><span>Rötlicher Holzboden<small>Gebrochenes Weiß, Graugrün, Taubenblau</small></span></a><a href="wandfarbe-kleine-raeume.html" data-t="raum"><span class="wf-du" style="--c1:#C9A66B;--c2:#F4F0E6"></span><span>Kleine Räume<small>Gebrochenes Weiß, Helles Graublau, Helles Salbeigrün</small></span></a><a href="wandfarbe-nordzimmer.html" data-t="raum"><span class="wf-du" style="--c1:#C9A66B;--c2:#F5EBD8"></span><span>Zimmer nach Norden<small>Warmes Weiß, Sand, Helles Apricot</small></span></a><a href="wandfarbe-suedzimmer.html" data-t="raum"><span class="wf-du" style="--c1:#C9A66B;--c2:#F4F0E6"></span><span>Zimmer nach Süden<small>Gebrochenes Weiß, Salbeigrün, Graublau</small></span></a><a href="wandfarbe-niedrige-decke.html" data-t="raum"><span class="wf-du" style="--c1:#C9A66B;--c2:#F4F0E6"></span><span>Niedrige Decken<small>Gebrochenes Weiß, Helles Greige, Helles Salbeigrün</small></span></a><a href="wandfarbe-flur-ohne-fenster.html" data-t="raum"><span class="wf-du" style="--c1:#C9A66B;--c2:#F5EBD8"></span><span>Flur ohne Fenster<small>Warmes Weiß, Helles Sand, Zartes Gelb</small></span></a></div>
+</div></section>
+<section id="regeln"><div class="wrap narrow">
+  <h2>Drei Regeln, die fast immer stimmen.</h2>
+  <p><b>Abstand halten.</b> Die Wand sollte deutlich heller oder deutlich dunkler sein als das Sofa oder die Möbel davor. Gleiche Helligkeit lässt alles verschwimmen.</p>
+  <p><b>Gegenspieler suchen.</b> Holz ist gelblich oder rötlich. Grün und Blau liegen im Farbkreis gegenüber und lassen es wärmer wirken. Gelb und Orange haben denselben Stich und machen den Raum einfarbig.</p>
+  <p><b>Licht ausgleichen.</b> Zimmer nach Norden haben kühles Licht und vertragen warme Töne. Zimmer nach Süden haben warmes Licht und vertragen kühle.</p>
+  <p>Die Grundlagen stehen im Ratgeber <a href="farben.html">Wandfarbe wählen und kombinieren</a>. Wenn du lieber von deinem eigenen Zimmer ausgehst: Die <a href="farbpalette.html">Farbpalette aus Foto</a> zieht die Farben aus einem Bild und schlägt Wandfarben vor.</p>
+</div></section>
+<!--END-->
+<script>
+(function(){var f=document.getElementById('wf-fl'),h=document.getElementById('wf-hub');if(!f||!h)return;
+ f.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
+  [].forEach.call(f.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  [].forEach.call(h.children,function(a){a.hidden=!!b.dataset.f&&a.dataset.t!==b.dataset.f})})})();
+</script>
