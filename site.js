@@ -256,6 +256,18 @@ window.__VTHERO='.hero.sub';
   io.observe(ba);
 })();
 
+/* Menü: Themenlisten auf breiten Bildschirmen immer offen, auf dem Handy aufklappbar */
+(function(){var D=[].slice.call(document.querySelectorAll('#msheet .m-d'));if(!D.length)return;var mq=matchMedia('(min-width:861px)');
+  function set(){D.forEach(function(d){var s=d.querySelector('summary');if(mq.matches){d.open=true;s.tabIndex=-1}else{s.tabIndex=0;if(!d.querySelector('[aria-current]')&&d.__auto!==0)d.open=false}})}
+  D.forEach(function(d){d.querySelector('summary').addEventListener('click',function(e){if(mq.matches)e.preventDefault();else d.__auto=0})});set();if(mq.addEventListener)mq.addEventListener('change',set)})();
+
+/* Ratgeber auf der Startseite: zuerst 8 Kacheln, Knopf öffnet alle. Beim Suchen oder Filtern sind immer alle Treffer sichtbar. */
+(function(){var hub=document.getElementById('huball'),m=document.getElementById('hubm'),q=document.getElementById('hubq'),bar=document.getElementById('hubf');if(!hub||!m)return;
+  var n=hub.querySelectorAll('a').length,open=location.hash==='#ratgeber-liste';m.textContent='Alle '+n+' Ratgeber zeigen';if(n<=8){hub.classList.remove('cl');m.parentNode.hidden=true;return}
+  function set(){var p=bar&&bar.querySelector('button[aria-pressed="true"]'),act=open||(q&&q.value.trim())||(p&&p.dataset.f);hub.classList.toggle('cl',!act);m.parentNode.hidden=!!act;m.setAttribute('aria-expanded',act?'true':'false')}
+  m.addEventListener('click',function(){open=true;set();var a=hub.querySelectorAll('a')[8];if(a)a.focus({preventScroll:true})});
+  if(q)q.addEventListener('input',set);if(bar)bar.addEventListener('click',function(){setTimeout(set,0)});set()})();
+
 /* Alle Ratgeber: Suchfeld und Themen-Filter. Kacheln tragen data-k (Themen aus KAT in build.py). */
 (function(){
   var bar=document.getElementById('hubf'),hub=document.getElementById('huball');if(!bar||!hub)return;
@@ -342,7 +354,7 @@ window.__VTHERO='.hero.sub';
   function mark(im){if(im.__ki)return;var s=im.getAttribute('src')||'';if(!RX.test(s))return;im.__ki=1;
     var card=im.closest('a'),fig=im.closest('figure');
     if(card&&card.parentElement){var g=card.parentElement,p=g.previousElementSibling;
-      if(!(p&&p.classList.contains('ki-hinweis'))){var h=document.createElement('p');h.className='ki-hinweis';h.textContent=G;g.parentNode.insertBefore(h,g)}return}
+      var sec=g.closest('section');if(sec&&sec.querySelector('.ki-hinweis'))return;if(!(p&&p.classList.contains('ki-hinweis'))){var h=document.createElement('p');h.className='ki-hinweis';h.textContent=G;g.parentNode.insertBefore(h,g)}return}
     var fc=fig&&fig.querySelector('figcaption');
     if(fc){if(!fc.querySelector('.ki-cap')){var c=document.createElement('span');c.className='ki-cap';c.textContent=(fc.textContent.trim()?' ':'')+C;fc.appendChild(c)}return}
     var a=box(im);if(!a||a.querySelector(':scope>.ki-marke'))return;
