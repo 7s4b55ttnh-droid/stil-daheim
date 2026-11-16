@@ -33,7 +33,7 @@
 <section id="oben" class="top"><div class="wrap narrow">
   <p class="eyebrow"><a href="wandfarben.html">Welche Wandfarbe passt?</a></p>
   <h1>Wandfarbe am eigenen Foto testen.</h1>
-  <p class="lede">Foto auswählen, Wand antippen, Farbe ausprobieren. Das Foto bleibt auf deinem Gerät.</p>
+  <p class="lede">Foto auswählen, Farbe antippen, fertig. Das Werkzeug sucht die Wand selbst. Das Foto bleibt auf deinem Gerät.</p>
 </div></section>
 <section id="werkzeug" class="band"><div class="wrap narrow">
   <h2>Dein Zimmer, neue Wand.</h2>
@@ -76,23 +76,38 @@
 (function(){
  var FARBEN=[['Warmweiß','#F2ECE0'],['Greige','#CFC6B8'],['Sand','#D9C7A8'],['Salbeigrün','#A8B5A0'],['Olivgrün','#7C8060'],['Tannengrün','#3F5548'],['Graublau','#8A9BA8'],['Petrol','#2F5D62'],['Nachtblau','#2F3E55'],['Altrosa','#D4B2A7'],['Terrakotta','#C27B5A'],['Ocker','#D2A55A']];
  var $=function(i){return document.getElementById(i)},cv=$('wt-cv'),x=cv.getContext('2d',{willReadFrequently:true}),stage=$('wt-stage'),work=$('wt-work'),msg=$('wt-msg'),hint=$('wt-hint');
- var W=0,H=0,base=null,mask=null,taps=[],col='#A8B5A0',name='Salbeigrün',demo=false;
+ var W=0,H=0,base=null,weich=null,mask=null,taps=[],col='#A8B5A0',name='Salbeigrün',demo=false;
  var ch=$('wt-ch');ch.innerHTML=FARBEN.map(function(f,i){return '<button type="button" aria-pressed="'+(f[1]===col)+'" data-c="'+f[1]+'"><i style="background:'+f[1]+'"></i>'+f[0]+'</button>'}).join('');
  function rgb(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
  function start(img,isDemo){demo=!!isDemo;var k=Math.min(1,1280/Math.max(img.naturalWidth,img.naturalHeight));W=Math.max(1,Math.round(img.naturalWidth*k));H=Math.max(1,Math.round(img.naturalHeight*k));
-  cv.width=W;cv.height=H;x.drawImage(img,0,0,W,H);base=x.getImageData(0,0,W,H);mask=new Uint8Array(W*H);taps=[];stage.hidden=false;work.hidden=false;hint.hidden=false;$('wt-ki').hidden=!demo;btns();msg.textContent='';
-  stage.scrollIntoView({block:'nearest',behavior:'smooth'})}
+  cv.width=W;cv.height=H;x.drawImage(img,0,0,W,H);base=x.getImageData(0,0,W,H);kanten();mask=new Uint8Array(W*H);taps=[];stage.hidden=false;work.hidden=false;hint.hidden=false;$('wt-ki').hidden=!demo;btns();msg.textContent='';
+  try{stage.scrollIntoView({block:'nearest'})}catch(e){}
+  setTimeout(function(){try{msg.textContent=auto()?'Wand erkannt und eingefärbt. Wähle unten eine andere Farbe. Fehlt ein Stück, tippe im Bild darauf.':'Tippe im Bild auf deine Wand.'}catch(e){msg.textContent='Tippe im Bild auf deine Wand.'}},60)}
+ function glatt(d){var o=new Uint8ClampedArray(d.length),t=new Uint16Array(d.length),i,c;
+  for(var yy=0;yy<H;yy++)for(var xx=0;xx<W;xx++){i=(yy*W+xx)*4;var l=xx>0?i-4:i,r=xx<W-1?i+4:i;for(c=0;c<3;c++)t[i+c]=d[l+c]+d[i+c]+d[r+c]}
+  for(yy=0;yy<H;yy++)for(xx=0;xx<W;xx++){i=(yy*W+xx)*4;var u=yy>0?i-W*4:i,b=yy<H-1?i+W*4:i;for(c=0;c<3;c++)o[i+c]=(t[u+c]+t[i+c]+t[b+c])/9;o[i+3]=255}return o}
+ /* Wand selbst suchen: mehrere Punkte im oberen Bildteil probieren und die größte zusammenhängende Fläche nehmen. So ist sofort eine Farbe zu sehen. */
+ function auto(){var tol=+$('wt-tol').value,best=null,ba=0;
+  for(var gy=0;gy<3;gy++)for(var gx=0;gx<5;gx++){var px=Math.round(W*(.14+gx*.18)),py=Math.round(H*(.1+gy*.17));if(mask[py*W+px])continue;var m=fill(px,py,tol),n=0;for(var i=0;i<m.length;i+=7)n+=m[i];var an=n*7/(W*H);
+   if(an>ba&&an<.64){ba=an;best=[px,py,tol];for(i=0;i<m.length;i++)if(m[i])mask[i]=1}else if(an<=ba){}}
+  mask=new Uint8Array(W*H);if(!best||ba<.06)return false;taps=[best];rebuild();draw();hint.hidden=true;btns();return true}
  function btns(){var an=taps.length>0;$('wt-undo').disabled=!an;$('wt-reset').disabled=!an;$('wt-save').disabled=!an}
- /* Fläche ab dem Tipp füllen: Nachbarpunkte zählen dazu, wenn sie der getippten Farbe ähnlich sind und kein harter Farbsprung dazwischen liegt */
- function fill(px,py,tol){var d=base.data,m=new Uint8Array(W*H),i0=(py*W+px)*4,n=0,sr=0,sg=0,sb=0;
-  for(var yy=Math.max(0,py-2);yy<=Math.min(H-1,py+2);yy++)for(var xx=Math.max(0,px-2);xx<=Math.min(W-1,px+2);xx++){var j=(yy*W+xx)*4;sr+=d[j];sg+=d[j+1];sb+=d[j+2];n++}
-  sr/=n;sg/=n;sb/=n;var t2=tol*tol*3,g2=Math.max(60,tol*tol*.22),st=[py*W+px];m[py*W+px]=1;
-  while(st.length){var p=st.pop(),cx=p%W,cy=(p-cx)/W,q=p*4,r=d[q],g=d[q+1],b=d[q+2];
-   for(var k=0;k<4;k++){var nx=cx+(k===0?1:k===1?-1:0),ny=cy+(k===2?1:k===3?-1:0);if(nx<0||ny<0||nx>=W||ny>=H)continue;var np=ny*W+nx;if(m[np])continue;var e=np*4,dr=d[e]-sr,dg=d[e+1]-sg,db=d[e+2]-sb;
-    /* Helligkeit darf stärker abweichen als der Farbton, damit Schatten zur Wand zählen */
-    var l=(dr+dg+db)/3,cr=dr-l,cg=dg-l,cb=db-l;if(l*l>t2*1.6||cr*cr+cg*cg+cb*cb>t2*.25)continue;
-    var er=d[e]-r,eg=d[e+1]-g,eb=d[e+2]-b;if(er*er+eg*eg+eb*eb>g2)continue;m[np]=1;st.push(np)}}
-  return m}
+ /* Kanten vorab berechnen: Helligkeit leicht glätten, dann den Helligkeitssprung je Bildpunkt messen. Kanten sind Sperren für das Füllen. */
+ var kante=null;
+ function kanten(){var d=base.data,L=new Float32Array(W*H),G=new Float32Array(W*H),i,xx,yy;for(i=0;i<W*H;i++)L[i]=(d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11);
+  for(yy=1;yy<H-1;yy++)for(xx=1;xx<W-1;xx++){i=yy*W+xx;G[i]=(L[i]*4+L[i-1]+L[i+1]+L[i-W]+L[i+W])/8}
+  kante=new Uint8Array(W*H);for(yy=2;yy<H-2;yy++)for(xx=2;xx<W-2;xx++){i=yy*W+xx;var gx=G[i+1]-G[i-1],gy=G[i+W]-G[i-W],dx=G[i+2]-G[i-2],dy=G[i+2*W]-G[i-2*W];kante[i]=Math.min(255,Math.max(Math.abs(gx)+Math.abs(gy),(Math.abs(dx)+Math.abs(dy))*.6))}}
+ /* Fläche ab dem Tipp füllen: Nachbarpunkte zählen dazu, solange keine Kante dazwischen liegt und der Farbton zur getippten Stelle passt.
+    Die Helligkeit darf stark abweichen, damit Schatten und Sonnenflecken zur Wand zählen. */
+ function fill(px,py,tol){var d=base.data,m=new Uint8Array(W*H),n=0,sr=0,sg=0,sb=0;
+  for(var yy=Math.max(0,py-3);yy<=Math.min(H-1,py+3);yy++)for(var xx=Math.max(0,px-3);xx<=Math.min(W-1,px+3);xx++){var j=(yy*W+xx)*4;sr+=d[j];sg+=d[j+1];sb+=d[j+2];n++}
+  sr/=n;sg/=n;sb/=n;var sl=(sr+sg+sb)/3,kt=4+tol*.42,ct=(8+tol*.9),ct2=ct*ct,lt=40+tol*3.2,st=[py*W+px];m[py*W+px]=1;
+  while(st.length){var p=st.pop(),cx=p%W,cy=(p-cx)/W;
+   for(var k=0;k<4;k++){var nx=cx+(k===0?1:k===1?-1:0),ny=cy+(k===2?1:k===3?-1:0);if(nx<1||ny<1||nx>=W-1||ny>=H-1)continue;var np=ny*W+nx;if(m[np]||kante[np]>kt)continue;var e=np*4,r=d[e],g=d[e+1],b=d[e+2],l=(r+g+b)/3;
+    if(Math.abs(l-sl)>lt)continue;var f=l>8?sl/l:1,cr=r*f-sr,cg=g*f-sg,cb=b*f-sb;if(cr*cr+cg*cg+cb*cb>ct2)continue;m[np]=1;st.push(np)}}
+  /* kleine Löcher und den schmalen Rand an Kanten schließen */
+  var o=new Uint8Array(W*H),t=new Uint8Array(W*H),i;for(var a=0;a<2;a++){for(i=W+1;i<W*H-W-1;i++)t[i]=m[i]|m[i-1]|m[i+1]|m[i-W]|m[i+W];for(i=0;i<W*H;i++)m[i]=t[i]}
+  for(i=W+1;i<W*H-W-1;i++)o[i]=m[i]&m[i-1]&m[i+1]&m[i-W]&m[i+W];return o}
  function rebuild(){mask=new Uint8Array(W*H);taps.forEach(function(t){var m=fill(t[0],t[1],t[2]);for(var i=0;i<m.length;i++)if(m[i])mask[i]=1})}
  function draw(){var out=x.createImageData(W,H),o=out.data,d=base.data,c=rgb(col),s=0,n=0,i;
   for(i=0;i<mask.length;i++)if(mask[i]){s+=(d[i*4]+d[i*4+1]+d[i*4+2])/3;n++}
@@ -103,20 +118,22 @@
  function tap(ev){if(!base)return;var r=cv.getBoundingClientRect(),px=Math.round((ev.clientX-r.left)/r.width*W),py=Math.round((ev.clientY-r.top)/r.height*H);if(px<0||py<0||px>=W||py>=H)return;
   taps.push([px,py,+$('wt-tol').value]);rebuild();var an=draw();hint.hidden=true;btns();
   msg.textContent=an>.85?'Fast das ganze Bild ist eingefärbt. Schieb „Genauigkeit“ nach links und wähle die Wand neu.':an<.02?'Nur eine kleine Fläche erkannt. Tippe noch einmal oder schieb „Genauigkeit“ nach rechts.':'Wand erkannt. Tippe weitere Stellen an, wenn noch etwas fehlt.'}
- cv.addEventListener('click',tap);
+ var letzt=0;function einmal(ev){var t=Date.now();if(t-letzt<350)return;letzt=t;tap(ev)}
+ cv.addEventListener('click',einmal);cv.addEventListener('pointerup',function(ev){if(ev.pointerType==='touch'||ev.pointerType==='pen')einmal(ev)});
  $('wt-undo').addEventListener('click',function(){taps.pop();rebuild();draw();btns();if(!taps.length){hint.hidden=false;msg.textContent=''}});
  $('wt-reset').addEventListener('click',function(){taps=[];rebuild();draw();btns();hint.hidden=false;msg.textContent=''});
  $('wt-tol').addEventListener('change',function(){if(!taps.length)return;var v=+this.value;taps.forEach(function(t){t[2]=v});rebuild();draw()});
- ch.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;[].forEach.call(ch.children,function(k){k.setAttribute('aria-pressed',k===b?'true':'false')});col=b.dataset.c;name=b.textContent;$('wt-col').value=col;if(taps.length)draw()});
- $('wt-col').addEventListener('input',function(){col=this.value;name='eigene Farbe '+col.toUpperCase();[].forEach.call(ch.children,function(k){k.setAttribute('aria-pressed','false')});if(taps.length)draw()});
+ ch.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;[].forEach.call(ch.children,function(k){k.setAttribute('aria-pressed',k===b?'true':'false')});col=b.dataset.c;name=b.textContent;$('wt-col').value=col;if(!base){msg.textContent='Wähle zuerst ein Foto oder das Beispielfoto.';return}if(taps.length)draw();else if(!auto())msg.textContent='Tippe im Bild auf deine Wand, dann wird sie eingefärbt.'});
+ $('wt-col').addEventListener('input',function(){col=this.value;name='eigene Farbe '+col.toUpperCase();[].forEach.call(ch.children,function(k){k.setAttribute('aria-pressed','false')});if(!base)return;if(taps.length)draw();else auto()});
  $('wt-file').addEventListener('change',function(){var f=this.files&&this.files[0];if(!f)return;var u=URL.createObjectURL(f),im=new Image();im.onload=function(){start(im,false);URL.revokeObjectURL(u)};im.onerror=function(){msg.textContent='Dieses Bild lässt sich nicht öffnen. Bitte ein Foto im Format JPG oder PNG wählen.';work.hidden=false};im.src=u});
- $('wt-demo').addEventListener('click',function(){var im=new Image();im.onload=function(){start(im,true)};im.src='assets/wf-nordzimmer.jpg'});
+ $('wt-demo').addEventListener('click',function(){var im=new Image();im.onload=function(){start(im,true)};im.src='assets/wf-braunes-ledersofa.jpg'});
  $('wt-save').addEventListener('click',function(){var o=document.createElement('canvas');o.width=W;o.height=H+Math.round(W*.066);var y=o.getContext('2d'),bh=o.height-H;y.fillStyle='#fff';y.fillRect(0,0,o.width,o.height);y.drawImage(cv,0,0);
   y.fillStyle='#1c1f1d';y.font='600 '+Math.round(bh*.36)+'px system-ui,-apple-system,Segoe UI,sans-serif';y.textBaseline='middle';y.fillText('Wandfarbe: '+name,Math.round(W*.022),H+bh/2);
   y.font='500 '+Math.round(bh*.27)+'px system-ui,-apple-system,Segoe UI,sans-serif';y.fillStyle='#5d615d';y.textAlign='right';y.fillText('Vorschau von stil-daheim.de'+(demo?' · Beispielbild, mit KI erstellt':''),W-Math.round(W*.022),H+bh/2);
   o.toBlob(function(bl){if(!bl){msg.textContent='Das Bild konnte nicht erstellt werden.';return}var f=new File([bl],'meine-wandfarbe.jpg',{type:'image/jpeg'});
    if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'Meine Wandfarbe'}).then(function(){msg.textContent='Bild geteilt.'},function(){});return}
    var l=document.createElement('a');l.href=URL.createObjectURL(bl);l.download=f.name;document.body.appendChild(l);l.click();l.remove();msg.textContent='Bild gespeichert: '+f.name},'image/jpeg',.9)});
+ window.addEventListener('error',function(ev){if(msg&&/wandfarbe-testen/.test(ev.filename||location.href))msg.textContent='Hier ist etwas schiefgegangen ('+(ev.message||'Fehler')+'). Bitte die Seite neu laden.';work.hidden=false});
  window.WT={taps:function(){return taps.length},anteil:function(){var n=0;for(var i=0;i<mask.length;i++)n+=mask[i];return n/(W*H)}};
 })();
 </script>
