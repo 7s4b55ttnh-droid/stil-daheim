@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "de.stildaheim.app",
+    "sha256_cert_fingerprints": [
+      "E3:53:BC:5A:D8:45:28:66:C6:65:96:2E:48:D1:12:08:62:5E:17:33:1E:73:05:62:B5:07:92:68:9D:44:A4:58"
+    ]
+  }
+}]

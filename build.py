@@ -543,6 +543,8 @@ if __name__ == '__main__':
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest
         shutil.copyfile(f, OUT / 'assets' / f.name)
+    (OUT / '.well-known').mkdir(exist_ok=True)                # Android-App (Ordner android/): Nachweis, dass App und Website zusammengehören
+    shutil.copyfile(HERE / 'app' / 'assetlinks.json', OUT / '.well-known' / 'assetlinks.json')
     (OUT / 'CNAME').write_text(DOMAIN.split('/')[2] + '\n')
     (OUT / '.nojekyll').write_text('')
     (OUT / 'bc5564f7c1405d082c6e3b0873cb208a.txt').write_text('bc5564f7c1405d082c6e3b0873cb208a')  # IndexNow-Schlüssel (Bing), nicht entfernen

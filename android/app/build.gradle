@@ -1,0 +1,50 @@
+// Stil-Daheim als Android-App (Trusted Web Activity): zeigt https://stil-daheim.de im Vollbild ohne Browserleiste.
+// Inhalte kommen immer live von der Website. Neue App-Version nur nötig, wenn sich Name, Symbol oder Farben ändern:
+// dann versionCode +1, versionName anpassen, ./bauen.sh ausführen.
+plugins { id 'com.android.application' }
+
+def keyProps = new Properties()
+def keyFile = file(System.getenv('STIL_KEY_PROPS') ?: '../schluessel.properties')
+if (keyFile.exists()) keyFile.withInputStream { keyProps.load(it) }
+
+android {
+    namespace 'de.stildaheim.app'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'de.stildaheim.app'
+        minSdk 23
+        targetSdk 36
+        versionCode 1
+        versionName '1.0'
+        manifestPlaceholders = [
+            hostName: 'stil-daheim.de',
+            launchUrl: 'https://stil-daheim.de/?app=android',
+            appName: 'Stil-Daheim',
+            themeColor: '#1E4A3D',
+            navColor: '#F6F6F3',
+            backgroundColor: '#F6F6F3'
+        ]
+    }
+    signingConfigs {
+        upload {
+            if (keyProps['storeFile']) {
+                storeFile file(keyProps['storeFile'])
+                storePassword keyProps['storePassword']
+                keyAlias keyProps['keyAlias']
+                keyPassword keyProps['keyPassword']
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            if (keyProps['storeFile']) signingConfig signingConfigs.upload
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.6.2'
+}
