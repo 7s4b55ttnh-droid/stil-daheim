@@ -50,9 +50,9 @@ function start(el,R){
   '<div class="st-dots" role="group" aria-label="Wandfarbe wählen"></div>'+
   '<p class="st-h">'+(voll?'Raum wechseln':'Anderer Raum')+' <small>Beispielräume, mit KI erstellt</small></p><div class="st-rooms"></div>'+
   (voll?'<div class="st-more"></div><details class="st-fein" hidden><summary>Feiner einstellen</summary><div><label>Genauigkeit <input type="range" min="8" max="60" value="26" aria-label="Wie streng die Wand erkannt wird"></label><button type="button" class="st-btn" data-a="zurueck">Letzten Tipp zurück</button><button type="button" class="st-btn" data-a="neu">Wand neu suchen</button></div></details>':'')+
-  '<p class="st-msg" role="status"></p>'+(voll?'<details class="st-kauf"><summary>Diese Farbe kaufen</summary><div></div></details><p class="st-link"></p>':'<div class="st-los"><a class="btn" href="wandfarbe-testen.html">Im Studio weitermachen</a><a class="btn ghost" href="wandfarbe-testen.html#foto">Mit deinem Zimmer ausprobieren</a></div>');
+  (voll?'<p class="st-shop" hidden></p>':'')+'<p class="st-msg" role="status"></p>'+(voll?'<details class="st-kauf"><summary>Diese Farbe kaufen</summary><div></div></details><p class="st-link"></p>':'<div class="st-los"><a class="btn" href="wandfarbe-testen.html">Im Studio weitermachen</a><a class="btn ghost" href="wandfarbe-testen.html#foto">Mit deinem Zimmer ausprobieren</a></div>');
  var ph=el.querySelector('.st-ph'),img=ph.querySelector('img'),lay=ph.querySelector('.st-lay'),neu=lay.querySelector('.n'),cap=el.querySelector('.st-cap'),dots=el.querySelector('.st-dots'),rooms=el.querySelector('.st-rooms'),
-  more=el.querySelector('.st-more'),msg=el.querySelector('.st-msg'),herz=el.querySelector('.st-herz'),fein=el.querySelector('.st-fein'),link=el.querySelector('.st-link'),kaufBox=el.querySelector('.st-kauf div'),cv=ph.querySelector('canvas');
+  more=el.querySelector('.st-more'),msg=el.querySelector('.st-msg'),herz=el.querySelector('.st-herz'),fein=el.querySelector('.st-fein'),link=el.querySelector('.st-link'),shopEl=el.querySelector('.st-shop'),kaufBox=el.querySelector('.st-kauf div'),cv=ph.querySelector('canvas');
  function sag(t){msg.textContent=t||''}
  function sichern(){M.r=art==='raum'&&raum?raum.slug:M.r;M.c=farbe;M.f=favs.slice(0,8);schreib(M)}
 
@@ -92,9 +92,15 @@ function start(el,R){
  function mehr(){if(!more)return;var h='';if(art==='raum'&&raum){if(raum.sitz)h+=mini('sitz',SITZ,raum.sitzname||'Sofa');if(raum.boden)h+=mini('boden',BODEN,'Boden')}
   if(art==='raum')h+='<button type="button" class="st-btn" data-a="halb" aria-pressed="'+halb+'">'+I.halb+'Halbhoch</button><button type="button" class="st-btn" data-a="abend" aria-pressed="'+eve+'">'+I.mond+'Abendlicht</button>';
   h+='<button type="button" class="st-btn" data-a="zufall">'+I.wuerfel+'Überrasch mich</button><button type="button" class="st-btn" data-a="speichern">'+I.laden+'Bild speichern</button>';
-  if(art==='raum')h+='<button type="button" class="st-btn" data-a="teilen">'+I.teilen+'Link teilen</button>';more.innerHTML=h}
+  if(art==='raum')h+='<button type="button" class="st-btn" data-a="teilen">'+I.teilen+'Link teilen</button>';more.innerHTML=h;shop()}
+ /* Passende Möbel ansehen: erscheint erst, wenn jemand Sofa oder Boden umgefärbt hat (Partnerlink, gekennzeichnet) */
+ function shop(){if(!shopEl)return;var h='',amz=function(q){return 'https://www.amazon.de/s?k='+encodeURIComponent(q).replace(/%20/g,'+')+'&tag=stildaheim-21'},nm=function(L,x){var n='';L.forEach(function(f){if(f[1]&&x&&f[1].toUpperCase()===x.toUpperCase())n=f[0]});return n};
+  if(art==='raum'&&raum){var a=sf.sitz&&nm(SITZ,sf.sitz[0]),b=sf.boden&&nm(BODEN,sf.boden[0]),was=raum.sitzname||'Sofa';
+   if(a)h+='<a href="'+amz(was+' '+a)+'" target="_blank" rel="sponsored nofollow noopener">'+(was==='Sessel'?'Sessel':'Sofas')+' in '+esc(a)+' ansehen</a>';
+   if(b)h+='<a href="'+amz((b==='Grau'?'Vinylboden grau':'Laminat '+b))+'" target="_blank" rel="sponsored nofollow noopener">Böden in '+esc(b)+' ansehen</a>'}
+  shopEl.hidden=!h;shopEl.innerHTML=h?h+'<span class="tag">Anzeige</span>':''}
  function setzTon(w,hex){if(!raum||!raum[w])return;var t=ton(hex,raum[w==='sitz'?'hs':'hb']);sf[w]=hex?t:null;ph.querySelector('.st-k.st-'+w).style.background=t[0];ph.querySelector('.st-d.st-'+w).style.background=t[1];ph.querySelector('.st-s.st-'+w).style.background=t[2];
-  var g=more&&more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'').toUpperCase()===(hex||'').toUpperCase()?'true':'false')})}
+  var g=more&&more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'').toUpperCase()===(hex||'').toUpperCase()?'true':'false')});shop()}
  function adresse(){var u=location.origin+location.pathname.replace(/[^/]*$/,'')+'wandfarbe-testen.html?raum='+raum.slug+'&farbe='+farbe[1].slice(1);if(sf.sitz)u+='&sofa='+sf.sitz[0].slice(1);if(sf.boden)u+='&boden='+sf.boden[0].slice(1);if(halb)u+='&halb=1';if(eve)u+='&abend=1';return u}
  function teilen(){var u=adresse(),t=raum.name+' in '+farbe[0];if(navigator.share){navigator.share({title:'Wandfarben-Studio: '+t,url:u}).then(function(){sag('Geteilt.')},function(){sag('')});return}
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){sag('Link kopiert. Wer ihn öffnet, sieht genau diesen Raum.')},function(){zeig(u)});return}zeig(u)}
