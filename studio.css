@@ -60,6 +60,7 @@
 .st[data-studio="kurz"] .st-rooms button:nth-of-type(n+7){display:none}
 .st[data-studio="kurz"],#studio .sec-h{max-width:860px;margin-inline:auto}#studio .sec-h{margin-bottom:clamp(22px,3vw,36px)}
 @media (max-width:560px){.st-grp{flex-wrap:wrap;width:100%;gap:2px 8px}.st-grp>span{width:100%}.st-mini{margin-left:-6px}.st-ph{border-radius:16px;margin-inline:-6px}.st-rooms button,.st-rooms label,.st-rooms a{width:112px}}
+.st-shop{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:14px 2px 0;font-size:.95rem;font-weight:600}.st-shop[hidden]{display:none}
 /* Diese Farbe kaufen */
 .st-kauf{margin:14px 2px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .st-kauf summary{cursor:pointer;font-weight:650;min-height:56px;display:flex;align-items:center;justify-content:space-between;list-style:none}

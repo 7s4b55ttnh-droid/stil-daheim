@@ -18,6 +18,7 @@ const bg=w=>p.evaluate(w=>[...document.querySelectorAll('.st-ph .st-'+w)].map(x=
 ok(await p.locator('.st-grp[data-was="sitz"] button').count()>=6,'Sofafarben werden angeboten');
 await p.locator('.st-grp[data-was="sitz"] button[title="Beige"]').click();await p.waitForTimeout(200);const sb=await bg('sitz');ok(/rgb/.test(sb.join())&&sb[1]!=='rgb(0, 0, 0)','Dunkles Sofa wird über screen aufgehellt '+JSON.stringify(sb));
 await p.locator('.st-grp[data-was="boden"] button').nth(2).click();await p.waitForTimeout(200);const bb=await bg('boden');ok(bb[0]!=='rgb(255, 255, 255)','Boden wird über multiply abgedunkelt '+JSON.stringify(bb));
+const sh=await p.evaluate(()=>{const e=document.querySelector('.st-shop');return {h:e.hidden,l:[...e.querySelectorAll('a')].map(a=>[a.textContent,a.href,a.rel]),tag:!!e.querySelector('.tag')}});ok(!sh.h&&sh.l.length===2&&/Sofas in Beige/.test(sh.l[0][0])&&sh.l.every(x=>/amazon\.de\/s\?k=.+&tag=stildaheim-21$/.test(x[1])&&/sponsored/.test(x[2]))&&sh.tag,'Nach dem Umfärben: gekennzeichnete Links zu Sofa und Boden '+JSON.stringify(sh.l.map(x=>x[0])));
 await p.locator('.st-grp[data-was="sitz"] button').first().click();const so=await bg('sitz');ok(so[2]==='transparent','Original stellt das Sofa zurück');
 // Abendlicht, Überraschung, Liebling, Merken
 await p.click('[data-a="abend"]');ok(await p.evaluate(()=>document.querySelector('.st-ph').classList.contains('eve')),'Abendlicht schaltet');await p.click('[data-a="abend"]');
