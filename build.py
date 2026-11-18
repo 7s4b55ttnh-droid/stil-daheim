@@ -75,6 +75,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('silvester.html', 'Silvester-Tischdeko', 'Raclette-Planer, Farben, sicher bis Mitternacht', 'silvester', 'silvester'),
         ('adventskranz.html', 'Adventskranz binden', 'Frische-Check, Anleitung, sicher mit Kerzen', 'adventskranz', 'adventskranz'),
         ('geschenke.html', 'Geschenke fürs Zuhause', 'Kleine Ideen für Nikolaus und Weihnachten', 'geschenke', 'geschenke'),
+        ('gaestezimmer.html', 'Gästezimmer einrichten', 'Schlafplatz für Besuch, Gäste-Planer', 'gaestezimmer', 'gaestezimmer'),
         ('esszimmer.html', 'Esszimmer einrichten', 'Esstisch-Größe, Abstände, Esstisch-Rechner', 'esszimmer', 'esszimmer'),
         ('wohnzimmer.html', 'Wohnzimmer einrichten', 'Maße, Anordnung, Licht, Wohnzimmer-Check', 'wohnzimmer', 'wohnzimmer'),
         ('flur.html', 'Flur und Eingang einrichten', 'Maße, Garderobe, Licht, Flur-Check', 'flur', 'flur'),
@@ -167,7 +168,7 @@ def fig(name, alt, cap):
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
-       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
+       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}

@@ -1,0 +1,206 @@
+<!--meta {"key":"gaestezimmer","title":"Gästezimmer einrichten: Schlafplatz für Besuch planen – Stil-Daheim","desc":"Gästezimmer einrichten, auch ohne eigenes Zimmer: 90 cm Bettbreite für einen, 140 cm für zwei Gäste, Länge Körpergröße plus 20 cm. Mit Gäste-Planer.","og":"assets/gaestezimmer.jpg","updated":"2026-11-18","kurz":"Ein Gast braucht eine Liegefläche von etwa 90&nbsp;cm Breite, ein Paar mindestens 140&nbsp;cm. Das Bett sollte rund 20&nbsp;cm länger sein als der größte Gast. Daneben bleiben etwa 70&nbsp;cm zum Gehen und für den Koffer. Für ein, zwei Nächte reicht ein Luftbett mit Decke darunter, für längeren Besuch lieber ein Schlafsofa mit echter Matratze oder ein Gästebett mit Lattenrost."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:50% 60%}
+.masse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}
+.masse div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:16px}
+.masse b{display:block;font-size:1.9rem;font-stretch:80%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.masse span{font-size:.92rem;color:var(--mut)}
+.gcheck{display:grid;gap:16px;margin-top:28px}
+.gcheck .in{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.gcheck label{display:flex;align-items:center;gap:10px;font-weight:600}
+.gcheck .pair{display:flex;align-items:center;gap:8px;font-weight:600;white-space:nowrap}
+.gcheck input[type=text]{width:6ch;min-height:44px;font:inherit;font-size:1.2rem;font-weight:700;text-align:right;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.gcheck input[type=checkbox]{width:22px;height:22px;accent-color:var(--grn)}
+.gres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gres div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.gres b{display:block;font-size:1.4rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--brass-t);margin-bottom:4px}
+.gres span{font-size:.9rem;color:var(--mut)}
+#gplan{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px}
+#gplan svg{display:block;width:100%;height:auto;max-height:320px}
+#gplan .room{fill:none;stroke:var(--ink);stroke-width:3;opacity:.7}
+#gplan .bed{fill:var(--ink);opacity:.16;stroke:var(--ink);stroke-width:2}
+#gplan .pil{fill:var(--pan);stroke:var(--ink);stroke-width:1.5;opacity:.8}
+#gplan .gang{fill:var(--brass-t);opacity:.14}
+#gplan .bad{fill:#c0392b;opacity:.16}
+#gplan text{fill:var(--brass-t);font:600 15px Archivo,system-ui,sans-serif}
+.gtxt{margin:0;color:var(--mut)}
+.gopt{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.gopt li{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.gopt li b{margin-right:6px}
+.gopt li.no{color:var(--mut);background:var(--pan)}
+.ltab{width:100%;border-collapse:collapse;margin-top:24px}
+.ltab th,.ltab td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.ltab th{font-size:.9rem;color:var(--mut);font-weight:600}
+@media (max-width:640px){.masse{grid-template-columns:repeat(2,minmax(0,1fr))}.ltab th,.ltab td{padding:8px 4px;font-size:.92rem}.ltab td:nth-child(3),.ltab th:nth-child(3){display:none}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:gaestezimmer|Kleines Altbau-Gästezimmer am Winterabend mit ausgeklapptem hellgrauem Schlafsofa in weißer Bettwäsche, Hocker mit Leselampe und Wasserkaraffe, Kofferablage und Wandhaken}}
+  <div class="wrap">
+    <h1>Gästezimmer einrichten: ein guter Schlafplatz für Besuch</h1>
+    <p>Ob eigenes Gästezimmer, Arbeitszimmer oder Wohnzimmer: Mit den richtigen Maßen und ein paar Kleinigkeiten schlafen deine Gäste gut. Der Gäste-Planer zeigt, was in deinen Platz passt.</p>
+    <div class="btns"><a class="btn" href="#planer">Zum Gäste-Planer</a><a class="btn ghost" href="#masse">Die Maße</a></div>
+  </div>
+</div>
+
+<section id="masse"><div class="wrap narrow">
+  <h2>Die wichtigsten Maße.</h2>
+  <p class="lede">Damit der Schlafplatz für Gäste kein Notbehelf ist.</p>
+  <div class="masse">
+    <div><b>90&nbsp;cm</b><span>Liegebreite für einen Gast</span></div>
+    <div><b>140&nbsp;cm</b><span>Liegebreite für zwei, bequemer sind 160</span></div>
+    <div><b>+20&nbsp;cm</b><span>Bettlänge = Körpergröße plus 20&nbsp;cm</span></div>
+    <div><b>70&nbsp;cm</b><span>frei neben dem Bett zum Gehen und für den Koffer</span></div>
+  </div>
+</div></section>
+
+<section class="band" id="planer"><div class="wrap narrow">
+  <h2>Der Gäste-Planer.</h2>
+  <p class="lede">Wie viele Gäste kommen, wie groß ist der größte, und wie viel Fläche hast du frei? Der Planer rechnet die Liegefläche und zeigt, welche Lösung passt.</p>
+  <div class="gcheck">
+    <div class="in">
+      <label for="gg">Gäste <input id="gg" type="text" inputmode="numeric" autocomplete="off" value="2" aria-label="Zahl der Gäste, die übernachten"></label>
+      <label for="gp"><input id="gp" type="checkbox" checked> Zwei teilen sich ein Bett</label>
+      <label for="gh">Größter Gast <input id="gh" type="text" inputmode="numeric" autocomplete="off" value="180" aria-label="Körpergröße des größten Gastes in Zentimetern"> cm</label>
+      <label for="gn">Nächte <input id="gn" type="text" inputmode="numeric" autocomplete="off" value="3" aria-label="Zahl der Nächte"></label>
+      <span class="pair"><label for="gb">Freie Fläche <input id="gb" type="text" inputmode="decimal" autocomplete="off" value="2,4" aria-label="Breite der freien Fläche in Metern"></label> × <label for="gl"><input id="gl" type="text" inputmode="decimal" autocomplete="off" value="2,8" aria-label="Länge der freien Fläche in Metern"> m</label></span>
+    </div>
+    <div class="gres" aria-live="polite"><div><b id="g1"></b><span id="g1s">Liegefläche</span></div><div><b id="g2"></b><span>Platzbedarf mit 70 cm Gang</span></div></div>
+    <div id="gplan" aria-hidden="true"></div>
+    <p class="gtxt" id="gtxt"></p>
+    <ul class="gopt" id="gopt"></ul>
+  </div>
+  <p class="tip">Ob Schlafsofa, Schreibtisch und Schrank zusammen ins Zimmer passen, probierst du im <a href="raumplaner.html">Raumplaner</a> aus. Wie das eigene Schlafzimmer ruhig wird, steht im Ratgeber <a href="schlafzimmer.html">Schlafzimmer einrichten</a>.</p>
+</div></section>
+
+<section id="loesungen"><div class="wrap narrow">
+  <h2>Welcher Schlafplatz passt?</h2>
+  <p class="lede">Jede Lösung ist ein Kompromiss zwischen Platz im Alltag und Komfort in der Nacht.</p>
+  <table class="ltab">
+    <thead><tr><th>Lösung</th><th>Gut für</th><th>Darauf achten</th></tr></thead>
+    <tbody>
+      <tr><td><b>Gästebett mit Lattenrost</b></td><td>Häufigen und längeren Besuch</td><td>Klapp- oder Unterschiebebett mit echter Matratze. Flexible Latten liegen sich bequemer als starre Roste.</td></tr>
+      <tr><td><b>Schlafsofa, Querschläfer</b></td><td>Wohn- und Arbeitszimmer</td><td>Die Lehne klappt nach hinten. Ausgeklappt braucht es oft 190 bis 200&nbsp;cm Breite an der Wand.</td></tr>
+      <tr><td><b>Schlafsofa, Längsschläfer</b></td><td>Schmale Räume</td><td>Die Liegefläche wird nach vorn ausgezogen. Mehrere Polsterteile können Kanten und Ritzen haben.</td></tr>
+      <tr><td><b>Tagesbett</b></td><td>Kleine Zimmer</td><td>Tagsüber Sofa mit Kissen, nachts ein Einzelbett mit 90&nbsp;×&nbsp;200&nbsp;cm.</td></tr>
+      <tr><td><b>Luftbett</b></td><td>Ein bis zwei Nächte</td><td>Klein verstaut. Decke oder Teppich darunter, nicht zu prall aufpumpen und vor dem Schlafen nachpumpen.</td></tr>
+      <tr><td><b>Faltmatratze</b></td><td>Kinder, kurze Besuche</td><td>Schnell ausgelegt, liegt aber direkt am Boden. Für Erwachsene eher als Notlösung.</td></tr>
+    </tbody>
+  </table>
+</div></section>
+
+{{FIG:gaestezimmer-2|Ecke eines frisch bezogenen Gästebetts mit weißer Leinenwäsche, daneben ein Stapel aus großem und kleinem Handtuch mit Tannenzweig, eine Wasserkaraffe und eine kleine Leuchte auf einem Holzhocker|Frische Bettwäsche, zwei Handtücher pro Gast, Wasser und eine Leselampe: Mehr braucht ein Gästebett für die erste Nacht kaum.}}
+
+<section class="band" id="schritte"><div class="wrap narrow">
+  <h2>In sechs Schritten zum Gästezimmer.</h2>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Den Schlafplatz wählen</h3><p>Wie oft kommt Besuch, und wie lange bleibt er? Für ein Wochenende im Jahr reicht ein gutes Luftbett. Kommt öfter jemand für mehrere Nächte, lohnt ein Schlafsofa mit echter Matratze oder ein Gästebett mit Lattenrost.</p></li>
+    <li><h3>Probeliegen</h3><p>Leg dich vor dem Besuch selbst eine Nacht auf den Gästeplatz. Dann merkst du, ob eine Kante drückt, das Luftbett Luft verliert oder die Straßenlaterne ins Gesicht scheint.</p></li>
+    <li><h3>Platz für Koffer und Kleidung</h3><p>Ein Hocker oder eine Kofferablage, drei Haken an der Wand und ein paar freie Bügel reichen. Neben dem Bett bleiben etwa 70&nbsp;cm frei, damit der Koffer offen liegen kann.</p></li>
+    <li><h3>Licht am Bett</h3><p>Eine kleine Leuchte in Griffweite, damit niemand im Dunkeln zum Schalter tastet. Warmweißes Licht um 2.700&nbsp;K wirkt ruhig, ein kleines Nachtlicht im Flur hilft nachts in fremder Wohnung.</p></li>
+    <li><h3>Dunkel und kühl</h3><p>Vorhänge oder ein Verdunkelungsrollo vors Fenster. Zum Schlafen sind 16 bis 18&nbsp;Grad angenehm. Eine zusätzliche Decke für Frierende liegt bereit.</p></li>
+    <li><h3>Die kleinen Dinge</h3><p>Zwei Handtücher pro Gast, eine Wasserkaraffe, ein Ladekabel an der Steckdose und das WLAN-Passwort auf einem Zettel. Ein Platz im Bad für die eigene Kulturtasche macht das Ankommen leicht.</p></li>
+  </ol>
+</div></section>
+
+<section id="ohne"><div class="wrap narrow">
+  <h2>Gäste ohne Gästezimmer.</h2>
+  <p class="lede">Die meisten haben kein eigenes Zimmer für Besuch. So wird trotzdem ein Rückzugsort daraus.</p>
+  <ul class="rechte">
+    <li><b>Im Wohnzimmer:</b> Schlafsofa oder Tagesbett an die ruhigste Wand, abends Esstisch und Couchtisch zur Seite. Wer früh aufsteht, bereitet das Frühstück in der Küche vor, nicht neben dem Gast.</li>
+    <li><b>Im Arbeitszimmer:</b> Den Schreibtisch vorher freiräumen, Unterlagen in eine Kiste. Ein Schrankfach oder eine Ecke im Regal wird für ein paar Tage zur Ablage des Gastes.</li>
+    <li><b>Ein Raumteiler:</b> Ein Paravent, ein Vorhang an einer Deckenschiene oder ein offenes Regal gibt einem Schlafplatz im Wohnraum etwas Privatsphäre, ganz ohne Bohren geht es mit Klemmstangen.</li>
+    <li><b>Stauraum für den Gästeplatz:</b> Luftbett, Pumpe, Bettwäsche und Handtücher zusammen in einer Kiste oder unter dem Bett lagern. Dann ist alles in zehn Minuten bereit.</li>
+    <li><b>Kinder als Gäste:</b> Eine Faltmatratze im Zimmer der eigenen Kinder ist für viele Kinder ein Abenteuer. Erwachsene schlafen dagegen besser erhöht.</li>
+  </ul>
+</div></section>
+
+<section class="band" id="checkliste"><div class="wrap narrow">
+  <h2>Checkliste vor dem Besuch.</h2>
+  <p class="lede">Hak ab, was erledigt ist. Der Stand bleibt nur in deinem Browser.</p>
+  <div class="ck" id="ck" style="margin-top:26px"></div>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für den Gästeplatz.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Schlafsofa Liegefläche 140x200}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Schlafsofa</b><span>Sofa am Tag, Doppelbett in der Nacht</span><span class="chk">Achte auf: Liegefläche 140&nbsp;×&nbsp;200&nbsp;cm und Maß ausgeklappt</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Gästebett klappbar mit Matratze}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Klappbares Gästebett</b><span>Steht zusammengeklappt im Schrank</span><span class="chk">Achte auf: Lattenrost statt Netz, Matratze nicht zu dünn</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Luftbett mit integrierter elektrischer Pumpe}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Luftbett mit Pumpe</b><span>Für ein, zwei Nächte</span><span class="chk">Achte auf: eingebaute Pumpe und erhöhte Bauweise</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Faltmatratze Gästematratze}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Faltmatratze</b><span>Für Kinder und kurze Besuche</span><span class="chk">Achte auf: abnehmbarer, waschbarer Bezug</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Kofferablage klappbar Holz}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Kofferablage</b><span>Der Koffer liegt nicht am Boden</span><span class="chk">Achte auf: klappbar, damit sie danach im Schrank verschwindet</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Nachttischlampe dimmbar warmweiß}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Leuchte fürs Bett</b><span>Licht in Griffweite</span><span class="chk">Achte auf: warmweiß, Schalter am Kabel oder Touch</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Verdunkelungsrollo ohne Bohren Klemmfix}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Verdunkelungsrollo</b><span>Dunkel schlafen, auch im Arbeitszimmer</span><span class="chk">Achte auf: Klemmträger, dann ohne Bohren montiert</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Paravent Raumteiler Stoff}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Paravent</b><span>Ein Rückzugsort im Wohnzimmer</span><span class="chk">Achte auf: Höhe etwa 170&nbsp;cm und standsicher</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie breit muss ein Gästebett für zwei Personen sein?</summary><div><p>Mindestens 140&nbsp;cm, das ist die Breite eines französischen Betts. Bequemer für zwei Erwachsene sind 160&nbsp;cm. Für einen Gast reichen 90&nbsp;cm.</p></div></details>
+    <details><summary>Wie lang sollte das Bett für Gäste sein?</summary><div><p>Etwa 20&nbsp;cm länger als der größte Gast. Die übliche Länge von 200&nbsp;cm passt bis etwa 1,80&nbsp;m Körpergröße, für größere Gäste sind 210 oder 220&nbsp;cm besser.</p></div></details>
+    <details><summary>Luftbett oder Schlafsofa?</summary><div><p>Für ein, zwei Nächte im Jahr reicht ein gutes Luftbett, es braucht kaum Platz im Schrank. Kommt öfter Besuch für mehrere Nächte, ist ein Schlafsofa mit echter Matratze oder ein Gästebett mit Lattenrost bequemer.</p></div></details>
+    <details><summary>Warum verliert das Luftbett über Nacht Luft?</summary><div><p>Neue Luftbetten dehnen sich nach dem ersten Aufpumpen noch, und kühlere Nachtluft lässt den Druck sinken. Meist reicht es, vor dem Schlafen nachzupumpen. Eine Decke oder ein Teppich darunter schützt das Material.</p></div></details>
+    <details><summary>Wie viel Platz braucht ein Schlafsofa?</summary><div><p>Ausgeklappt mit 140&nbsp;×&nbsp;200&nbsp;cm Liegefläche, plus etwa 70&nbsp;cm zum Gehen an einer Seite. Querschläfer brauchen an der Wand oft 190 bis 200&nbsp;cm Breite, Längsschläfer werden nach vorn ausgezogen und brauchen davor Platz.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>hausjournal: Welche Bettgröße ist die richtige? Einzelbett 90 bis 100&nbsp;cm, Paare ab 140&nbsp;cm, Körpergröße plus mindestens 20&nbsp;cm (aktualisiert 17.12.2024) <a href="https://www.hausjournal.net/bettgroessen" target="_blank" rel="noopener">hausjournal.net</a></li>
+    <li>Baur Magazin: Bettengröße, 140&nbsp;cm für Paare mit wenig Platz, 160&nbsp;cm als sichere Wahl, Körpergröße plus 20&nbsp;cm <a href="https://www.baur.de/magazin/bettengroesse" target="_blank" rel="noopener">baur.de</a></li>
+    <li>ÖKO-TEST: Ratgeber Gästebetten, Querschläfer und Längsschläfer, Lattenroste, Probeliegen, Geruch als Warnzeichen (12.05.2016) <a href="https://www.oekotest.de/bauen-wohnen/Ratgeber-Gaestebetten_107824_1.html" target="_blank" rel="noopener">oekotest.de</a></li>
+    <li>JYSK: So findest du die richtige Luftmatratze, Nachpumpen, Decke darunter, eingebaute Pumpe (03.03.2023) <a href="https://jysk.at/inspiration/so-findest-du-die-richtige-luftmatratze" target="_blank" rel="noopener">jysk.at</a></li>
+    <li>sanier.de: Optimale Luftfeuchtigkeit im Schlafzimmer, 16 bis 18 Grad <a href="https://www.sanier.de/raumklima/optimale-luftfeuchtigkeit-im-schlafzimmer" target="_blank" rel="noopener">sanier.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 18.11.2026. Der Gang von 70&nbsp;cm entspricht dem Laufweg im <a href="raumplaner.html">Raumplaner</a>.</p></div>
+</div></section>
+
+{{RELATED:schlafzimmer,raumplaner,kleine-raeume}}
+<!--END-->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var $=function(i){return document.getElementById(i)};
+function num(id,d,lo,hi){var v=parseFloat(String($(id).value).replace(',','.'));if(!isFinite(v))return d;return Math.min(hi,Math.max(lo,v))}
+function cm(x){return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' cm'}
+function m(x){return (Math.round(x)/100).toFixed(2).replace('.',',')+' m'}
+function calc(){
+var g=Math.round(num('gg',2,1,6)),pair=$('gp').checked&&g>=2,h=num('gh',180,80,230),n=Math.round(num('gn',3,1,60));
+var fb=num('gb',2.4,0.5,20)*100,fl=num('gl',2.8,0.5,20)*100;
+var beds=[];if(pair){beds.push(140);for(var i=2;i<g;i++)beds.push(90)}else{for(var j=0;j<g;j++)beds.push(90)}
+var len=Math.max(200,Math.ceil((h+20)/10)*10);
+var w=beds.reduce(function(a,b){return a+b},0),needW=w+70,needL=len;
+var fit=(needW<=fb&&needL<=fl)||(needW<=fl&&needL<=fb);
+var rot=!(needW<=fb&&needL<=fl)&&(needW<=fl&&needL<=fb);
+$('g1').textContent=beds.map(function(b){return b+'×'+len}).join(' + ');
+$('g1s').textContent=beds.length===1?'Liegefläche in cm':'Liegeflächen in cm, '+beds.length+' Schlafplätze';
+$('g2').textContent=m(needW)+' × '+m(needL);
+var t=fit?'Passt: Auf deiner freien Fläche von '+m(fb)+' × '+m(fl)+' ist Platz für '+(beds.length===1?'den Schlafplatz':'alle Schlafplätze')+' und einen Gang von 70 cm.':'Zu eng: Es fehlen '+cm(Math.max(0,Math.min(needW-fb,needW-fl)))+' in der Breite oder Länge. Rück ein Möbel zur Seite, verteil die Gäste auf zwei Räume oder nimm schmalere Einzelplätze.';
+if(len>200)t+=' Für '+cm(h)+' Körpergröße ist ein Bett mit '+cm(len)+' Länge bequemer als die üblichen 200 cm.';
+$('gtxt').textContent=t;
+var o=[];var short=n<=2;
+if(pair){o.push([true,'Schlafsofa mit 140×200 cm','als Querschläfer an der Wand oft 190 bis 200 cm breit'])}
+o.push([true,'Gästebett mit Lattenrost',short?'bequem, für kurze Besuche aber nicht nötig':'die bequemste Lösung für '+n+' Nächte']);
+o.push([short,'Luftbett mit Pumpe',short?'reicht für '+n+(n===1?' Nacht':' Nächte')+', Decke darunter':'für '+n+' Nächte eher unbequem']);
+o.push([true,'Tagesbett 90×200 cm','gut, wenn das Zimmer tagsüber Wohn- oder Arbeitsraum ist']);
+$('gopt').innerHTML=o.map(function(x){return '<li class="'+(x[0]?'':'no')+'"><b>'+(x[0]?'✓':'–')+' '+x[1]+'</b>'+x[2]+'</li>'}).join('');
+draw(fb,fl,beds,len,fit,rot)}
+function draw(fb,fl,beds,len,fit,rot){
+var W=fb,L=fl,s=Math.min(600/Math.max(W,1),280/Math.max(L,1)),pw=W*s+40,ph=L*s+40;
+var x=20,y=20,h='<svg viewBox="0 0 '+pw.toFixed(0)+' '+ph.toFixed(0)+'"><rect class="room" x="20" y="20" width="'+(W*s).toFixed(1)+'" height="'+(L*s).toFixed(1)+'"/>';
+var bx=x,by=y;
+beds.forEach(function(b){var bw=(rot?len:b)*s,bl=(rot?b:len)*s;
+h+='<rect class="bed" x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bl.toFixed(1)+'" rx="4"/>';
+if(rot){h+='<rect class="pil" x="'+(bx+4).toFixed(1)+'" y="'+(by+bl*.15).toFixed(1)+'" width="'+(bw*.12).toFixed(1)+'" height="'+(bl*.7).toFixed(1)+'" rx="3"/>';by+=bl}
+else{h+='<rect class="pil" x="'+(bx+bw*.15).toFixed(1)+'" y="'+(by+4).toFixed(1)+'" width="'+(bw*.7).toFixed(1)+'" height="'+(bl*.12).toFixed(1)+'" rx="3"/>';bx+=bw}});
+if(rot){h+='<rect class="'+(fit?'gang':'bad')+'" x="'+x+'" y="'+by.toFixed(1)+'" width="'+(len*s).toFixed(1)+'" height="'+(70*s).toFixed(1)+'"/>'}
+else{h+='<rect class="'+(fit?'gang':'bad')+'" x="'+bx.toFixed(1)+'" y="'+y+'" width="'+(70*s).toFixed(1)+'" height="'+(len*s).toFixed(1)+'"/>'}
+h+='</svg>';$('gplan').innerHTML=h}
+['gg','gh','gn','gb','gl'].forEach(function(i){$(i).addEventListener('input',calc)});$('gp').addEventListener('change',calc);calc();
+var L=[['Schlafplatz gewählt','Luftbett für kurz, Schlafsofa oder Gästebett für länger.'],['Probe gelegen','Eine Nacht selbst darauf schlafen.'],['Bett bezogen','Frische Bettwäsche, Kissen und eine Extradecke.'],['Zwei Handtücher pro Gast','Ein großes, ein kleines.'],['Ablage frei','Hocker oder Kofferablage, Haken, ein paar Bügel.'],['Licht am Bett','Leuchte in Griffweite, Nachtlicht im Flur.'],['Fenster verdunkelt','Vorhang oder Rollo, Raum auf 16 bis 18 Grad.'],['Kleinigkeiten bereit','Wasser, Ladekabel, WLAN-Passwort, Platz im Bad.']];
+sdChecklist('ck',L,'sdgz',{verb:'erledigt',done:'Alles bereit. Schönen Besuch!'})});
+</script>
