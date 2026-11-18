@@ -291,14 +291,43 @@ def related(spec, plain=False):
 
 
 def sources(m):
-    """Quellenliste als aufklappbarer Block, Prüfdatum bleibt sichtbar."""
+    """Quellenliste als aufklappbarer Block, Prüfdatum bleibt sichtbar.
+    Design-Agent 18.11.2026: jede Quelle als Etikett (Name vor dem Doppelpunkt), Titel und Link; die Namen stehen schon im zugeklappten Knopf."""
     inner = m.group(1)
     checked = re.search(r'<p[^>]*>(Geprüft am.*?)</p>', inner, re.S)
     inner = re.sub(r'<p[^>]*>Geprüft am.*?</p>', '', inner, flags=re.S).strip()
     n = inner.count('<li')
-    return ('<details class="src"><summary>%s</summary>%s</details>%s' % (
-        'Alle %d Quellen anzeigen' % n if n > 1 else 'Quelle anzeigen', inner,
-        '<p class="src checked">%s</p>' % checked.group(1) if checked else ''))
+    names = []
+
+    def item(mi):
+        li = mi.group(1).strip()
+        link = ''
+        ml = re.search(r'(<a [^>]*>.*?</a>)\s*$', li, re.S)
+        if ml and li.count('<a ') == 1:
+            link = ml.group(1).replace('<a ', '<a class="sq-a" ', 1)
+            li = li[:ml.start()].strip()
+        mn = re.match(r'([^:<]{2,45}):\s+', li)
+        if mn:
+            name, li = mn.group(1), li[mn.end():]
+        elif link:
+            name = re.sub(r'<.*?>', '', link)
+        else:
+            name = ''
+        if name and name not in names:
+            names.append(name)
+        return '<li>%s%s<span class="sq-t">%s</span></li>' % (
+            '<span class="sq-n">%s</span>' % name if name else '', link, li)
+
+    inner = re.sub(r'<li>(.*?)</li>', item, inner, flags=re.S)
+    pre = ' · '.join(names[:4]) + (' und %d weitere' % (len(names) - 4) if len(names) > 4 else '')
+    chk = ''
+    if checked:
+        chk = re.sub(r'(Geprüft am\s\d{1,2}\.\d{1,2}\.\d{4})', r'<span class="sq-chk">\1</span>', checked.group(1), count=1)
+        chk = re.sub(r'</span>\.\s*$', '</span>', chk)
+    return ('<details class="src srcx"><summary><span class="sq-s">%s</span>%s</summary>%s</details>%s' % (
+        'Alle %d Quellen anzeigen' % n if n > 1 else 'Quelle anzeigen',
+        '<span class="sq-pre">%s</span>' % pre if pre else '', inner,
+        '<p class="src checked">%s</p>' % chk if chk else ''))
 
 
 def mini(js):
