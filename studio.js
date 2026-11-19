@@ -2,7 +2,7 @@
    Ein Werkzeug für die Seite wandfarbe-testen.html (voll) und die Startseite (kurz): <div class="st" data-studio="voll|kurz"></div>
    - Beispielräume: Foto + genaue Masken aus assets/ (wf-<slug>.jpg, -maske.png, teils -sitz.png und -boden.png). Die Wand wird mit mix-blend-mode:multiply eingefärbt,
      beim Wechsel wischt die neue Farbe über die Wand. Sofa und Boden: Farbton (color) + Helligkeit (multiply).
-   - Eigenes Foto (nur voll): bleibt im Browser. Die Wand wird an Kanten und Farbton erkannt und gleich eingefärbt; ein Tipp ins Bild nimmt eine Fläche dazu.
+   - Eigenes Foto (nur voll): bleibt im Browser. Die Wand wird an Kanten und Farbton erkannt und gleich eingefärbt; ein Tipp ins Bild nimmt eine Fläche dazu. Seit 19.11.2026 lassen sich dort auch Sofa und Boden umfärben: Farbe wählen, das Sofa antippen, dann Sofa oder Boden im Bild antippen.
    - Gemerkt wird nur im Browser (localStorage "sdst"): letzter Raum, letzte Farbe, Lieblingsfarben.
    Daten: assets/studio.json (schreibt wandfarben.py). Keine fremden Dienste. */
 (function(){
@@ -66,7 +66,7 @@ function start(el,R){
   cap.querySelector('span').textContent=passt?'passt zu diesem Raum':mix.some(function(f){return f[1]===farbe[1].toUpperCase()})?'aus deinem Stil':'';kauf();var fav=favs.some(function(f){return f[1].toUpperCase()===farbe[1].toUpperCase()});herz.setAttribute('aria-pressed',fav?'true':'false');
   herz.setAttribute('aria-label',fav?'Liebling entfernen':'Farbe als Liebling merken')}
  function setzFarbe(f,wisch){farbe=[f[0],f[1]];titel();[].forEach.call(dots.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',b.dataset.c.toUpperCase()===f[1].toUpperCase()?'true':'false')});sichern();
-  if(art==='foto'){if(F.taps.length)F.draw();return}
+  if(art==='foto'){if(F.base)F.draw();return}
   clearTimeout(ph._t);if(neu.classList.contains('go')){ph.style.setProperty('--w',ph._c);neu.classList.remove('go')}
   ph._c=f[1];if(!wisch){ph.style.setProperty('--w',f[1]);return}
   ph.style.setProperty('--n',f[1]);void neu.offsetWidth;neu.classList.add('go');ph._t=setTimeout(function(){ph.style.setProperty('--w',f[1]);neu.classList.remove('go')},1150)}
@@ -90,14 +90,18 @@ function start(el,R){
   if(!voll)h+='<a href="wandfarbe-testen.html"><span class="b st-alle" style="display:grid;place-items:center;border:1.5px solid var(--line);font-size:.9rem">Alle '+R.length+' Räume</span><span class="t">im Studio</span></a>';rooms.innerHTML=h}
  function mini(was,L,name){return '<div class="st-grp" data-was="'+was+'"><span>'+name+'</span><div class="st-mini" role="group" aria-label="'+name+' umfärben">'+L.map(function(f,i){return '<button type="button" class="'+(i?'':'o')+'" aria-pressed="'+(i===0)+'" data-k="'+f[1]+'" title="'+f[0]+'" aria-label="'+name+': '+f[0]+'"><i'+(f[1]?' style="background:'+f[1]+'"':'')+'></i></button>'}).join('')+'</div></div>'}
  function mehr(){if(!more)return;var h='';if(art==='raum'&&raum){if(raum.sitz)h+=mini('sitz',SITZ,raum.sitzname||'Sofa');if(raum.boden)h+=mini('boden',BODEN,'Boden')}
+  if(art==='foto'){h+='<div class="st-grp st-ziel"><span>Antippen trifft</span><div role="group" aria-label="Was ein Tipp ins Bild einfärbt">'+[['wand','Wand'],['sitz','Sofa'],['boden','Boden']].map(function(z){return '<button type="button" class="st-btn" data-z="'+z[0]+'" aria-pressed="'+(F.ziel===z[0])+'">'+z[1]+'</button>'}).join('')+'</div></div>'+mini('sitz',SITZ,'Sofa')+mini('boden',BODEN,'Boden')}
   if(art==='raum')h+='<button type="button" class="st-btn" data-a="halb" aria-pressed="'+halb+'">'+I.halb+'Halbhoch</button><button type="button" class="st-btn" data-a="abend" aria-pressed="'+eve+'">'+I.mond+'Abendlicht</button>';
   h+='<button type="button" class="st-btn" data-a="zufall">'+I.wuerfel+'Überrasch mich</button><button type="button" class="st-btn" data-a="speichern">'+I.laden+'Bild speichern</button>';
-  if(art==='raum')h+='<button type="button" class="st-btn" data-a="teilen">'+I.teilen+'Link teilen</button>';more.innerHTML=h;shop()}
+  if(art==='raum')h+='<button type="button" class="st-btn" data-a="teilen">'+I.teilen+'Link teilen</button>';more.innerHTML=h;if(art==='foto')['sitz','boden'].forEach(function(w){var g=more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'')===(F.ton[w]||'')?'true':'false')})});shop()}
  /* Passende Möbel ansehen: erscheint erst, wenn jemand Sofa oder Boden umgefärbt hat (Partnerlink, gekennzeichnet) */
  function shop(){if(!shopEl)return;var h='',amz=function(q){return 'https://www.amazon.de/s?k='+encodeURIComponent(q).replace(/%20/g,'+')+'&tag={{TAG}}'},nm=function(L,x){var n='';L.forEach(function(f){if(f[1]&&x&&f[1].toUpperCase()===x.toUpperCase())n=f[0]});return n};
   if(art==='raum'&&raum){var a=sf.sitz&&nm(SITZ,sf.sitz[0]),b=sf.boden&&nm(BODEN,sf.boden[0]),was=raum.sitzname||'Sofa';
    if(a)h+='<a href="'+amz(was+' '+a)+'" target="_blank" rel="sponsored nofollow noopener">'+(was==='Sessel'?'Sessel':'Sofas')+' in '+esc(a)+' ansehen</a>';
    if(b)h+='<a href="'+amz((b==='Grau'?'Vinylboden grau':'Laminat '+b))+'" target="_blank" rel="sponsored nofollow noopener">Böden in '+esc(b)+' ansehen</a>'}
+  if(art==='foto'){var fa=F.ton.sitz&&F.T.sitz.length&&nm(SITZ,F.ton.sitz),fb=F.ton.boden&&F.T.boden.length&&nm(BODEN,F.ton.boden);
+   if(fa)h+='<a href="'+amz('Sofa '+fa)+'" target="_blank" rel="sponsored nofollow noopener">Sofas in '+esc(fa)+' ansehen</a>';
+   if(fb)h+='<a href="'+amz((fb==='Grau'?'Vinylboden grau':'Laminat '+fb))+'" target="_blank" rel="sponsored nofollow noopener">Böden in '+esc(fb)+' ansehen</a>'}
   shopEl.hidden=!h;shopEl.innerHTML=h?h+'<span class="tag">Anzeige</span>':''}
  function setzTon(w,hex){if(!raum||!raum[w])return;var t=ton(hex,raum[w==='sitz'?'hs':'hb']);sf[w]=hex?t:null;ph.querySelector('.st-k.st-'+w).style.background=t[0];ph.querySelector('.st-d.st-'+w).style.background=t[1];ph.querySelector('.st-s.st-'+w).style.background=t[2];
   var g=more&&more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'').toUpperCase()===(hex||'').toUpperCase()?'true':'false')});shop()}
@@ -116,6 +120,8 @@ function start(el,R){
 
  /* ---------- Zweite Zeile: Sofa, Boden, Abendlicht, Zufall, Speichern ---------- */
  if(more)more.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;var g=b.closest('.st-grp');
+  if(b.dataset.z){fotoZiel(b.dataset.z,true);return}
+  if(g&&art==='foto'){fotoTon(g.dataset.was,b.dataset.k);return}
   if(g){var w=g.dataset.was;[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});setzTon(w,b.dataset.k);return}
   var a=b.dataset.a;
   if(a==='halb'){halb=!halb;ph.classList.toggle('halb',halb);b.setAttribute('aria-pressed',halb?'true':'false');sag(halb?'Unten Farbe, oben bleibt die Wand hell. Das lässt niedrige Räume höher wirken.':'')}
@@ -142,7 +148,7 @@ function start(el,R){
    fertig(c,W,H,'wandfarbe-'+s+'.jpg',true)}).catch(function(){sag('Das Bild ließ sich gerade nicht laden. Versuch es gleich noch einmal.')})}
 
  /* ---------- Eigenes Foto ---------- */
- var F={W:0,H:0,base:null,mask:null,kante:null,taps:[],x:cv?cv.getContext('2d',{willReadFrequently:true}):null};
+ var F={W:0,H:0,base:null,mask:null,kante:null,taps:[],ziel:'wand',T:{sitz:[],boden:[]},M:{sitz:null,boden:null},ton:{sitz:'',boden:''},x:cv?cv.getContext('2d',{willReadFrequently:true}):null};
  F.kanten=function(){var W=F.W,H=F.H,d=F.base.data,L=new Float32Array(W*H),G=new Float32Array(W*H),i,xx,yy;for(i=0;i<W*H;i++)L[i]=d[i*4]*.3+d[i*4+1]*.59+d[i*4+2]*.11;
   for(yy=1;yy<H-1;yy++)for(xx=1;xx<W-1;xx++){i=yy*W+xx;G[i]=(L[i]*4+L[i-1]+L[i+1]+L[i-W]+L[i+W])/8}
   F.kante=new Uint8Array(W*H);for(yy=2;yy<H-2;yy++)for(xx=2;xx<W-2;xx++){i=yy*W+xx;var gx=G[i+1]-G[i-1],gy=G[i+W]-G[i-W],dx=G[i+2]-G[i-2],dy=G[i+2*W]-G[i-2*W];F.kante[i]=Math.min(255,Math.max(Math.abs(gx)+Math.abs(gy),(Math.abs(dx)+Math.abs(dy))*.6))}};
@@ -156,28 +162,59 @@ function start(el,R){
   var o=new Uint8Array(W*H),t=new Uint8Array(W*H),i;for(var a=0;a<2;a++){for(i=W+1;i<W*H-W-1;i++)t[i]=m[i]|m[i-1]|m[i+1]|m[i-W]|m[i+W];for(i=0;i<W*H;i++)m[i]=t[i]}
   for(i=W+1;i<W*H-W-1;i++)o[i]=m[i]&m[i-1]&m[i+1]&m[i-W]&m[i+W];return o};
  F.rebuild=function(){F.mask=new Uint8Array(F.W*F.H);F.taps.forEach(function(t){var m=F.fill(t[0],t[1],t[2]);for(var i=0;i<m.length;i++)if(m[i])F.mask[i]=1})};
+ /* Sofa und Boden im eigenen Foto: eigene Tipps und Masken je Ziel. Möbel und Böden haben Nähte, Falten und Maserung, an denen die Wandsuche hängen bleibt.
+    Deshalb läuft die Suche hier auf einem verkleinerten, geglätteten Bild (etwa 320 Bildpunkte breit): Dazu gehört, was im Farbton zum angetippten Punkt passt und ähnlich hell ist. Die Maske wird danach weich vergrößert. */
+ F.klein=function(){if(F.k)return F.k;var w=Math.max(40,Math.min(320,F.W)),h=Math.max(30,Math.round(F.H*w/F.W)),c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');x.imageSmoothingQuality='high';var q=document.createElement('canvas');q.width=F.W;q.height=F.H;q.getContext('2d').putImageData(F.base,0,0);
+  x.filter='blur(1.2px)';x.drawImage(q,0,0,w,h);return F.k={w:w,h:h,d:x.getImageData(0,0,w,h).data}};
+ F.fillZ=function(px,py,tol,sperr){var K=F.klein(),w=K.w,h=K.h,d=K.d,sx=Math.min(w-2,Math.max(1,Math.round(px*w/F.W))),sy=Math.min(h-2,Math.max(1,Math.round(py*h/F.H))),m=new Uint8Array(w*h),n=0,sr=0,sg=0,sb=0,xx,yy,i;
+  for(yy=sy-1;yy<=sy+1;yy++)for(xx=sx-1;xx<=sx+1;xx++){i=(yy*w+xx)*4;sr+=d[i];sg+=d[i+1];sb+=d[i+2];n++}sr/=n;sg/=n;sb/=n;
+  var sl=(sr+sg+sb)/3,ct=5+tol*.5,ct2=ct*ct,lt=Math.max(26,sl*.42)+tol*.9,stp=10+tol*.5,st=[sy*w+sx];m[sy*w+sx]=1;
+  while(st.length){var p=st.pop(),cx=p%w,cy=(p-cx)/w,e0=p*4,l0=(d[e0]+d[e0+1]+d[e0+2])/3;
+   for(var k=0;k<4;k++){var nx=cx+(k===0?1:k===1?-1:0),ny=cy+(k===2?1:k===3?-1:0);if(nx<0||ny<0||nx>=w||ny>=h)continue;var np=ny*w+nx;if(m[np]||sperr[np])continue;var e=np*4,r=d[e],g=d[e+1],b=d[e+2],l=(r+g+b)/3;
+    if(Math.abs(l-sl)>lt||Math.abs(l-l0)>stp)continue;var f=l>8?sl/l:1,cr=r*f-sr,cg=g*f-sg,cb=b*f-sb;if(cr*cr+cg*cg+cb*cb>ct2)continue;m[np]=1;st.push(np)}}
+  /* Löcher schließen (Nähte, Knöpfe, Maserung): zweimal wachsen, zweimal schrumpfen */
+  var t=new Uint8Array(w*h),a;for(a=0;a<4;a++){for(i=w+1;i<w*h-w-1;i++)t[i]=a<2?(m[i]|m[i-1]|m[i+1]|m[i-w]|m[i+w]):(m[i]&m[i-1]&m[i+1]&m[i-w]&m[i+w]);for(i=0;i<w*h;i++)m[i]=t[i]}
+  return m};
+ F.rebuildZ=function(w){var K=F.klein(),kw=K.w,kh=K.h,m=new Uint8Array(kw*kh),W=F.W,H=F.H,i,sp=new Uint8Array(kw*kh);
+  if(F.mask)for(i=0;i<kw*kh;i++){var gx=Math.min(W-1,Math.round((i%kw+.5)*W/kw)),gy=Math.min(H-1,Math.round(((i/kw|0)+.5)*H/kh));sp[i]=F.mask[gy*W+gx]}   /* was schon Wand ist, bleibt Wand */
+  F.T[w].forEach(function(t){var a=F.fillZ(t[0],t[1],t[2],sp);for(i=0;i<a.length;i++)if(a[i])m[i]=1});
+  var M=F.M[w]=new Float32Array(W*H),fx=kw/W,fy=kh/H;for(var yy=0;yy<H;yy++){var v=Math.min(kh-1.001,Math.max(0,(yy+.5)*fy-.5)),y0=v|0,ty=v-y0;for(var xx=0;xx<W;xx++){var u=Math.min(kw-1.001,Math.max(0,(xx+.5)*fx-.5)),x0=u|0,tx=u-x0,q=y0*kw+x0;
+    var al=(m[q]*(1-tx)+m[q+1]*tx)*(1-ty)+(m[q+kw]*(1-tx)+m[q+kw+1]*tx)*ty;M[yy*W+xx]=al<=.25?0:al>=.75?1:(al-.25)*2}}};
  F.draw=function(){var W=F.W,H=F.H,x=F.x,out=x.createImageData(W,H),o=out.data,d=F.base.data,mask=F.mask,c=rgb(farbe[1]),s=0,n=0,i;
   for(i=0;i<mask.length;i++)if(mask[i]){s+=(d[i*4]+d[i*4+1]+d[i*4+2])/3;n++}
   var mean=n?s/n:255,soft=new Float32Array(W*H);for(var yy=1;yy<H-1;yy++)for(var xx=1;xx<W-1;xx++){var p=yy*W+xx;soft[p]=(mask[p]*4+mask[p-1]+mask[p+1]+mask[p-W]+mask[p+W])/8}
   for(i=0;i<mask.length;i++){var q=i*4,a=soft[i],r=d[q],g=d[q+1],b=d[q+2];if(a>0){var f=Math.min(1.35,((r+g+b)/3)/mean);r=r*(1-a)+Math.min(255,c[0]*f)*a;g=g*(1-a)+Math.min(255,c[1]*f)*a;b=b*(1-a)+Math.min(255,c[2]*f)*a}o[q]=r;o[q+1]=g;o[q+2]=b;o[q+3]=255}
+  ['boden','sitz'].forEach(function(w){if(F.ton[w]&&F.M[w]&&F.T[w].length)F.mal(o,F.M[w],rgb(F.ton[w]))});
   x.putImageData(out,0,0);return n/(W*H)};
+ /* Fläche in einer Farbe malen und dabei Licht, Schatten und Maserung behalten: Die Helligkeit jedes Bildpunkts im Verhältnis zum Mittel der Fläche bleibt erhalten. */
+ F.mal=function(o,mask,c){var d=F.base.data,s=0,n=0,i;for(i=0;i<mask.length;i+=3)if(mask[i]>.9){s+=(d[i*4]+d[i*4+1]+d[i*4+2])/3;n++}if(!n)return;var mean=Math.max(24,s/n);
+  for(i=0;i<mask.length;i++){var a=mask[i];if(!a)continue;var q=i*4,f=Math.max(.3,Math.min(1.6,((d[q]+d[q+1]+d[q+2])/3)/mean));
+   o[q]=o[q]*(1-a)+Math.min(255,c[0]*f)*a;o[q+1]=o[q+1]*(1-a)+Math.min(255,c[1]*f)*a;o[q+2]=o[q+2]*(1-a)+Math.min(255,c[2]*f)*a}};
  /* Wand selbst suchen: Punkte im oberen Bildteil probieren, die größte zusammenhängende Fläche gewinnt */
  F.auto=function(){var W=F.W,H=F.H,tol=+fein.querySelector('input').value,best=null,ba=0;
   for(var gy=0;gy<3;gy++)for(var gx=0;gx<5;gx++){var px=Math.round(W*(.14+gx*.18)),py=Math.round(H*(.1+gy*.17)),m=F.fill(px,py,tol),n=0;for(var i=0;i<m.length;i+=7)n+=m[i];var an=n*7/(W*H);if(an>ba&&an<.64){ba=an;best=[px,py,tol]}}
   if(!best||ba<.06){F.taps=[];F.mask=new Uint8Array(W*H);F.x.putImageData(F.base,0,0);return false}F.taps=[best];F.rebuild();F.draw();return true};
  function setzFoto(bild){art='foto';ph.dataset.art='foto';var k=Math.min(1,1280/Math.max(bild.naturalWidth,bild.naturalHeight));F.W=Math.max(1,Math.round(bild.naturalWidth*k));F.H=Math.max(1,Math.round(bild.naturalHeight*k));
-  cv.width=F.W;cv.height=F.H;ph.style.aspectRatio=F.W+'/'+F.H;F.x.drawImage(bild,0,0,F.W,F.H);F.base=F.x.getImageData(0,0,F.W,F.H);F.kanten();F.taps=[];F.mask=new Uint8Array(F.W*F.H);
+  cv.width=F.W;cv.height=F.H;ph.style.aspectRatio=F.W+'/'+F.H;F.x.drawImage(bild,0,0,F.W,F.H);F.base=F.x.getImageData(0,0,F.W,F.H);F.kanten();F.k=null;F.taps=[];F.mask=new Uint8Array(F.W*F.H);F.ziel='wand';F.T={sitz:[],boden:[]};F.M={sitz:null,boden:null};F.ton={sitz:'',boden:''};
   [].forEach.call(rooms.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed','false')});fein.hidden=false;punkte();titel();mehr();link.textContent='';sag('Einen Moment, ich suche deine Wand …');
   setTimeout(function(){var ok=false;try{ok=F.auto()}catch(e){}sag(ok?'Das ist deine Wand in '+farbe[0]+'. Fehlt ein Stück? Tipp im Bild einfach darauf.':'Tipp im Bild auf deine Wand, dann färbe ich sie ein.')},60)}
+ var ZN={wand:'deine Wand',sitz:'dein Sofa',boden:'deinen Boden'};
+ function fotoZiel(z,sagen){F.ziel=z;[].forEach.call(more.querySelectorAll('[data-z]'),function(b){b.setAttribute('aria-pressed',b.dataset.z===z?'true':'false')});cv.setAttribute('aria-label','Dein Foto. Tippe auf '+ZN[z]+'.');
+  if(sagen)sag(z==='wand'?'Ein Tipp ins Bild nimmt jetzt wieder ein Stück Wand dazu.':'Tipp im Bild auf '+ZN[z]+'.'+(F.ton[z]?'':' Die Farbe wählst du daneben.'))}
+ function fotoTon(w,hex){if(!F.base){sag('Wähl zuerst ein Foto aus.');return}F.ton[w]=hex||'';var g=more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'')===(hex||'')?'true':'false')});
+  if(!hex){F.draw();shop();sag(w==='sitz'?'Das Sofa ist wieder wie im Foto.':'Der Boden ist wieder wie im Foto.');return}
+  fotoZiel(w);var da=F.T[w].length>0;
+  F.draw();shop();sag(da?(w==='sitz'?'Dein Sofa':'Dein Boden')+' in '+g.querySelector('[aria-pressed="true"]').title+'. Fehlt ein Stück? Tipp im Bild darauf.':'Tipp jetzt im Bild auf '+ZN[w]+'.')}
  function zurRaum(){ph.style.aspectRatio=''}
  if(voll){
   rooms.addEventListener('change',function(ev){var f=ev.target.files&&ev.target.files[0];if(!f)return;var u=URL.createObjectURL(f),b=new Image();b.onload=function(){setzFoto(b);URL.revokeObjectURL(u)};b.onerror=function(){sag('Dieses Bild lässt sich nicht öffnen. Nimm am besten ein Foto als JPG oder PNG.')};b.src=u;ev.target.value=''});
   rooms.addEventListener('click',function(ev){if(ev.target.closest('button'))zurRaum()},true);
   var letzt=0;function tipp(ev){if(art!=='foto'||!F.base)return;var t=Date.now();if(t-letzt<350)return;letzt=t;var r=cv.getBoundingClientRect(),px=Math.round((ev.clientX-r.left)/r.width*F.W),py=Math.round((ev.clientY-r.top)/r.height*F.H);if(px<1||py<1||px>=F.W-1||py>=F.H-1)return;
+   if(F.ziel!=='wand'){var z=F.ziel;F.T[z].push([px,py,+fein.querySelector('input').value]);F.rebuildZ(z);if(!F.ton[z]){var L=z==='sitz'?SITZ:BODEN;F.ton[z]=L[1][1];mehr()}F.draw();shop();sag((z==='sitz'?'Dein Sofa':'Dein Boden')+' ist umgefärbt. Fehlt ein Stück? Tipp darauf. Andere Farben stehen unter dem Bild.');return}
    F.taps.push([px,py,+fein.querySelector('input').value]);F.rebuild();var an=F.draw();sag(an>.85?'Jetzt ist fast alles eingefärbt. Schieb unter „Feiner einstellen“ die Genauigkeit nach links.':'Dazugenommen.')}
   cv.addEventListener('click',tipp);cv.addEventListener('pointerup',function(ev){if(ev.pointerType==='touch'||ev.pointerType==='pen')tipp(ev)});
-  fein.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b||!F.base)return;if(b.dataset.a==='zurueck'){F.taps.pop();F.rebuild();F.draw();sag(F.taps.length?'':'Tipp im Bild auf deine Wand.')}if(b.dataset.a==='neu'){sag(F.auto()?'Neu gesucht.':'Tipp im Bild auf deine Wand.')}});
-  fein.querySelector('input').addEventListener('change',function(){if(!F.base||!F.taps.length)return;var v=+this.value;F.taps.forEach(function(t){t[2]=v});F.rebuild();F.draw()});
+  fein.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b||!F.base)return;if(b.dataset.a==='zurueck'){if(F.ziel!=='wand'){F.T[F.ziel].pop();F.rebuildZ(F.ziel);F.draw();shop();sag(F.T[F.ziel].length?'':'Tipp im Bild auf '+ZN[F.ziel]+'.');return}F.taps.pop();F.rebuild();F.draw();sag(F.taps.length?'':'Tipp im Bild auf deine Wand.')}if(b.dataset.a==='neu'){sag(F.auto()?'Neu gesucht.':'Tipp im Bild auf deine Wand.')}});
+  fein.querySelector('input').addEventListener('change',function(){if(!F.base)return;var v=+this.value;F.taps.forEach(function(t){t[2]=v});F.rebuild();['sitz','boden'].forEach(function(w){F.T[w].forEach(function(t){t[2]=v});if(F.T[w].length)F.rebuildZ(w)});F.draw()});
   if(location.hash==='#foto')setTimeout(function(){var l=rooms.querySelector('.st-eig');if(l){try{l.scrollIntoView({block:'center'})}catch(e){}sag('Tipp auf „Eigenes Foto“ und wähl ein Bild von deinem Zimmer.')}},400)}
 
  /* ---------- Start ---------- */

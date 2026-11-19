@@ -38,6 +38,14 @@ ok(f.art==='foto'&&f.an>.3&&f.an<.65,'Eigenes Foto: Wand von selbst erkannt ('+M
 ok(f.w[1]>f.w[0]+8&&f.so[0]>f.so[1]+30,'Wand ist grün, das Ledersofa bleibt braun '+JSON.stringify([f.w,f.so]));
 ok(f.ki==='none'&&f.fein&&/Wand/.test(f.msg),'Eigenes Foto ohne KI-Hinweis, mit „Feiner einstellen“ und Hinweistext');
 await p.locator('.st-dots button[title="Petrol"]').first().click();await p.waitForTimeout(300);const p2=await p.evaluate(()=>{const c=document.querySelector('.st canvas'),w=c.getContext('2d').getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data;return [...w].slice(0,3)});ok(p2[2]>p2[0]+20,'Farbwechsel im eigenen Foto wirkt '+JSON.stringify(p2));
+// Eigenes Foto: Sofa umfärben (Farbe wählen, Sofa antippen), Wand bleibt, „Original“ nimmt die Farbe zurück
+const pxl=(x,y)=>p.evaluate(([x,y])=>{const c=document.querySelector('.st canvas');return [...c.getContext('2d').getImageData(Math.round(c.width*x),Math.round(c.height*y),1,1).data].slice(0,3)},[x,y]);
+const sv=await pxl(.5,.55),wv=await pxl(.5,.15);await p.locator('.st-grp[data-was="sitz"] button[title="Blau"]').click();ok(/Sofa/.test(await p.textContent('.st-msg'))&&await p.locator('[data-z="sitz"]').getAttribute('aria-pressed')==='true','Sofafarbe gewählt: Studio bittet um einen Tipp aufs Sofa');
+const cb=await p.locator('.st canvas').boundingBox();await p.locator('.st canvas').click({position:{x:cb.width*.5,y:cb.height*.55}});await p.waitForTimeout(500);const sn=await pxl(.5,.55),wn=await pxl(.5,.15);
+ok(sv[0]>sv[2]+30&&sn[2]>sn[0]+30,'Sofa im eigenen Foto ist jetzt blau '+JSON.stringify([sv,sn]));ok(Math.abs(wv[0]-wn[0])<4&&Math.abs(wv[2]-wn[2])<4,'Die Wand bleibt dabei unverändert');
+ok(/Sofas in Blau ansehen/.test(await p.textContent('.st-shop'))&&/Anzeige/.test(await p.textContent('.st-shop')),'Kauflink zum Sofa, als Anzeige gekennzeichnet');
+await p.locator('.st-grp[data-was="sitz"] button[title="Original"]').click();await p.waitForTimeout(300);const sz=await pxl(.5,.55);ok(Math.abs(sz[0]-sv[0])<4,'„Original“ zeigt das Sofa wieder wie im Foto');
+await p.locator('[data-z="wand"]').click();ok(/Wand/.test(await p.textContent('.st-msg')),'Zurück auf „Wand“ schaltbar');
 await p.locator('.st-rooms button').nth(1).click();await p.waitForTimeout(700);const zr=await S();ok(zr.art==='raum'&&await p.locator('.st-ki').isVisible(),'Zurück zum Beispielraum');
 // Halbhoch, Teilen-Link, Kaufen
 await p.goto(B+'/wandfarbe-testen.html?raum=gruenes-sofa',{waitUntil:'networkidle'});await p.waitForTimeout(500);

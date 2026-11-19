@@ -568,7 +568,7 @@ if __name__ == '__main__':
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
-    for f in ('site.css', 'site.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
+    for f in ('site.css', 'site.js', 'frag.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest
@@ -591,4 +591,5 @@ if __name__ == '__main__':
         feed(metas)
         llms(metas)
         suche(metas)
+        import frag_index; frag_index.main(str(OUT))   # frag.json: geprüfte Fragen und Antworten aller Seiten für frag.js (Suche, „Noch eine Frage?“)
         print('sitemap.xml:', sum(1 for m in metas if not m['noindex']), 'Seiten')
