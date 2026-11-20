@@ -639,3 +639,6 @@ details.srcx[open] .sq-pre{display:none}
 .sq-chk{display:inline-flex;align-items:center;gap:7px;padding:3px 12px 3px 9px;border-radius:999px;font-weight:600;font-size:.84rem;color:var(--ink);border:1px solid color-mix(in srgb,var(--grn) 45%,transparent);background:color-mix(in srgb,var(--grn) 9%,transparent);white-space:nowrap}
 .sq-chk::before{content:"";width:10px;height:5px;border-left:2px solid var(--brass-t);border-bottom:2px solid var(--brass-t);transform:rotate(-45deg) translate(1px,-1px)}
 @media print{.srcx li>a.sq-a::after{content:none}}
+
+/* Partnerlinks über Awin (direkt zum Händler), immer mit .tag „Anzeige“ */
+.aw{margin:22px 0 0;font-weight:600;line-height:1.9}.aw a{text-decoration:underline;text-underline-offset:3px}

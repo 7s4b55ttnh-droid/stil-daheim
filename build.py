@@ -93,7 +93,7 @@ GOAT = ("<script>\n/* Besucherzähler: GoatCounter ohne Cookies, ohne Fremdskrip
         "(function(){if(location.hostname!=='stil-daheim.de')return;var E='https://stildaheim.goatcounter.com/count';\n"
         "function send(q){var u=E+'?'+q+'&rnd='+Math.random().toString(36).slice(2);if(navigator.sendBeacon){try{if(navigator.sendBeacon(u))return}catch(e){}}new Image().src=u}\n"
         "var e=encodeURIComponent;send('p='+e(location.pathname)+'&t='+e(document.title)+'&r='+e(document.referrer));\n"
-        "document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a[href*=\"amazon.de\"]');if(!a)return;var m=a.href.match(/[?&]k=([^&]+)/),l=m?decodeURIComponent(m[1].replace(/\\+/g,' ')):(a.textContent||'amazon').trim().slice(0,60);\n"
+        "document.addEventListener('click',function(ev){var w=ev.target.closest&&ev.target.closest('a[href*=\"awin1.com\"]');if(w){send('p='+e('awin: '+w.textContent.trim().slice(0,60))+'&t='+e('Klick von '+location.pathname)+'&e=true');return}var a=ev.target.closest&&ev.target.closest('a[href*=\"amazon.de\"]');if(!a)return;var m=a.href.match(/[?&]k=([^&]+)/),l=m?decodeURIComponent(m[1].replace(/\\+/g,' ')):(a.textContent||'amazon').trim().slice(0,60);\n"
         "send('p='+e('amazon: '+l)+'&t='+e('Klick von '+location.pathname)+'&e=true')},true)})();\n</script>")
 
 # Wohnstile: Farbkarte (Name, Farbe, Schriftfarbe), Kurzbeschreibung, drei Startstücke mit Amazon-Suchbegriff, Ziel, Foto
@@ -138,6 +138,47 @@ def amz_url(q):
 
 def amz(m):
     return amz_url(m.group(1))
+
+
+# ---- Partnerlinks über Awin (seit 20.11.2026): direkt zum Händler, zusätzlich zu den Amazon-Suchen. ----
+# Publisher-ID 3156925. Zugelassen: Lampenwelt 7619, teppich.de 53143, Möbel Inhofer 41312, OTTO 14336.
+# Die Zeile steht automatisch unter der Einkaufsliste (class="shop") der Seiten in AWIN_SEITEN, immer mit „Anzeige“.
+AWIN_ID = '3156925'
+LW = lambda text, pfad: ('7619', text + ' bei Lampenwelt', 'https://www.lampenwelt.de/c/' + pfad)
+TP = lambda text, pfad: ('53143', text + ' bei teppich.de', 'https://www.teppich.de/' + pfad + '/')
+INH = lambda text, pfad: ('41312', text + ' bei Möbel Inhofer', 'https://www.inhofer.de/' + pfad + '/')
+OTTO = lambda text, such: ('14336', text + ' bei OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(such) + '/')
+_stil = [LW('Pendelleuchten', 'innenleuchten/pendelleuchten-hangelampen'), TP('Teppiche', 'teppiche'), OTTO('Sofas', 'sofa')]
+AWIN_SEITEN = {
+    'licht': [LW('Deckenleuchten', 'innenleuchten/deckenleuchten'), LW('Stehlampen', 'innenleuchten/stehlampen'), LW('Leuchtmittel', 'leuchtmittel')],
+    'wohnzimmer': [TP('Wohnzimmer-Teppiche', 'wohnzimmer-teppiche'), LW('Stehlampen', 'innenleuchten/stehlampen'), INH('Wohnzimmer-Möbel', 'wohnen/wohnzimmer'), OTTO('Sofas', 'sofa')],
+    'esszimmer': [LW('Pendelleuchten', 'innenleuchten/pendelleuchten-hangelampen'), INH('Esszimmer-Möbel', 'wohnen/esszimmer'), TP('Teppiche', 'teppiche')],
+    'schlafzimmer': [INH('Betten und Matratzen', 'schlafen/betten-matratzen'), LW('Tischlampen', 'innenleuchten/tischlampen'), TP('Hochflor-Teppiche', 'hochflor-teppiche')],
+    'gaestezimmer': [INH('Betten und Matratzen', 'schlafen/betten-matratzen'), LW('Tischlampen', 'innenleuchten/tischlampen')],
+    'flur': [TP('Läufer', 'teppich-laeufer'), LW('Deckenleuchten', 'innenleuchten/deckenleuchten')],
+    'kleine-raeume': [LW('Wandleuchten', 'innenleuchten/wandleuchten'), TP('Kleine Teppiche', 'kleine-teppiche')],
+    'gemuetlich': [TP('Hochflor-Teppiche', 'hochflor-teppiche'), LW('Tischlampen', 'innenleuchten/tischlampen')],
+    'arbeitsecke': [LW('Tischlampen', 'innenleuchten/tischlampen')],
+    'mieten': [LW('Stehlampen', 'innenleuchten/stehlampen'), TP('Teppiche', 'teppiche')],
+    'vorhaenge': [OTTO('Vorhänge', 'vorhänge')],
+    'boho': _stil, 'industrial': _stil, 'japandi': _stil, 'modern': _stil, 'skandinavisch': _stil, 'vintage': _stil,
+}
+
+
+def awin_url(mid, ziel):
+    return 'https://www.awin1.com/cread.php?awinmid=%s&amp;awinaffid=%s&amp;ued=%s' % (mid, AWIN_ID, urllib.parse.quote(ziel, safe=''))
+
+
+def awin_zeile(html, slug):
+    L = AWIN_SEITEN.get(slug)
+    i = html.find('class="shop"')
+    if not L or i < 0:
+        return html
+    j = html.find('</div></section>', i)
+    if j < 0:
+        return html
+    links = ' · '.join('<a href="%s" rel="sponsored nofollow noopener" target="_blank">%s</a>' % (awin_url(m, z), t) for m, t, z in L)
+    return html[:j] + '  <p class="aw">Lieber direkt beim Händler stöbern? %s<span class="tag">Anzeige</span></p>\n' % links + html[j:]
 
 
 _widths = {}
@@ -442,6 +483,7 @@ def page(src):
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
+    html = awin_zeile(html, pathlib.Path(str(src)).stem)
     html = re.sub(r'<div class="src">(.*?)</div>', sources, html, flags=re.S)
     html = html.replace('href="index.html#', 'href="./#').replace('href="index.html"', 'href="./"')
     html = html.replace('Stil-Daheim', BRAND)
