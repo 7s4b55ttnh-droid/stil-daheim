@@ -38,6 +38,8 @@ await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'knapp'},['Dedica','
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug',budget:'mittel'},['Sage'],'Tüfteln mit Platz');
 await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},['Matcha-Set'],'Matcha');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug'},['Magnifica'],'Milch als Ritual');
+await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug',budget:'egal'},['Oracle'],'Ritual, Budget egal');
+await fall({tassen:'mittel',art:'milch',zeit:'knopf',platz:'genug',budget:'egal'},['PrimaDonna','JURA'],'Knopfdruck, Budget egal');
 const rl=await p.$$eval('#kf-res a[target]',A=>A.map(a=>({h:a.href,r:a.rel,an:/Anzeige/.test(a.parentNode.textContent)})));
 ok(rl.length&&rl.every(x=>/sponsored/.test(x.r)&&x.an),'Finder-Links sind gekennzeichnet');
 // Links
@@ -45,9 +47,15 @@ const L=await p.$$eval('main a[href*="awin1.com"],main a[href*="amazon.de"]',A=>
 ok(L.length>=25,L.length+' Partnerlinks');ok(L.every(x=>/sponsored/.test(x.r)&&/nofollow/.test(x.r)&&x.t==='_blank'),'Alle mit rel="sponsored nofollow" und neuem Tab');
 ok(L.every(x=>/Anzeige/.test(x.txt)),'Alle als „Anzeige“ markiert');
 const otto=await p.$$eval('.kf-m .kf-buy a',A=>A.map(a=>decodeURIComponent((a.href.match(/ued=([^&]+)/)||[])[1]||'')));
-ok(otto.length===11&&otto.every(u=>u.startsWith('https://www.otto.de/p/')),'11 Geräte führen direkt zur OTTO-Produktseite über Awin');
+ok(otto.length===13&&otto.every(u=>u.startsWith('https://www.otto.de/p/')),'13 Geräte führen direkt zur OTTO-Produktseite über Awin');
 ok(await p.$$eval('.kf-m',A=>A.every(a=>a.querySelector('.kf-pl b')&&a.querySelectorAll('.kf-pc .pro li').length>0&&a.querySelectorAll('.kf-pc .con li').length>0)),'Jede Maschine hat Preis-Leistung, Dafür und Dagegen');
-ok(await p.$$eval('#vergleich + .kf-vgl tbody tr',R=>R.length===11&&R.every(r=>{const a=r.querySelector('a');return a&&document.querySelector(a.getAttribute('href'))})),'Vergleichstabelle: 11 Zeilen, alle verlinken auf ihre Karte');
+ok(await p.$$eval('#kf-vgl-b tr',R=>R.length===13&&R.every(r=>{const a=r.querySelector('a');return a&&document.querySelector(a.getAttribute('href'))})),'Vergleich: 13 Zeilen, alle verlinken auf ihre Karte');
+const sicht=()=>p.$$eval('#kf-vgl-b tr',R=>R.filter(r=>!r.hidden).map(r=>r.querySelector('a').textContent));
+await p.click('.kf-seg button[data-f="sieb"]');let v=await sicht();ok(v.length===3&&v.every(n=>/Dedica|Barista|Oracle/.test(n)),'Filter Siebträger: '+v.join(', '));
+await p.check('#kf-nurmilch');v=await sicht();ok(v.length===1&&/Oracle/.test(v[0]),'Siebträger mit Milch auf Knopfdruck: '+v.join(', '));
+await p.click('.kf-seg button[data-f="alle"]');await p.uncheck('#kf-nurmilch');await p.selectOption('#kf-sort','pl');v=await sicht();
+ok(v.length===13&&/Dedica/.test(v[0])&&/Oracle/.test(v[12]),'Sortiert nach Preis-Leistung: zuerst '+v[0]+', zuletzt '+v[12]);
+await p.selectOption('#kf-sort','preis');v=await sicht();ok(/Dedica/.test(v[0])&&/Oracle/.test(v[12]),'Sortiert nach Preis: '+v[0]+' bis '+v[12]);
 ok(await p.$$eval('.kf-m .kf-buy a',A=>A.every(a=>/awinmid=14336&awinaffid=3156925/.test(a.href))),'OTTO-Programm und Publisher-ID stimmen');
 // Koffein und Rechner
 for(let i=0;i<3;i++)await p.click('#kf-koff .z:nth-child(1) button[data-d="1"]');await p.click('#kf-koff .z:nth-child(2) button[data-d="1"]');
