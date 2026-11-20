@@ -71,6 +71,18 @@
 @media (max-width:900px){.measure .desk-only{display:none}.mob-only{display:flex}}
 @media (max-width:900px){.measure{grid-template-columns:1fr}}
 /* Miete */
+/* Kaffee-Band (seit 20.11.2026): dunkel und warm, gezeichnete Animation aus kaffee.js, startet erst beim Hinscrollen */
+.kf-band{background:#160f0b;color:#efe4d6;padding-block:clamp(56px,8vw,104px)}
+.kf-b{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,64px);align-items:center}
+.kf-band h2{color:#fff;font-size:clamp(2.2rem,5vw,3.6rem);font-stretch:85%;line-height:1.02;margin:0}
+.kf-band .lede{color:rgba(239,228,214,.84);max-width:36ch}
+.kf-band .btn{background:#f1e4d2;color:#22150d;border-color:#f1e4d2}
+.kf-band .btn.ghost{background:transparent;color:#f6ede2;border-color:rgba(241,228,210,.45)}
+.kf-band .btn.ghost:hover{border-color:#f1e4d2}
+.kf-band :focus-visible{outline-color:#fff}
+.kf-bb{position:relative;aspect-ratio:4/3;border-radius:22px;overflow:hidden;background:#140d09;box-shadow:0 30px 80px -40px rgba(0,0,0,.8)}
+.kf-bb canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:820px){.kf-b{grid-template-columns:1fr}.kf-bb{order:-1;aspect-ratio:5/4}}
 </style>
 <style>
 /* Weitermachen: nur für Wiederkehrer sichtbar, Stand kommt aus dem Speicher des Browsers */
@@ -89,7 +101,7 @@
   <div class="wrap">
     <h1>Mit Gefühl einrichten. Und mit Zollstock.</h1>
     <p>Finde deinen Wohnstil, miss richtig aus und kauf das Passende. Auch in der Mietwohnung.</p>
-    <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="wandfarbe-testen.html">Wandfarbe testen</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div>
+    <div class="btns"><a class="btn" href="#stil-finder">Meinen Stil finden</a><a class="btn ghost" href="wandfarbe-testen.html">Wandfarbe testen</a><a class="btn ghost" href="raumplaner.html">Raum planen</a><a class="btn ghost" href="kaffee.html">Kaffee-Ecke</a></div>
   </div>
 </div>
 
@@ -132,6 +144,15 @@
   <div class="sec-h"><h2>Sechs Stile und ihre Farben.</h2><p class="lede">Jeder Stil hat eine eigene Farbkarte. Tippe einen an, um ihn kennenzulernen.</p></div>
   {{STRIPS}}
   <p class="swipe">Zur Seite wischen für alle sechs Stile.</p>
+</div></section>
+
+<section class="kf-band" id="kaffee"><div class="wrap kf-b">
+  <div class="kf-bt">
+    <h2>Erst mal einen Kaffee.</h2>
+    <p class="lede">Vollautomat, Siebträger oder doch lieber Matcha? Der Kaffee-Ratgeber findet mit vier Fragen deine Maschine und zeigt, wie aus einer Küchenecke dein Lieblingsplatz wird.</p>
+    <div class="btns"><a class="btn" href="kaffee.html">Zum Kaffee-Ratgeber</a><a class="btn ghost" href="kaffee.html#finder">Welche Maschine passt?</a></div>
+  </div>
+  <div class="kf-bb"><canvas id="kf-band" data-kaffee="espresso" data-lage="mitte" data-spaet role="img" aria-label="Gezeichnete Animation: Espresso läuft aus dem Siebträger in eine Tasse, Dampf steigt auf."></canvas><button type="button" class="kf-pause" data-kaffee-pause="kf-band" aria-pressed="false" aria-label="Animation anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button></div>
 </div></section>
 
 <section class="band" id="ausmessen"><div class="wrap measure">
@@ -233,6 +254,7 @@ up();
 })();
 </script>
 <script src="studio.js" defer></script>
+<script src="kaffee.js" defer></script>
 <script>
 /* Weitermachen, wo du warst: liest nur, was Studio (sdst), Stil-Finder (sdquiz) und Raumplaner (sdrp) im Browser abgelegt haben. Nichts wird übertragen. */
 (function(){try{var box=document.getElementById('weiter'),l=box.querySelector('.weiter-l'),h='',e=function(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};

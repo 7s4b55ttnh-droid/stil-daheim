@@ -13,6 +13,7 @@ meldet einen HINWEIS. Den Tag der ersten Veröffentlichung merkt sich der Build 
 
 Platzhalter in den Seiten:
   {{amz:Suchbegriff}}      Amazon-Suchlink mit Partner-Tag (immer mit „Anzeige“ kennzeichnen)
+  {{otto:Suchbegriff}}     OTTO über Awin (Suche oder, mit voller otto.de-Adresse, direkt die Produktseite; immer mit „Anzeige“)
   {{PALETTE:stil}}         Farbkarte eines Stils
   {{STARTS:stil}}          Die drei Startstücke eines Stils mit Amazon-Suchlinks
   {{PIC:name|Alt-Text|sizes}}  Foto aus assets/ als <picture> mit WebP und JPEG
@@ -70,6 +71,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'licht'),
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'schlafzimmer'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
+        ('kaffee.html', 'Kaffee-Ecke einrichten', 'Maschinen-Finder, Espresso, Matcha, Kaffee-Ecke', 'kaffee', 'kaffee'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
         ('tischdeko.html', 'Weihnachtliche Tischdeko', 'Festlich decken mit Maßen und Ideen', 'tischdeko', 'tischdeko'),
         ('silvester.html', 'Silvester-Tischdeko', 'Raclette-Planer, Farben, sicher bis Mitternacht', 'silvester', 'silvester'),
@@ -194,6 +196,12 @@ def awin_url(mid, ziel):
     return 'https://www.awin1.com/cread.php?awinmid=%s&amp;awinaffid=%s&amp;ued=%s' % (mid, AWIN_ID, urllib.parse.quote(ziel, safe=''))
 
 
+def otto_url(q):
+    """{{otto:…}}: OTTO über Awin. Eine volle otto.de-Adresse (Produktseite) wird direkt verlinkt, sonst führt der Link zur OTTO-Suche."""
+    q = q.strip()
+    return awin_url('14336', q if q.startswith('https://www.otto.de/') else 'https://www.otto.de/suche/' + urllib.parse.quote(q) + '/')
+
+
 # Hauptlink je Empfehlung (seit 20.11.2026): Teppiche, Leuchten und Möbel gehen direkt zum Fachhändler (höhere Provision, 30 Tage Zuordnung),
 # Kleinteile bleiben bei Amazon. Entschieden wird am Suchbegriff im {{amz:…}}; Amazon steht dann als zweiter Link in der Zeile darunter.
 # Die vier Muster sind die EINE Quelle der Regel: build() setzt sie auch in site.js ein (Platzhalter __AUS__ usw.), damit Rechner und Planer gleich entscheiden.
@@ -201,7 +209,7 @@ K_AUS = r'tischläufer|filzgleiter|molton|vakuum|luftbett|unterbettkommode|pflan
 K_TEP = r'teppich|läufer|kelim|bettvorleger'
 K_LAM = r'stehleuchte|stehlampe|pendelleuchte|tischleuchte|nachttischlampe|wandleuchte|schreibtischlampe|leselampe|papierleuchte|pilzleuchte|deckenleuchte|deckenfluter'
 K_MOE = (r'sofa|sessel|\bbett\b|gästebett|esstisch|couchtisch|beistelltisch|nierentisch|sideboard|\bregal\b|wandregal|sitzbank|schreibtisch|sekretär|esszimmerstühle|barhocker|kommode|kleiderschrank|wandklapptisch'
-         r'|tv-board|lowboard|nachttisch|garderobe|schuhschrank|schuhkipper|hocker|paravent|standspiegel|wandspiegel|ganzkörperspiegel|wandkonsole|\bpouf\b|bürostuhl|faltmatratze|gästematratze')
+         r'|tv-board|lowboard|nachttisch|garderobe|schuhschrank|schuhkipper|hocker|paravent|standspiegel|wandspiegel|ganzkörperspiegel|wandkonsole|\bpouf\b|bürostuhl|faltmatratze|gästematratze|servierwagen')
 # Lampenwelt: Bei diesen Wörtern führt der Link zur Suche „Leuchtenart + Wort“ statt nur in die Kategorie.
 LW_WORT = [['rattan', 'Rattan'], ['papier', 'Papier'], ['messing', 'Messing'], ['keramik', 'Keramik'], ['akku', 'Akku'], ['industrial', 'Industrial'], ['stoffschirm', 'Stoffschirm'], ['schwarz', 'schwarz'], ['retro', 'Retro']]
 # teppich.de: erstes passendes Wort bestimmt die Zielseite (Kategorien und Suchen geprüft am 20.11.2026), sonst alle Teppiche.
@@ -269,6 +277,9 @@ def awin_zeile(html, slug, getauscht=()):
         j = html.find('</p>', i) + 4
         return html[:j] + '\n  <p class="aw">Passend zum Raum: %s<span class="tag">Anzeige</span></p>' % ' · '.join(A % (awin_url(m, zl), t) for m, t, zl in awin_wandfarbe(slug)) + html[j:]
     i = html.find('class="shop"')
+    if getauscht and html.count('class="shop"') > 1:   # mehrere Einkaufslisten (kaffee.html): Zeile unter die Liste mit den getauschten Links
+        k = html.rfind('<a class="item" href="https://www.awin1.com')
+        i = html.rfind('class="shop"', 0, k) if k > 0 else i
     if (not L and not getauscht) or i < 0:
         return html
     j = html.find('</div></section>', i)
@@ -312,7 +323,7 @@ def fig(name, alt, cap):
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
-       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
+       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}
@@ -584,6 +595,7 @@ def page(src):
     html = html.replace('{{ALLE}}', alle()) if '{{ALLE}}' in html else html
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
+    html = re.sub(r'\{\{otto:(.*?)\}\}', lambda m: otto_url(m.group(1)), html)
     html, _get = awin_haupt(html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
     html = awin_zeile(html, pathlib.Path(str(src)).stem, _get)
@@ -720,7 +732,7 @@ if __name__ == '__main__':
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
-    for f in ('site.css', 'frag.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
+    for f in ('site.css', 'frag.js', 'studio.css', 'kaffee.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js; kaffee.js: gezeichnete Kaffee-Animation
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest

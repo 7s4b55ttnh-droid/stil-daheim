@@ -1,0 +1,71 @@
+// Prüft den Kaffee-Ratgeber (kaffee.html, kaffee.js) und das Kaffee-Band der Startseite.  node kaffee-test.js [Basis-URL]
+const {chromium,devices}=require('playwright');const B=process.argv[2]||'http://localhost:8766';let bad=0;
+const ok=(c,t)=>{console.log((c?'ok   ':'FEHLER ')+t);if(!c)bad++};
+(async()=>{const b=await chromium.launch();const errs=[],fremd=[];
+const neu=async(o)=>{const c=await b.newContext(o);const p=await c.newPage();p.on('pageerror',e=>errs.push(e.message));
+  p.on('request',r=>{const u=r.url();if(!u.startsWith(B)&&!/^data:|^blob:/.test(u))fremd.push(u)});return [c,p]};
+let [c,p]=await neu({viewport:{width:1440,height:900}});
+await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(700);
+// Animation
+ok(await p.evaluate(()=>!!(window.sdKaffee&&document.getElementById('kf-szene').__kf)),'Startbild-Animation ist aufgebaut');
+ok(await p.evaluate(()=>document.getElementById('kf-szene').__kf.laeuft()),'Animation läuft im Bild');
+const t0=await p.evaluate(()=>document.getElementById('kf-szene').__kf.zeit());await p.waitForTimeout(600);
+ok(await p.evaluate(t=>document.getElementById('kf-szene').__kf.zeit()!==t,t0),'Zeit läuft weiter');
+const px=await p.evaluate(()=>{const c=document.getElementById('kf-szene'),x=c.getContext('2d').getImageData(Math.round(c.width*.7),Math.round(c.height*.66),1,1).data;return x[0]+x[1]+x[2]});
+ok(px>60,'Tasse ist gezeichnet (Pixel hell: '+px+')');
+ok(await p.evaluate(()=>getComputedStyle(document.querySelector('.kf-poster')).display==='none'),'Standbild verschwindet, sobald die Animation steht');
+await p.click('[data-kaffee-pause="kf-szene"]');await p.waitForTimeout(200);
+ok(await p.evaluate(()=>!document.getElementById('kf-szene').__kf.laeuft())&&await p.getAttribute('[data-kaffee-pause="kf-szene"]','aria-pressed')==='true','Pause-Knopf hält an');
+await p.click('[data-kaffee-pause="kf-szene"]');await p.waitForTimeout(200);ok(await p.evaluate(()=>document.getElementById('kf-szene').__kf.laeuft()),'Pause-Knopf spielt wieder ab');
+ok(await p.evaluate(()=>!document.getElementById('kf-matcha').__kf.laeuft()),'Matcha-Animation ruht außerhalb des Bildes');
+await p.evaluate(()=>document.getElementById('kf-matcha').scrollIntoView({block:'center',behavior:'instant'}));await p.waitForTimeout(400);
+ok(await p.evaluate(()=>document.getElementById('kf-matcha').__kf.laeuft()&&!document.getElementById('kf-szene').__kf.laeuft()),'Matcha läuft beim Hinscrollen, Startbild ruht');
+// Maschinen-Finder
+const fall=async(w,erw,t)=>{await p.evaluate(w=>{for(const [n,v] of Object.entries(w)){const i=document.querySelector(`#kf-q input[name="${n}"][value="${v}"]`);i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}))}},w);
+  const r=await p.evaluate(()=>({h:document.querySelector('#kf-res h3').textContent,l:[...document.querySelectorAll('#kf-res li b')].map(x=>x.textContent)}));ok(erw.every(e=>r.l.some(x=>x.includes(e))),t+': '+r.h+' → '+r.l.join(', '))};
+await fall({tassen:'mittel',art:'milch',zeit:'knopf',platz:'genug'},['Philips'],'Milch, Knopfdruck');
+await fall({tassen:'viel',art:'milch',zeit:'knopf',platz:'genug'},['JURA'],'Viele Tassen');
+await fall({tassen:'wenig',art:'schwarz',zeit:'knopf',platz:'knapp'},['Melitta Solo'],'Schwarz, wenig Platz');
+await fall({tassen:'viel',art:'schwarz',zeit:'knopf',platz:'genug'},['Moccamaster'],'Viel schwarz');
+await fall({tassen:'wenig',art:'schwarz',zeit:'ritual',platz:'genug'},['Handfilter'],'Schwarz mit Ritual');
+await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'knapp'},['Dedica','Graef'],'Tüfteln, wenig Platz');
+await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug'},['Sage'],'Tüfteln mit Platz');
+await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},['Matcha-Set'],'Matcha');
+await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug'},['Magnifica'],'Milch als Ritual');
+const rl=await p.$$eval('#kf-res a[target]',A=>A.map(a=>({h:a.href,r:a.rel,an:/Anzeige/.test(a.parentNode.textContent)})));
+ok(rl.length&&rl.every(x=>/sponsored/.test(x.r)&&x.an),'Finder-Links sind gekennzeichnet');
+// Links
+const L=await p.$$eval('main a[href*="awin1.com"],main a[href*="amazon.de"]',A=>A.map(a=>({h:a.href,r:a.rel,t:a.target,txt:(a.closest('article,.item,p,li')||a).textContent})));
+ok(L.length>=25,L.length+' Partnerlinks');ok(L.every(x=>/sponsored/.test(x.r)&&/nofollow/.test(x.r)&&x.t==='_blank'),'Alle mit rel="sponsored nofollow" und neuem Tab');
+ok(L.every(x=>/Anzeige/.test(x.txt)),'Alle als „Anzeige“ markiert');
+const otto=await p.$$eval('.kf-m .kf-buy a',A=>A.map(a=>decodeURIComponent((a.href.match(/ued=([^&]+)/)||[])[1]||'')));
+ok(otto.length===8&&otto.every(u=>u.startsWith('https://www.otto.de/p/')),'8 Maschinen führen direkt zur OTTO-Produktseite über Awin');
+ok(await p.$$eval('.kf-m .kf-buy a',A=>A.every(a=>/awinmid=14336&awinaffid=3156925/.test(a.href))),'OTTO-Programm und Publisher-ID stimmen');
+// Koffein und Rechner
+for(let i=0;i<3;i++)await p.click('#kf-koff .z:nth-child(1) button[data-d="1"]');await p.click('#kf-koff .z:nth-child(2) button[data-d="1"]');
+ok(/350/.test(await p.textContent('#kf-ks')),'Koffein: 3 Filterkaffee + 1 Espresso = 350 mg');
+for(let i=0;i<2;i++)await p.click('#kf-koff .z:nth-child(2) button[data-d="1"]');ok(/510/.test(await p.textContent('#kf-ks'))&&/EFSA/.test(await p.textContent('#kf-ks')),'Über 400 mg: Hinweis erscheint');
+ok((await p.textContent('#o-tasse')).trim()==='32 ct'&&(await p.textContent('#o-jahr')).trim()==='232 €','Rechner: 20 €/kg, 9 g, Cappuccino → 32 ct, 232 € im Jahr');
+await p.fill('#r-g','14');await p.selectOption('#r-ml','0');ok((await p.textContent('#o-tasse')).trim()==='28 ct','Rechner reagiert (doppelter Espresso ohne Milch: 28 ct)');
+ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),'Kein seitliches Scrollen (Desktop)');
+await c.close();
+// Handy
+[c,p]=await neu({...devices['iPhone 13']});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(500);
+ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),'Kein seitliches Scrollen (Handy)');
+const hr=await p.evaluate(()=>{const h=document.querySelector('.kf-hero h1').getBoundingClientRect();return h.top<innerHeight&&h.bottom<innerHeight});ok(hr,'Überschrift im ersten Bild sichtbar (Handy)');
+await c.close();
+// Bewegung reduzieren
+[c,p]=await neu({viewport:{width:1200,height:800},reducedMotion:'reduce'});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(400);
+ok(await p.evaluate(()=>!document.getElementById('kf-szene').__kf.laeuft()),'Bewegung reduzieren: Standbild statt Animation');
+ok(await p.evaluate(()=>getComputedStyle(document.querySelector('[data-kaffee-pause="kf-szene"]')).display==='none'),'Bewegung reduzieren: kein Pause-Knopf');
+await c.close();
+// Startseite
+[c,p]=await neu({viewport:{width:1440,height:900}});await p.goto(B+'/',{waitUntil:'networkidle'});await p.waitForTimeout(300);
+ok(await p.locator('.hero .btns a[href="kaffee.html"]').count()===1,'Startseite: Knopf „Kaffee-Ecke“ oben');
+ok(await p.evaluate(()=>!document.getElementById('kf-band').__kf),'Startseite: Kaffee-Band wird erst beim Hinscrollen aufgebaut');
+await p.evaluate(()=>document.getElementById('kaffee').scrollIntoView({behavior:'instant'}));await p.waitForTimeout(600);
+ok(await p.evaluate(()=>{const k=document.getElementById('kf-band').__kf;return !!k&&k.laeuft()}),'Startseite: Kaffee-Band läuft beim Hinscrollen');
+ok(await p.locator('#kaffee a[href="kaffee.html"]').count()===1&&await p.locator('#kaffee a[href="kaffee.html#finder"]').count()===1,'Startseite: Knöpfe zum Ratgeber und zum Finder');
+await c.close();
+ok(!fremd.length,'Keine Anfrage an fremde Server '+JSON.stringify(fremd.slice(0,3)));ok(!errs.length,'Keine Skriptfehler '+JSON.stringify(errs));
+await b.close();console.log(bad?bad+' FEHLER':'ALLE TESTS BESTANDEN');process.exit(bad?1:0)})();
