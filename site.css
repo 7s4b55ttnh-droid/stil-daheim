@@ -642,3 +642,9 @@ details.srcx[open] .sq-pre{display:none}
 
 /* Partnerlinks über Awin (direkt zum Händler), immer mit .tag „Anzeige“ */
 .aw{margin:22px 0 0;font-weight:600;line-height:1.9}.aw a{text-decoration:underline;text-underline-offset:3px}
+/* Kaffee-Animation (kaffee.js, seit 20.11.2026): Pause-Knopf für kaffee.html und die Startseite */
+.kf-pause{position:absolute;right:16px;bottom:16px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(18,12,9,.55);color:#f3eadf;display:grid;place-items:center;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.kf-pause svg{width:16px;height:16px;fill:currentColor}
+.kf-pause[hidden]{display:none}
+.kf-pause .pl,.kf-pause[aria-pressed="true"] .pa{display:none}.kf-pause[aria-pressed="true"] .pl{display:block}
+.kf-pause:focus-visible{outline:2px solid #fff;outline-offset:3px}
