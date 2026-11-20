@@ -732,7 +732,7 @@ if __name__ == '__main__':
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
-    for f in ('site.css', 'frag.js', 'studio.css', 'kaffee.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js; kaffee.js: gezeichnete Kaffee-Animation
+    for f in ('site.css', 'frag.js', 'studio.css', 'kaffee-film.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js; kaffee-film.js: Kaffee-Filme (kaffee.html, Startseite)
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest

@@ -366,7 +366,7 @@ window.__VTHERO='.hero.sub';
    - Alle anderen (Titelbild, Vorher/Nachher, Szenen): sehr kleine Marke "KI" in der Bildecke (.ki-marke).
    Nicht entfernen. Fotos immer als <img src="assets/..."> einbinden, nie als CSS-Hintergrund. */
 (function(){
-  var RX=/(^|\/)assets\/[^\/]+\.(jpe?g|webp|png)(\?|$)/i,list=[],T='KI',TL='Mit KI erstellt',G='Bilder mit KI erstellt.',C='KI-Bild.',GR=/(^|\/)assets\/(app|app-maskable|balkonkraftwerk-foerderung|lexikon|solar-atlas|solar-rechner|stromkosten|strompreis-archiv|strompreis-heute|was-lohnt-sich|kaffee|matcha)(-[mt])?(-\d+)?\.(jpe?g|webp|png)(\?|$)/i;   /* seit 20.11.2026 auf Wunsch des Inhabers sehr klein: nur „KI“ in der Bildecke (Abkürzung genügt). Grafiken und Symbole (GR) brauchen keinen Hinweis. */
+  var RX=/(^|\/)assets\/[^\/]+\.(jpe?g|webp|png)(\?|$)/i,list=[],T='KI',TL='Mit KI erstellt',G='Bilder mit KI erstellt.',C='KI-Bild.',GR=/(^|\/)assets\/(app|app-maskable|balkonkraftwerk-foerderung|lexikon|solar-atlas|solar-rechner|stromkosten|strompreis-archiv|strompreis-heute|was-lohnt-sich)(-[mt])?(-\d+)?\.(jpe?g|webp|png)(\?|$)/i;   /* seit 20.11.2026 auf Wunsch des Inhabers sehr klein: nur „KI“ in der Bildecke (Abkürzung genügt). Grafiken und Symbole (GR) brauchen keinen Hinweis. */
   function box(im){var a=im.parentElement;if(a&&a.tagName==='PICTURE')a=a.parentElement;return a}
   function put(m){var a=m.__a,im=m.__i,ar=a.getBoundingClientRect(),ir=im.getBoundingClientRect();
     if(!ir.width||!ar.width){m.hidden=true;return}m.hidden=false;

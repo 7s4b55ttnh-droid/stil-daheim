@@ -1,4 +1,4 @@
-// Prüft den Kaffee-Ratgeber (kaffee.html, kaffee.js) und das Kaffee-Band der Startseite.  node kaffee-test.js [Basis-URL]
+// Prüft den Kaffee-Ratgeber (kaffee.html, kaffee-film.js) und das Kaffee-Band der Startseite.  node kaffee-test.js [Basis-URL]
 const {chromium,devices}=require('playwright');const B=process.argv[2]||'http://localhost:8766';let bad=0;
 const ok=(c,t)=>{console.log((c?'ok   ':'FEHLER ')+t);if(!c)bad++};
 (async()=>{const b=await chromium.launch();const errs=[],fremd=[];
@@ -6,20 +6,24 @@ const neu=async(o)=>{const c=await b.newContext(o);const p=await c.newPage();p.o
   p.on('request',r=>{const u=r.url();if(!u.startsWith(B)&&!/^data:|^blob:/.test(u)&&!/goatcounter/.test(u))fremd.push(u)});return [c,p]};
 let [c,p]=await neu({viewport:{width:1440,height:900}});
 await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(700);
-// Animation
-ok(await p.evaluate(()=>!!(window.sdKaffee&&document.getElementById('kf-szene').__kf)),'Startbild-Animation ist aufgebaut');
-ok(await p.evaluate(()=>document.getElementById('kf-szene').__kf.laeuft()),'Animation läuft im Bild');
-const t0=await p.evaluate(()=>document.getElementById('kf-szene').__kf.zeit());await p.waitForTimeout(600);
-ok(await p.evaluate(t=>document.getElementById('kf-szene').__kf.zeit()!==t,t0),'Zeit läuft weiter');
-const px=await p.evaluate(()=>{const c=document.getElementById('kf-szene'),x=c.getContext('2d').getImageData(Math.round(c.width*.7),Math.round(c.height*.66),1,1).data;return x[0]+x[1]+x[2]});
-ok(px>60,'Tasse ist gezeichnet (Pixel hell: '+px+')');
-ok(await p.evaluate(()=>getComputedStyle(document.querySelector('.kf-poster')).display==='none'),'Standbild verschwindet, sobald die Animation steht');
-await p.click('[data-kaffee-pause="kf-szene"]');await p.waitForTimeout(200);
-ok(await p.evaluate(()=>!document.getElementById('kf-szene').__kf.laeuft())&&await p.getAttribute('[data-kaffee-pause="kf-szene"]','aria-pressed')==='true','Pause-Knopf hält an');
-await p.click('[data-kaffee-pause="kf-szene"]');await p.waitForTimeout(200);ok(await p.evaluate(()=>document.getElementById('kf-szene').__kf.laeuft()),'Pause-Knopf spielt wieder ab');
-ok(await p.evaluate(()=>!document.getElementById('kf-matcha').__kf.laeuft()),'Matcha-Animation ruht außerhalb des Bildes');
-await p.evaluate(()=>document.getElementById('kf-matcha').scrollIntoView({block:'center',behavior:'instant'}));await p.waitForTimeout(400);
-ok(await p.evaluate(()=>document.getElementById('kf-matcha').__kf.laeuft()&&!document.getElementById('kf-szene').__kf.laeuft()),'Matcha läuft beim Hinscrollen, Startbild ruht');
+// Filme
+const lauf=id=>p.evaluate(id=>{const v=document.getElementById(id);return !!v&&!v.paused&&v.readyState>2&&v.classList.contains('an')},id);
+await p.waitForFunction(()=>{const v=document.getElementById('kf-film');return v&&!v.paused&&v.readyState>2},null,{timeout:15000}).catch(()=>{});
+ok(await p.evaluate(()=>!!(window.sdKaffee&&document.getElementById('kf-film').__kf)),'Kopfbild-Film ist eingerichtet');
+ok(await lauf('kf-film'),'Kopfbild-Film läuft und ist eingeblendet');
+const q=await p.evaluate(()=>document.getElementById('kf-film').currentSrc);ok(/assets\/kaffee\.(mp4|webm)$/.test(q),'Querformat-Film auf dem Desktop: '+q.split('/').pop());
+const t0=await p.evaluate(()=>document.getElementById('kf-film').currentTime);await p.waitForTimeout(700);
+ok(await p.evaluate(t=>document.getElementById('kf-film').currentTime!==t,t0),'Zeit läuft weiter');
+ok(await p.evaluate(()=>document.getElementById('kf-film').muted),'Film ist stumm');
+ok(await p.evaluate(()=>!!document.querySelector('.kf-hero .ki-marke')),'KI-Marke im Kopfbild');
+await p.click('[data-kaffee-pause="kf-film"]');await p.waitForTimeout(200);
+ok(await p.evaluate(()=>document.getElementById('kf-film').paused)&&await p.getAttribute('[data-kaffee-pause="kf-film"]','aria-pressed')==='true','Pause-Knopf hält an');
+await p.click('[data-kaffee-pause="kf-film"]');await p.waitForTimeout(400);ok(await p.evaluate(()=>!document.getElementById('kf-film').paused),'Pause-Knopf spielt wieder ab');
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-matcha');return v.paused&&!v.currentSrc}),'Matcha-Film lädt erst beim Hinscrollen');
+await p.evaluate(()=>document.getElementById('kf-matcha').scrollIntoView({block:'center',behavior:'instant'}));
+await p.waitForFunction(()=>{const v=document.getElementById('kf-matcha');return !v.paused&&v.readyState>2},null,{timeout:15000}).catch(()=>{});
+ok(await lauf('kf-matcha')&&await p.evaluate(()=>document.getElementById('kf-film').paused),'Matcha läuft beim Hinscrollen, Kopfbild ruht');
+ok(await p.evaluate(()=>!!document.querySelector('.kf-mat .bild .ki-marke')),'KI-Marke am Matcha-Film');
 // Maschinen-Finder
 const fall=async(w,erw,t)=>{await p.evaluate(w=>{for(const [n,v] of Object.entries(w)){const i=document.querySelector(`#kf-q input[name="${n}"][value="${v}"]`);i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}))}},w);
   const r=await p.evaluate(()=>({h:document.querySelector('#kf-res h3').textContent,l:[...document.querySelectorAll('#kf-res li b')].map(x=>x.textContent)}));ok(erw.every(e=>r.l.some(x=>x.includes(e))),t+': '+r.h+' → '+r.l.join(', '))};
@@ -53,18 +57,21 @@ await c.close();
 [c,p]=await neu({...devices['iPhone 13']});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(500);
 ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),'Kein seitliches Scrollen (Handy)');
 const hr=await p.evaluate(()=>{const h=document.querySelector('.kf-hero h1').getBoundingClientRect();return h.top<innerHeight&&h.bottom<innerHeight});ok(hr,'Überschrift im ersten Bild sichtbar (Handy)');
+await p.waitForFunction(()=>{const v=document.getElementById('kf-film');return v&&v.currentSrc},null,{timeout:15000}).catch(()=>{});
+ok(/kaffee-hoch\.(mp4|webm)$/.test(await p.evaluate(()=>document.getElementById('kf-film').currentSrc)),'Hochformat-Film auf dem Handy');
 await c.close();
 // Bewegung reduzieren
-[c,p]=await neu({viewport:{width:1200,height:800},reducedMotion:'reduce'});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(400);
-ok(await p.evaluate(()=>!document.getElementById('kf-szene').__kf.laeuft()),'Bewegung reduzieren: Standbild statt Animation');
-ok(await p.evaluate(()=>getComputedStyle(document.querySelector('[data-kaffee-pause="kf-szene"]')).display==='none'),'Bewegung reduzieren: kein Pause-Knopf');
+[c,p]=await neu({viewport:{width:1200,height:800},reducedMotion:'reduce'});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(600);
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-film');return v.paused&&!v.currentSrc&&getComputedStyle(v).display==='none'}),'Bewegung reduzieren: nur Standbild, kein Film geladen');
+ok(await p.evaluate(()=>getComputedStyle(document.querySelector('[data-kaffee-pause="kf-film"]')).display==='none'),'Bewegung reduzieren: kein Pause-Knopf');
 await c.close();
 // Startseite
 [c,p]=await neu({viewport:{width:1440,height:900}});await p.goto(B+'/',{waitUntil:'networkidle'});await p.waitForTimeout(300);
 ok(await p.locator('.hero .btns a[href="kaffee.html"]').count()===1,'Startseite: Knopf „Kaffee-Ecke“ oben');
-ok(await p.evaluate(()=>!document.getElementById('kf-band').__kf),'Startseite: Kaffee-Band wird erst beim Hinscrollen aufgebaut');
-await p.evaluate(()=>document.getElementById('kaffee').scrollIntoView({behavior:'instant'}));await p.waitForTimeout(600);
-ok(await p.evaluate(()=>{const k=document.getElementById('kf-band').__kf;return !!k&&k.laeuft()}),'Startseite: Kaffee-Band läuft beim Hinscrollen');
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-band');return v.paused&&!v.currentSrc}),'Startseite: Kaffee-Film lädt erst beim Hinscrollen');
+await p.evaluate(()=>document.getElementById('kaffee').scrollIntoView({behavior:'instant'}));
+await p.waitForFunction(()=>{const v=document.getElementById('kf-band');return !v.paused&&v.readyState>2},null,{timeout:15000}).catch(()=>{});
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-band');return !v.paused&&v.classList.contains('an')}),'Startseite: Kaffee-Film läuft beim Hinscrollen');
 ok(await p.locator('#kaffee a[href="kaffee.html"]').count()===1&&await p.locator('#kaffee a[href="kaffee.html#finder"]').count()===1,'Startseite: Knöpfe zum Ratgeber und zum Finder');
 await c.close();
 ok(!fremd.length,'Keine Anfrage an fremde Server '+JSON.stringify(fremd.slice(0,3)));ok(!errs.length,'Keine Skriptfehler '+JSON.stringify(errs));

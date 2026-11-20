@@ -1,15 +1,16 @@
 <!--meta {"key":"kaffee","title":"Kaffee-Ecke einrichten: Vollautomat, Siebträger oder Matcha? – Stil-Daheim","desc":"Welche Kaffeemaschine passt zu dir? Maschinen-Finder, Vollautomaten und Siebträger bei OTTO, Espresso und Matcha richtig zubereiten, gemütliche Kaffee-Ecke.","og":"assets/kaffee.jpg","updated":"2026-11-20","kurz":"Wer schnell und oft mit Milch trinkt, ist mit einem Vollautomaten gut bedient, er steht laut Kaffeeverband schon in jedem dritten Haushalt. Wer das Ritual mag, nimmt einen Siebträger mit Mühle: Für einen klassischen Espresso reichen rund 7&nbsp;Gramm Kaffee, 9&nbsp;bar und 25&nbsp;Sekunden. Filterkaffee gelingt mit 92 bis 96&nbsp;Grad heißem Wasser, Matcha mit 75 bis 80&nbsp;Grad. Für die Kaffee-Ecke reichen 60&nbsp;Zentimeter Arbeitsfläche, eine Steckdose und warmes Licht."} -->
 <!--HEAD-->
 <style>
-/* Kaffee-Ecke (seit 20.11.2026): warm, ruhig, Holz und Crema. Startbild ist eine gezeichnete Animation (kaffee.js), kein Foto. */
+/* Kaffee-Ecke (seit 20.11.2026): warm, ruhig, Holz und Crema. Kopfbild und Matcha sind kurze KI-Filme (kaffee-film.js) über einem Standbild; das Standbild trägt die KI-Marke. */
 .kf-hero{background:#120c09}
-.kf-hero canvas,.kf-hero .kf-poster{position:absolute;inset:0;width:100%;height:100%;display:block}
-.kf-hero .kf-poster{object-fit:cover;object-position:72% 50%}
-.kf-hero canvas.kf-an+.kf-poster,.kf-hero .kf-poster.weg{display:none}
-.kf-hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.kf-hero picture,.kf-hero img,.kf-film{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.kf-film{opacity:0;transition:opacity .9s ease;pointer-events:none}
+.kf-film.an{opacity:1}
 .kf-hero .wrap{z-index:2}
 .kf-hero h1{max-width:12ch}
-@media (max-width:700px){.kf-hero .wrap{padding-top:58vh}}
+.kf-hero .kf-pause,.kf-mat .kf-pause{right:40px}
+@media (prefers-reduced-motion:reduce){.kf-film{display:none}}
+@media (max-aspect-ratio:4/5){.kf-hero .wrap{padding-top:62vh}.kf-hero img,.kf-hero .kf-film{object-position:50% 30%}}
 
 /* Maschinen-Finder */
 .kf-q{display:grid;gap:22px;margin-top:30px}
@@ -61,7 +62,8 @@
 /* Matcha */
 .kf-mat{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(22px,4vw,48px);align-items:center;margin-top:28px}
 .kf-mat .bild{position:relative;aspect-ratio:3/2;border-radius:20px;overflow:hidden;background:#140d09}
-.kf-mat canvas{position:absolute;inset:0;width:100%;height:100%}
+.kf-mat .bild picture,.kf-mat .bild img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.kf-mat .bild img,.kf-mat .kf-film{object-position:55% 50%}
 .kf-mat .kf-pause{right:12px;bottom:12px}
 .kf-mat ol{margin:0;padding-left:1.2em}.kf-mat li{margin:0 0 10px}
 @media (max-width:820px){.kf-mat{grid-template-columns:1fr}}
@@ -109,14 +111,14 @@
 </style>
 <!--MAIN-->
 <div class="hero sub kf-hero">
-  <canvas id="kf-szene" data-kaffee="espresso" role="img" aria-label="Gezeichnete Animation: Espresso läuft aus dem Siebträger in eine Tasse, die Crema dreht sich, Dampf steigt auf."></canvas>
-  <img class="kf-poster" src="assets/kaffee.jpg" alt="" fetchpriority="high">
+  <picture><source media="(max-aspect-ratio: 4/5)" type="image/webp" srcset="assets/kaffee-hoch-m.webp 540w, assets/kaffee-hoch.webp 864w" sizes="100vw"><source media="(max-aspect-ratio: 4/5)" srcset="assets/kaffee-hoch-m.jpg 540w, assets/kaffee-hoch.jpg 864w" sizes="100vw"><source type="image/webp" srcset="assets/kaffee-m.webp 960w, assets/kaffee.webp 1672w" sizes="100vw"><img src="assets/kaffee.jpg" srcset="assets/kaffee-m.jpg 960w, assets/kaffee.jpg 1672w" sizes="100vw" alt="Nahaufnahme: Espresso läuft in eine helle Steinzeugtasse auf einer Arbeitsplatte aus Nussbaum, Dampf steigt im warmen Morgenlicht auf" fetchpriority="high"></picture>
+  <video class="kf-film" id="kf-film" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/kaffee" data-hoch="assets/kaffee-hoch"></video>
   <div class="wrap">
     <h1>Kaffee-Ecke einrichten</h1>
     <p>Die Tasse warm in beiden Händen, der Duft vor dem ersten Schluck. So findest du die Maschine, die zu dir passt, und machst aus einer Ecke der Küche deinen Lieblingsplatz.</p>
     <div class="btns"><a class="btn" href="#finder">Welche Maschine passt?</a><a class="btn ghost" href="#ecke">Zur Kaffee-Ecke</a></div>
   </div>
-  <button type="button" class="kf-pause" data-kaffee-pause="kf-szene" aria-pressed="false" aria-label="Animation anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
+  <button type="button" class="kf-pause" data-kaffee-pause="kf-film" aria-pressed="false" aria-label="Film anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
 </div>
 
 <section id="finder"><div class="wrap narrow">
@@ -240,7 +242,7 @@
 <section class="band" id="matcha"><div class="wrap">
   <div class="sec-h"><h2>Oder doch Matcha?</h2><p class="lede">Matcha ist fein gemahlener grüner Tee. Man trinkt das ganze Blatt mit, aufgeschlagen zu einem samtigen Schaum. Ruhiger als ein Espresso, aber nicht weniger ein Ritual.</p></div>
   <div class="kf-mat">
-    <div class="bild"><canvas id="kf-matcha" data-kaffee="matcha" role="img" aria-label="Gezeichnete Animation: Ein Bambusbesen schlägt Matcha in einer dunklen Schale schaumig."></canvas><button type="button" class="kf-pause" data-kaffee-pause="kf-matcha" aria-pressed="false" aria-label="Animation anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button></div>
+    <div class="bild"><picture><source type="image/webp" srcset="assets/matcha-m.webp 960w, assets/matcha.webp 1672w" sizes="(max-width:820px) 100vw, 560px"><img src="assets/matcha.jpg" srcset="assets/matcha-m.jpg 960w, assets/matcha.jpg 1672w" sizes="(max-width:820px) 100vw, 560px" alt="Aufgeschäumte Milch fließt in eine dunkle Keramikschale mit grünem Matcha, daneben Bambusbesen und Löffel" loading="lazy" decoding="async"></picture><video class="kf-film" id="kf-matcha" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/matcha"></video><button type="button" class="kf-pause" data-kaffee-pause="kf-matcha" aria-pressed="false" aria-label="Film anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button></div>
     <div>
       <h3 style="margin-top:0">So schlägst du Matcha auf.</h3>
       <ol>
@@ -391,7 +393,7 @@
 <section class="sis"><div class="wrap narrow"><a class="sis-a" href="https://strom-daheim.de/stromkosten/kaffeemaschine.html"><span class="sis-k">Von unserer Schwesterseite Strom-Daheim</span><b>Was kostet eine Kaffeemaschine an Strom? →</b><span>Rechner für dein Gerät und deinen Strompreis, dazu Spartipps zu Warmhalteplatte und Abschaltung.</span></a></div></section>
 {{RELATED:gemuetlich,licht,esszimmer}}
 <!--END-->
-<script src="kaffee.js" defer></script>
+<script src="kaffee-film.js" defer></script>
 <script>
 /* Maschinen-Finder, Koffein-Zähler und Tassen-Rechner (kaffee.html) */
 (function(){
