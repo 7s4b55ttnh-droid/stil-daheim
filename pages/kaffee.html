@@ -3,14 +3,27 @@
 <style>
 /* Kaffee-Ecke (seit 20.11.2026): warm, ruhig, Holz und Crema. Kopfbild und Matcha sind kurze KI-Filme (kaffee-film.js) über einem Standbild; das Standbild trägt die KI-Marke. */
 .kf-hero{background:#120c09}
-.kf-hero picture,.kf-hero img,.kf-film{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
-.kf-film{opacity:0;transition:opacity .9s ease;pointer-events:none}
+.kf-hero picture,.kf-film{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kf-hero img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.kf-film{object-fit:cover;opacity:0;transition:opacity .9s ease;pointer-events:none}
 .kf-film.an{opacity:1}
 .kf-hero .wrap{z-index:2}
 .kf-hero h1{max-width:12ch}
 .kf-hero .kf-pause,.kf-mat .kf-pause{right:40px}
 @media (prefers-reduced-motion:reduce){.kf-film{display:none}}
-@media (max-aspect-ratio:4/5){.kf-hero .wrap{padding-top:62vh}.kf-hero img,.kf-hero .kf-film{object-position:50% 30%}}
+/* Quer: ganzer Bildschirm, Ausschnitt so, dass Ausguss, Tropfen und Krone unter der Kopfzeile sichtbar bleiben */
+@media (min-aspect-ratio:4/5){
+.hero.sub.kf-hero{min-height:100vh;min-height:100svh}
+.kf-hero img,.kf-hero .kf-film{object-position:35% 0%}
+}
+/* Handy hochkant: Film oben unter der Kopfzeile als großes Bild (Ausschnitt um die Tasse), Text darunter auf dunklem Grund */
+@media (max-aspect-ratio:4/5){
+.hero.sub.kf-hero{min-height:0}
+.kf-hero picture,.kf-hero .kf-film{top:60px;bottom:auto;height:min(118vw,64svh);-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent)}
+.kf-hero img,.kf-hero .kf-film{object-position:70% 50%}
+.kf-hero .wrap{padding-top:calc(min(118vw,64svh) - 4px)}
+.kf-hero .kf-pause{top:calc(min(118vw,64svh) + 2px);bottom:auto}
+}
 
 /* Maschinen-Finder */
 .kf-q{display:grid;gap:22px;margin-top:30px}
@@ -111,8 +124,8 @@
 </style>
 <!--MAIN-->
 <div class="hero sub kf-hero">
-  <picture><source media="(max-aspect-ratio: 4/5)" type="image/webp" srcset="assets/kaffee-hoch-m.webp 540w, assets/kaffee-hoch.webp 864w" sizes="100vw"><source media="(max-aspect-ratio: 4/5)" srcset="assets/kaffee-hoch-m.jpg 540w, assets/kaffee-hoch.jpg 864w" sizes="100vw"><source type="image/webp" srcset="assets/kaffee-m.webp 960w, assets/kaffee.webp 1672w" sizes="100vw"><img src="assets/kaffee.jpg" srcset="assets/kaffee-m.jpg 960w, assets/kaffee.jpg 1672w" sizes="100vw" alt="Nahaufnahme: Espresso läuft in eine helle Steinzeugtasse auf einer Arbeitsplatte aus Nussbaum, Dampf steigt im warmen Morgenlicht auf" fetchpriority="high"></picture>
-  <video class="kf-film" id="kf-film" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/kaffee" data-hoch="assets/kaffee-hoch"></video>
+  <picture><source type="image/webp" srcset="assets/kaffee-m.webp 960w, assets/kaffee.webp 1672w" sizes="100vw"><img src="assets/kaffee.jpg" srcset="assets/kaffee-m.jpg 960w, assets/kaffee.jpg 1672w" sizes="100vw" alt="Nahaufnahme: Ein Tropfen Espresso hängt über einer randvollen Tasse Kaffee, Dampf steigt im warmen Morgenlicht auf" fetchpriority="high"></picture>
+  <video class="kf-film" id="kf-film" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/kaffee"></video>
   <div class="wrap">
     <h1>Kaffee-Ecke einrichten</h1>
     <p>Die Tasse warm in beiden Händen, der Duft vor dem ersten Schluck. So findest du die Maschine, die zu dir passt, und machst aus einer Ecke der Küche deinen Lieblingsplatz.</p>

@@ -57,8 +57,9 @@ await c.close();
 [c,p]=await neu({...devices['iPhone 13']});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(500);
 ok(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth),'Kein seitliches Scrollen (Handy)');
 const hr=await p.evaluate(()=>{const h=document.querySelector('.kf-hero h1').getBoundingClientRect();return h.top<innerHeight&&h.bottom<innerHeight});ok(hr,'Überschrift im ersten Bild sichtbar (Handy)');
-await p.waitForFunction(()=>{const v=document.getElementById('kf-film');return v&&v.currentSrc},null,{timeout:15000}).catch(()=>{});
-ok(/kaffee-hoch\.(mp4|webm)$/.test(await p.evaluate(()=>document.getElementById('kf-film').currentSrc)),'Hochformat-Film auf dem Handy');
+await p.waitForFunction(()=>{const v=document.getElementById('kf-film');return v&&!v.paused&&v.readyState>2},null,{timeout:15000}).catch(()=>{});
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-film');return !v.paused&&/kaffee\.(mp4|webm)$/.test(v.currentSrc)}),'Film läuft auch auf dem Handy');
+ok(await p.evaluate(()=>{const v=document.getElementById('kf-film').getBoundingClientRect(),h=document.querySelector('.kf-hero h1').getBoundingClientRect();return v.height>300&&h.top>v.top+v.height*0.6}),'Handy: Film oben groß, Überschrift darunter');
 await c.close();
 // Bewegung reduzieren
 [c,p]=await neu({viewport:{width:1200,height:800},reducedMotion:'reduce'});await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(600);
