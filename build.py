@@ -14,6 +14,7 @@ meldet einen HINWEIS. Den Tag der ersten Veröffentlichung merkt sich der Build 
 Platzhalter in den Seiten:
   {{amz:Suchbegriff}}      Amazon-Suchlink mit Partner-Tag (immer mit „Anzeige“ kennzeichnen)
   {{otto:Suchbegriff}}     OTTO über Awin (Suche oder, mit voller otto.de-Adresse, direkt die Produktseite; immer mit „Anzeige“)
+  {{awin:ID|Adresse}}      beliebiger Awin-Händler mit Programm-ID und Zielseite (immer mit „Anzeige“)
   {{PALETTE:stil}}         Farbkarte eines Stils
   {{STARTS:stil}}          Die drei Startstücke eines Stils mit Amazon-Suchlinks
   {{PIC:name|Alt-Text|sizes}}  Foto aus assets/ als <picture> mit WebP und JPEG
@@ -596,6 +597,7 @@ def page(src):
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     html = re.sub(r'\{\{otto:(.*?)\}\}', lambda m: otto_url(m.group(1)), html)
+    html = re.sub(r'\{\{awin:(\d+)\|([^}]*)\}\}', lambda m: awin_url(m.group(1), m.group(2).strip()), html)
     html, _get = awin_haupt(html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
     html = awin_zeile(html, pathlib.Path(str(src)).stem, _get)
