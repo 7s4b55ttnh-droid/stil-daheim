@@ -1,0 +1,210 @@
+<!--meta {"key":"vorhaenge","title":"Vorhänge aufhängen: Länge, Breite und Höhe richtig planen – Stil-Daheim","desc":"Vorhänge aufhängen: Stange 15 cm über dem Fenster und je 20 cm breiter, Stoff 1,5- bis 2-mal so breit, 1 bis 2 cm über dem Boden. Mit Vorhang-Planer.","og":"assets/vorhaenge.jpg","updated":"2026-11-20","kurz":"Die Stange hängt etwa 15&nbsp;cm über dem Fensterrahmen und ist links und rechts je 15 bis 20&nbsp;cm breiter als das Fenster. Der Stoff ist bei Ösen und Schlaufen 1,5- bis 2-mal so breit wie die Stange, bei Kräuselband 2- bis 3-mal. Bodenlange Vorhänge enden 1 bis 2&nbsp;cm über dem Boden. Steht unter dem Fenster ein Heizkörper, sollte der Vorhang beim Heizen oberhalb davon enden und ihn nicht verdecken."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:50% 50%}
+.masse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}
+.masse div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:16px}
+.masse b{display:block;font-size:1.9rem;font-stretch:80%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.masse span{font-size:.92rem;color:var(--mut)}
+.vcheck{display:grid;gap:16px;margin-top:28px}
+.vcheck .in{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.vcheck label{display:flex;align-items:center;gap:10px;font-weight:600}
+.vcheck input[type=text]{width:6ch;min-height:44px;font:inherit;font-size:1.2rem;font-weight:700;text-align:right;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.vcheck input[type=checkbox]{width:22px;height:22px;accent-color:var(--grn)}
+.vcheck select{min-height:44px;font:inherit;font-weight:600;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink);max-width:100%}
+.vres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vres div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.vres b{display:block;font-size:1.4rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--brass-t);margin-bottom:4px}
+.vres span{font-size:.9rem;color:var(--mut)}
+#vplan{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px}
+#vplan svg{display:block;width:100%;height:auto;max-height:340px}
+#vplan .wall{fill:none;stroke:var(--ink);stroke-width:2;opacity:.5}
+#vplan .win{fill:#9fb4c4;opacity:.35;stroke:var(--ink);stroke-width:2}
+#vplan .rod{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+#vplan .cur{fill:var(--brass-t);opacity:.32}
+#vplan .rad{fill:none;stroke:var(--ink);stroke-width:2;opacity:.55}
+#vplan .bad{fill:#c0392b;opacity:.22}
+#vplan text{fill:var(--brass-t);font:600 15px Archivo,system-ui,sans-serif}
+.vtxt{margin:0;color:var(--mut)}
+.ltab{width:100%;border-collapse:collapse;margin-top:24px}
+.ltab th,.ltab td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.ltab th{font-size:.9rem;color:var(--mut);font-weight:600}
+@media (max-width:640px){.masse{grid-template-columns:repeat(2,minmax(0,1fr))}.ltab th,.ltab td{padding:8px 4px;font-size:.92rem}.ltab td:nth-child(3),.ltab th:nth-child(3){display:none}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:vorhaenge|Altbau-Wohnzimmer am Winterabend mit bodenlangen sandfarbenen Leinenvorhängen an einer schwarzen Stange hoch über dem Fenster, dahinter weiße Stores und ein freier Heizkörper unter dem Fenster}}
+  <div class="wrap">
+    <h1>Vorhänge aufhängen: Länge, Breite und Höhe richtig planen</h1>
+    <p>Hoch und breit gehängt wirken Fenster größer und der Raum ruhiger. Der Vorhang-Planer rechnet Stange, Stoffbreite und Länge für dein Fenster aus und zeichnet es dir auf.</p>
+    <div class="btns"><a class="btn" href="#planer">Zum Vorhang-Planer</a><a class="btn ghost" href="#masse">Die Maße</a></div>
+  </div>
+</div>
+
+<section id="masse"><div class="wrap narrow">
+  <h2>Die wichtigsten Maße.</h2>
+  <p class="lede">Vier Zahlen, mit denen fast jedes Fenster gut aussieht.</p>
+  <div class="masse">
+    <div><b>15&nbsp;cm</b><span>Stange über dem Fensterrahmen</span></div>
+    <div><b>+20&nbsp;cm</b><span>Stange je Seite breiter als das Fenster</span></div>
+    <div><b>×1,5–2</b><span>Stoffbreite bei Ösen und Schlaufen, Kräuselband ×2–3</span></div>
+    <div><b>1–2&nbsp;cm</b><span>Abstand zum Boden bei schwebenden Vorhängen</span></div>
+  </div>
+</div></section>
+
+<section class="band" id="planer"><div class="wrap narrow">
+  <h2>Der Vorhang-Planer.</h2>
+  <p class="lede">Miss das Fenster mit Rahmen und den Abstand vom Boden zur Fensterbank. Der Planer zeigt, wo die Stange hin muss und wie viel Stoff du brauchst.</p>
+  <div class="vcheck">
+    <div class="in">
+      <label for="vw">Fensterbreite <input id="vw" type="text" inputmode="numeric" autocomplete="off" value="120" aria-label="Fensterbreite mit Rahmen in Zentimetern"> cm</label>
+      <label for="vh">Fensterhöhe <input id="vh" type="text" inputmode="numeric" autocomplete="off" value="140" aria-label="Fensterhöhe mit Rahmen in Zentimetern"> cm</label>
+      <label for="vs">Boden bis Fensterbank <input id="vs" type="text" inputmode="numeric" autocomplete="off" value="90" aria-label="Abstand vom Boden bis zur Fensterunterkante in Zentimetern"> cm</label>
+      <label for="vr">Raumhöhe <input id="vr" type="text" inputmode="numeric" autocomplete="off" value="260" aria-label="Raumhöhe in Zentimetern"> cm</label>
+    </div>
+    <div class="in">
+      <label for="va">Aufhängung <select id="va"><option value="1.5">Ösen oder Schlaufen</option><option value="2">Kräusel- oder Smokband</option></select></label>
+      <label for="vl">Länge <select id="vl"><option value="f">bodenlang, schwebend</option><option value="a">bodenlang, aufliegend</option><option value="s">bis zur Fensterbank</option></select></label>
+      <label for="vk"><input id="vk" type="checkbox" checked> Heizkörper unter dem Fenster</label>
+    </div>
+    <div class="vres" aria-live="polite">
+      <div><b id="v1"></b><span>Stange, Länge</span></div>
+      <div><b id="v2"></b><span>Stange über dem Boden</span></div>
+      <div><b id="v3"></b><span>Vorhanglänge ab Oberkante Stange</span></div>
+      <div><b id="v4"></b><span id="v4s">Stoffbreite gesamt</span></div>
+    </div>
+    <div id="vplan" aria-hidden="true"></div>
+    <p class="vtxt" id="vtxt"></p>
+  </div>
+  <p class="tip">Dieselbe Rechnung steckt im <a href="rechner.html?w=vorhang#werkzeug">Raum-Rechner</a>, dort zusammen mit Teppich, Bildern und Lampen. Wie viel Licht ein Raum mit Vorhängen braucht, steht im Ratgeber <a href="licht.html">Licht planen</a>.</p>
+</div></section>
+
+<section id="laenge"><div class="wrap narrow">
+  <h2>Welche Länge passt?</h2>
+  <p class="lede">Die Länge entscheidet, wie der Vorhang wirkt, und ob er im Winter die Heizung ausbremst.</p>
+  <table class="ltab">
+    <thead><tr><th>Länge</th><th>Wirkt</th><th>Darauf achten</th></tr></thead>
+    <tbody>
+      <tr><td><b>Schwebend, 1 bis 2&nbsp;cm über dem Boden</b></td><td>Klar und ordentlich</td><td>Die übliche Wahl. Der Stoff schleift nicht und bleibt sauber.</td></tr>
+      <tr><td><b>Aufliegend, 2 bis 5&nbsp;cm länger</b></td><td>Weich und gemütlich</td><td>Der Saum knickt leicht auf dem Boden. Schöner bei schweren Stoffen, staubt aber schneller ein.</td></tr>
+      <tr><td><b>Bis zur Fensterbank</b></td><td>Leicht, gut für kleine Räume</td><td>Etwa 1&nbsp;cm über der Fensterbank enden lassen. Praktisch, wenn die Fensterbank als Ablage dient oder ein Heizkörper darunter steht.</td></tr>
+      <tr><td><b>Bodenlang an der Balkontür</b></td><td>Wie eine Wand aus Stoff</td><td>Der Vorhang darf die Tür nicht behindern. Hier hält er im Winter auch Zugluft ab.</td></tr>
+    </tbody>
+  </table>
+  <p class="tip">Leinen und Baumwolle laufen beim Waschen oft etwas ein. Solche Vorhänge lieber ein paar Zentimeter länger kaufen und nach der ersten Wäsche kürzen.</p>
+</div></section>
+
+{{FIG:vorhaenge-2|Nahaufnahme eines sandfarbenen Leinenvorhangs mit schwarzen Metallösen an einer schlanken schwarzen Stange, weiche gleichmäßige Falten im warmen Abendlicht|Ösen ergeben gleichmäßige, tiefe Falten. Dafür braucht der Stoff etwa die 1,5- bis 2-fache Breite der Stange.}}
+
+<section class="band" id="schritte"><div class="wrap narrow">
+  <h2>In sechs Schritten zum Vorhang.</h2>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Den Zweck klären</h3><p>Soll der Vorhang verdunkeln, vor Blicken schützen oder nur Wärme und Weichheit in den Raum bringen? Ein dünner Store schützt tagsüber vor Blicken, ein dichter Vorhang macht abends dunkel. Beides zusammen geht mit einer Doppelstange oder einer Schiene mit zwei Läufen.</p></li>
+    <li><h3>Richtig messen</h3><p>Miss das Fenster mit Rahmen, dazu den Abstand vom Boden zur Fensterbank und die Raumhöhe. Die Länge des Vorhangs misst du später ab der Oberkante der Stange, bei Schienen ab ihrer Unterkante.</p></li>
+    <li><h3>Hoch und breit hängen</h3><p>Etwa 15&nbsp;cm über dem Rahmen und je 15 bis 20&nbsp;cm zu beiden Seiten. Dann deckt der offene Vorhang kaum Glas ab, es bleibt hell, und das Fenster wirkt größer. In niedrigen Räumen darf die Stange auch bis kurz unter die Decke wandern.</p></li>
+    <li><h3>Genug Stoff nehmen</h3><p>Ein Vorhang, der nur gerade so breit ist wie die Stange, hängt flach wie ein Laken. Bei Ösen und Schlaufen sollte der Stoff zusammen 1,5- bis 2-mal so breit sein wie die Stange, bei Kräuselband 2- bis 3-mal. Schwere Stoffe vertragen mehr Falten.</p></li>
+    <li><h3>Die Heizung freilassen</h3><p>Ein Vorhang über dem Heizkörper staut die Wärme, und das Thermostat misst falsch. Steht die Heizung unter dem Fenster, enden Vorhänge besser oberhalb davon oder bleiben beim Heizen seitlich offen.</p></li>
+    <li><h3>Abends zuziehen</h3><p>Im Winter nachts Rollläden schließen und Vorhänge zuziehen. Das mindert den Wärmeverlust am Fenster, besonders bei großen und älteren Fenstern.</p></li>
+  </ol>
+</div></section>
+
+<section id="miete"><div class="wrap narrow">
+  <h2>Vorhänge zur Miete und ohne Bohren.</h2>
+  <p class="lede">Nicht jede Wand verträgt Dübel, und nicht jeder Vermieter mag Löcher im Fensterrahmen.</p>
+  <ul class="rechte">
+    <li><b>Klemmstange:</b> Sie spannt sich zwischen zwei Wände oder in die Fensterlaibung. Gut für Nischen und Dachfenster, nicht für schwere Vorhänge auf großer Breite.</li>
+    <li><b>Klemmträger:</b> Sie werden auf den Flügel des Fensters gesteckt und tragen leichte Stangen oder Rollos direkt am Fenster.</li>
+    <li><b>Deckenschiene:</b> Wirkt besonders hoch und ruhig. Gebohrt wird in die Decke, das lässt sich beim Auszug meist leicht spachteln. Was in Mietwohnungen erlaubt ist, steht im Ratgeber <a href="mieten.html">Wohnen zur Miete</a>.</li>
+    <li><b>Vorhandene Haken nutzen:</b> Hängen schon Träger an der Wand, lohnt oft eine längere Stange auf denselben Trägern statt neuer Löcher.</li>
+  </ul>
+</div></section>
+
+<section class="band" id="checkliste"><div class="wrap narrow">
+  <h2>Checkliste vor dem Kauf.</h2>
+  <p class="lede">Hak ab, was erledigt ist. Der Stand bleibt nur in deinem Browser.</p>
+  <div class="ck" id="ck" style="margin-top:26px"></div>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für dein Fenster.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Vorhang Leinenoptik Ösen blickdicht}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Vorhang in Leinenoptik</b><span>Weich, warm und ruhig im Raum</span><span class="chk">Achte auf: Länge ab Oberkante Stange und die Breite je Schal</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Verdunkelungsvorhang Thermovorhang Ösen}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Verdunkelungsvorhang</b><span>Für Schlafzimmer und Gästezimmer</span><span class="chk">Achte auf: dichtes Gewebe oder Beschichtung, Angabe zur Lichtdurchlässigkeit</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Store Voile weiß transparent Gardine}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Store aus Voile</b><span>Sichtschutz am Tag, lässt Licht herein</span><span class="chk">Achte auf: gleiche Aufhängung wie der Vorhang davor</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Gardinenstange ausziehbar schwarz Metall 20 mm}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Gardinenstange</b><span>Ausziehbar, damit sie zum Fenster passt</span><span class="chk">Achte auf: Mittelträger ab etwa 2&nbsp;m Länge</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Doppelstange Gardinenstange zweiläufig}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Doppelstange</b><span>Store und Vorhang hintereinander</span><span class="chk">Achte auf: Wandabstand, damit nichts an die Fensterbank stößt</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Vorhangschiene Deckenschiene}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Deckenschiene</b><span>Wirkt hoch und ruhig</span><span class="chk">Achte auf: Zahl der Läufe und passende Gleiter</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Klemmstange ohne Bohren Gardine}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Klemmstange</b><span>Für Nischen, ohne Bohren</span><span class="chk">Achte auf: Spannbereich und Tragkraft</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Raffhalter Vorhang Magnet}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Raffhalter</b><span>Hält den Vorhang beim Heizen von der Heizung fern</span><span class="chk">Achte auf: Magnet oder Haken, je nach Wand</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie hoch hängt man eine Gardinenstange?</summary><div><p>Etwa 15&nbsp;cm über dem Fensterrahmen und mindestens 5&nbsp;cm unter der Decke. Höher gehängt wirkt das Fenster größer und der Raum höher.</p></div></details>
+    <details><summary>Wie viel breiter als das Fenster sollte die Gardinenstange sein?</summary><div><p>Links und rechts je 15 bis 20&nbsp;cm. Dann liegt der offene Vorhang neben dem Glas und nimmt kaum Licht weg.</p></div></details>
+    <details><summary>Wie breit muss ein Vorhang sein?</summary><div><p>Bei Ösen und Schlaufen 1,5- bis 2-mal so breit wie die Stange, bei Kräuselband 2- bis 3-mal. Bei einer Stange von 160&nbsp;cm und Ösen sind das also 240 bis 320&nbsp;cm Stoff, zum Beispiel zwei Schals mit je 140&nbsp;cm.</p></div></details>
+    <details><summary>Wie lang sollten Vorhänge sein?</summary><div><p>Schwebende Vorhänge enden 1 bis 2&nbsp;cm über dem Boden, aufliegende sind 2 bis 5&nbsp;cm länger. Kurze Vorhänge enden etwa 1&nbsp;cm über der Fensterbank. Gemessen wird ab der Oberkante der Stange.</p></div></details>
+    <details><summary>Dürfen Vorhänge über der Heizung hängen?</summary><div><p>Besser nicht. Die Wärme staut sich hinter dem Stoff, und ein verdecktes Thermostat misst die Raumtemperatur falsch. Steht der Heizkörper unter dem Fenster, sollte der Vorhang oberhalb davon enden oder beim Heizen offen zur Seite gebunden sein.</p></div></details>
+    <details><summary>Helfen Vorhänge gegen Kälte am Fenster?</summary><div><p>Ja. Nachts geschlossene Rollläden mindern den Wärmeverlust am Fenster stark, zugezogene Vorhänge verstärken das noch. Je größer und älter das Fenster, desto mehr bringt es.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>Verbraucherzentrale RLP: Mit geringem Aufwand Heizenergie sparen, Rollläden und Vorhänge nachts schließen, Heizkörper nicht verdecken, Vorhänge oberhalb enden lassen (24.10.2023) <a href="https://www.vg-altenkirchen-flammersfeld.de/fileadmin/user_upload/Klimaschutz/Energiespartipps/231024-EnT-Einfache_Heiztipps-VZRLP.pdf" target="_blank" rel="noopener">vg-altenkirchen-flammersfeld.de</a></li>
+    <li>hausjournal: Gardinenbreite berechnen, Rafffaktor 1,5 bis 2 bei Ösen und Schlaufen, 2 bis 3 bei Kräuselband, 15 bis 20&nbsp;cm Überstand je Seite (23.10.2024) <a href="https://www.hausjournal.net/wie-breit-muss-eine-gardine-sein" target="_blank" rel="noopener">hausjournal.net</a></li>
+    <li>hausjournal: Gardinen bis Fensterbank oder Boden, 1 bis 2&nbsp;cm Abstand zum Boden, Balkontür, Heizkörper (08.11.2024) <a href="https://www.hausjournal.net/gardinen-bis-fensterbank-oder-boden" target="_blank" rel="noopener">hausjournal.net</a></li>
+    <li>Baur Magazin: Gardinenlänge, schwebend, aufliegend 2 bis 5&nbsp;cm länger, bis Fensterbank 1&nbsp;cm abziehen <a href="https://www.baur.de/magazin/gardinen-laenge" target="_blank" rel="noopener">baur.de</a></li>
+    <li>home&amp;smart: Vorhang, Sofa, Thermostat, wie Möbel und Stoff die Heizung ausbremsen (09.11.2026) <a href="https://www.homeandsmart.de/vorhang-sofa-thermostat-heizung-ausbremst-40192a-0009-316706" target="_blank" rel="noopener">homeandsmart.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 20.11.2026. Höhe und Breite der Stange rechnen wir wie im <a href="rechner.html?w=vorhang#werkzeug">Raum-Rechner</a>.</p></div>
+</div></section>
+
+<section class="sis"><div class="wrap narrow"><a class="sis-a" href="https://strom-daheim.de/lueften.html"><span class="sis-k">Von unserer Schwesterseite Strom-Daheim</span><b>Richtig lüften und heizen →</b><span>Warm bleiben, Schimmel vermeiden und Heizkosten sparen.</span></a></div></section>
+
+{{RELATED:gemuetlich,schlafzimmer,rechner}}
+<!--END-->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var $=function(i){return document.getElementById(i)};
+function num(id,d,lo,hi){var v=parseFloat(String($(id).value).replace(',','.'));if(!isFinite(v))return d;return Math.min(hi,Math.max(lo,v))}
+function cm(x){return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' cm'}
+function calc(){
+var w=num('vw',120,40,400),h=num('vh',140,40,300),s=num('vs',90,0,150),r=num('vr',260,200,400),f=parseFloat($('va').value),L=$('vl').value,rad=$('vk').checked&&s>=30;
+var top=s+h,rod=Math.min(top+15,r-5);if(rod<top+3)rod=top+3;if(rod>r)rod=r;
+var rl=Math.ceil((w+40)/10)*10;
+if(L==='s'&&s<20)L='f';
+var len=L==='f'?rod-2:L==='a'?rod+3:rod-s-1;
+var fab=rl*f,sch=Math.max(2,Math.ceil(fab/140/2)*2);
+$('v1').textContent=cm(rl);$('v2').textContent=cm(rod);
+$('v3').textContent=cm(len);
+$('v4').textContent=cm(fab);$('v4s').textContent='Stoffbreite gesamt, z. B. '+sch+' Schals à 140 cm';
+var t='Die Stange sitzt '+cm(rod-top)+' über dem Fensterrahmen'+(rod>=r-5?' und damit kurz unter der Decke':'')+' und steht links und rechts je '+cm((rl-w)/2)+' über.';
+if(L==='s')t+=' Der Vorhang endet etwa 1 cm über der Fensterbank.';
+else if(L==='a')t+=' Der Saum liegt etwa 3 cm auf dem Boden auf.';
+else t+=' Der Vorhang schwebt 2 cm über dem Boden.';
+if(s<20)t+=' Bei bodentiefen Fenstern und Balkontüren darf der Vorhang die Tür nicht behindern.';
+var warn=rad&&L!=='s';
+if(warn)t+=' Achtung: Bodenlang hängt der geschlossene Vorhang vor dem Heizkörper. Beim Heizen offen zur Seite binden oder einen kurzen Vorhang wählen, der oberhalb der Heizung endet.';
+$('vtxt').textContent=t;
+draw(w,h,s,r,rod,rl,L,rad,warn)}
+function draw(w,h,s,r,rod,rl,L,rad,warn){
+var WW=Math.max(rl+80,w+120),sc=Math.min(560/WW,300/r),pw=WW*sc+20,ph=r*sc+20,ox=10+(WW-w)/2*sc,y0=10;
+function Y(z){return y0+(r-z)*sc}
+var g='<svg viewBox="0 0 '+pw.toFixed(0)+' '+ph.toFixed(0)+'"><rect class="wall" x="10" y="10" width="'+(WW*sc).toFixed(1)+'" height="'+(r*sc).toFixed(1)+'"/>';
+g+='<rect class="win" x="'+ox.toFixed(1)+'" y="'+Y(s+h).toFixed(1)+'" width="'+(w*sc).toFixed(1)+'" height="'+(h*sc).toFixed(1)+'"/>';
+if(rad&&s>=30)g+='<rect class="rad" x="'+(ox+w*.1*sc).toFixed(1)+'" y="'+Y(Math.min(s-8,70)).toFixed(1)+'" width="'+(w*.8*sc).toFixed(1)+'" height="'+((Math.min(s-8,70)-12)*sc).toFixed(1)+'" rx="3"/>';
+var rx=ox-(rl-w)/2*sc,bot=L==='s'?s+1:L==='a'?0:2,cw=Math.max(20,(rl-w)/2+w*.18)*sc;
+g+='<rect class="'+(warn?'bad':'cur')+'" x="'+rx.toFixed(1)+'" y="'+Y(rod).toFixed(1)+'" width="'+cw.toFixed(1)+'" height="'+((rod-bot)*sc).toFixed(1)+'"/>';
+g+='<rect class="'+(warn?'bad':'cur')+'" x="'+(rx+rl*sc-cw).toFixed(1)+'" y="'+Y(rod).toFixed(1)+'" width="'+cw.toFixed(1)+'" height="'+((rod-bot)*sc).toFixed(1)+'"/>';
+g+='<line class="rod" x1="'+rx.toFixed(1)+'" y1="'+Y(rod).toFixed(1)+'" x2="'+(rx+rl*sc).toFixed(1)+'" y2="'+Y(rod).toFixed(1)+'"/>';
+g+='<text x="'+(rx+rl*sc/2).toFixed(1)+'" y="'+(Y(rod)-6).toFixed(1)+'" text-anchor="middle">'+Math.round(rl)+' cm</text></svg>';
+$('vplan').innerHTML=g}
+['vw','vh','vs','vr'].forEach(function(i){$(i).addEventListener('input',calc)});['va','vl','vk'].forEach(function(i){$(i).addEventListener('change',calc)});calc();
+var C=[['Fenster gemessen','Breite und Höhe mit Rahmen, Boden bis Fensterbank, Raumhöhe.'],['Zweck geklärt','Verdunkeln, Sichtschutz oder nur Gemütlichkeit?'],['Länge gewählt','Schwebend, aufliegend oder bis zur Fensterbank.'],['Heizung bedacht','Vorhang endet oberhalb oder lässt sich zur Seite binden.'],['Stange geplant','15 cm über dem Rahmen, je 20 cm breiter als das Fenster.'],['Stoffbreite gerechnet','Stange mal 1,5 bis 2, bei Kräuselband mal 2 bis 3.'],['Bohren geklärt','Zur Miete: Klemmstange oder vorhandene Träger nutzen.'],['Einlaufen bedacht','Leinen und Baumwolle etwas länger kaufen.']];
+sdChecklist('ck',C,'sdvh',{verb:'erledigt',done:'Alles geplant. Viel Freude mit dem neuen Vorhang!'})});
+</script>
