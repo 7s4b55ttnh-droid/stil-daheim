@@ -169,16 +169,67 @@ def awin_url(mid, ziel):
     return 'https://www.awin1.com/cread.php?awinmid=%s&amp;awinaffid=%s&amp;ued=%s' % (mid, AWIN_ID, urllib.parse.quote(ziel, safe=''))
 
 
-def awin_zeile(html, slug):
-    L = AWIN_SEITEN.get(slug)
+# Hauptlink je Empfehlung (seit 20.11.2026): Teppiche, Leuchten und Möbel gehen direkt zum Fachhändler (höhere Provision, 30 Tage Zuordnung),
+# Kleinteile bleiben bei Amazon. Entschieden wird am Suchbegriff im {{amz:…}}; Amazon steht dann als zweiter Link in der Zeile darunter.
+_AUS = re.compile(r'tischläufer|filzgleiter|molton|vakuum|luftbett|unterbettkommode|pflanzenlampe|unterbauleuchte|led lampe|led filament|bürostuhl|lichterkette|kerze|dimmer', re.I)
+_TEP = re.compile(r'teppich|läufer|kelim|bettvorleger', re.I)
+_LAM = re.compile(r'stehleuchte|stehlampe|pendelleuchte|tischleuchte|nachttischlampe|wandleuchte|schreibtischlampe|leselampe|papierleuchte|pilzleuchte|deckenleuchte', re.I)
+_MOE = re.compile(r'sofa|sessel|\bbett\b|gästebett|esstisch|couchtisch|beistelltisch|nierentisch|sideboard|\bregal\b|wandregal|sitzbank|schreibtisch|sekretär|esszimmerstühle|barhocker|kommode|kleiderschrank|wandklapptisch', re.I)
+
+
+def haendler(q):
+    """(Händler-ID, Name, Zielseite) für einen Amazon-Suchbegriff oder None, wenn Amazon Hauptlink bleibt. Zielseiten geprüft am 20.11.2026."""
+    k = q.lower()
+    if _AUS.search(k):
+        return None
+    if _TEP.search(k):
+        T = 'https://www.teppich.de/'
+        for wort, ziel in (('läufer', 'teppich-laeufer/'), ('jute', 'search?search=Jute'), ('kurzflor', 'kurzflor-teppiche/'), ('orient', 'search?search=Orient'), ('vintage', 'search?search=Vintage'),
+                           ('woll', 'search?search=Wolle'), ('bettvorleger', 'kleine-teppiche/'), ('wohnzimmer', 'wohnzimmer-teppiche/')):
+            if wort in k:
+                return ('53143', 'teppich.de', T + ziel)
+        return ('53143', 'teppich.de', T + 'teppiche/')
+    if _LAM.search(k):
+        L = 'https://www.lampenwelt.de/c/innenleuchten/'
+        ziel = ('pendelleuchten-hangelampen' if 'pendel' in k else 'wandleuchten' if 'wandleuchte' in k else 'stehlampen' if ('stehl' in k) else 'deckenleuchten' if 'decken' in k else 'tischlampen')
+        return ('7619', 'Lampenwelt', L + ziel)
+    if _MOE.search(k):
+        return ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
+    return None
+
+
+def awin_haupt(html):
+    """Tauscht in den Einkaufslisten den Hauptlink (vor der {{amz:}}-Ersetzung aufrufen). Gibt (html, [(Titel, Amazon-Suchbegriff)]) zurück."""
+    getauscht = []
+
+    def f(m):
+        h = haendler(m.group(2))
+        if not h:
+            return m.group(0)
+        t = re.search(r'<b>(.*?)</b>', m.group(3))
+        getauscht.append((t.group(1) if t else m.group(2), m.group(2)))
+        return m.group(1) + awin_url(h[0], h[2]) + m.group(3) + 'Bei ' + h[1]
+    html = re.sub(r'(<a class="item" href=")\{\{amz:([^}]*)\}\}("[^\n]*?<span class="go"><span>)Bei Amazon', f, html)
+    if getauscht:
+        html = html.replace('Die Links führen zu einer Suche bei Amazon', 'Die Links führen zu Amazon oder direkt zum Fachhändler').replace('Die Links führen zu Angeboten bei Amazon', 'Die Links führen zu Amazon oder direkt zum Fachhändler')
+    return html, getauscht
+
+
+def awin_zeile(html, slug, getauscht=()):
+    L = AWIN_SEITEN.get(slug) or []
     i = html.find('class="shop"')
-    if not L or i < 0:
+    if (not L and not getauscht) or i < 0:
         return html
     j = html.find('</div></section>', i)
     if j < 0:
         return html
-    links = ' · '.join('<a href="%s" rel="sponsored nofollow noopener" target="_blank">%s</a>' % (awin_url(m, z), t) for m, t, z in L)
-    return html[:j] + '  <p class="aw">Lieber direkt beim Händler stöbern? %s<span class="tag">Anzeige</span></p>\n' % links + html[j:]
+    A = '<a href="%s" rel="sponsored nofollow noopener" target="_blank">%s</a>'
+    z = ''
+    if L:
+        z += 'Lieber direkt beim Händler stöbern? ' + ' · '.join(A % (awin_url(m, zl), t) for m, t, zl in L)
+    if getauscht:
+        z += ('<br>' if z else '') + 'Auch bei Amazon: ' + ' · '.join(A % (amz_url(q), t) for t, q in list(getauscht)[:4])
+    return html[:j] + '  <p class="aw">%s<span class="tag">Anzeige</span></p>\n' % z + html[j:]
 
 
 _widths = {}
@@ -482,8 +533,9 @@ def page(src):
     html = html.replace('{{ALLE}}', alle()) if '{{ALLE}}' in html else html
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
+    html, _get = awin_haupt(html)
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
-    html = awin_zeile(html, pathlib.Path(str(src)).stem)
+    html = awin_zeile(html, pathlib.Path(str(src)).stem, _get)
     html = re.sub(r'<div class="src">(.*?)</div>', sources, html, flags=re.S)
     html = html.replace('href="index.html#', 'href="./#').replace('href="index.html"', 'href="./"')
     html = html.replace('Stil-Daheim', BRAND)
