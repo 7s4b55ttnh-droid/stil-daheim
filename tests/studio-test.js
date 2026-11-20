@@ -37,11 +37,33 @@ const f=await p.evaluate(()=>{const e=document.querySelector('.st'),F=e.STUDIO.f
 ok(f.art==='foto'&&f.an>.3&&f.an<.65,'Eigenes Foto: Wand von selbst erkannt ('+Math.round(f.an*100)+' %)');
 ok(f.w[1]>f.w[0]+8&&f.so[0]>f.so[1]+30,'Wand ist grün, das Ledersofa bleibt braun '+JSON.stringify([f.w,f.so]));
 ok(f.ki==='none'&&f.fein&&/Wand/.test(f.msg),'Eigenes Foto ohne KI-Hinweis, mit „Feiner einstellen“ und Hinweistext');
-await p.locator('.st-dots button[title="Petrol"]').first().click();await p.waitForTimeout(300);const p2=await p.evaluate(()=>{const c=document.querySelector('.st canvas'),w=c.getContext('2d').getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data;return [...w].slice(0,3)});ok(p2[2]>p2[0]+20,'Farbwechsel im eigenen Foto wirkt '+JSON.stringify(p2));
+await p.locator('.st-dots button[title="Petrol"]').first().click();await p.waitForTimeout(300);const p2=await p.evaluate(()=>{const c=document.querySelector('.st-ph canvas'),w=c.getContext('2d').getImageData(Math.round(c.width*.5),Math.round(c.height*.15),1,1).data;return [...w].slice(0,3)});ok(p2[2]>p2[0]+20,'Farbwechsel im eigenen Foto wirkt '+JSON.stringify(p2));
+// Eigene Farbe mischen (eigene Seite, damit der Rest unberührt bleibt)
+{const q=await ctx.newPage();const qe=[];q.on('pageerror',e=>qe.push(e.message));await q.goto(B+'/wandfarbe-testen.html?raum=graues-sofa&farbe=A9B8A0',{waitUntil:'networkidle'});await q.waitForTimeout(400);
+const Z=()=>q.evaluate(()=>{const e=document.querySelector('.st');return {f:e.STUDIO.farbe(),w:e.querySelector('.st-ph').style.getPropertyValue('--w'),cap:e.querySelector('.st-cap').textContent,d0:e.querySelector('.st-dots button').dataset.c,mix:!e.querySelector('.st-mix').hidden,ral:e.querySelector('.st-kauf').textContent.slice(0,400)}});
+await q.locator('.st-misch>summary').click();const z0=await Z();
+await q.locator('.st-nudge [data-n="h"]').click();await q.waitForTimeout(200);const z1=await Z();
+ok(z1.f[1]!==z0.f[1]&&z1.w===z1.f[1]&&/Deine Mischung/.test(z1.cap)&&/selbst gemischt/.test(z1.cap)&&z1.d0===z1.f[1],'„Heller“ macht eine eigene Farbe, die Wand zeigt sie '+JSON.stringify([z0.f,z1.f]));
+const lum=h=>parseInt(h.slice(1,3),16)+parseInt(h.slice(3,5),16)+parseInt(h.slice(5,7),16);ok(lum(z1.f[1])>lum(z0.f[1]),'Die Farbe ist wirklich heller');
+await q.locator('.st-nudge [data-n="w"]').click();await q.waitForTimeout(150);const zw=await Z();ok(parseInt(zw.f[1].slice(1,3),16)>parseInt(z1.f[1].slice(1,3),16)&&parseInt(zw.f[1].slice(5,7),16)<parseInt(z1.f[1].slice(5,7),16),'„Wärmer“ schiebt Richtung Rot, weg von Blau');
+const mb=q.locator('.st-mdots button').nth(3);const bc=await mb.getAttribute('data-c');await mb.click();await q.waitForTimeout(200);const z2=await Z();
+ok(z2.mix&&z2.f[1]!==zw.f[1]&&z2.f[1]!==bc.toUpperCase(),'Zweite Farbe gewählt: Mischung halb und halb, Regler erscheint');
+await q.locator('.st-mix input').evaluate(e=>{e.value=100;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))});await q.waitForTimeout(250);const z3=await Z();
+ok(z3.f[1]===bc.toUpperCase(),'Regler ganz rechts ergibt genau die zweite Farbe '+z3.f[1]);
+await q.locator('.st-hsl>summary').click();await q.locator('.st-hsl input').nth(0).evaluate(e=>{e.value=210;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))});await q.waitForTimeout(250);const z4=await Z();
+ok(parseInt(z4.f[1].slice(5,7),16)>=parseInt(z4.f[1].slice(1,3),16),'Farbton-Regler auf Blau: Blauanteil mindestens so hoch wie Rot '+z4.f[1]);
+// Farbe aus Foto: einfarbiges Testbild, Tipp in die Mitte ergibt (fast) genau diese Farbe
+const png=await q.evaluate(()=>{const c=document.createElement('canvas');c.width=200;c.height=120;const g=c.getContext('2d');g.fillStyle='#B4553C';g.fillRect(0,0,200,120);return c.toDataURL('image/png').split(',')[1]});
+await q.locator('.st-pip input').setInputFiles({name:'kissen.png',mimeType:'image/png',buffer:Buffer.from(png,'base64')});await q.waitForTimeout(500);ok(await q.locator('.st-pipc').isVisible(),'Foto zum Aufnehmen wird gezeigt');
+const pb=await q.locator('.st-pipc').boundingBox();await q.locator('.st-pipc').click({position:{x:pb.width/2,y:pb.height/2}});await q.waitForTimeout(250);const z5=await Z();
+const nah=(a,b)=>[1,3,5].every(i=>Math.abs(parseInt(a.slice(i,i+2),16)-parseInt(b.slice(i,i+2),16))<=3);ok(nah(z5.f[1],'#B4553C')&&/Aus deinem Foto/.test(z5.cap)&&z5.w===z5.f[1],'Tipp ins Foto nimmt die Farbe auf '+z5.f[1]);
+await q.locator('.st-kauf>summary').click();ok(/RAL \d{4}/.test((await Z()).ral),'Eigene Farbe bekommt den nächsten RAL-Ton');
+await q.reload({waitUntil:'networkidle'});await q.waitForTimeout(400);const z6=await q.evaluate(()=>[...document.querySelectorAll('.st-dots button[data-t="eigen"]')].length);ok(z6>=3&&z6<=5,'Eigene Farben bleiben nach dem Neuladen ('+z6+')');
+ok(!qe.length,'Mischen ohne Skriptfehler '+JSON.stringify(qe));await q.locator('.st-misch>summary').click();await q.locator('.st-nudge [data-n="k"]').click();await q.locator('.st').screenshot({path:'/tmp/claude-0/-home-claude/9e0351cc-45dc-5c59-bff1-529ce2c8a069/scratchpad/awin/misch.png'}).catch(()=>{});await q.close()}
 // Eigenes Foto: Sofa umfärben (Farbe wählen, Sofa antippen), Wand bleibt, „Original“ nimmt die Farbe zurück
-const pxl=(x,y)=>p.evaluate(([x,y])=>{const c=document.querySelector('.st canvas');return [...c.getContext('2d').getImageData(Math.round(c.width*x),Math.round(c.height*y),1,1).data].slice(0,3)},[x,y]);
+const pxl=(x,y)=>p.evaluate(([x,y])=>{const c=document.querySelector('.st-ph canvas');return [...c.getContext('2d').getImageData(Math.round(c.width*x),Math.round(c.height*y),1,1).data].slice(0,3)},[x,y]);
 const sv=await pxl(.5,.55),wv=await pxl(.5,.15);await p.locator('.st-grp[data-was="sitz"] button[title="Blau"]').click();ok(/Sofa/.test(await p.textContent('.st-msg'))&&await p.locator('[data-z="sitz"]').getAttribute('aria-pressed')==='true','Sofafarbe gewählt: Studio bittet um einen Tipp aufs Sofa');
-const cb=await p.locator('.st canvas').boundingBox();await p.locator('.st canvas').click({position:{x:cb.width*.5,y:cb.height*.55}});await p.waitForTimeout(500);const sn=await pxl(.5,.55),wn=await pxl(.5,.15);
+const cb=await p.locator('.st-ph canvas').boundingBox();await p.locator('.st-ph canvas').click({position:{x:cb.width*.5,y:cb.height*.55}});await p.waitForTimeout(500);const sn=await pxl(.5,.55),wn=await pxl(.5,.15);
 ok(sv[0]>sv[2]+30&&sn[2]>sn[0]+30,'Sofa im eigenen Foto ist jetzt blau '+JSON.stringify([sv,sn]));ok(Math.abs(wv[0]-wn[0])<4&&Math.abs(wv[2]-wn[2])<4,'Die Wand bleibt dabei unverändert');
 ok(/Sofas in Blau ansehen/.test(await p.textContent('.st-shop'))&&/Anzeige/.test(await p.textContent('.st-shop')),'Kauflink zum Sofa, als Anzeige gekennzeichnet');
 await p.locator('.st-grp[data-was="sitz"] button[title="Original"]').click();await p.waitForTimeout(300);const sz=await pxl(.5,.55);ok(Math.abs(sz[0]-sv[0])<4,'„Original“ zeigt das Sofa wieder wie im Foto');

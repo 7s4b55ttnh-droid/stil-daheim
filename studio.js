@@ -37,9 +37,16 @@ function ral(hex){var a=lab(hex),best=null,bd=1e9;RAL.forEach(function(r){var b=
 function hx(s){return /^[0-9a-fA-F]{6}$/.test(s||'')?'#'+s.toUpperCase():''}
 var EXT='<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
 function rgb(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+/* Eigene Farbe mischen (seit 20.11.2026): Hex aus RGB, HSL hin und zurück, Mischen im linearen Licht (wirkt natürlicher als im Hex-Raum). */
+function hexVon(r,g,b){return '#'+[r,g,b].map(function(v){v=Math.max(0,Math.min(255,Math.round(v)));return (v<16?'0':'')+v.toString(16)}).join('').toUpperCase()}
+function hslVon(h){var c=rgb(h),r=c[0]/255,g=c[1]/255,b=c[2]/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn,H=0,S=0;
+ if(d){S=d/(1-Math.abs(2*l-1));H=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;H*=60;if(H<0)H+=360}return [Math.round(H)%360,Math.round(S*100),Math.round(l*100)]}
+function hexHsl(H,S,L){S/=100;L/=100;var c=(1-Math.abs(2*L-1))*S,x=c*(1-Math.abs((H/60)%2-1)),m=L-c/2,r=0,g=0,b=0;
+ if(H<60){r=c;g=x}else if(H<120){r=x;g=c}else if(H<180){g=c;b=x}else if(H<240){g=x;b=c}else if(H<300){r=x;b=c}else{r=c;b=x}return hexVon((r+m)*255,(g+m)*255,(b+m)*255)}
+function mische(a,b,t){var A=rgb(a),B=rgb(b),o=[0,0,0];for(var i=0;i<3;i++){var x=Math.pow(A[i]/255,2.2),y=Math.pow(B[i]/255,2.2);o[i]=Math.pow(x*(1-t)+y*t,1/2.2)*255}return hexVon(o[0],o[1],o[2])}
 
 function start(el,R){
- var voll=el.dataset.studio!=='kurz',M=merk(),favs=(M.f||[]).filter(function(f){return f&&f[1]}),raum=null,art='raum',farbe=null,sf={},eve=false,halb=false,mix=[],P={};
+ var voll=el.dataset.studio!=='kurz',M=merk(),favs=(M.f||[]).filter(function(f){return f&&f[1]}),raum=null,art='raum',farbe=null,sf={},eve=false,halb=false,mix=[],P={},eigen=(M.e||[]).filter(function(f){return f&&hx(String(f[1]).slice(1))}).slice(0,5),mA=null,mB=null;
  if(voll)location.search.replace(/[?&]([a-z]+)=([^&]*)/g,function(_,k,v){try{P[k]=decodeURIComponent(v)}catch(e){}});
  if(P.mix)P.mix.split(',').slice(0,6).forEach(function(t){var h=hx(t.slice(0,6));if(h)mix.push([(t.slice(7)||'Deine Farbe').slice(0,24),h])});
  var by={};R.forEach(function(r){by[r.slug]=r});
@@ -48,23 +55,30 @@ function start(el,R){
   (voll?'<canvas width="16" height="9" role="img" aria-label="Dein Foto. Tippe auf die Wand, wenn ein Stück fehlt."></canvas>':'')+'<span class="st-ki" title="Mit KI erstellt" aria-label="Mit KI erstellt">KI</span></div>'+
   '<p class="st-cap"><b></b><span></span><button type="button" class="st-herz" aria-pressed="false" aria-label="Farbe als Liebling merken">'+I.herz+'</button></p>'+
   '<div class="st-dots" role="group" aria-label="Wandfarbe wählen"></div>'+
+  (voll?'<details class="st-misch"><summary>Eigene Farbe mischen</summary><div>'+
+   '<div class="st-nudge" role="group" aria-label="Aktuelle Farbe anpassen"><button type="button" class="st-btn" data-n="h">Heller</button><button type="button" class="st-btn" data-n="d">Dunkler</button><button type="button" class="st-btn" data-n="w">Wärmer</button><button type="button" class="st-btn" data-n="k">Kühler</button></div>'+
+   '<p class="st-mh">Mit einer zweiten Farbe mischen</p><div class="st-mdots" role="group" aria-label="Zweite Farbe zum Mischen"></div>'+
+   '<label class="st-mix" hidden><i class="a"></i><input type="range" min="0" max="100" value="50" aria-label="Mischverhältnis"><i class="b"></i></label>'+
+   '<p class="st-mh">Farbe aus einem Foto aufnehmen</p><label class="st-btn st-pip">'+I.foto+'Foto wählen<input type="file" accept="image/*" aria-label="Foto wählen, um eine Farbe daraus aufzunehmen"></label><canvas class="st-pipc" hidden role="img" aria-label="Dein Foto. Tippe auf die Stelle, deren Farbe du willst."></canvas>'+
+   '<details class="st-hsl"><summary>Farbton, Kräftigkeit, Helligkeit</summary><div><label>Farbton <input type="range" min="0" max="359" data-k="0"></label><label>Kräftigkeit <input type="range" min="0" max="100" data-k="1"></label><label>Helligkeit <input type="range" min="8" max="96" data-k="2"></label></div></details>'+
+   '</div></details>':'')+
   '<p class="st-h">'+(voll?'Raum wechseln':'Anderer Raum')+' <small>Beispielräume, mit KI erstellt</small></p><div class="st-rooms"></div>'+
   (voll?'<div class="st-more"></div><details class="st-fein" hidden><summary>Feiner einstellen</summary><div><label>Genauigkeit <input type="range" min="8" max="60" value="26" aria-label="Wie streng die Wand erkannt wird"></label><button type="button" class="st-btn" data-a="zurueck">Letzten Tipp zurück</button><button type="button" class="st-btn" data-a="neu">Wand neu suchen</button></div></details>':'')+
   (voll?'<p class="st-shop" hidden></p>':'')+'<p class="st-msg" role="status"></p>'+(voll?'<details class="st-kauf"><summary>Diese Farbe kaufen</summary><div></div></details><p class="st-link"></p>':'<div class="st-los"><a class="btn" href="wandfarbe-testen.html">Im Studio weitermachen</a><a class="btn ghost" href="wandfarbe-testen.html#foto">Mit deinem Zimmer ausprobieren</a></div>');
  var ph=el.querySelector('.st-ph'),img=ph.querySelector('img'),lay=ph.querySelector('.st-lay'),neu=lay.querySelector('.n'),cap=el.querySelector('.st-cap'),dots=el.querySelector('.st-dots'),rooms=el.querySelector('.st-rooms'),
   more=el.querySelector('.st-more'),msg=el.querySelector('.st-msg'),herz=el.querySelector('.st-herz'),fein=el.querySelector('.st-fein'),link=el.querySelector('.st-link'),shopEl=el.querySelector('.st-shop'),kaufBox=el.querySelector('.st-kauf div'),cv=ph.querySelector('canvas');
  function sag(t){msg.textContent=t||''}
- function sichern(){M.r=art==='raum'&&raum?raum.slug:M.r;M.c=farbe;M.f=favs.slice(0,8);schreib(M)}
+ function sichern(){M.r=art==='raum'&&raum?raum.slug:M.r;M.c=farbe;M.f=favs.slice(0,8);M.e=eigen.slice(0,5);schreib(M)}
 
  /* ---------- Farbpunkte ---------- */
  function liste(){var out=[],seen={};function add(f,typ){var k=f[1].toUpperCase();if(seen[k])return;seen[k]=1;out.push([f[0],f[1],typ])}
-  mix.forEach(function(f){add(f,'stil')});favs.forEach(function(f){add(f,'fav')});if(art==='raum'&&raum)raum.farben.forEach(function(f){add(f,'raum')});PAL.forEach(function(f){add(f,'')});return out}
+  eigen.forEach(function(f){add(f,'eigen')});mix.forEach(function(f){add(f,'stil')});favs.forEach(function(f){add(f,'fav')});if(art==='raum'&&raum)raum.farben.forEach(function(f){add(f,'raum')});PAL.forEach(function(f){add(f,'')});return out}
  function punkte(){var L=liste(),h='',letzt=null;L.forEach(function(f){if(letzt!==null&&letzt!==f[2]&&f[2]==='')h+='<span class="st-tr" aria-hidden="true"></span>';letzt=f[2];
-   h+='<button type="button" aria-pressed="'+(farbe&&farbe[1].toUpperCase()===f[1].toUpperCase())+'" data-c="'+f[1]+'" data-n="'+esc(f[0])+'" data-t="'+f[2]+'" title="'+esc(f[0])+'" aria-label="'+esc(f[0])+(f[2]==='raum'?', passt zu diesem Raum':f[2]==='stil'?', aus deinem Stil':'')+'"><i style="background:'+f[1]+'"></i>'+(f[2]==='fav'?'<em>♥</em>':'')+'</button>'});
+   h+='<button type="button" aria-pressed="'+(farbe&&farbe[1].toUpperCase()===f[1].toUpperCase())+'" data-c="'+f[1]+'" data-n="'+esc(f[0])+'" data-t="'+f[2]+'" title="'+esc(f[0])+'" aria-label="'+esc(f[0])+(f[2]==='raum'?', passt zu diesem Raum':f[2]==='stil'?', aus deinem Stil':f[2]==='eigen'?', selbst gemischt':'')+'"><i style="background:'+f[1]+'"></i>'+(f[2]==='fav'?'<em>♥</em>':'')+'</button>'});
   dots.innerHTML=h}
  function titel(){var passt=art==='raum'&&raum&&raum.farben.some(function(f){return f[1].toUpperCase()===farbe[1].toUpperCase()});cap.querySelector('b').textContent=farbe[0];
-  cap.querySelector('span').textContent=passt?'passt zu diesem Raum':mix.some(function(f){return f[1]===farbe[1].toUpperCase()})?'aus deinem Stil':'';kauf();var fav=favs.some(function(f){return f[1].toUpperCase()===farbe[1].toUpperCase()});herz.setAttribute('aria-pressed',fav?'true':'false');
-  herz.setAttribute('aria-label',fav?'Liebling entfernen':'Farbe als Liebling merken')}
+  cap.querySelector('span').textContent=passt?'passt zu diesem Raum':eigen.some(function(f){return f[1]===farbe[1].toUpperCase()})?'selbst gemischt':mix.some(function(f){return f[1]===farbe[1].toUpperCase()})?'aus deinem Stil':'';kauf();var fav=favs.some(function(f){return f[1].toUpperCase()===farbe[1].toUpperCase()});herz.setAttribute('aria-pressed',fav?'true':'false');
+  herz.setAttribute('aria-label',fav?'Liebling entfernen':'Farbe als Liebling merken');if(typeof reglerSync==='function')reglerSync()}
  function setzFarbe(f,wisch){farbe=[f[0],f[1]];titel();[].forEach.call(dots.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',b.dataset.c.toUpperCase()===f[1].toUpperCase()?'true':'false')});sichern();
   if(art==='foto'){if(F.base)F.draw();return}
   clearTimeout(ph._t);if(neu.classList.contains('go')){ph.style.setProperty('--w',ph._c);neu.classList.remove('go')}
@@ -80,7 +94,38 @@ function start(el,R){
    '<p class="st-lit">Für zwei Anstriche brauchst du etwa <b>'+String(lit).replace('.',',')+' Liter</b>, gerechnet mit 6 m² je Liter. Mit Türen und Fenstern rechnet der <a href="rechner.html">Raum-Rechner</a> genauer.</p>'+
    '<div class="starts"><p class="starts-h"><b>Was du zum Streichen brauchst</b><span class="tag">Anzeige</span></p><ul>'+L.map(function(x){return '<li><a href="'+amz(x[0])+'" rel="sponsored nofollow noopener" target="_blank"><span>'+esc(x[1])+'</span><em>Bei Amazon'+EXT+'</em></a></li>'}).join('')+'</ul></div>'}
  if(kaufBox)kaufBox.addEventListener('input',function(ev){if(ev.target.type!=='range')return;flaeche=+ev.target.value;var lit=Math.ceil(flaeche*2/6*2)/2;kaufBox.querySelector('output').textContent=flaeche+' m²';kaufBox.querySelector('.st-lit b').textContent=String(lit).replace('.',',')+' Liter'});
- dots.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;setzFarbe([b.dataset.n,b.dataset.c],true);sag('')});
+ dots.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;mA=null;mB=null;if(mischBox)mischBox.querySelector('.st-mix').hidden=true;setzFarbe([b.dataset.n,b.dataset.c],true);mdots();sag('')});
+
+ /* ---------- Eigene Farbe mischen: anpassen, zwei Farben mischen, aus Foto aufnehmen, Regler ---------- */
+ var mischBox=el.querySelector('.st-misch'),raf=0;
+ function live(hex,name){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){setzFarbe([name||'Deine Mischung',hex],false)})}
+ function setzEigen(hex,name){name=name||'Deine Mischung';hex=hex.toUpperCase();cancelAnimationFrame(raf);eigen=[[name,hex]].concat(eigen.filter(function(f){return f[1]!==hex})).slice(0,5);farbe=[name,hex];punkte();setzFarbe([name,hex],false);
+  if(dots.scrollTo)dots.scrollTo({left:0,behavior:'smooth'})}
+ function mdots(){if(!mischBox)return;var h='';liste().filter(function(f){return !farbe||f[1].toUpperCase()!==farbe[1].toUpperCase()}).slice(0,16).forEach(function(f){h+='<button type="button" data-c="'+f[1]+'" data-n="'+esc(f[0])+'" title="'+esc(f[0])+'" aria-label="Mit '+esc(f[0])+' mischen" aria-pressed="'+(!!mB&&mB[1]===f[1])+'"><i style="background:'+f[1]+'"></i></button>'});mischBox.querySelector('.st-mdots').innerHTML=h}
+ function reglerSync(){if(!mischBox||!farbe||mischBox._zieht)return;var v=hslVon(farbe[1]);[].forEach.call(mischBox.querySelectorAll('.st-hsl input'),function(i){i.value=v[+i.dataset.k]})}
+ if(mischBox){
+  mischBox.addEventListener('toggle',function(){if(mischBox.open){mdots();reglerSync()}});
+  mischBox.querySelector('.st-nudge').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b||!farbe)return;var c=rgb(farbe[1]),n=b.dataset.n,v=hslVon(farbe[1]),hex;
+   if(n==='h')hex=hexHsl(v[0],v[1],Math.min(96,v[2]+5));else if(n==='d')hex=hexHsl(v[0],v[1],Math.max(8,v[2]-5));else hex=n==='w'?hexVon(c[0]+9,c[1]+2,c[2]-9):hexVon(c[0]-9,c[1]-2,c[2]+9);
+   mA=null;mB=null;mischBox.querySelector('.st-mix').hidden=true;setzEigen(hex);mdots();sag({h:'Eine Spur heller.',d:'Eine Spur dunkler.',w:'Eine Spur wärmer.',k:'Eine Spur kühler.'}[n])});
+  mischBox.querySelector('.st-mdots').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b||!farbe)return;if(!mA)mA=[farbe[0],farbe[1]];mB=[b.dataset.n,b.dataset.c];
+   var mx=mischBox.querySelector('.st-mix'),r=mx.querySelector('input');mx.hidden=false;r.value=50;mx.querySelector('.a').style.background=mA[1];mx.querySelector('.b').style.background=mB[1];mx.querySelector('.a').title=mA[0];mx.querySelector('.b').title=mB[0];
+   [].forEach.call(this.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});setzEigen(mische(mA[1],mB[1],.5));sag('Halb '+mA[0]+', halb '+mB[0]+'. Mit dem Regler verschiebst du das Verhältnis.')});
+  var mr=mischBox.querySelector('.st-mix input');
+  mr.addEventListener('input',function(){if(mA&&mB)live(mische(mA[1],mB[1],this.value/100))});
+  mr.addEventListener('change',function(){if(mA&&mB){setzEigen(mische(mA[1],mB[1],this.value/100));sag(Math.round(100-this.value)+' % '+mA[0]+', '+Math.round(this.value)+' % '+mB[0]+'.')}});
+  [].forEach.call(mischBox.querySelectorAll('.st-hsl input'),function(i){
+   i.addEventListener('input',function(){mischBox._zieht=1;var q=mischBox.querySelectorAll('.st-hsl input');live(hexHsl(+q[0].value,+q[1].value,+q[2].value))});
+   i.addEventListener('change',function(){var q=mischBox.querySelectorAll('.st-hsl input');mischBox._zieht=0;mA=null;mB=null;mischBox.querySelector('.st-mix').hidden=true;setzEigen(hexHsl(+q[0].value,+q[1].value,+q[2].value));mdots()})});
+  /* Farbe aus einem Foto aufnehmen: Das Foto bleibt auf dem Gerät. Ein Tipp nimmt den Mittelwert einer kleinen Fläche (7 × 7 Bildpunkte), damit Rauschen nicht stört. */
+  var pc=mischBox.querySelector('.st-pipc'),pimg=null;
+  function pzeig(x,y){var g=pc.getContext('2d');g.drawImage(pimg,0,0,pc.width,pc.height);if(x!=null){g.lineWidth=3;g.strokeStyle='#fff';g.beginPath();g.arc(x,y,13,0,7);g.stroke();g.lineWidth=1.5;g.strokeStyle='#000';g.beginPath();g.arc(x,y,15,0,7);g.stroke()}}
+  mischBox.querySelector('.st-pip input').addEventListener('change',function(){var f=this.files&&this.files[0];this.value='';if(!f)return;var u=URL.createObjectURL(f),im=new Image();
+   im.onload=function(){var w=Math.min(720,im.naturalWidth),h=Math.round(im.naturalHeight*w/im.naturalWidth);pc.width=w;pc.height=h;pimg=im;pc.hidden=false;pzeig();sag('Tipp im Foto auf die Farbe, die an die Wand soll.');URL.revokeObjectURL(u)};
+   im.onerror=function(){sag('Dieses Bild lässt sich nicht öffnen. Versuch ein anderes Foto.')};im.src=u});
+  pc.addEventListener('click',function(ev){if(!pimg)return;var r=pc.getBoundingClientRect(),x=Math.round((ev.clientX-r.left)*pc.width/r.width),y=Math.round((ev.clientY-r.top)*pc.height/r.height);pzeig();
+   var x0=Math.max(0,Math.min(pc.width-7,x-3)),y0=Math.max(0,Math.min(pc.height-7,y-3)),d=pc.getContext('2d').getImageData(x0,y0,7,7).data,s=[0,0,0];for(var i=0;i<d.length;i+=4){s[0]+=d[i];s[1]+=d[i+1];s[2]+=d[i+2]}
+   var hex=hexVon(s[0]/49,s[1]/49,s[2]/49);pzeig(x,y);mA=null;mB=null;mischBox.querySelector('.st-mix').hidden=true;setzEigen(hex,'Aus deinem Foto');mdots();sag('Aufgenommen. So sieht die Farbe an der Wand aus. Der nächste RAL-Ton steht unter „Diese Farbe kaufen“.')})}
  herz.addEventListener('click',function(){var i=-1;favs.forEach(function(f,k){if(f[1].toUpperCase()===farbe[1].toUpperCase())i=k});if(i>=0)favs.splice(i,1);else favs.unshift([farbe[0],farbe[1]]);punkte();titel();sichern();
   sag(i>=0?'':'Gemerkt. Deine Lieblingsfarben stehen ab jetzt vorn.')});
 
