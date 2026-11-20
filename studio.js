@@ -95,12 +95,12 @@ function start(el,R){
   h+='<button type="button" class="st-btn" data-a="zufall">'+I.wuerfel+'Überrasch mich</button><button type="button" class="st-btn" data-a="speichern">'+I.laden+'Bild speichern</button>';
   if(art==='raum')h+='<button type="button" class="st-btn" data-a="teilen">'+I.teilen+'Link teilen</button>';more.innerHTML=h;if(art==='foto')['sitz','boden'].forEach(function(w){var g=more.querySelector('.st-grp[data-was="'+w+'"]');if(g)[].forEach.call(g.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',(x.dataset.k||'')===(F.ton[w]||'')?'true':'false')})});shop()}
  /* Passende Möbel ansehen: erscheint erst, wenn jemand Sofa oder Boden umgefärbt hat (Partnerlink, gekennzeichnet) */
- function shop(){if(!shopEl)return;var h='',amz=function(q){return 'https://www.amazon.de/s?k='+encodeURIComponent(q).replace(/%20/g,'+')+'&tag=stildaheim-21'},nm=function(L,x){var n='';L.forEach(function(f){if(f[1]&&x&&f[1].toUpperCase()===x.toUpperCase())n=f[0]});return n};
+ function shop(){if(!shopEl)return;var h='',otto=function(q,t){return ' <a href="https://www.awin1.com/cread.php?awinmid=14336&awinaffid=3156925&ued='+encodeURIComponent('https://www.otto.de/suche/'+encodeURIComponent(q)+'/')+'" target="_blank" rel="sponsored nofollow noopener">'+t+'</a>'},amz=function(q){return 'https://www.amazon.de/s?k='+encodeURIComponent(q).replace(/%20/g,'+')+'&tag=stildaheim-21'},nm=function(L,x){var n='';L.forEach(function(f){if(f[1]&&x&&f[1].toUpperCase()===x.toUpperCase())n=f[0]});return n};
   if(art==='raum'&&raum){var a=sf.sitz&&nm(SITZ,sf.sitz[0]),b=sf.boden&&nm(BODEN,sf.boden[0]),was=raum.sitzname||'Sofa';
-   if(a)h+='<a href="'+amz(was+' '+a)+'" target="_blank" rel="sponsored nofollow noopener">'+(was==='Sessel'?'Sessel':'Sofas')+' in '+esc(a)+' ansehen</a>';
+   if(a)h+='<a href="'+amz(was+' '+a)+'" target="_blank" rel="sponsored nofollow noopener">'+(was==='Sessel'?'Sessel':'Sofas')+' in '+esc(a)+' ansehen</a>'+otto(was+' '+a,'Auch bei OTTO');
    if(b)h+='<a href="'+amz((b==='Grau'?'Vinylboden grau':'Laminat '+b))+'" target="_blank" rel="sponsored nofollow noopener">Böden in '+esc(b)+' ansehen</a>'}
   if(art==='foto'){var fa=F.ton.sitz&&F.T.sitz.length&&nm(SITZ,F.ton.sitz),fb=F.ton.boden&&F.T.boden.length&&nm(BODEN,F.ton.boden);
-   if(fa)h+='<a href="'+amz('Sofa '+fa)+'" target="_blank" rel="sponsored nofollow noopener">Sofas in '+esc(fa)+' ansehen</a>';
+   if(fa)h+='<a href="'+amz('Sofa '+fa)+'" target="_blank" rel="sponsored nofollow noopener">Sofas in '+esc(fa)+' ansehen</a>'+otto('Sofa '+fa,'Auch bei OTTO');
    if(fb)h+='<a href="'+amz((fb==='Grau'?'Vinylboden grau':'Laminat '+fb))+'" target="_blank" rel="sponsored nofollow noopener">Böden in '+esc(fb)+' ansehen</a>'}
   shopEl.hidden=!h;shopEl.innerHTML=h?h+'<span class="tag">Anzeige</span>':''}
  function setzTon(w,hex){if(!raum||!raum[w])return;var t=ton(hex,raum[w==='sitz'?'hs':'hb']);sf[w]=hex?t:null;ph.querySelector('.st-k.st-'+w).style.background=t[0];ph.querySelector('.st-d.st-'+w).style.background=t[1];ph.querySelector('.st-s.st-'+w).style.background=t[2];

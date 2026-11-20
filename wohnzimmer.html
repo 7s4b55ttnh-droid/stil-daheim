@@ -151,6 +151,7 @@
       <a class="item" href="https://www.amazon.de/s?k=Aufbewahrungskorb+Wohnzimmer+geflochten&amp;tag=stildaheim-21" rel="sponsored nofollow noopener" target="_blank"><div><b>Körbe</b><span>Für Decken, Zeitschriften und Kabel</span><span class="chk">Achte auf: Henkel und Größe passend zum Regal</span></div><span class="go"><span>Bei Amazon<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span><small>Anzeige</small></span></a>
     </div>
   </div>
+  <p class="aw">Lieber direkt beim Händler stöbern? <a href="https://www.awin1.com/cread.php?awinmid=53143&amp;awinaffid=3156925&amp;ued=https%3A%2F%2Fwww.teppich.de%2Fwohnzimmer-teppiche%2F" rel="sponsored nofollow noopener" target="_blank">Wohnzimmer-Teppiche bei teppich.de</a> · <a href="https://www.awin1.com/cread.php?awinmid=7619&amp;awinaffid=3156925&amp;ued=https%3A%2F%2Fwww.lampenwelt.de%2Fc%2Finnenleuchten%2Fstehlampen" rel="sponsored nofollow noopener" target="_blank">Stehlampen bei Lampenwelt</a> · <a href="https://www.awin1.com/cread.php?awinmid=41312&amp;awinaffid=3156925&amp;ued=https%3A%2F%2Fwww.inhofer.de%2Fwohnen%2Fwohnzimmer%2F" rel="sponsored nofollow noopener" target="_blank">Wohnzimmer-Möbel bei Möbel Inhofer</a> · <a href="https://www.awin1.com/cread.php?awinmid=14336&amp;awinaffid=3156925&amp;ued=https%3A%2F%2Fwww.otto.de%2Fsuche%2Fsofa%2F" rel="sponsored nofollow noopener" target="_blank">Sofas bei OTTO</a><span class="tag">Anzeige</span></p>
 </div></section>
 
 <section class="band" id="fragen"><div class="wrap narrow">
@@ -208,7 +209,7 @@ sdChecklist('ck',L,'sdwz',{verb:'erledigt',done:'Dein Wohnzimmer ist fertig. Mac
 (function(){if(location.hostname!=='stil-daheim.de')return;var E='https://stildaheim.goatcounter.com/count';
 function send(q){var u=E+'?'+q+'&rnd='+Math.random().toString(36).slice(2);if(navigator.sendBeacon){try{if(navigator.sendBeacon(u))return}catch(e){}}new Image().src=u}
 var e=encodeURIComponent;send('p='+e(location.pathname)+'&t='+e(document.title)+'&r='+e(document.referrer));
-document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a[href*="amazon.de"]');if(!a)return;var m=a.href.match(/[?&]k=([^&]+)/),l=m?decodeURIComponent(m[1].replace(/\+/g,' ')):(a.textContent||'amazon').trim().slice(0,60);
+document.addEventListener('click',function(ev){var w=ev.target.closest&&ev.target.closest('a[href*="awin1.com"]');if(w){send('p='+e('awin: '+w.textContent.trim().slice(0,60))+'&t='+e('Klick von '+location.pathname)+'&e=true');return}var a=ev.target.closest&&ev.target.closest('a[href*="amazon.de"]');if(!a)return;var m=a.href.match(/[?&]k=([^&]+)/),l=m?decodeURIComponent(m[1].replace(/\+/g,' ')):(a.textContent||'amazon').trim().slice(0,60);
 send('p='+e('amazon: '+l)+'&t='+e('Klick von '+location.pathname)+'&e=true')},true)})();
 </script>
 </body></html>
