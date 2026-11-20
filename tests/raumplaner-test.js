@@ -19,6 +19,10 @@ ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'kein 
 ok(await p.evaluate(()=>{const a=document.querySelector('.rp-b'),b2=document.querySelector('.rp-a');return a.getBoundingClientRect().top<b2.getBoundingClientRect().top}),'Handy: Plan steht vor den Raummaßen');
 // Sofa mit dem Finger ziehen
 const sofa=s0.items.find(i=>i.t==='sofa3'||i.t==='sofa2');
+// „Deine Möbel kaufen“: jedes Stück aus dem Plan mit Maß, Möbel gehen zu OTTO (über Awin), alles als Anzeige gekennzeichnet
+const mk=await p.$$eval('#rp-moebel a',A=>A.map(a=>({t:a.textContent,h:decodeURIComponent(decodeURIComponent(a.href)),r:a.rel})));
+ok(mk.length>=4&&mk.every(x=>/sponsored/.test(x.r)&&/Anzeige/.test(x.t))&&mk.some(x=>/^Sofa/.test(x.t)&&/awin1\.com.*otto\.de\/suche\/Sofa.*\d+ cm/.test(x.h)),'Deine Möbel kaufen: '+mk.length+' Links, Sofa in Planbreite bei OTTO');
+
 await center('#rp-plan');
 const boxOf=async id=>p.evaluate(id=>{const r=document.querySelector('.rp-it[data-id="'+id+'"] .rp-hit').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}},id);
 let bx=await boxOf(sofa.id);

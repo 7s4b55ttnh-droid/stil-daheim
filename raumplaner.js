@@ -71,6 +71,11 @@
     eigen: { n: 'Eigenes Möbel', N: 'Möbel', a: 'n', s: 'Möbel', w: 100, h: 50, k: 'tisch', g: 5, acc: 'f' },
     sperr: { n: 'Sperrfläche', N: 'Sperrfläche', a: 'f', s: 'gesperrt', w: 100, h: 100, k: 'block', g: 5 }
   };
+  /* Suchbegriff je Möbel für „Deine Möbel kaufen“. {w} und {h} werden durch die Maße aus dem Plan ersetzt. Ohne Eintrag: kein Kauflink (Sperrfläche, eigenes Möbel). */
+  var KAUF = { sofa3: 'Sofa 3-Sitzer {w} cm breit', sofa2: 'Sofa 2-Sitzer {w} cm breit', eck: 'Ecksofa {w} cm', sessel: 'Sessel Wohnzimmer', hocker: 'Hocker Polsterhocker', couch: 'Couchtisch {w} cm', couchr: 'Couchtisch rund {w} cm',
+    ess: 'Esstisch {w}x{h} cm', essr: 'Esstisch rund {w} cm', schreib: 'Schreibtisch {w} cm', tv: 'TV-Board {w} cm', side: 'Sideboard {w} cm', regal: 'Regal {w} cm breit', kommode: 'Kommode {w} cm', schrank: 'Kleiderschrank {w} cm',
+    bett180: 'Bett {w}x{h}', bett140: 'Bett {w}x{h}', bett90: 'Bett {w}x{h}', nacht: 'Nachttisch', garderobe: 'Garderobe {w} cm', schuh: 'Schuhkipper {w} cm', bank: 'Sitzbank {w} cm', teppich: 'Teppich {h}x{w}', teppichr: 'Teppich rund {w} cm', laeufer: 'Läufer {h}x{w}',
+    pflanze: 'Zimmerpflanze groß', lampe: 'Stehleuchte' };
   var GROUPS = ['Sitzen', 'Tische', 'Stauraum', 'Schlafen', 'Flur', 'Mehr'];
   var TYPES = { wohnen: 'Wohnzimmer', schlafen: 'Schlafzimmer', essen: 'Esszimmer', arbeiten: 'Arbeitszimmer', flur: 'Flur', leer: 'Leerer Raum' };
   var LIM = { room: [100, 1500], item: [15, 600], door: [60, 240], win: [40, 500], doors: 4, wins: 6, items: 40 };
@@ -745,7 +750,7 @@
   }
 
   var RP = {
-    RULE: RULE, CAT: CAT, GROUPS: GROUPS, TYPES: TYPES, LIM: LIM, FR: FR, BK: BK, LF: LF, RT: RT, VEC: VEC, WALLNAME: WALLNAME,
+    RULE: RULE, CAT: CAT, KAUF: KAUF, GROUPS: GROUPS, TYPES: TYPES, LIM: LIM, FR: FR, BK: BK, LF: LF, RT: RT, VEC: VEC, WALLNAME: WALLNAME,
     START: START, def: def, use: use, state: state, newId: newId, lim: lim, bw: bw, bh: bh, box: box, ctr: ctr, abs: abs, rects: rects, legOf: legOf, isRound: isRound, overlap: overlap,
     wallLen: wallLen, wallPt: wallPt, swing: swing, blocksDoor: blocksDoor, inside: inside, fit: fit, valid: valid, gap: gap, chairs: chairs, solids: solids,
     walk: walk, preset: preset, spot: spot, check: check, shop: shop, enc: enc, dec: dec, noun: noun, cm: cm, met: met, fz: fz
@@ -1246,6 +1251,18 @@
     items.forEach(function (s) { h += '<a class="item" href="https://www.amazon.de/s?k=' + encodeURIComponent(s.q).replace(/%20/g, '+') + '&tag=' + TAG + '" rel="sponsored nofollow noopener" target="_blank"><div><b>' + s.t + '</b><span>' + s.x + '</span></div><span class="go"><span>Bei Amazon' + EXT + '</span><small>Anzeige</small></span></a>'; });
     if (box.__h !== h) { box.innerHTML = h; box.__h = h; }
     var wrap = $('rp-list-wrap'); if (wrap) wrap.hidden = !items.length;
+    /* Möbel aus dem Plan in genau dieser Größe kaufen (seit 20.11.2026). Der Händler kommt aus sdKauf (site.js): Möbel OTTO, Leuchten Lampenwelt, sonst Amazon. */
+    var mb = $('rp-moebel'), mh = '', seen = {};
+    if (mb) {
+      S.items.slice().sort(function (a, b) { var fa = CAT[a.t].flat || CAT[a.t].small ? 1 : 0, fb = CAT[b.t].flat || CAT[b.t].small ? 1 : 0; return fa - fb || b.w * b.h - a.w * a.h; }).forEach(function (it) {
+        var c = CAT[it.t], q = RP.KAUF[it.t]; if (!q) return;
+        var mass = c.round ? 'Ø ' + it.w + ' cm' : it.w + ' × ' + it.h + ' cm', sq = q.replace('{w}', it.w).replace('{h}', it.h), key = sq; if (seen[key]) return; seen[key] = 1;
+        var k = window.sdKauf && window.sdKauf(sq), url = k ? k.u : 'https://www.amazon.de/s?k=' + encodeURIComponent(sq).replace(/%20/g, '+') + '&tag=' + TAG;
+        mh += '<a class="item" href="' + url + '" data-amz="bleib" rel="sponsored nofollow noopener" target="_blank"><div><b>' + c.n + '</b><span>' + mass + ', wie in deinem Plan</span></div><span class="go"><span>Bei ' + (k ? k.n : 'Amazon') + EXT + '</span><small>Anzeige</small></span></a>';
+      });
+      if (mb.__h !== mh) { mb.innerHTML = mh; mb.__h = mh; }
+      var mw = $('rp-moebel-wrap'); if (mw) mw.hidden = !mh;
+    }
     var tb = $('rp-tab'); if (!tb) return;
     var rows = order().reverse().map(function (it) { var c = CAT[it.t]; return '<tr><td>' + c.n + '</td><td>' + (c.round ? 'Ø ' + it.w : it.w + ' × ' + it.h) + ' cm</td><td>' + it.x + ' cm</td><td>' + it.y + ' cm</td></tr>'; }).join('');
     tb.innerHTML = '<thead><tr><th>Möbel</th><th>Breite × Tiefe</th><th>Abstand zur linken Wand</th><th>Abstand zur oberen Wand</th></tr></thead><tbody>' + (rows || '<tr><td colspan="4">Noch keine Möbel im Plan.</td></tr>') + '</tbody>';

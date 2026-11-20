@@ -50,7 +50,7 @@ ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-
 EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
 
 # Hauptnavigation (Kopfzeile) und alle Ratgeber (Menü, Fußzeile, „Passt dazu“)
-NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'), ('raumplaner.html', 'Raumplaner', 'raumplaner'),
+NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'), ('wandfarbe-testen.html', 'Wandfarben-Studio', 'wandfarbe-testen'), ('raumplaner.html', 'Raumplaner', 'raumplaner'),
        ('rechner.html', 'Raum-Rechner', 'rechner'), ('mieten.html', 'Zur Miete', 'mieten')]
 # (Link, Titel, Kurztext, Schlüssel, Foto)
 GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
@@ -165,6 +165,31 @@ AWIN_SEITEN = {
 }
 
 
+def awin_wandfarbe(slug):
+    """Händlerlinks für die Seiten wandfarbe-<slug> (stehen unter dem Probierdosen-Hinweis)."""
+    k = slug[len('wandfarbe-'):]
+    sofa = {'graues-sofa': 'grau', 'beiges-sofa': 'beige', 'blaues-sofa': 'blau', 'gruenes-sofa': 'grün', 'braunes-ledersofa': 'Leder braun'}
+    if k in sofa:
+        return [OTTO('Sofas in ' + ('braunem Leder' if 'Leder' in sofa[k] else sofa[k].capitalize()), 'Sofa ' + sofa[k]), TP('Wohnzimmer-Teppiche', 'wohnzimmer-teppiche'), LW('Stehlampen', 'innenleuchten/stehlampen')]
+    if k == 'schlafzimmer':
+        return [INH('Betten und Matratzen', 'schlafen/betten-matratzen'), LW('Tischlampen', 'innenleuchten/tischlampen'), TP('Hochflor-Teppiche', 'hochflor-teppiche')]
+    if k == 'kinderzimmer':
+        return [TP('Kinderteppiche', 'kinderteppiche'), OTTO('Kinderzimmer-Möbel', 'kinderzimmer möbel')]
+    if k == 'kueche':
+        return [LW('Pendelleuchten', 'innenleuchten/pendelleuchten-hangelampen'), OTTO('Küchenregale', 'küchenregal')]
+    if k == 'bad':
+        return [LW('Deckenleuchten', 'innenleuchten/deckenleuchten'), OTTO('Badmöbel', 'badmöbel')]
+    if k.startswith('flur'):
+        return [TP('Läufer', 'teppich-laeufer'), LW('Deckenleuchten', 'innenleuchten/deckenleuchten'), OTTO('Garderoben', 'garderobe')]
+    if k == 'schwarze-moebel':
+        return [OTTO('Schwarze Sideboards', 'sideboard schwarz'), TP('Teppiche', 'teppiche'), LW('Stehlampen', 'innenleuchten/stehlampen')]
+    if k == 'weisse-moebel':
+        return [OTTO('Weiße Sideboards', 'sideboard weiß'), TP('Teppiche', 'teppiche'), LW('Stehlampen', 'innenleuchten/stehlampen')]
+    if k in ('kleine-raeume', 'niedrige-decke', 'nordzimmer', 'suedzimmer'):
+        return [LW('Wandleuchten', 'innenleuchten/wandleuchten'), LW('Stehlampen', 'innenleuchten/stehlampen'), TP('Teppiche', 'teppiche')]
+    return [TP('Teppiche', 'teppiche'), LW('Stehlampen', 'innenleuchten/stehlampen'), OTTO('Sofas', 'sofa')]   # Holz- und Bodenseiten
+
+
 def awin_url(mid, ziel):
     return 'https://www.awin1.com/cread.php?awinmid=%s&amp;awinaffid=%s&amp;ued=%s' % (mid, AWIN_ID, urllib.parse.quote(ziel, safe=''))
 
@@ -183,6 +208,8 @@ def haendler(q):
     if _AUS.search(k):
         return None
     if _TEP.search(k):
+        if re.search(r'\d', k):   # mit Maß: OTTO-Suche behält die Größe
+            return ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
         T = 'https://www.teppich.de/'
         for wort, ziel in (('läufer', 'teppich-laeufer/'), ('jute', 'search?search=Jute'), ('kurzflor', 'kurzflor-teppiche/'), ('orient', 'search?search=Orient'), ('vintage', 'search?search=Vintage'),
                            ('woll', 'search?search=Wolle'), ('bettvorleger', 'kleine-teppiche/'), ('wohnzimmer', 'wohnzimmer-teppiche/')):
@@ -196,6 +223,12 @@ def haendler(q):
     if _MOE.search(k):
         return ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
     return None
+
+
+def kauf(q):
+    """(Adresse, Händlername) nach der Hauptlink-Regel: Fachhändler über Awin oder Amazon."""
+    h = haendler(q)
+    return (awin_url(h[0], h[2]), h[1]) if h else (amz_url(q), 'Amazon')
 
 
 def awin_haupt(html):
@@ -217,18 +250,25 @@ def awin_haupt(html):
 
 def awin_zeile(html, slug, getauscht=()):
     L = AWIN_SEITEN.get(slug) or []
+    A = '<a href="%s" rel="sponsored nofollow noopener" target="_blank">%s</a>'
+    if slug.startswith('wandfarbe-') and slug != 'wandfarbe-testen':
+        i = html.find('<p class="wf-buy">')
+        if i < 0:
+            return html
+        j = html.find('</p>', i) + 4
+        return html[:j] + '\n  <p class="aw">Passend zum Raum: %s<span class="tag">Anzeige</span></p>' % ' · '.join(A % (awin_url(m, zl), t) for m, t, zl in awin_wandfarbe(slug)) + html[j:]
     i = html.find('class="shop"')
     if (not L and not getauscht) or i < 0:
         return html
     j = html.find('</div></section>', i)
     if j < 0:
         return html
-    A = '<a href="%s" rel="sponsored nofollow noopener" target="_blank">%s</a>'
+    AZ = '<a href="%s" data-amz="bleib" rel="sponsored nofollow noopener" target="_blank">%s</a>'
     z = ''
     if L:
         z += 'Lieber direkt beim Händler stöbern? ' + ' · '.join(A % (awin_url(m, zl), t) for m, t, zl in L)
     if getauscht:
-        z += ('<br>' if z else '') + 'Auch bei Amazon: ' + ' · '.join(A % (amz_url(q), t) for t, q in list(getauscht)[:4])
+        z += ('<br>' if z else '') + 'Auch bei Amazon: ' + ' · '.join(AZ % (amz_url(q), t) for t, q in list(getauscht)[:4])
     return html[:j] + '  <p class="aw">%s<span class="tag">Anzeige</span></p>\n' % z + html[j:]
 
 
@@ -328,7 +368,7 @@ def palette(key, cls='palette'):
 
 def starts(key):
     s = STYLE[key]
-    items = ''.join('<li><a href="%s" rel="sponsored nofollow noopener" target="_blank"><span>%s</span><em>Bei Amazon%s</em></a></li>' % (amz_url(q), t, EXT)
+    items = ''.join('<li><a href="%s" rel="sponsored nofollow noopener" target="_blank"><span>%s</span><em>Bei %s%s</em></a></li>' % (kauf(q)[0], t, kauf(q)[1], EXT)
                     for t, q in s['start'])
     return ('<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>%s</ul></div>' % items)
 
@@ -513,7 +553,7 @@ def page(src):
             '<p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>\n'
             '<main id="main">\n%(main)s\n</main>\n'
             '<footer class="ft"><div class="wrap"><p>Alle Angaben sind Richtwerte nach den genannten Quellen, ohne Gewähr. Die Raumfotos sind Beispielbilder. '
-            'Mit „Anzeige“ markierte Links sind Partnerlinks (Amazon-Partnerprogramm): Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. '
+            'Mit „Anzeige“ markierte Links sind Partnerlinks zu Amazon oder, über das Netzwerk Awin, zu Fachhändlern wie OTTO, Lampenwelt und teppich.de: Kaufst du darüber, erhalten wir eine Provision. Für dich ändert sich der Preis nicht. '
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
             '<nav class="ft-links fc" aria-label="Alle Seiten">%(flinks)s<div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
