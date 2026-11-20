@@ -3,7 +3,7 @@ const {chromium,devices}=require('playwright');const B=process.argv[2]||'http://
 const ok=(c,t)=>{console.log((c?'ok   ':'FEHLER ')+t);if(!c)bad++};
 (async()=>{const b=await chromium.launch();const errs=[],fremd=[];
 const neu=async(o)=>{const c=await b.newContext(o);const p=await c.newPage();p.on('pageerror',e=>errs.push(e.message));
-  p.on('request',r=>{const u=r.url();if(!u.startsWith(B)&&!/^data:|^blob:/.test(u))fremd.push(u)});return [c,p]};
+  p.on('request',r=>{const u=r.url();if(!u.startsWith(B)&&!/^data:|^blob:/.test(u)&&!/goatcounter/.test(u))fremd.push(u)});return [c,p]};
 let [c,p]=await neu({viewport:{width:1440,height:900}});
 await p.goto(B+'/kaffee.html',{waitUntil:'networkidle'});await p.waitForTimeout(700);
 // Animation
