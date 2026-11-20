@@ -14,7 +14,7 @@
 .st-ph.eve .st-eve{opacity:.72}
 .st-ph[data-art="foto"] .st-lay,.st-ph[data-art="foto"] .st-k,.st-ph[data-art="foto"] .st-d,.st-ph[data-art="foto"] .st-s,.st-ph[data-art="foto"] img{display:none}
 .st-ph[data-art="raum"] canvas{display:none}
-.st-ki{position:absolute;right:12px;bottom:12px;font-size:11px;color:#fff;background:rgba(0,0,0,.66);padding:4px 9px;border-radius:99px;pointer-events:none}
+.st-ki{position:absolute;right:8px;bottom:8px;font:600 9px/1 system-ui,sans-serif;letter-spacing:.04em;color:#fff;background:rgba(0,0,0,.5);padding:2px 5px;border-radius:99px;pointer-events:none}
 .st-ph[data-art="foto"] .st-ki{display:none}
 .st-cap{display:flex;align-items:center;gap:12px;margin:18px 2px 0;min-height:48px}
 .st-cap b{font-size:1.25rem;font-weight:700}.st-cap span{color:var(--mut);font-size:.95rem}

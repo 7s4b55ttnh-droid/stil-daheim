@@ -45,7 +45,7 @@ function start(el,R){
  var by={};R.forEach(function(r){by[r.slug]=r});
  el.innerHTML='<div class="st-ph" data-art="raum"><img alt="" decoding="async"><div class="st-lay" aria-hidden="true"><i class="a"></i><i class="n"></i></div>'+
   '<div class="st-d st-boden"></div><div class="st-s st-boden"></div><div class="st-k st-boden"></div><div class="st-d st-sitz"></div><div class="st-s st-sitz"></div><div class="st-k st-sitz"></div><div class="st-eve" aria-hidden="true"></div>'+
-  (voll?'<canvas width="16" height="9" role="img" aria-label="Dein Foto. Tippe auf die Wand, wenn ein Stück fehlt."></canvas>':'')+'<span class="st-ki">Mit KI erstellt</span></div>'+
+  (voll?'<canvas width="16" height="9" role="img" aria-label="Dein Foto. Tippe auf die Wand, wenn ein Stück fehlt."></canvas>':'')+'<span class="st-ki" title="Mit KI erstellt" aria-label="Mit KI erstellt">KI</span></div>'+
   '<p class="st-cap"><b></b><span></span><button type="button" class="st-herz" aria-pressed="false" aria-label="Farbe als Liebling merken">'+I.herz+'</button></p>'+
   '<div class="st-dots" role="group" aria-label="Wandfarbe wählen"></div>'+
   '<p class="st-h">'+(voll?'Raum wechseln':'Anderer Raum')+' <small>Beispielräume, mit KI erstellt</small></p><div class="st-rooms"></div>'+
