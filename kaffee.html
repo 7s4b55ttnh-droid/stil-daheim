@@ -8,14 +8,27 @@
 <style>
 /* Kaffee-Ecke (seit 20.11.2026): warm, ruhig, Holz und Crema. Kopfbild und Matcha sind kurze KI-Filme (kaffee-film.js) über einem Standbild; das Standbild trägt die KI-Marke. */
 .kf-hero{background:#120c09}
-.kf-hero picture,.kf-hero img,.kf-film{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
-.kf-film{opacity:0;transition:opacity .9s ease;pointer-events:none}
+.kf-hero picture,.kf-film{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kf-hero img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.kf-film{object-fit:cover;opacity:0;transition:opacity .9s ease;pointer-events:none}
 .kf-film.an{opacity:1}
 .kf-hero .wrap{z-index:2}
 .kf-hero h1{max-width:12ch}
 .kf-hero .kf-pause,.kf-mat .kf-pause{right:40px}
 @media (prefers-reduced-motion:reduce){.kf-film{display:none}}
-@media (max-aspect-ratio:4/5){.kf-hero .wrap{padding-top:62vh}.kf-hero img,.kf-hero .kf-film{object-position:50% 30%}}
+/* Quer: ganzer Bildschirm, Ausschnitt so, dass Ausguss, Tropfen und Krone unter der Kopfzeile sichtbar bleiben */
+@media (min-aspect-ratio:4/5){
+.hero.sub.kf-hero{min-height:100vh;min-height:100svh}
+.kf-hero img,.kf-hero .kf-film{object-position:35% 0%}
+}
+/* Handy hochkant: Film oben unter der Kopfzeile als großes Bild (Ausschnitt um die Tasse), Text darunter auf dunklem Grund */
+@media (max-aspect-ratio:4/5){
+.hero.sub.kf-hero{min-height:0}
+.kf-hero picture,.kf-hero .kf-film{top:60px;bottom:auto;height:min(118vw,64svh);-webkit-mask-image:linear-gradient(#000 74%,transparent);mask-image:linear-gradient(#000 74%,transparent)}
+.kf-hero img,.kf-hero .kf-film{object-position:70% 50%}
+.kf-hero .wrap{padding-top:calc(min(118vw,64svh) - 4px)}
+.kf-hero .kf-pause{top:calc(min(118vw,64svh) + 2px);bottom:auto}
+}
 
 /* Maschinen-Finder */
 .kf-q{display:grid;gap:22px;margin-top:30px}
@@ -121,8 +134,8 @@
 <div class="sheet-m" id="msheet" hidden role="dialog" aria-modal="true" aria-label="Menü"><div class="sheet-in"><div class="sheet-top"><b>Stil-Daheim</b><button class="ic" id="mclose" type="button" aria-label="Menü schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="mtoc-wrap" hidden><p class="m-h">Auf dieser Seite</p><nav class="m-toc" id="mtoc" aria-label="Auf dieser Seite"></nav></div><a class="m-go" href="./#finder"><span><b>Welcher Stil passt zu dir?</b><small>Fünf Fragen, dann dein Stil mit Farben</small></span><i aria-hidden="true">→</i></a><p class="m-h">Planer</p><nav class="m-grid" aria-label="Planer"><a href="raumplaner.html"><b>Raumplaner</b><small>Möbel verschieben, Abstände prüfen</small></a><a href="bilderwand.html"><b>Bilderwand-Planer</b><small>Rahmen anordnen, Nagelpunkte messen</small></a><a href="farbpalette.html"><b>Farbpalette aus Foto</b><small>Farben aus deinem Zimmerfoto ziehen</small></a><a href="wandfarbe-testen.html"><b>Wandfarben-Studio</b><small>Farben, Sofa und Boden im Raum ausprobieren</small></a><a href="rechner.html"><b>Raum-Rechner</b><small>Teppich, Vorhang, Couchtisch, Fernseher, Bett, Läufer</small></a></nav><p class="m-h">Ratgeber</p><nav class="m-cols" aria-label="Ratgeber nach Thema"><details class="m-d"><summary>Wohnstile</summary><div><a href="stile.html">Wohnstile im Überblick</a><a href="vintage.html">Vintage einrichten</a><a href="modern.html">Modern einrichten</a><a href="skandinavisch.html">Skandinavisch einrichten</a><a href="japandi.html">Japandi einrichten</a><a href="industrial.html">Industrial einrichten</a><a href="boho.html">Boho einrichten</a></div></details><details class="m-d" open><summary>Räume</summary><div><a href="kleine-raeume.html">Kleine Räume größer wirken lassen</a><a href="schlafzimmer.html">Schlafzimmer einrichten</a><a href="kaffee.html" aria-current="page">Kaffee-Ecke einrichten</a><a href="gaestezimmer.html">Gästezimmer einrichten</a><a href="vorhaenge.html">Vorhänge aufhängen</a><a href="esszimmer.html">Esszimmer einrichten</a><a href="wohnzimmer.html">Wohnzimmer einrichten</a><a href="flur.html">Flur und Eingang einrichten</a><a href="ausmisten.html">Wohnung ausmisten</a><a href="arbeitsecke.html">Arbeitsecke im Wohnzimmer</a><a href="mieten.html">Schöner wohnen zur Miete</a></div></details><details class="m-d"><summary>Licht und Farbe</summary><div><a href="farben.html">Wandfarbe wählen und kombinieren</a><a href="licht.html">Licht planen</a><a href="gemuetlich.html">Gemütlich im Winter</a><a href="wandfarben.html">Welche Wandfarbe passt?</a></div></details><details class="m-d"><summary>Saison</summary><div><a href="weihnachten.html">Weihnachtlich dekorieren</a><a href="tischdeko.html">Weihnachtliche Tischdeko</a><a href="silvester.html">Silvester-Tischdeko</a><a href="adventskranz.html">Adventskranz binden</a><a href="geschenke.html">Geschenke fürs Zuhause</a><a href="pflanzen.html">Zimmerpflanzen im Winter</a><a href="black-friday.html">Black Friday 2026</a></div></details></nav><p class="m-h">Nachschlagen</p><nav class="m-more" aria-label="Nachschlagen"><a href="lexikon.html">Lexikon</a><a href="einbetten.html">Planer einbetten</a></nav><p class="m-foot"><a href="so-arbeiten-wir.html">So arbeiten wir</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · Schwesterseite: <a href="https://strom-daheim.de/">Strom-Daheim</a></p></div></div>
 <main id="main">
 <div class="hero sub kf-hero">
-  <picture><source media="(max-aspect-ratio: 4/5)" type="image/webp" srcset="assets/kaffee-hoch-m.webp 540w, assets/kaffee-hoch.webp 864w" sizes="100vw"><source media="(max-aspect-ratio: 4/5)" srcset="assets/kaffee-hoch-m.jpg 540w, assets/kaffee-hoch.jpg 864w" sizes="100vw"><source type="image/webp" srcset="assets/kaffee-m.webp 960w, assets/kaffee.webp 1672w" sizes="100vw"><img src="assets/kaffee.jpg" srcset="assets/kaffee-m.jpg 960w, assets/kaffee.jpg 1672w" sizes="100vw" alt="Nahaufnahme: Espresso läuft in eine helle Steinzeugtasse auf einer Arbeitsplatte aus Nussbaum, Dampf steigt im warmen Morgenlicht auf" fetchpriority="high"></picture>
-  <video class="kf-film" id="kf-film" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/kaffee" data-hoch="assets/kaffee-hoch"></video>
+  <picture><source type="image/webp" srcset="assets/kaffee-m.webp 960w, assets/kaffee.webp 1672w" sizes="100vw"><img src="assets/kaffee.jpg" srcset="assets/kaffee-m.jpg 960w, assets/kaffee.jpg 1672w" sizes="100vw" alt="Nahaufnahme: Ein Tropfen Espresso hängt über einer randvollen Tasse Kaffee, Dampf steigt im warmen Morgenlicht auf" fetchpriority="high"></picture>
+  <video class="kf-film" id="kf-film" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/kaffee"></video>
   <div class="wrap">
     <h1>Kaffee-Ecke einrichten</h1>
     <p>Die Tasse warm in beiden Händen, der Duft vor dem ersten Schluck. So findest du die Maschine, die zu dir passt, und machst aus einer Ecke der Küche deinen Lieblingsplatz.</p>
