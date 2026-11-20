@@ -402,16 +402,16 @@ window.__VTHERO='.hero.sub';
    sdKauf(Suchbegriff) gibt {u: Adresse, n: Händlername} oder null (= Amazon bleibt).
    Links, die Rechner und Planer erst im Browser bauen (amazon.de/s?k=…), werden automatisch umgeschrieben. data-amz="bleib" lässt einen Link bei Amazon. */
 (function(){
- var AUS=/tischläufer|filzgleiter|molton|vakuum|luftbett|unterbettkommode|pflanzenlampe|unterbauleuchte|led lampe|led filament|bürostuhl|lichterkette|kerze|dimmer|fernseher|gardinenstange|leuchtmittel/i,
-  TEP=/teppich|läufer|kelim|bettvorleger/i,LAM=/stehleuchte|stehlampe|pendelleuchte|tischleuchte|nachttischlampe|wandleuchte|schreibtischlampe|leselampe|papierleuchte|pilzleuchte|deckenleuchte/i,
-  MOE=/sofa|sessel|\bbett\b|gästebett|esstisch|couchtisch|beistelltisch|nierentisch|sideboard|\bregal\b|wandregal|sitzbank|schreibtisch|sekretär|esszimmerstühle|barhocker|kommode|kleiderschrank|wandklapptisch|tv-board|lowboard|nachttisch|garderobe|schuhschrank|schuhkipper|hocker/i,
+ var AUS=/__AUS__/i,TEP=/__TEP__/i,LAM=/__LAM__/i,MOE=/__MOE__/i,LWW=__LWW__,   /* build.py setzt die Muster ein (K_AUS, K_TEP, K_LAM, K_MOE, LW_WORT): dort ändern, nicht hier */
   A='https://www.awin1.com/cread.php?awinmid=',B='&awinaffid=3156925&ued=',e=encodeURIComponent;
  function otto(q){return {u:A+'14336'+B+e('https://www.otto.de/suche/'+e(q.trim())+'/'),n:'OTTO'}}
- window.sdKauf=function(q){var k=String(q).toLowerCase();if(AUS.test(k))return null;
-  if(TEP.test(k)){if(/\d/.test(k))return otto(q);   /* mit Maß: OTTO-Suche behält die Größe */
-   var T=[['läufer','teppich-laeufer/'],['jute','search?search=Jute'],['kurzflor','kurzflor-teppiche/'],['orient','search?search=Orient'],['vintage','search?search=Vintage'],['woll','search?search=Wolle'],['bettvorleger','kleine-teppiche/'],['rund','runde-teppiche/'],['wohnzimmer','wohnzimmer-teppiche/']],z='teppiche/';
-   for(var i=0;i<T.length;i++)if(k.indexOf(T[i][0])>=0){z=T[i][1];break}return {u:A+'53143'+B+e('https://www.teppich.de/'+z),n:'teppich.de'}}
-  if(LAM.test(k))return {u:A+'7619'+B+e('https://www.lampenwelt.de/c/innenleuchten/'+(k.indexOf('pendel')>=0?'pendelleuchten-hangelampen':k.indexOf('wandleuchte')>=0?'wandleuchten':k.indexOf('stehl')>=0?'stehlampen':k.indexOf('decken')>=0?'deckenleuchten':'tischlampen')),n:'Lampenwelt'};
+ window.sdKauf=function(q){var k=String(q).toLowerCase(),i;if(AUS.test(k))return null;
+  if(TEP.test(k)){if(/^(teppich|läufer|runder teppich)( rund)? ?\d/.test(k))return otto(q);   /* nur Art und Maß: OTTO-Suche behält die Größe */
+   var T=__TEPZ__,z='teppiche/';
+   for(i=0;i<T.length;i++)if(k.indexOf(T[i][0])>=0){z=T[i][1];break}return {u:A+'53143'+B+e('https://www.teppich.de/'+z),n:'teppich.de'}}
+  if(LAM.test(k)){var t=k.indexOf('pendel')>=0?['Pendelleuchte','pendelleuchten-hangelampen']:k.indexOf('wandleuchte')>=0?['Wandleuchte','wandleuchten']:(k.indexOf('stehl')>=0||k.indexOf('deckenfluter')>=0)?['Stehleuchte','stehlampen']:k.indexOf('decken')>=0?['Deckenleuchte','deckenleuchten']:['Tischleuchte','tischlampen'];
+   for(i=0;i<LWW.length;i++)if(k.indexOf(LWW[i][0])>=0)return {u:A+'7619'+B+e('https://www.lampenwelt.de/catalogsearch/result/?q='+e(t[0]+' '+LWW[i][1])),n:'Lampenwelt'};
+   return {u:A+'7619'+B+e('https://www.lampenwelt.de/c/innenleuchten/'+t[1]),n:'Lampenwelt'}}
   if(MOE.test(k))return otto(q);return null};
  function um(a){if(a.__k)return;a.__k=1;if(a.getAttribute('data-amz')==='bleib')return;var m=(a.getAttribute('href')||'').match(/amazon\.de\/s\?k=([^&]+)/);if(!m)return;var q;try{q=decodeURIComponent(m[1].replace(/\+/g,' '))}catch(x){return}
   var h=window.sdKauf(q);if(!h)return;a.href=h.u;var w=document.createTreeWalker(a,NodeFilter.SHOW_TEXT),n;while((n=w.nextNode()))if(/bei Amazon/i.test(n.nodeValue))n.nodeValue=n.nodeValue.replace(/bei Amazon/i,function(t){return t.charAt(0)+'ei '+h.n})}

@@ -196,32 +196,43 @@ def awin_url(mid, ziel):
 
 # Hauptlink je Empfehlung (seit 20.11.2026): Teppiche, Leuchten und Möbel gehen direkt zum Fachhändler (höhere Provision, 30 Tage Zuordnung),
 # Kleinteile bleiben bei Amazon. Entschieden wird am Suchbegriff im {{amz:…}}; Amazon steht dann als zweiter Link in der Zeile darunter.
-_AUS = re.compile(r'tischläufer|filzgleiter|molton|vakuum|luftbett|unterbettkommode|pflanzenlampe|unterbauleuchte|led lampe|led filament|bürostuhl|lichterkette|kerze|dimmer', re.I)
-_TEP = re.compile(r'teppich|läufer|kelim|bettvorleger', re.I)
-_LAM = re.compile(r'stehleuchte|stehlampe|pendelleuchte|tischleuchte|nachttischlampe|wandleuchte|schreibtischlampe|leselampe|papierleuchte|pilzleuchte|deckenleuchte', re.I)
-_MOE = re.compile(r'sofa|sessel|\bbett\b|gästebett|esstisch|couchtisch|beistelltisch|nierentisch|sideboard|\bregal\b|wandregal|sitzbank|schreibtisch|sekretär|esszimmerstühle|barhocker|kommode|kleiderschrank|wandklapptisch', re.I)
+# Die vier Muster sind die EINE Quelle der Regel: build() setzt sie auch in site.js ein (Platzhalter __AUS__ usw.), damit Rechner und Planer gleich entscheiden.
+K_AUS = r'tischläufer|filzgleiter|molton|vakuum|luftbett|unterbettkommode|pflanzenlampe|unterbauleuchte|led lampe|led filament|led e27|lichterkette|kerze|dimmer|fernseher|gardinenstange|leuchtmittel|tv wandhalterung'
+K_TEP = r'teppich|läufer|kelim|bettvorleger'
+K_LAM = r'stehleuchte|stehlampe|pendelleuchte|tischleuchte|nachttischlampe|wandleuchte|schreibtischlampe|leselampe|papierleuchte|pilzleuchte|deckenleuchte|deckenfluter'
+K_MOE = (r'sofa|sessel|\bbett\b|gästebett|esstisch|couchtisch|beistelltisch|nierentisch|sideboard|\bregal\b|wandregal|sitzbank|schreibtisch|sekretär|esszimmerstühle|barhocker|kommode|kleiderschrank|wandklapptisch'
+         r'|tv-board|lowboard|nachttisch|garderobe|schuhschrank|schuhkipper|hocker|paravent|standspiegel|wandspiegel|ganzkörperspiegel|wandkonsole|\bpouf\b|bürostuhl|faltmatratze|gästematratze')
+# Lampenwelt: Bei diesen Wörtern führt der Link zur Suche „Leuchtenart + Wort“ statt nur in die Kategorie.
+LW_WORT = [['rattan', 'Rattan'], ['papier', 'Papier'], ['messing', 'Messing'], ['keramik', 'Keramik'], ['akku', 'Akku'], ['industrial', 'Industrial'], ['stoffschirm', 'Stoffschirm'], ['schwarz', 'schwarz'], ['retro', 'Retro']]
+# teppich.de: erstes passendes Wort bestimmt die Zielseite (Kategorien und Suchen geprüft am 20.11.2026), sonst alle Teppiche.
+TEP_ZIEL = [['läufer', 'teppich-laeufer/'], ['jute', 'search?search=Jute'], ['kurzflor', 'kurzflor-teppiche/'], ['orient', 'search?search=Orient'], ['vintage', 'search?search=Vintage'],
+            ['bettvorleger', 'kleine-teppiche/'], ['rund', 'runde-teppiche/'], ['wohnzimmer', 'wohnzimmer-teppiche/'], ['woll', 'search?search=Wolle']]
+_AUS, _TEP, _LAM, _MOE = (re.compile(x, re.I) for x in (K_AUS, K_TEP, K_LAM, K_MOE))
 
 
 def haendler(q):
-    """(Händler-ID, Name, Zielseite) für einen Amazon-Suchbegriff oder None, wenn Amazon Hauptlink bleibt. Zielseiten geprüft am 20.11.2026."""
+    """(Händler-ID, Name, Zielseite) für einen Amazon-Suchbegriff oder None, wenn Amazon Hauptlink bleibt. Gleiche Regel wie sdKauf() in site.js."""
     k = q.lower()
+    otto = ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
     if _AUS.search(k):
         return None
     if _TEP.search(k):
-        if re.search(r'\d', k):   # mit Maß: OTTO-Suche behält die Größe
-            return ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
+        if re.match(r'^(teppich|läufer|runder teppich)( rund)? ?\d', k):   # nur Art und Maß („Teppich 200x300“): OTTO-Suche behält die Größe
+            return otto
         T = 'https://www.teppich.de/'
-        for wort, ziel in (('läufer', 'teppich-laeufer/'), ('jute', 'search?search=Jute'), ('kurzflor', 'kurzflor-teppiche/'), ('orient', 'search?search=Orient'), ('vintage', 'search?search=Vintage'),
-                           ('woll', 'search?search=Wolle'), ('bettvorleger', 'kleine-teppiche/'), ('wohnzimmer', 'wohnzimmer-teppiche/')):
+        for wort, ziel in TEP_ZIEL:
             if wort in k:
                 return ('53143', 'teppich.de', T + ziel)
         return ('53143', 'teppich.de', T + 'teppiche/')
     if _LAM.search(k):
-        L = 'https://www.lampenwelt.de/c/innenleuchten/'
-        ziel = ('pendelleuchten-hangelampen' if 'pendel' in k else 'wandleuchten' if 'wandleuchte' in k else 'stehlampen' if ('stehl' in k) else 'deckenleuchten' if 'decken' in k else 'tischlampen')
-        return ('7619', 'Lampenwelt', L + ziel)
+        art, kat = (('Pendelleuchte', 'pendelleuchten-hangelampen') if 'pendel' in k else ('Wandleuchte', 'wandleuchten') if 'wandleuchte' in k else ('Stehleuchte', 'stehlampen') if ('stehl' in k or 'deckenfluter' in k)
+                    else ('Deckenleuchte', 'deckenleuchten') if 'decken' in k else ('Tischleuchte', 'tischlampen'))
+        for wort, such in LW_WORT:
+            if wort in k:
+                return ('7619', 'Lampenwelt', 'https://www.lampenwelt.de/catalogsearch/result/?q=' + urllib.parse.quote(art + ' ' + such))
+        return ('7619', 'Lampenwelt', 'https://www.lampenwelt.de/c/innenleuchten/' + kat)
     if _MOE.search(k):
-        return ('14336', 'OTTO', 'https://www.otto.de/suche/' + urllib.parse.quote(q.strip()) + '/')
+        return otto
     return None
 
 
@@ -534,7 +545,7 @@ def page(src):
             '<script>try{var t=localStorage.getItem("sdth");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>\n'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
             '<meta name="p:domain_verify" content="ad440d6123f283fdf603af68f7587653"/>\n'
-            '<title>%(title)s</title><meta name="description" content="%(sdesc)s">\n'
+            '<title>%(stitle)s</title><meta name="description" content="%(sdesc)s">\n'
             '<meta property="og:title" content="%(title)s"><meta property="og:description" content="%(desc)s"><meta property="og:type" content="website">'
             '<meta property="og:image" content="%(dom)s%(og)s"><meta property="og:url" content="%(dom)s%(path)s"><meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary_large_image">\n'
             '<link rel="canonical" href="%(dom)s%(path)s">%(robots)s<meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121614" media="(prefers-color-scheme: dark)">\n'
@@ -557,7 +568,7 @@ def page(src):
             'Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.</p>%(stand)s'
             '<nav class="ft-links fc" aria-label="Alle Seiten">%(flinks)s<div><p class="fc-h">Stil-Daheim</p><a href="so-arbeiten-wir.html">So arbeiten wir</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://strom-daheim.de/">Schwesterseite Strom-Daheim</a></div></nav><p class="fc-c">© 2026 Stil-Daheim</p>%(badge)s</div></footer>\n'
             '%(end)s\n%(gc)s\n</body></html>\n') % dict(badge='<span class="preview">Vorschau, noch nicht veröffentlicht</span>' if PREVIEW else '', gc=GOAT,
-                                                  title=meta['title'], desc=meta['desc'], sdesc=sdesc, robots=robots, dom=DOMAIN, og=ogimg(meta), stand=stand,
+                                                  title=meta['title'], stitle=(meta['title'][:-len(' – Stil-Daheim')] if len(meta['title']) > 62 and meta['title'].endswith(' – Stil-Daheim') else meta['title']), desc=meta['desc'], sdesc=sdesc, robots=robots, dom=DOMAIN, og=ogimg(meta), stand=stand,
                                                   path=path, head=head, lamp=LAMP, links=links, sun=SUN, moon=MOON, burger=BURGER,
                                                   close=CLOSE, grid=grid, main=main, flinks=flinks, end=end)
     html = html.replace('{{amzdeals}}', 'https://www.amazon.de/deals?tag=%s' % TAG)
@@ -700,10 +711,16 @@ def sitemap(metas):
 if __name__ == '__main__':
     import wandfarben; wandfarben.main()   # erzeugt pages/wandfarben.html und pages/wandfarbe-*.html aus wandfarben.json
     names = sys.argv[1:] or [p.name for p in sorted(SRC.glob('*.html'))]
+    sj = (HERE / 'site.js').read_text(encoding='utf-8')
+    for name, wert in (('__AUS__', K_AUS), ('__TEP__', K_TEP), ('__LAM__', K_LAM), ('__MOE__', K_MOE)):
+        assert name in sj, name
+        sj = sj.replace(name, wert)
+    assert '__LWW__' in sj and '__TEPZ__' in sj
+    (OUT / 'site.js').write_text(sj.replace('__LWW__', json.dumps(LW_WORT, ensure_ascii=False)).replace('__TEPZ__', json.dumps(TEP_ZIEL, ensure_ascii=False)), encoding='utf-8')   # Kauf-Regel aus build.py einsetzen
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
-    for f in ('site.css', 'site.js', 'frag.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
+    for f in ('site.css', 'frag.js', 'studio.css', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
     for f in (HERE / 'app').glob('*.png'):                    # App-Symbole fürs Manifest
