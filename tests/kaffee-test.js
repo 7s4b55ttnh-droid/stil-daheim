@@ -27,13 +27,15 @@ ok(await p.evaluate(()=>!!document.querySelector('.kf-mat .bild .ki-marke')),'KI
 // Maschinen-Finder
 const fall=async(w,erw,t)=>{await p.evaluate(w=>{for(const [n,v] of Object.entries(w)){const i=document.querySelector(`#kf-q input[name="${n}"][value="${v}"]`);i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}))}},w);
   const r=await p.evaluate(()=>({h:document.querySelector('#kf-res h3').textContent,l:[...document.querySelectorAll('#kf-res li b')].map(x=>x.textContent)}));ok(erw.every(e=>r.l.some(x=>x.includes(e))),t+': '+r.h+' → '+r.l.join(', '))};
-await fall({tassen:'mittel',art:'milch',zeit:'knopf',platz:'genug'},['Philips'],'Milch, Knopfdruck');
-await fall({tassen:'viel',art:'milch',zeit:'knopf',platz:'genug'},['JURA'],'Viele Tassen');
+await fall({tassen:'mittel',art:'milch',zeit:'knopf',platz:'genug',budget:'mittel'},['Philips 3300'],'Milch, Knopfdruck');
+await fall({tassen:'viel',art:'milch',zeit:'knopf',platz:'genug',budget:'mittel'},['Siemens'],'Viele Tassen, bis 600 Euro');
+await fall({tassen:'viel',art:'milch',zeit:'knopf',platz:'genug',budget:'egal'},['JURA'],'Viele Tassen, Budget egal');
+await fall({tassen:'mittel',art:'milch',zeit:'knopf',platz:'genug',budget:'klein'},['Philips 2200','Magnifica'],'Milch, bis 300 Euro');
 await fall({tassen:'wenig',art:'schwarz',zeit:'knopf',platz:'knapp'},['Melitta Solo'],'Schwarz, wenig Platz');
 await fall({tassen:'viel',art:'schwarz',zeit:'knopf',platz:'genug'},['Moccamaster'],'Viel schwarz');
 await fall({tassen:'wenig',art:'schwarz',zeit:'ritual',platz:'genug'},['Handfilter'],'Schwarz mit Ritual');
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'knapp'},['Dedica','Graef'],'Tüfteln, wenig Platz');
-await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug'},['Sage'],'Tüfteln mit Platz');
+await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug',budget:'mittel'},['Sage'],'Tüfteln mit Platz');
 await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},['Matcha-Set'],'Matcha');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug'},['Magnifica'],'Milch als Ritual');
 const rl=await p.$$eval('#kf-res a[target]',A=>A.map(a=>({h:a.href,r:a.rel,an:/Anzeige/.test(a.parentNode.textContent)})));
@@ -43,7 +45,9 @@ const L=await p.$$eval('main a[href*="awin1.com"],main a[href*="amazon.de"]',A=>
 ok(L.length>=25,L.length+' Partnerlinks');ok(L.every(x=>/sponsored/.test(x.r)&&/nofollow/.test(x.r)&&x.t==='_blank'),'Alle mit rel="sponsored nofollow" und neuem Tab');
 ok(L.every(x=>/Anzeige/.test(x.txt)),'Alle als „Anzeige“ markiert');
 const otto=await p.$$eval('.kf-m .kf-buy a',A=>A.map(a=>decodeURIComponent((a.href.match(/ued=([^&]+)/)||[])[1]||'')));
-ok(otto.length===8&&otto.every(u=>u.startsWith('https://www.otto.de/p/')),'8 Maschinen führen direkt zur OTTO-Produktseite über Awin');
+ok(otto.length===11&&otto.every(u=>u.startsWith('https://www.otto.de/p/')),'11 Geräte führen direkt zur OTTO-Produktseite über Awin');
+ok(await p.$$eval('.kf-m',A=>A.every(a=>a.querySelector('.kf-pl b')&&a.querySelectorAll('.kf-pc .pro li').length>0&&a.querySelectorAll('.kf-pc .con li').length>0)),'Jede Maschine hat Preis-Leistung, Dafür und Dagegen');
+ok(await p.$$eval('#vergleich + .kf-vgl tbody tr',R=>R.length===11&&R.every(r=>{const a=r.querySelector('a');return a&&document.querySelector(a.getAttribute('href'))})),'Vergleichstabelle: 11 Zeilen, alle verlinken auf ihre Karte');
 ok(await p.$$eval('.kf-m .kf-buy a',A=>A.every(a=>/awinmid=14336&awinaffid=3156925/.test(a.href))),'OTTO-Programm und Publisher-ID stimmen');
 // Koffein und Rechner
 for(let i=0;i<3;i++)await p.click('#kf-koff .z:nth-child(1) button[data-d="1"]');await p.click('#kf-koff .z:nth-child(2) button[data-d="1"]');
