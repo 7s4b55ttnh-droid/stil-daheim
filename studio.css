@@ -62,6 +62,21 @@
 @media (max-width:560px){.st-grp{flex-wrap:wrap;width:100%;gap:2px 8px}.st-grp>span{width:100%}.st-mini{margin-left:-6px}.st-ph{border-radius:16px;margin-inline:-6px}.st-rooms button,.st-rooms label,.st-rooms a{width:112px}}
 .st-shop{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:14px 2px 0;font-size:.95rem;font-weight:600}.st-shop[hidden]{display:none}
 .st-ziel>div{display:flex;gap:6px}.st-ziel .st-btn{min-height:44px;padding:6px 14px;font-size:.88rem}
+/* Eigene Farbe mischen */
+.st-misch{margin:0 2px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.st-misch>summary{cursor:pointer;font-weight:650;min-height:52px;display:flex;align-items:center;justify-content:space-between;list-style:none}.st-misch>summary::-webkit-details-marker{display:none}
+.st-misch>summary::after{content:"";width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-right:6px;transition:transform .3s}.st-misch[open]>summary::after{transform:rotate(-135deg)}
+.st-misch>div{padding:2px 0 20px;max-width:640px}
+.st-nudge{display:flex;flex-wrap:wrap;gap:8px}.st-nudge .st-btn{padding:8px 14px}
+.st-mh{font-size:.9rem;font-weight:650;color:var(--mut);margin:20px 0 8px}
+.st-mdots{display:flex;gap:4px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:thin}
+.st-mdots button{position:relative;flex:none;width:44px;height:44px;border-radius:50%;border:0;background:none;padding:0;cursor:pointer}.st-mdots button i{position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(0,0,0,.16)}
+.st-mdots button[aria-pressed="true"]::after{content:"";position:absolute;inset:1px;border-radius:50%;border:2px solid var(--ink)}
+.st-mix{display:flex;align-items:center;gap:12px;margin:10px 0 0}.st-mix[hidden]{display:none}.st-mix i{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(0,0,0,.16)}.st-mix input{flex:1;min-width:0;min-height:44px}
+.st-pip{position:relative}.st-pip input{position:absolute;opacity:0;width:1px;height:1px}.st-pip:focus-within{outline:2px solid var(--brass-t);outline-offset:2px}
+.st-pipc{display:block;width:100%;max-width:420px;height:auto;margin:12px 0 0;border-radius:12px;cursor:crosshair;touch-action:manipulation}.st-pipc[hidden]{display:none}
+.st-hsl{margin:18px 0 0}.st-hsl summary{cursor:pointer;font-weight:600;color:var(--mut);min-height:44px;display:flex;align-items:center;font-size:.92rem;gap:10px;list-style:none}.st-hsl summary::-webkit-details-marker{display:none}.st-hsl summary::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .3s}.st-hsl[open] summary::after{transform:rotate(-135deg)}
+.st-hsl div{display:grid;gap:6px;padding:4px 0 0}.st-hsl label{display:grid;grid-template-columns:7.5em 1fr;align-items:center;gap:10px;font-weight:600;font-size:.92rem}.st-hsl input{min-height:44px;min-width:0}
 /* Diese Farbe kaufen */
 .st-kauf{margin:14px 2px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .st-kauf summary{cursor:pointer;font-weight:650;min-height:56px;display:flex;align-items:center;justify-content:space-between;list-style:none}
