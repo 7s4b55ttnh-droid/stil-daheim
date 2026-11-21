@@ -1,4 +1,4 @@
-<!--meta {"key":"kaffee","title":"Kaffee-Ecke einrichten: Vollautomat, Siebträger oder Matcha? – Stil-Daheim","desc":"Welche Kaffeemaschine passt zu dir? Maschinen-Finder, Vollautomaten und Siebträger bei OTTO, Espresso und Matcha richtig zubereiten, gemütliche Kaffee-Ecke.","og":"assets/kaffee.jpg","updated":"2026-11-20","kurz":"Wer schnell und oft mit Milch trinkt, ist mit einem Vollautomaten gut bedient, er steht laut Kaffeeverband schon in jedem dritten Haushalt. Wer das Ritual mag, nimmt einen Siebträger mit Mühle: Für einen klassischen Espresso reichen rund 7&nbsp;Gramm Kaffee, 9&nbsp;bar und 25&nbsp;Sekunden. Filterkaffee gelingt mit 92 bis 96&nbsp;Grad heißem Wasser, Matcha mit 75 bis 80&nbsp;Grad. Für die Kaffee-Ecke reichen 60&nbsp;Zentimeter Arbeitsfläche, eine Steckdose und warmes Licht."} -->
+<!--meta {"key":"kaffee","title":"Kaffee-Ecke einrichten: Vollautomat, Siebträger oder Matcha? – Stil-Daheim","desc":"Welche Kaffeemaschine passt zu dir? Maschinen-Finder, unsere Wahl in fünf Preisklassen bei OTTO, Espresso und Matcha zubereiten, gemütliche Kaffee-Ecke.","og":"assets/kaffee.jpg","updated":"2026-11-22","kurz":"Wer schnell und oft mit Milch trinkt, ist mit einem Vollautomaten gut bedient, er steht laut Kaffeeverband schon in jedem dritten Haushalt. Wer das Ritual mag, nimmt einen Siebträger mit Mühle: Für einen klassischen Espresso reichen rund 7&nbsp;Gramm Kaffee, 9&nbsp;bar und 25&nbsp;Sekunden. Filterkaffee gelingt mit 92 bis 96&nbsp;Grad heißem Wasser, Matcha mit 75 bis 80&nbsp;Grad. Für die Kaffee-Ecke reichen 60&nbsp;Zentimeter Arbeitsfläche, eine Steckdose und warmes Licht."} -->
 <!--HEAD-->
 <style>
 /* Kaffee-Ecke (seit 20.11.2026): warm, ruhig, Holz und Crema. Kopfbild und Matcha sind kurze KI-Filme (kaffee-film.js) über einem Standbild; das Standbild trägt die KI-Marke. */
@@ -39,9 +39,20 @@
 .kf-res h3{font-size:clamp(1.45rem,3.4vw,1.9rem);font-stretch:85%;line-height:1.1;margin:0 0 10px}
 .kf-res p{margin:0 0 12px}
 .kf-res .achte{color:var(--mut);font-size:.95rem}
-.kf-res ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
-.kf-res li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:12px 0 0;border-top:1px solid var(--line)}
-.kf-res li b{margin-right:auto}
+.kf-res ul{list-style:none;padding:0;margin:16px 0 0}
+.kf-res li{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 0;border-top:1px solid var(--line)}
+.kf-rb{flex:none;width:84px;border-radius:10px;overflow:hidden;background:color-mix(in srgb,var(--brass-t) 7%,var(--pan))}
+.kf-rb svg{width:100%}
+.kf-rb text,.kf-rb .m{display:none}
+.kf-rt{flex:1 1 180px;min-width:0}
+.kf-rt b{display:block;font-size:1.06rem;line-height:1.25}
+.kf-rm{display:block;margin-top:2px;font-size:.86rem;color:var(--mut)}
+.kf-ra{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.kf-ra .btn{min-height:44px;padding:8px 16px;font-size:.95rem}
+.kf-ra .tag{margin-left:0}
+.kf-ra a:not(.btn){font-size:.92rem}
+.kf-rw{margin:4px 0 0!important;padding-top:14px;border-top:1px solid var(--line)}
+@media (max-width:640px){.kf-ra{flex-basis:100%}}
 
 /* Sieben Wege */
 .kf-wege{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:28px}
@@ -54,30 +65,106 @@
 .kf-wege dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:12px 0 0;font-size:.9rem}
 .kf-wege dt{font-weight:700}.kf-wege dd{margin:0;color:var(--mut)}
 
-/* Maschinen */
-.kf-ms{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:28px}
-.kf-m{display:flex;flex-direction:column;background:var(--pan);border:1px solid var(--line);border-radius:18px;padding:20px;scroll-margin-top:90px}
+/* Maschinen (seit 21.11.2026 aus kaffee.json, siehe build.py): Jede Karte beginnt mit einem Maßbild. Alle Maßbilder haben denselben
+   Maßstab (3 px je cm), die Linie der Arbeitsplatte läuft durch. Breite Karte (Container ab 760px): Maßbild | Text | Dafür und Dagegen.
+   Schmale Karte: untereinander. Es sind Zeichnungen der Bauart, keine Produktfotos. */
+.kf-ms{display:grid;gap:14px;margin-top:22px}
+.kf-m{container-type:inline-size;background:var(--pan);border:1px solid var(--line);border-radius:18px;overflow:hidden;scroll-margin-top:90px}
 .kf-m:target{outline:2px solid var(--brass-t);outline-offset:3px}
-.kf-m .kf-tag{align-self:flex-start;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--brass-t) 16%,transparent);color:var(--brass-t);margin-bottom:10px}
-.kf-m h3{margin:0;font-size:1.22rem;line-height:1.2}
-.kf-m .mod{margin:2px 0 10px;font-size:.85rem;color:var(--mut)}
-.kf-m>p{margin:0 0 14px;font-size:.96rem}
-.kf-spec{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0 0 16px;padding-top:12px;border-top:1px solid var(--line);font-size:.9rem}
-.kf-spec dt{color:var(--mut)}.kf-spec dd{margin:0;font-weight:600}
-.kf-m .kf-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.kf-m .kf-tags .kf-tag{margin:0}
+.kf-wahl{border:2px solid var(--brass)}
+.kf-in{display:flex;flex-direction:column;height:100%}
+.kf-bild{display:grid;place-items:center;overflow:hidden;background:color-mix(in srgb,var(--brass-t) 7%,var(--pan));border-bottom:1px solid var(--line)}
+.kf-mb{display:block;overflow:visible;max-width:100%;height:auto}
+.kf-mb .f{fill:var(--pan);stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.kf-mb .g{fill:color-mix(in srgb,var(--brass-t) 16%,var(--pan));stroke:var(--ink);stroke-width:1.3;stroke-linejoin:round}
+.kf-mb .n{fill:color-mix(in srgb,var(--ink) 10%,var(--pan))}
+.kf-mb .s{fill:color-mix(in srgb,var(--ink) 78%,var(--pan))}
+.kf-mb .p{fill:var(--ink);opacity:.62}
+.kf-mb .t,.kf-mb .l,.kf-mb .k,.kf-mb .d,.kf-mb .h,.kf-mb .m,.kf-mb .b{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.kf-mb .d{stroke-width:1.1;opacity:.5}
+.kf-mb .h{stroke-width:1.2;opacity:.7}
+.kf-mb .l{stroke-width:2}
+.kf-mb .k{stroke-width:4.4}
+.kf-mb .b{stroke-width:2;opacity:.82;stroke-linecap:butt}
+.kf-mb .m{stroke:var(--brass-t);stroke-width:1.3}
+.kf-mb text{fill:var(--brass-t);font:650 11.5px var(--sans);font-stretch:92%}
+.kf-txt{padding:18px 20px 2px}
+.kf-rest{display:flex;flex-direction:column;flex:1;padding:12px 20px 20px}
+.kf-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.kf-tag{font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--brass-t) 16%,transparent);color:var(--brass-t)}
 .kf-tipp{font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--ink);color:var(--bg);white-space:nowrap}
-.kf-pl{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:0 0 14px!important;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--brass-t) 9%,transparent);font-size:.92rem}
+.kf-n{margin:0;font-size:1.3rem;font-weight:700;font-stretch:84%;letter-spacing:-.004em;line-height:1.18;text-wrap:balance}
+.kf-m .mod{margin:3px 0 10px;font-size:.85rem;color:var(--mut)}
+.kf-t{margin:0 0 14px;font-size:.96rem}
+.kf-pl{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:0 0 12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--brass-t) 9%,transparent);font-size:.92rem}
 .kf-pl span{font-size:.8rem;font-weight:700;color:var(--mut)}
 .kf-pl b{font-size:1rem}
 .kf-pl small{flex-basis:100%;font-size:.88rem;color:var(--mut);line-height:1.45}
-.kf-note{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
 .kf-pl-1 b,.kf-note.kf-pl-1{color:var(--brass-t)}
-.kf-pc{display:grid;gap:10px;margin:0 0 16px;font-size:.9rem}
+.kf-test{position:relative;margin:0 0 12px;padding-left:15px;font-size:.85rem;line-height:1.45;color:var(--mut)}
+.kf-test::before{content:"";position:absolute;left:1px;top:.48em;width:7px;height:7px;border-radius:50%;background:var(--brass)}
+.kf-akt{margin:0 0 12px;padding:10px 12px;border:1px dashed var(--brass);border-radius:12px;font-size:.88rem;line-height:1.45}
+.kf-akt a{font-weight:650;white-space:nowrap}
+.kf-akt a svg{width:13px;height:13px;margin-left:4px;vertical-align:-1px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kf-pc{display:grid;gap:10px;margin:0 0 14px;font-size:.9rem}
 .kf-pch{margin:0 0 4px!important;font-size:.78rem;font-weight:700;color:var(--mut)}
 .kf-pc ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
 .kf-pc li{position:relative;padding-left:18px;line-height:1.4}
 .kf-pc .pro li::before{content:"+";position:absolute;left:0;top:-1px;font-weight:800;color:var(--brass-t)}
 .kf-pc .con li::before{content:"–";position:absolute;left:1px;top:-1px;font-weight:800;color:var(--mut)}
+.kf-dat{margin:0 0 14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.kf-dat summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;cursor:pointer;font-size:.9rem;font-weight:650;list-style:none}
+.kf-dat summary::-webkit-details-marker{display:none}
+.kf-dat summary::after{content:"";flex:none;width:8px;height:8px;margin-right:4px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.kf-dat[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+.kf-spec{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:2px 0 12px;font-size:.9rem}
+.kf-spec dt{color:var(--mut)}.kf-spec dd{margin:0;font-weight:600}
+.kf-buy{margin-top:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.kf-buy .btn{min-height:46px}
+.kf-buy .btn svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@container (min-width:760px){
+.kf-in{display:grid;grid-template-columns:292px minmax(0,1.14fr) minmax(0,1fr)}
+.kf-bild{border-bottom:0;border-right:1px solid var(--line)}
+.kf-txt{padding:22px 26px}
+.kf-txt>:last-child{margin-bottom:0}
+.kf-rest{padding:22px 24px 22px 0}
+}
+@media (prefers-reduced-motion:reduce){.kf-dat summary::after{transition:none}}
+
+/* Unsere Wahl je Preisklasse: fünf kleine Maßbilder auf einer Arbeitsplatte, darunter die Preisklassen als durchlaufende Maßlinie */
+.kf-lh{margin:0;font-size:.82rem;font-weight:700;color:var(--brass-t)}
+.kf-leiste{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:18px;background:var(--pan);overflow:hidden}
+.kf-leiste li{display:flex;min-width:0}
+.kf-leiste a{display:flex;flex-direction:column;flex:1;min-width:0;color:var(--ink);text-decoration:none}
+.kf-leiste a:focus-visible{outline-offset:-4px}
+.kf-lb{display:grid;place-items:center;overflow:hidden;background:color-mix(in srgb,var(--brass-t) 7%,var(--pan))}
+.kf-lt{display:flex;flex-direction:column;gap:2px;padding:0 12px 16px;text-align:center}
+.kf-lk{position:relative;margin:0 -12px 8px;padding-top:22px;font-size:.8rem;font-weight:700;color:var(--brass-t)}
+.kf-lk::before{content:"";position:absolute;left:0;right:0;top:11px;border-top:1.5px solid var(--brass)}
+.kf-leiste li+li .kf-lk::after{content:"";position:absolute;left:-1px;top:5px;height:13px;border-left:1.5px solid var(--brass)}
+.kf-lt b{font-size:1rem;line-height:1.25}
+.kf-lt small{font-size:.84rem;color:var(--mut)}
+.kf-leiste a:hover b{text-decoration:underline;text-underline-offset:.2em}
+.kf-lz{margin:10px 0 0;font-size:.85rem;color:var(--mut)}
+@media (max-width:760px){
+.kf-leiste{grid-template-columns:1fr}
+.kf-leiste li+li{border-top:1px solid var(--line)}
+.kf-leiste a{flex-direction:row}
+.kf-lb{flex:0 0 118px}
+.kf-mbk{width:112px}
+.kf-lt{flex:1;justify-content:center;gap:1px;padding:10px 14px;text-align:left}
+.kf-lk{margin:0;padding:0}
+.kf-lk::before,.kf-leiste li+li .kf-lk::after{display:none}
+}
+/* Preisklassen-Leiter */
+.kf-kl{margin-top:46px;scroll-margin-top:90px}
+.kf-kl-h h3{font-size:clamp(1.5rem,3.2vw,2.05rem);font-stretch:82%}
+.kf-kl-h .kf-eu{font-size:.62em;margin-right:12px;vertical-align:.14em;font-stretch:100%}
+.kf-kl-h p{margin:6px 0 0;color:var(--mut);max-width:62ch}
+.kf-kl .kf-ms{margin-top:16px}
+
+/* Vergleich */
+.kf-note{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
 .kf-vgl-w{margin-top:8px}
 .kf-vgl-h{margin:52px 0 14px;scroll-margin-top:90px;font-size:clamp(1.4rem,3vw,1.9rem);font-stretch:85%}
 .kf-vgl-ctl{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
@@ -97,11 +184,13 @@
 .kf-vgl tbody th,.kf-vgl tbody td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
 .kf-vgl tbody tr:last-child>*{border-bottom:0}
 .kf-vgl tbody tr{transition:background .15s}
-.kf-vgl tbody tr:hover{background:color-mix(in srgb,var(--brass-t) 5%,transparent)}
+.kf-vgl tbody tr[data-art]:hover{background:color-mix(in srgb,var(--brass-t) 5%,transparent)}
 .kf-vgl tbody th{font-weight:400}
 .kf-vgl tbody th a{display:block;font-weight:700;color:var(--ink);text-decoration:none;font-size:1rem}
-.kf-vgl thead th:first-child,.kf-vgl tbody th{width:34%}
+.kf-vgl thead th:first-child,.kf-vgl tbody tr[data-art] th{width:34%}
 .kf-vgl tbody th a:hover{text-decoration:underline}
+.kf-vgl tbody tr.kf-grp td{padding:8px 14px;font-size:.8rem;font-weight:700;color:var(--mut);background:color-mix(in srgb,var(--brass-t) 7%,var(--pan))}
+.kf-grp .kf-eu{font-size:.86rem}
 .kf-va{font-size:.8rem;color:var(--mut)}
 .kf-vt{display:inline-block;margin-left:8px;white-space:nowrap;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--ink);color:var(--bg);vertical-align:1px}
 .kf-eu{display:inline-flex;gap:1px;margin-right:8px;font-weight:800;letter-spacing:-.02em}
@@ -121,29 +210,30 @@
 .kf-vgl tbody tr[hidden]{display:none}
 .kf-vgl-leer{margin:0;padding:18px;color:var(--mut)}
 .kf-vgl-z{margin:10px 0 0;font-size:.85rem;color:var(--mut)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-/* Handy: jede Maschine als kompakte Karte, Werte in drei Spalten */
+/* Handy: jede Maschine als kompakte Karte. Oben Name und Urteil, darunter eine Zeile mit Preisklasse, Milch und Breite; die Preisklasse steht auch als Zwischenzeile darüber */
 @media (max-width:700px){
 .kf-vgl{background:transparent;border:0;border-radius:0;overflow:visible}
 .kf-vgl thead{display:none}
 .kf-vgl tbody{display:grid;gap:8px}
-.kf-vgl tbody tr{display:grid;grid-template-columns:1.15fr 1fr .8fr;gap:10px 10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--pan)}
-.kf-vgl tbody th,.kf-vgl tbody td{padding:0;border:0;width:auto}
-.kf-vgl tbody th{grid-column:1 / 3;grid-row:1}
-.kf-vgl tbody .kf-vr{grid-column:3;grid-row:1;align-self:start}
-.kf-vgl tbody td[data-l]:not(.kf-vr){grid-row:2;font-size:.85rem;padding-top:10px;border-top:1px solid var(--line);white-space:normal}
-.kf-vgl tbody td[data-l]:not(.kf-vr)::before{content:attr(data-l);display:block;font-size:.72rem;font-weight:700;color:var(--mut);margin-bottom:3px}
-.kf-vgl .kf-eu{display:flex;margin:0 0 1px}
-.kf-vgl .kf-bw{display:none}
+.kf-vgl tbody tr[data-art]{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:14px;padding:13px 14px 12px;border:1px solid var(--line);border-radius:14px;background:var(--pan)}
+.kf-vgl tbody tr[data-art]::before{content:"";order:2;flex:0 0 100%;height:0}
+.kf-vgl tbody th,.kf-vgl tbody td{padding:0;border:0}
+.kf-vgl tbody tr[data-art] th{order:0;flex:1 1 0;min-width:0;width:auto}
+.kf-vgl tbody .kf-vr{order:1;flex:none}
+.kf-vgl tbody td[data-l]:not(.kf-vr){order:3;flex:none;max-width:100%;margin-top:8px;font-size:.84rem;color:var(--mut);white-space:normal}
+.kf-vgl td .kf-eu,.kf-vgl .kf-bw,.kf-vgl td.kf-ohne{display:none}
+.kf-vgl td[data-l="Breite"] .v::after{content:" breit"}
 .kf-vgl .kf-mi{white-space:normal;align-items:baseline}
-.kf-vt{margin-left:0;margin-top:4px}
+.kf-vt{margin-left:0}
 .kf-va{margin-right:6px}
+.kf-vgl tbody tr.kf-grp{display:block;margin-top:8px}
+.kf-vgl tbody tr.kf-grp td{display:block;padding:0 2px;background:none}
 }
-.kf-meth{margin-top:12px;font-size:.88rem;color:var(--mut)}
-.kf-buy{margin-top:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.kf-buy .btn{min-height:46px}
-.kf-buy .btn svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#barista .kf-ms{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.kf-meth{margin-top:26px;padding:20px 22px 22px;border:1px solid var(--line);border-radius:16px;background:var(--pan);scroll-margin-top:90px}
+.kf-meth h3{margin:0 0 14px;font-size:1.15rem}
+.kf-meth dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px 28px;margin:0}
+.kf-meth dt{font-size:.8rem;font-weight:700;color:var(--brass-t);margin-bottom:2px}
+.kf-meth dd{margin:0;font-size:.9rem;line-height:1.5;color:var(--mut)}
 .kf-fil{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(22px,4vw,48px);align-items:start;margin-top:6px}
 .kf-fil .kv{margin:0}
 @media (max-width:820px){.kf-fil{grid-template-columns:1fr}}
@@ -223,39 +313,35 @@
     <fieldset><legend>Wie viel Platz hast du?</legend><div class="opts">
       <label><input type="radio" name="platz" value="knapp">Knapp, eher schmal</label><label><input type="radio" name="platz" value="genug" checked>Genug</label></div></fieldset>
     <fieldset><legend>Wie viel möchtest du ausgeben?</legend><div class="opts">
-      <label><input type="radio" name="budget" value="klein">Bis 300 Euro</label><label><input type="radio" name="budget" value="mittel" checked>Bis 600 Euro</label><label><input type="radio" name="budget" value="egal">Egal, Hauptsache bequem</label></div></fieldset>
+      <label><input type="radio" name="budget" value="klein">Bis 300 Euro</label><label><input type="radio" name="budget" value="mittel" checked>Bis 500 Euro</label><label><input type="radio" name="budget" value="hoch">Bis 1.000 Euro</label><label><input type="radio" name="budget" value="egal">Mehr, wenn es sich lohnt</label></div></fieldset>
   </form>
   <div class="kf-res" id="kf-res" aria-live="polite"></div>
 </div><div class="wrap kf-vgl-w">
-  <h3 class="kf-vgl-h" id="vergleich">Alle 13 Maschinen im Preis-Leistungs-Vergleich.</h3>
+  <h3 class="kf-vgl-h" id="vergleich">Alle {{KF:n}} Maschinen im Preis-Leistungs-Vergleich.</h3>
   <div class="kf-vgl-ctl">
-    <div class="kf-seg" role="group" aria-label="Art auswählen"><button type="button" data-f="alle" aria-pressed="true">Alle <span>13</span></button><button type="button" data-f="voll" aria-pressed="false">Vollautomaten <span>8</span></button><button type="button" data-f="sieb" aria-pressed="false">Siebträger <span>3</span></button><button type="button" data-f="zub" aria-pressed="false">Filter und Mühle <span>2</span></button></div>
+    <div class="kf-seg" role="group" aria-label="Art auswählen"><button type="button" data-f="alle" aria-pressed="true">Alle <span>{{KF:n}}</span></button><button type="button" data-f="voll" aria-pressed="false">Vollautomaten <span>{{KF:n_voll}}</span></button><button type="button" data-f="sieb" aria-pressed="false">Siebträger <span>{{KF:n_sieb}}</span></button><button type="button" data-f="zub" aria-pressed="false">Filter und Mühle <span>{{KF:n_zub}}</span></button></div>
     <div class="kf-vgl-opt"><label class="kf-chk"><input type="checkbox" id="kf-nurmilch">Nur Milch auf Knopfdruck</label><label class="kf-sort">Sortieren <select id="kf-sort"><option value="preis">Günstigste zuerst</option><option value="pl">Beste Preis-Leistung zuerst</option></select></label></div>
   </div>
   <div class="kf-vgl">
     <table>
-      <caption class="sr">Preis-Leistungs-Vergleich aller Kaffeemaschinen auf dieser Seite</caption>
+      <caption class="sr">Preis-Leistungs-Vergleich aller Kaffeemaschinen auf dieser Seite, nach Preisklasse geordnet</caption>
       <thead><tr><th scope="col">Maschine</th><th scope="col">Preisklasse</th><th scope="col">Milch</th><th scope="col">Breite</th><th scope="col">Preis-Leistung</th></tr></thead>
       <tbody id="kf-vgl-b">
-      <tr data-art="sieb" data-milch="hand" data-rang="1" data-pl="1"><th scope="row"><a href="#m-dedica">De’Longhi Dedica Style</a><span class="kf-va">Siebträger</span><span class="kf-vt">Unser Tipp</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i>€</i><i>€</i><i>€</i><i>€</i></span>unter 300&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-hand">Düse, von Hand</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:37%"></i></span>14,9&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-1">Sehr gut</span></td></tr>
-      <tr data-art="zub" data-milch="keine" data-rang="2" data-pl="2"><th scope="row"><a href="#m-graef">Graef CM&nbsp;800</a><span class="kf-va">Mühle</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i>€</i><i>€</i><i>€</i><i>€</i></span>unter 300&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-leer">–</span></span></td><td data-l="Breite"><span class="v"><span class="kf-leer">–</span></span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-2">Gut</span></td></tr>
-      <tr data-art="voll" data-milch="hand" data-rang="3" data-pl="1"><th scope="row"><a href="#m-philips2200">Philips 2200 Series</a><span class="kf-va">Vollautomat</span><span class="kf-vt">Unser Tipp</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i>€</i><i>€</i><i>€</i><i>€</i></span>unter 300&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-hand">Düse, von Hand</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:62%"></i></span>24,7&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-1">Sehr gut</span></td></tr>
-      <tr data-art="voll" data-milch="hand" data-rang="4" data-pl="1"><th scope="row"><a href="#m-magnifica">De’Longhi Magnifica&nbsp;S</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i>€</i><i>€</i><i>€</i><i>€</i></span>unter 300&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-hand">Düse, von Hand</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:60%"></i></span>23,8&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-1">Sehr gut</span></td></tr>
-      <tr data-art="voll" data-milch="keine" data-rang="5" data-pl="2"><th scope="row"><a href="#m-solo">Melitta Solo</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i>€</i><i>€</i><i>€</i><i>€</i></span>unter 300&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-keine">Keine</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:50%"></i></span>20&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-2">Gut</span></td></tr>
-      <tr data-art="zub" data-milch="keine" data-rang="6" data-pl="3"><th scope="row"><a href="#m-mocca">Moccamaster KBG Select</a><span class="kf-va">Filter</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i>€</i><i>€</i><i>€</i></span>300 bis 500&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-leer">–</span></span></td><td data-l="Breite"><span class="v"><span class="kf-leer">–</span></span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-3">Okay</span></td></tr>
-      <tr data-art="voll" data-milch="auto" data-rang="7" data-pl="1"><th scope="row"><a href="#m-philips">Philips 3300 Series LatteGo</a><span class="kf-va">Vollautomat</span><span class="kf-vt">Unser Tipp</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i>€</i><i>€</i><i>€</i></span>300 bis 500&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:62%"></i></span>24,6&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-1">Sehr gut</span></td></tr>
-      <tr data-art="voll" data-milch="auto" data-rang="8" data-pl="2"><th scope="row"><a href="#m-evo">De’Longhi Magnifica Evo</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i>€</i><i>€</i><i>€</i></span>300 bis 500&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:60%"></i></span>24&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-2">Gut</span></td></tr>
-      <tr data-art="sieb" data-milch="hand" data-rang="9" data-pl="2"><th scope="row"><a href="#m-sage">Sage The Barista Express</a><span class="kf-va">Siebträger</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i>€</i><i>€</i><i>€</i></span>300 bis 500&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-hand">Dampflanze, von Hand</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:80%"></i></span>31,8&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-2">Gut</span></td></tr>
-      <tr data-art="voll" data-milch="auto" data-rang="10" data-pl="2"><th scope="row"><a href="#m-siemens">Siemens EQ500</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i class="an">€</i><i>€</i><i>€</i></span>500 bis 800&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:68%"></i></span>27,2&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-2">Gut</span></td></tr>
-      <tr data-art="voll" data-milch="auto" data-rang="11" data-pl="3"><th scope="row"><a href="#m-jura">JURA E8</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i class="an">€</i><i class="an">€</i><i>€</i></span>800 bis 1.000&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:68%"></i></span>27&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-3">Okay</span></td></tr>
-      <tr data-art="voll" data-milch="auto" data-rang="12" data-pl="3"><th scope="row"><a href="#m-primadonna">De’Longhi PrimaDonna Aromatic</a><span class="kf-va">Vollautomat</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i class="an">€</i><i class="an">€</i><i class="an">€</i></span>über 1.000&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:66%"></i></span>26,2&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-3">Okay</span></td></tr>
-      <tr data-art="sieb" data-milch="auto" data-rang="13" data-pl="3"><th scope="row"><a href="#m-oracle">Sage The Oracle Touch</a><span class="kf-va">Siebträger</span></th><td class="kf-vp" data-l="Preisklasse"><span class="v"><span class="kf-eu" aria-hidden="true"><i class="an">€</i><i class="an">€</i><i class="an">€</i><i class="an">€</i><i class="an">€</i></span>über 1.000&nbsp;€</span></td><td data-l="Milch"><span class="v"><span class="kf-mi kf-mi-auto">Auf Knopfdruck</span></span></td><td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:93%"></i></span>37,3&nbsp;cm</span></td><td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-3">Okay</span></td></tr>
+{{KF_VERGLEICH}}
       </tbody>
     </table>
     <p class="kf-vgl-leer" id="kf-vgl-leer" hidden>Keine Maschine passt zu dieser Auswahl.</p>
   </div>
-  <p class="kf-vgl-z" id="kf-vgl-z" aria-live="polite">13 Maschinen, günstigste zuerst.</p>
-  <p class="kf-meth"><b>So ordnen wir ein:</b> Preis-Leistung ist unsere Einschätzung, kein Labortest. Wir vergleichen, was eine Maschine kann (Mahlwerk, Milchsystem, Reinigung, Größe, Bedienung), mit dem, was sie kostet. Die Preisklasse (€ bis €€€€€) richtet sich nach dem Preis bei OTTO am 20.11.2026, zur Black Week teils reduziert. Preise ändern sich oft, den aktuellen siehst du beim Händler.</p>
+  <p class="kf-vgl-z" id="kf-vgl-z" aria-live="polite">{{KF:n}} Maschinen, günstigste zuerst.</p>
+  <div class="kf-meth" id="auswahl">
+    <h3>So haben wir ausgewählt.</h3>
+    <dl>
+      <div><dt>Unsere Wahl</dt><dd>In jeder Preisklasse das Gerät, das wir den meisten empfehlen würden. Grundlage ist die Preis-Leistung: Wir vergleichen, was eine Maschine kann (Mahlwerk, Milchsystem, Reinigung, Größe, Bedienung), mit dem, was sie kostet. Das ist unsere Einschätzung, selbst getestet haben wir keine.</dd></div>
+      <div><dt>Stiftung Warentest</dt><dd>{{KF:N_test}} Vollautomaten hier hat die Stiftung Warentest geprüft (veröffentlicht am {{KF:test_datum}}, in der Tabelle stehen {{KF:test_n}} Geräte). Sie haben gut abgeschnitten: {{KF:test_namen}}. Das fließt in unsere Wahl ein. Noten und alle Ergebnisse gibt es gegen Gebühr bei <a href="{{KF:test_url}}" target="_blank" rel="noopener">test.de</a>.</dd></div>
+      <div><dt>Preisklasse</dt><dd>Richtet sich nach dem Preis bei OTTO am {{KF:stand}}, zur Black Week teils reduziert. Preise ändern sich oft, den aktuellen siehst du beim Händler.</dd></div>
+      <div><dt>Maßbilder</dt><dd>Die Zeichnungen zeigen Breite und Höhe laut Hersteller, alle im gleichen Maßstab. Sie zeigen die Bauart, es sind keine Produktfotos.</dd></div>
+    </dl>
+  </div>
 </div></section>
 
 <section class="band" id="wege"><div class="wrap">
@@ -273,94 +359,25 @@
 </div></section>
 
 <section id="vollautomaten"><div class="wrap">
-  <div class="sec-h"><h2>Vollautomaten bei OTTO.</h2><p class="lede">Acht Maschinen von unter 300 bis über 1.000 Euro, jede mit Preis-Leistung, Dafür und Dagegen. Technische Daten laut Hersteller und Händlern, geprüft am 20.11.2026.<span class="tag">Anzeige</span></p></div>
-  <div class="kf-ms">
-    <article class="kf-m" id="m-philips2200"><div class="kf-tags"><span class="kf-tag">Günstiger Einstieg</span><span class="kf-tipp">Unser Tipp unter 300 €</span></div><h3>Philips 2200 Series</h3><p class="mod">EP2225/10</p>
-      <p>Espresso und Kaffee auf Knopfdruck, Milch schäumst du an der klassischen Düse. Viel Vollautomat für wenig Geld.</p>
-      <p class="kf-pl kf-pl-1"><span>Preis-Leistung</span> <b>Sehr gut</b> <small>Keramikmahlwerk mit 12 Stufen und herausnehmbare Brühgruppe für unter 300 €.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>24,7 × 36,6 × 43,4&nbsp;cm</dd><dt>Wassertank</dt><dd>1,8&nbsp;l</dd><dt>Bohnen</dt><dd>275&nbsp;g, Keramikmahlwerk</dd><dt>Milch</dt><dd>Aufschäumdüse von Hand</dd><dt>Preisklasse</dt><dd>unter 300&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Brühgruppe herausnehmbar, unter Wasser abspülbar</li><li>Großer Wassertank mit 1,8&nbsp;l</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Nur Espresso und Kaffee per Taste</li><li>Milch schäumst du selbst</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/philips-kaffeevollautomat-ep2225-10-2200-series-2-kaffeespezialitaeten-panarello-milchschaumer-anpassbarer-aromastaerke-C858943813/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-magnifica"><span class="kf-tag">Klassiker</span><h3>De’Longhi Magnifica&nbsp;S</h3><p class="mod">ECAM21.118.B</p>
-      <p>Für Espresso und Café Crème auf Knopfdruck. Milch schäumst du an der Düse selbst auf, das dauert eine Minute.</p>
-      <p class="kf-pl kf-pl-1"><span>Preis-Leistung</span> <b>Sehr gut</b> <small>Schmal, einfach zu bedienen und mit Milchdüse für unter 300 €.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>23,8 × 35,1 × 43&nbsp;cm</dd><dt>Wassertank</dt><dd>1,8&nbsp;l</dd><dt>Bohnen</dt><dd>250&nbsp;g, Kegelmahlwerk</dd><dt>Milch</dt><dd>Aufschäumdüse von Hand</dd><dt>Preisklasse</dt><dd>unter 300&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Schmal mit 23,8&nbsp;cm</li><li>Einfache Bedienung über Direktwahltasten</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Kein Display</li><li>Milch schäumst du selbst</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/de-longhi-kaffeevollautomat-magnifica-s-ecam21-118-b-milchaufschaeumduese-fuer-cappuccino-schwarz-einfache-bedienung-direktwahltasten-reinigung-kegelmahlwerk-1628116682/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-solo"><span class="kf-tag">Nur 20&nbsp;cm breit</span><h3>Melitta Solo</h3><p class="mod">E950</p>
-      <p>Für alle, die schwarz trinken und wenig Platz haben. Ohne Milchsystem, dafür schmal und mit Abschaltung ohne Stromverbrauch.</p>
-      <p class="kf-pl kf-pl-2"><span>Preis-Leistung</span> <b>Gut</b> <small>Ideal für schmale Ecken und Schwarztrinker. Wer Milch mag, bekommt fürs gleiche Geld mehr.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>20 × 32,5 × 45,5&nbsp;cm</dd><dt>Wassertank</dt><dd>1,2&nbsp;l</dd><dt>Bohnen</dt><dd>125&nbsp;g, Kegelmahlwerk</dd><dt>Milch</dt><dd>keine</dd><dt>Tassenhöhe</dt><dd>bis 13,5&nbsp;cm</dd><dt>Preisklasse</dt><dd>unter 300&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Nur 20&nbsp;cm breit</li><li>Brühgruppe herausnehmbar</li><li>Schalter ohne Stromverbrauch im Aus</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Kein Milchsystem</li><li>Kleiner Tank (1,2&nbsp;l) und Bohnenbehälter (125&nbsp;g)</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/melitta-kaffeevollautomat-solo-e950-203-silber-schwarz-perfekt-fuer-cafe-creme-espresso-nur-20cm-breit-C751291358/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-philips"><div class="kf-tags"><span class="kf-tag">Milch auf Knopfdruck</span><span class="kf-tipp">Unser Tipp mit Milch</span></div><h3>Philips 3300 Series LatteGo</h3><p class="mod">EP3343/50</p>
-      <p>Cappuccino und Latte Macchiato ohne Handgriff, dazu Eiskaffee. Das Milchsystem hat zwei Teile und keinen Schlauch, es ist schnell ausgespült.</p>
-      <p class="kf-pl kf-pl-1"><span>Preis-Leistung</span> <b>Sehr gut</b> <small>Milchschaum auf Knopfdruck zum Preis, den viele Geräte ohne Milchsystem kosten.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>24,6 × 37,1 × 43,3&nbsp;cm</dd><dt>Wassertank</dt><dd>1,8&nbsp;l</dd><dt>Bohnen</dt><dd>275&nbsp;g, Keramikmahlwerk</dd><dt>Milch</dt><dd>LatteGo, automatisch</dd><dt>Getränke</dt><dd>6, laut Hersteller besonders leise</dd><dt>Preisklasse</dt><dd>300 bis 500&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Milchschaum auf Knopfdruck</li><li>Milchsystem ohne Schlauch, schnell gespült</li><li>Brühgruppe herausnehmbar</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Milch nur aus dem eigenen Behälter, nicht aus der Packung</li><li>Nur 6 Getränke</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/philips-kaffeevollautomat-ep3343-50-3300-series-6-getraenke-heiss-oder-eisgekuehlt-lattego-milchsystem-silentbrew-technologie-1782291583/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-evo"><span class="kf-tag">Milch mit Karaffe</span><h3>De’Longhi Magnifica Evo</h3><p class="mod">ECAM290.61</p>
-      <p>Fünf Rezepte über farbige Symbole, Milchschaum auf Knopfdruck aus einem abnehmbaren Milchbehälter. Hohe Tassen bis 14&nbsp;cm passen drunter.</p>
-      <p class="kf-pl kf-pl-2"><span>Preis-Leistung</span> <b>Gut</b> <small>Ähnlich ausgestattet wie die Philips 3300, kostet aber meist etwas mehr.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>24 × 36 × 44&nbsp;cm</dd><dt>Wassertank</dt><dd>1,8&nbsp;l</dd><dt>Bohnen</dt><dd>250&nbsp;g, 13 Mahlstufen</dd><dt>Milch</dt><dd>LatteCrema, automatisch</dd><dt>Tassenhöhe</dt><dd>bis 14&nbsp;cm</dd><dt>Preisklasse</dt><dd>300 bis 500&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Milchbehälter und Abtropfschale spülmaschinenfest</li><li>Tassen bis 14&nbsp;cm</li><li>Brühgruppe herausnehmbar</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Nur 5 Rezepte</li><li>Meist teurer als die Philips 3300</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/de-longhi-kaffeevollautomat-magnifica-evo-ecam290-61-sb-5-rezepte-perfekter-milchschaum-lattecrema-milchsystem-automatische-entkalkung-und-reinigung-C1533494912/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-siemens"><span class="kf-tag">Zwei Cappuccino auf einmal</span><h3>Siemens EQ500</h3><p class="mod">TP553E09</p>
-      <p>Bis zu 41 Getränke, auch über die App. Macht zwei Tassen gleichzeitig, auch mit Milch, und der Milchschlauch passt in jede Packung.</p>
-      <p class="kf-pl kf-pl-2"><span>Preis-Leistung</span> <b>Gut</b> <small>Lohnt sich ab vielen Milchgetränken am Tag. Für ein, zwei Tassen reicht ein günstigeres Gerät.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>27,2 × 37,8 × 47,2&nbsp;cm</dd><dt>Wassertank</dt><dd>1,8&nbsp;l</dd><dt>Bohnen</dt><dd>300&nbsp;g, Keramikmahlwerk</dd><dt>Milch</dt><dd>Schlauch, automatisch</dd><dt>Tassenhöhe</dt><dd>bis 14&nbsp;cm</dd><dt>Preisklasse</dt><dd>500 bis 800&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Zwei Tassen auf einmal, auch mit Milch</li><li>Milchsystem reinigt sich nach jedem Getränk mit Dampf</li><li>Brühgruppe herausnehmbar</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Braucht Platz: 27,2&nbsp;cm breit, 47,2&nbsp;cm tief</li><li>Isolierter Milchbehälter kostet extra</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/siemens-kaffeevollautomat-eq500-tp553e09-doppeltassenfunktion-41-getraenke-einfache-reinigung-keramikmahlwerk-entnehmbare-brueheinheit-steuerung-per-app-schwarz-C2099180304/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-jura"><span class="kf-tag">Für viele Tassen</span><h3>JURA E8</h3><p class="mod">15745 (ED)</p>
-      <p>27 Spezialitäten über ein Farbdisplay, zwei Tassen auf einmal. Für Haushalte, in denen die Maschine den ganzen Tag läuft.</p>
-      <p class="kf-pl kf-pl-3"><span>Preis-Leistung</span> <b>Okay</b> <small>Viel Komfort und Auswahl, aber fast dreimal so teuer wie die Philips 3300.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>27 × 34,8 × 44,6&nbsp;cm</dd><dt>Wassertank</dt><dd>1,9&nbsp;l</dd><dt>Bohnen</dt><dd>280&nbsp;g, Kegelmahlwerk</dd><dt>Milch</dt><dd>Feinschaumdüse mit Schlauch</dd><dt>Tassenhöhe</dt><dd>bis 11,1&nbsp;cm</dd><dt>Preisklasse</dt><dd>800 bis 1.000&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>27 Spezialitäten über das Farbdisplay</li><li>Zwei Tassen auf einmal</li><li>Wasserfilter im Lieferumfang</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Teurer als die meisten Geräte mit Milch auf Knopfdruck</li><li>Tassen nur bis 11,1&nbsp;cm</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/jura-kaffeevollautomat-15745-e8-ed-piano-black-27-spezialitaeten-wifi-hot-light-brew-sweet-C2078694862/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-primadonna"><span class="kf-tag">Heiß und kalt</span><h3>De’Longhi PrimaDonna Aromatic</h3><p class="mod">ECAM630.75.TM</p>
-      <p>35 Rezepte heiß und eiskalt über ein 5-Zoll-Touchdisplay, dazu zwei Milchkaraffen: eine für warmen, eine für kalten Milchschaum. Die Maschine für alle, die das Café nach Hause holen wollen.</p>
-      <p class="kf-pl kf-pl-3"><span>Preis-Leistung</span> <b>Okay</b> <small>Viel Luxus, auch kalt. Kostet aber knapp viermal so viel wie die Philips 3300, die Cappuccino genauso auf Knopfdruck macht.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>26,2 × 40,7 × 46,3&nbsp;cm</dd><dt>Wassertank</dt><dd>2,2&nbsp;l</dd><dt>Bohnen</dt><dd>500&nbsp;g, Scheibenmahlwerk</dd><dt>Milch</dt><dd>2 Karaffen, warm und kalt</dd><dt>Tassenhöhe</dt><dd>bis 14&nbsp;cm</dd><dt>Preisklasse</dt><dd>über 1.000&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>35 Rezepte, heiß und kalt</li><li>Kalter Milchschaum mit eigener Karaffe</li><li>Großer Bohnenbehälter (500&nbsp;g) und Tank (2,2&nbsp;l)</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Über 1.000 Euro</li><li>Braucht Platz: 46,3&nbsp;cm tief</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/de-longhi-kaffeevollautomat-primadonna-aromatic-ecam630-75-tm-35-eiskalte-heisse-kaffeerezepte-edles-italienisches-design-bean-adapt-technology-cold-brew-rezepte-1952077265/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-  </div>
+  <div class="sec-h"><h2>Vollautomaten bei OTTO.</h2><p class="lede">{{KF:N_voll}} Maschinen in {{KF:n_klassen}} Preisklassen. In jeder Klasse steht zuerst unsere Wahl, danach kommen die Alternativen. Technische Daten laut Hersteller und Händlern, geprüft am {{KF:stand}}.<span class="tag">Anzeige</span></p></div>
+  <p class="kf-lh" id="wahl">Unsere Wahl je Preisklasse</p>
+  {{KF_LEISTE}}
+  <p class="kf-lz">Alle Zeichnungen im gleichen Maßstab. Warum diese fünf, steht unter <a href="#auswahl">So haben wir ausgewählt</a>.</p>
+{{KF_LEITER}}
   <p class="aw">Lieber selbst stöbern? <a href="{{otto:Kaffeevollautomat}}" rel="sponsored nofollow noopener" target="_blank">Alle Kaffeevollautomaten bei OTTO</a> · <a href="{{otto:Siebträgermaschine}}" rel="sponsored nofollow noopener" target="_blank">Siebträgermaschinen bei OTTO</a> · <a href="{{otto:Filterkaffeemaschine}}" rel="sponsored nofollow noopener" target="_blank">Filterkaffeemaschinen bei OTTO</a><br>Black Friday am 27.11.: <a href="{{otto:https://www.otto.de/black-friday/}}" rel="sponsored nofollow noopener" target="_blank">OTTO Black-Friday-Seite</a> · <a href="black-friday.html#haendler">Alle Händler-Aktionen</a><span class="tag">Anzeige</span></p>
   <h3 style="margin-top:44px">Worauf du achtest.</h3>
   <ul class="rechte">
     <li><b>Milchsystem:</b> Eine Düse ist schlicht und schnell sauber, du schäumst aber selbst. Automatische Systeme sind bequem, ein Schlauch braucht aber mehr Pflege als ein System ohne Schlauch.</li>
-    <li><b>Breite und Tiefe:</b> Die Vollautomaten hier sind 20 bis gut 27&nbsp;cm breit und 43 bis 47&nbsp;cm tief. Auf eine übliche Arbeitsplatte passen alle, an den Rand sollte sie trotzdem nicht.</li>
+    <li><b>Breite und Tiefe:</b> Die Vollautomaten hier sind {{KF:b_voll}}&nbsp;cm breit und {{KF:t_voll}}&nbsp;cm tief. Auf eine übliche Arbeitsplatte passen alle, an den Rand sollte sie trotzdem nicht.</li>
     <li><b>Tassenhöhe:</b> Für hohe Latte-macchiato-Gläser zählt, wie weit der Auslauf hochgeht. Miss dein Lieblingsglas, bevor du bestellst.</li>
     <li><b>Reinigung:</b> Bei vielen Maschinen lässt sich die Brühgruppe herausnehmen und abspülen, andere reinigen sich mit Tabletten selbst. Beides geht, solange du es regelmäßig machst.</li>
   </ul>
 </div></section>
 
 <section class="band" id="barista"><div class="wrap">
-  <div class="sec-h"><h2>Barista zu Hause.</h2><p class="lede">Ein Siebträger ist mehr Handwerk als Gerät. Dafür bestimmst du jeden Schritt selbst. Wichtig ist eine gute Mühle, denn frisch gemahlen bleibt das meiste Aroma in der Tasse.<span class="tag">Anzeige</span></p></div>
+  <div class="sec-h"><h2>Barista zu Hause.</h2><p class="lede">Ein Siebträger ist mehr Handwerk als Gerät. Dafür bestimmst du jeden Schritt selbst. Wichtig ist eine gute Mühle, denn frisch gemahlen bleibt das meiste Aroma in der Tasse. Vier Maschinen vom Einstieg bis zum Autopiloten, dazu die passende Mühle.<span class="tag">Anzeige</span></p></div>
   <div class="kf-ms">
-    <article class="kf-m" id="m-dedica"><div class="kf-tags"><span class="kf-tag">15&nbsp;cm schmal</span><span class="kf-tipp">Unser Tipp zum Einstieg</span></div><h3>De’Longhi Dedica Style</h3><p class="mod">EC685</p>
-      <p>Der Einstieg für kleine Küchen. Heizt mit einem Thermoblock schnell auf, Milch schäumst du an der Düse. Braucht eine Mühle oder fertig gemahlenen Espresso.</p>
-      <p class="kf-pl kf-pl-1"><span>Preis-Leistung</span> <b>Sehr gut</b> <small>Günstigster Weg zum echten Siebträger-Espresso. Mit Mühle zusammen meist unter 400 €.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>14,9 × 33 × 30,5&nbsp;cm</dd><dt>Wassertank</dt><dd>1,1&nbsp;l</dd><dt>Druck</dt><dd>15&nbsp;bar</dd><dt>Mahlwerk</dt><dd>keins</dd><dt>Preisklasse</dt><dd>unter 300&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Nur 14,9&nbsp;cm breit</li><li>Tamper liegt bei</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Kein Mahlwerk, eine Mühle kommt dazu</li><li>Kleiner Wassertank mit 1,1&nbsp;l</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/de-longhi-espressomaschine-dedica-style-ec685-bk-espresso-doppio-mit-milchschaumduese-nur-15-cm-breit-fuer-e-s-e-pads-geeignet-1l-inkl-milchschaumduese-C592620108/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-graef"><span class="kf-tag">Die Mühle dazu</span><h3>Graef CM&nbsp;800</h3><p class="mod">Kaffeemühle mit Kegelmahlwerk</p>
-      <p>Mahlt fein genug für Espresso und grob genug für die French Press. Passt neben eine schmale Maschine.</p>
-      <p class="kf-pl kf-pl-2"><span>Preis-Leistung</span> <b>Gut</b> <small>Viele Mahlstufen für jede Zubereitung, für Siebträger und Filter gleichermaßen.</small></p>
-      <dl class="kf-spec"><dt>Mahlwerk</dt><dd>Kegelmahlwerk, 40 Stufen</dd><dt>Bohnen</dt><dd>350&nbsp;g</dd><dt>Leistung</dt><dd>120&nbsp;W</dd><dt>Preisklasse</dt><dd>unter 300&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>40 Mahlstufen von Espresso bis French Press</li><li>Großer Bohnenbehälter mit 350&nbsp;g</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Ein zweites Gerät auf der Arbeitsplatte</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/graef-kaffeemuehle-cm-800-elektrisch-aus-edelstahl-espressomuehle-kegelmahlwerk-silber-C905922857/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-sage"><span class="kf-tag">Mit Mahlwerk</span><h3>Sage The Barista Express</h3><p class="mod">SES875</p>
-      <p>Mühle, Siebträger und Dampflanze in einem Gerät. Eine Druckanzeige zeigt dir, ob dein Espresso richtig läuft.</p>
-      <p class="kf-pl kf-pl-2"><span>Preis-Leistung</span> <b>Gut</b> <small>Alles in einem Gerät mit Druckanzeige. Dedica plus Mühle kostet weniger, braucht aber zwei Geräte.</small></p>
-      <dl class="kf-spec"><dt>B × H × T</dt><dd>31,8 × 40,4 × 35,1&nbsp;cm</dd><dt>Wassertank</dt><dd>2&nbsp;l</dd><dt>Bohnen</dt><dd>250&nbsp;g, 16 Mahlgrade</dd><dt>Siebträger</dt><dd>54&nbsp;mm</dd><dt>Preisklasse</dt><dd>300 bis 500&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Mühle eingebaut</li><li>Druckanzeige hilft beim Einstellen</li><li>Großer Wassertank mit 2&nbsp;l</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Breit: 31,8&nbsp;cm</li><li>Braucht Übung, Milch schäumst du an der Dampflanze</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/sage-espressomaschine-the-barista-express-ses875bss2eeu1a-C784794016/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
-    <article class="kf-m" id="m-oracle"><span class="kf-tag">Siebträger mit Autopilot</span><h3>Sage The Oracle Touch</h3><p class="mod">SES990</p>
-      <p>Echter Siebträger-Espresso ohne Übung: Die Maschine mahlt, dosiert und drückt das Pulver selbst an, die Dampflanze schäumt die Milch automatisch. Bedienung über einen Touchscreen.</p>
-      <p class="kf-pl kf-pl-3"><span>Preis-Leistung</span> <b>Okay</b> <small>Barista-Ergebnis ohne Barista-Übung, aber über 2.000 Euro. Wer gern selbst tüftelt, bekommt mit Dedica und Mühle viel Espresso für einen Bruchteil.</small></p>
-      <dl class="kf-spec"><dt>Größe</dt><dd>37,3&nbsp;cm breit, 39,2&nbsp;cm tief</dd><dt>Wassertank</dt><dd>2,5&nbsp;l</dd><dt>Mahlwerk</dt><dd>Kegelmahlwerk, 45 Stufen</dd><dt>Siebträger</dt><dd>58&nbsp;mm, 22&nbsp;g</dd><dt>Milch</dt><dd>Dampflanze, automatisch, 40 bis 75&nbsp;°C</dd><dt>Preisklasse</dt><dd>über 1.000&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Mahlt, dosiert und tampt automatisch</li><li>Milchschaum automatisch, Temperatur und Schaum einstellbar</li><li>Zwei Boiler: Espresso und Milch gleichzeitig</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Über 2.000 Euro</li><li>Schwer (16,9&nbsp;kg) und breit</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/sage-espressomaschine-the-oracle-touch-ses990bst-siebtraeger-inkl-milchkaennchen-C1458383415/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
+{{KF_KARTEN:barista}}
   </div>
   <h3 style="margin-top:44px">Dein Espresso in fünf Schritten.</h3>
   <ol class="steps" style="margin-top:20px">
@@ -389,12 +406,7 @@
     <dt>Zeit</dt><dd>Eine gute Maschine braucht für die volle Kanne 4 bis 8&nbsp;Minuten, ein Handfilter für eine Tasse 3 bis 4.</dd>
     <dt>Mahlgrad</dt><dd>Mittelfein, etwa wie Sand. Für die French Press grober.</dd>
   </dl>
-    <article class="kf-m" id="m-mocca"><span class="kf-tag">Für die große Kanne</span><h3>Moccamaster KBG Select</h3><p class="mod">Filterkaffeemaschine, Glaskanne</p>
-      <p>Brüht mit 92 bis 96&nbsp;Grad, wie es die Specialty Coffee Association für Filterkaffee verlangt. Für bis zu 10 Tassen, mit Einstellung für die halbe Kanne.</p>
-      <p class="kf-pl kf-pl-3"><span>Preis-Leistung</span> <b>Okay</b> <small>Für eine Filtermaschine teuer. Dafür stimmt die Brühtemperatur, und das schmeckt man.</small></p>
-      <dl class="kf-spec"><dt>Kanne</dt><dd>1,25&nbsp;l, Glas</dd><dt>Brühtemperatur</dt><dd>92 bis 96&nbsp;°C</dd><dt>Extra</dt><dd>Schalter für die halbe Kanne</dd><dt>Preisklasse</dt><dd>300 bis 500&nbsp;€</dd></dl>
-      <div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro"><li>Brühtemperatur nach SCA-Vorgabe</li><li>Schalter für die halbe Kanne</li><li>Schaltet nach etwa 40 Minuten ab</li></ul></div><div><p class="kf-pch">Dagegen</p><ul class="con"><li>Teuer für eine Filtermaschine</li><li>Glaskanne auf Warmhalteplatte, keine Thermokanne</li></ul></div></div>
-      <div class="kf-buy"><a class="btn" href="{{otto:https://www.otto.de/p/moccamaster-filterkaffeemaschine-kbg-select-741-select-wahlschalter-warmhalteplatte-abschaltautomatik-CS0VLC0YI/}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen{{EXT}}</a><span class="tag">Anzeige</span></div></article>
+    {{KF_KARTEN:filter}}
   </div>
   <div class="shop" style="margin-top:22px">
     <div class="items">
@@ -448,7 +460,7 @@
 <section class="band" id="ecke"><div class="wrap">
   <div class="sec-h"><h2>Die gemütliche Kaffee-Ecke.</h2><p class="lede">Aus Gerät, Dose und Tassen wird ein Ort, an dem man gern stehen bleibt. Mit diesen Maßen passt alles, mit diesen Ideen wird es gemütlich.</p></div>
   <figure class="kf-ecke">
-    <svg viewBox="0 0 720 420" role="img" aria-label="Skizze einer Kaffee-Ecke mit Maßen: Arbeitsfläche 60 bis 80 Zentimeter breit, Regal 54 bis 60 Zentimeter über der Arbeitsfläche, Maschine 32 bis 41 Zentimeter hoch, warmes Licht mit 2.700 Kelvin.">
+    <svg viewBox="0 0 720 420" role="img" aria-label="Skizze einer Kaffee-Ecke mit Maßen: Arbeitsfläche 60 bis 80 Zentimeter breit, Regal 54 bis 60 Zentimeter über der Arbeitsfläche, Maschine {{KF:h_min}} bis {{KF:h_max}} Zentimeter hoch, warmes Licht mit 2.700 Kelvin.">
       <ellipse class="w" cx="560" cy="120" rx="120" ry="90"/>
       <line class="t" x1="40" y1="300" x2="680" y2="300"/>
       <rect class="f" x="40" y="300" width="640" height="26" rx="3"/>
@@ -468,7 +480,7 @@
       <rect class="t" x="610" y="250" width="26" height="32" rx="4"/><circle class="mf" cx="618" cy="266" r="2.2"/><circle class="mf" cx="628" cy="266" r="2.2"/>
       <path class="m" d="M40 352h640M40 346v12M680 346v12"/><text x="360" y="378" text-anchor="middle">60 bis 80 cm Arbeitsfläche</text>
       <path class="m" d="M120 90v210M114 90h12M114 300h12"/><text x="112" y="200" text-anchor="end">54–60 cm</text>
-      <path class="m" d="M190 190v110M184 190h12M184 300h12"/><text x="260" y="178" text-anchor="middle">Maschine 32–41 cm</text>
+      <path class="m" d="M190 190v110M184 190h12M184 300h12"/><text x="260" y="178" text-anchor="middle">Maschine {{KF:h_min}}–{{KF:h_max}} cm</text>
       <text x="606" y="196">2.700 K</text><text x="606" y="214">warmes Licht</text>
       <text x="640" y="240" text-anchor="end">Steckdose</text>
       <text x="367" y="228" text-anchor="middle">Bohnen</text>
@@ -528,15 +540,16 @@
 <section id="fragen"><div class="wrap narrow">
   <h2>Häufige Fragen.</h2>
   <div class="faq" style="margin-top:28px">
-    <details><summary>Welche Kaffeemaschine passt zu mir?</summary><div><p>Wer schnell und oft mit Milch trinkt, ist mit einem Vollautomaten gut bedient. Wer gern selbst mahlt und tüftelt, nimmt einen Siebträger mit Mühle. Für viele Tassen schwarzen Kaffee ist eine Filtermaschine die ruhigste Lösung. Der Maschinen-Finder oben hilft mit vier Fragen.</p></div></details>
-    <details><summary>Welche Kaffeemaschine hat das beste Preis-Leistungs-Verhältnis?</summary><div><p>Nach unserer Einordnung, kein Test: Unter 300&nbsp;Euro die Philips 2200 und die De’Longhi Magnifica&nbsp;S, mit Milch auf Knopfdruck die Philips 3300 LatteGo, für den Siebträger-Einstieg die De’Longhi Dedica Style mit einer Mühle. Über 1.000&nbsp;Euro bekommst du vor allem Komfort, mehr Kaffee nicht. Die Übersicht steht im <a href="#vergleich">Preis-Leistungs-Vergleich</a>.</p></div></details>
+    <details><summary>Welche Kaffeemaschine passt zu mir?</summary><div><p>Wer schnell und oft mit Milch trinkt, ist mit einem Vollautomaten gut bedient. Wer gern selbst mahlt und tüftelt, nimmt einen Siebträger mit Mühle. Für viele Tassen schwarzen Kaffee ist eine Filtermaschine die ruhigste Lösung. Der <a href="#finder">Maschinen-Finder</a> oben hilft mit fünf Fragen.</p></div></details>
+    <details><summary>Welchen Kaffeevollautomaten empfehlt ihr in welcher Preisklasse?</summary><div><p>Unsere Wahl, eine Einschätzung und kein eigener Test: {{KF:wahl_satz}}. {{KF:N_test}} Vollautomaten auf dieser Seite hat die Stiftung Warentest geprüft (veröffentlicht im Juli 2026), sie haben gut abgeschnitten: {{KF:test_namen}}.</p></div></details>
+    <details><summary>Welche Kaffeemaschine hat das beste Preis-Leistungs-Verhältnis?</summary><div><p>Nach unserer Einordnung, kein Test: unter 300&nbsp;Euro die Philips 2200 und die De’Longhi Magnifica&nbsp;S, mit Milch auf Knopfdruck die Philips 3300 LatteGo, für den Siebträger-Einstieg die De’Longhi Dedica Style mit einer Mühle. Über 1.000&nbsp;Euro bekommst du vor allem Komfort, mehr Kaffee nicht. Die Übersicht steht im <a href="#vergleich">Preis-Leistungs-Vergleich</a>.</p></div></details>
     <details><summary>Vollautomat oder Siebträger: was ist besser?</summary><div><p>Keins von beiden. Ein Vollautomat ist bequemer und macht jeden Morgen dieselbe Tasse. Ein Siebträger braucht Übung und eine gute Mühle, dafür bestimmst du jeden Schritt und bekommst einen kräftigeren Espresso mit Crema.</p></div></details>
     <details><summary>Wie viel Kaffee brauche ich für einen Espresso?</summary><div><p>Für einen klassischen italienischen Espresso etwa 7&nbsp;Gramm frisch gemahlenen Kaffee. Er läuft mit rund 9&nbsp;bar in 20 bis 30&nbsp;Sekunden und ergibt etwa 25&nbsp;ml in der Tasse.</p></div></details>
     <details><summary>Wie viel Kaffeepulver pro Liter Filterkaffee?</summary><div><p>Rund 55 bis 60&nbsp;Gramm pro Liter, also etwa 12&nbsp;Gramm für eine große Tasse. Das Wasser sollte 92 bis 96&nbsp;Grad heiß sein.</p></div></details>
     <details><summary>Wie heiß muss das Wasser für Matcha sein?</summary><div><p>75 bis 80&nbsp;Grad. Auf etwa 1,5&nbsp;Gramm Matcha kommen 70&nbsp;ml Wasser. Kochendes Wasser macht ihn bitter.</p></div></details>
     <details><summary>Wie viel Koffein hat eine Tasse Kaffee?</summary><div><p>Eine Tasse Filterkaffee mit 200&nbsp;ml hat rund 90&nbsp;mg, ein Espresso rund 80&nbsp;mg. Gesunde Erwachsene können laut EFSA bis 400&nbsp;mg am Tag unbedenklich zu sich nehmen, in Schwangerschaft und Stillzeit bis 200&nbsp;mg.</p></div></details>
     <details><summary>Wo lagere ich Kaffeebohnen am besten?</summary><div><p>In einer dicht schließenden Dose, am besten samt Originaltüte, an einem dunklen, kühlen und trockenen Ort. Nicht im Kühlschrank, dort nehmen sie Feuchtigkeit und Gerüche an.</p></div></details>
-    <details><summary>Wie viel Platz braucht ein Vollautomat?</summary><div><p>Die Vollautomaten auf dieser Seite sind 20 bis 27,2&nbsp;cm breit, 32,5 bis 37,8&nbsp;cm hoch und 43 bis 47,2&nbsp;cm tief. Unter Oberschränken mit üblichen 54 bis 60&nbsp;cm Abstand passen sie, zum Nachfüllen der Bohnen ziehst du sie kurz nach vorn.</p></div></details>
+    <details><summary>Wie viel Platz braucht ein Vollautomat?</summary><div><p>Die Vollautomaten auf dieser Seite sind {{KF:b_voll}}&nbsp;cm breit, {{KF:h_voll}}&nbsp;cm hoch und {{KF:t_voll}}&nbsp;cm tief. Unter Oberschränken mit üblichen 54 bis 60&nbsp;cm Abstand passen sie, zum Nachfüllen der Bohnen ziehst du sie kurz nach vorn.</p></div></details>
   </div>
 </div></section>
 
@@ -554,9 +567,9 @@
     <li>ÖKO-TEST: Kaffee aufbewahren, so bleibt er frisch (01.07.2025) <a href="https://www.oekotest.de/essen-trinken/Kaffee-aufbewahren-So-bleibt-das-Kaffeepulver-lange-frisch-und-aromatisch_12664_1.html" target="_blank" rel="noopener">oekotest.de</a></li>
     <li>Deutscher Kaffeeverband: Deutscher Kaffeemarkt 2025 (02.04.2026, PDF) <a href="https://www.kaffeeverband.de/media/presse_pdf/Deutscher_Kaffeemarkt_2025.pdf" target="_blank" rel="noopener">kaffeeverband.de</a></li>
     <li>sanier.de: Maße beim Küchenkauf (11.02.2025) <a href="https://www.sanier.de/kueche/masse-beim-kuechenkauf" target="_blank" rel="noopener">sanier.de</a></li>
-    <li>Produktdaten und Preise am 20.11.2026: Philips 2200 EP2225/10 <a href="https://www.otto.de/p/philips-kaffeevollautomat-ep2225-10-2200-series-2-kaffeespezialitaeten-panarello-milchschaumer-anpassbarer-aromastaerke-C858943813/" target="_blank" rel="noopener">otto.de</a>; Siemens EQ500 TP553E09, Datenblatt <a href="https://media3.bsh-group.com/Documents/specsheet/de-DE/TP553E09.pdf" target="_blank" rel="noopener">bsh-group.com</a>; De’Longhi Magnifica Evo <a href="https://www.baur.de/p/AKLBB1533494912" target="_blank" rel="noopener">baur.de</a>; übrige Preise aus der OTTO-Suche <a href="https://www.otto.de/suche/Kaffeevollautomat/" target="_blank" rel="noopener">otto.de</a></li>
-    <li>Produktdaten: Philips EP3343/50, JURA E8 und Melitta Solo <a href="https://www.otto.de/p/philips-kaffeevollautomat-ep3343-50-3300-series-6-getraenke-heiss-oder-eisgekuehlt-lattego-milchsystem-silentbrew-technologie-1782291583/" target="_blank" rel="noopener">otto.de</a>, <a href="https://www.otto.de/p/jura-kaffeevollautomat-15745-e8-ed-piano-black-27-spezialitaeten-wifi-hot-light-brew-sweet-C2078694862/" target="_blank" rel="noopener">otto.de</a>, <a href="https://www.alternate.de/Melitta/Caffeo-Solo-E950-201-Vollautomat/html/product/934860" target="_blank" rel="noopener">alternate.de</a>; De’Longhi Magnifica&nbsp;S <a href="https://www.baur.de/p/AKLBB1628116682" target="_blank" rel="noopener">baur.de</a>; Dedica Style <a href="https://www.delonghi.com/de-de/p/dedica-siebtragermaschinen-dedica-style-siebtragermaschine-ec685.m/EC685.M+EX:4.html?pid=0132106266" target="_blank" rel="noopener">delonghi.com</a>; Sage Barista Express <a href="https://happycoffee.org/de-de/e/sage-barista-express/" target="_blank" rel="noopener">happycoffee.org</a>; Moccamaster KBG Select <a href="https://www.hoeffner.de/artikel/618902" target="_blank" rel="noopener">hoeffner.de</a></li>
-  </ol><p style="margin-top:14px">Geprüft am 20.11.2026.</p></div>
+    {{KF_QUELLEN}}
+    <li>Urteile der Stiftung Warentest zu einzelnen Geräten: Testsiegel auf den Produktseiten von OTTO für JURA C9, Siemens EQ700, De’Longhi Eletta Explore und Eletta Ultra (gesehen am {{KF:stand}}); De’Longhi <a href="https://www.delonghi.com/de-de/e/promotions/testsieger" target="_blank" rel="noopener">delonghi.com</a>; zur Smeg BCC11 der Bericht von <a href="https://www.heidelberg24.de/verbraucher/einkauf-test/beste-kaffeevollautomat-test-delonghi-tchibo-jura-krups-siemens-hersteller-stiftung-warentest-94140504.html" target="_blank" rel="noopener">heidelberg24.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am {{KF:stand}}.</p></div>
 </div></section>
 
 <section class="sis"><div class="wrap narrow"><a class="sis-a" href="https://strom-daheim.de/stromkosten/kaffeemaschine.html"><span class="sis-k">Von unserer Schwesterseite Strom-Daheim</span><b>Was kostet eine Kaffeemaschine an Strom? →</b><span>Rechner für dein Gerät und deinen Strompreis, dazu Spartipps zu Warmhalteplatte und Abschaltung.</span></a></div></section>
@@ -567,37 +580,44 @@
 /* Maschinen-Finder, Koffein-Zähler und Tassen-Rechner (kaffee.html) */
 (function(){
 var $=function(i){return document.getElementById(i)},fm=$('kf-q'),out=$('kf-res');
-/* Ergebnis je Typ: Überschrift, Text, Worauf achten, Karten (IDs auf dieser Seite) */
+/* Ergebnis je Typ: Überschrift, Text, Worauf achten, Karten (IDs auf dieser Seite, die Maschinen stehen in kaffee.json), Abschnitt */
 var T={
  solo:['Ein schmaler Vollautomat ohne Milch','Du trinkst schwarz und willst nicht warten: Ein Vollautomat mahlt frisch und braucht nur einen Knopfdruck. Ohne Milchsystem bleibt er schmal und die Pflege kurz.','Achte auf: Breite, Tassenhöhe und eine Abschaltung ohne Stromverbrauch.',['m-solo','m-philips2200'],'vollautomaten'],
- philips:['Ein Vollautomat mit Milch auf Knopfdruck','Cappuccino ohne Handgriff. Ein Milchsystem ohne Schlauch ist nach dem Trinken schnell ausgespült.','Achte auf: wie das Milchsystem gereinigt wird und wie laut das Mahlwerk ist.',['m-philips','m-evo'],'vollautomaten'],
- siemens:['Ein Vollautomat für zwei Cappuccino auf einmal','Bei sechs und mehr Tassen am Tag spart es Zeit, wenn zwei Milchgetränke gleichzeitig laufen. Der Milchschlauch geht direkt in die Packung.','Achte auf: Platz, die Maschine ist gut 27 Zentimeter breit und 47 tief.',['m-siemens','m-philips'],'vollautomaten'],
- jura:['Ein Vollautomat für viele Tassen und viel Komfort','Bei sechs und mehr Tassen am Tag lohnen ein großer Wassertank, zwei Tassen auf einmal und Lieblingsgetränke auf dem Display.','Achte auf: Wassertank, Bohnenbehälter und Reinigungsprogramme.',['m-jura','m-siemens'],'vollautomaten'],
- luxus:['Ein Vollautomat, der das Café ersetzt','Wenn Geld keine Rolle spielt: viele Rezepte heiß und kalt, kalter Milchschaum und ein großes Touchdisplay. Bequemer wird es nicht.','Achte auf: Platz, die Maschine ist gut 46 Zentimeter tief.',['m-primadonna','m-jura'],'vollautomaten'],
- oracle:['Ein Siebträger, der beim Ritual hilft','Du willst Siebträger-Espresso, aber ohne lange Übung. Eine Maschine, die selbst mahlt, andrückt und Milch schäumt, macht jeden Morgen gleich gut.','Achte auf: Platz und Gewicht, die Maschine wiegt fast 17 Kilo.',['m-oracle','m-sage'],'barista'],
+ schmal:['Ein schmaler Vollautomat ohne Milch','Du trinkst schwarz und willst nicht warten: Ein Vollautomat mahlt frisch und braucht nur einen Knopfdruck. Ohne Milchsystem reichen ihm 18 bis 20 Zentimeter Breite.','Achte auf: die Tassenhöhe, wenn du gern aus großen Bechern trinkst.',['m-smeg','m-solo'],'vollautomaten'],
  guenstig:['Ein günstiger Vollautomat mit Milchdüse','Milch auf Knopfdruck gibt es erst ab etwa 350 Euro. Darunter schäumst du die Milch an der Düse selbst, das dauert eine Minute und schmeckt genauso.','Achte auf: eine herausnehmbare Brühgruppe, dann bleibt die Reinigung einfach.',['m-philips2200','m-magnifica'],'vollautomaten'],
  magnifica:['Ein Vollautomat mit Milchdüse','Der Kaffee kommt auf Knopfdruck, die Milch schäumst du selbst an der Düse auf. Das dauert eine Minute und wird zum kleinen Ritual.','Achte auf: Milch kalt aus dem Kühlschrank, höchstens 60 bis 65 Grad heiß schäumen.',['m-magnifica','m-philips2200'],'vollautomaten'],
+ philips:['Ein Vollautomat mit Milch auf Knopfdruck','Cappuccino ohne Handgriff. Ein Milchsystem ohne Schlauch ist nach dem Trinken schnell ausgespült.','Achte auf: wie das Milchsystem gereinigt wird und wie laut das Mahlwerk ist.',['m-philips','m-start'],'vollautomaten'],
+ siemens:['Ein Vollautomat für zwei Cappuccino auf einmal','Bei sechs und mehr Tassen am Tag spart es Zeit, wenn zwei Milchgetränke gleichzeitig laufen. Der Milchschlauch geht direkt in die Packung.','Achte auf: Platz, die Maschine ist gut 27 Zentimeter breit und 47 tief.',['m-siemens','m-c9'],'vollautomaten'],
+ kompakt:['Ein kompakter Vollautomat mit Milch','Wenig Platz, aber Milchschaum auf Knopfdruck: Eine flache, schmale Maschine passt auch in eine enge Ecke.','Achte auf: die Tassenhöhe, unter kompakte Maschinen passen oft nur Tassen bis gut 11 Zentimeter.',['m-c9','m-philips'],'vollautomaten'],
+ komfort:['Ein Vollautomat mit Display und vielen Rezepten','Bis 1.000 Euro bekommst du ein Farbdisplay, viele Getränke und Milchschaum ohne Handgriff, auf Wunsch auch kalt.','Achte auf: die Tassenhöhe. Nicht unter jede Maschine passt ein hohes Glas.',['m-explore','m-c9'],'vollautomaten'],
+ luxus:['Ein Vollautomat, der das Café ersetzt','Wenn es mehr kosten darf: viele Rezepte heiß und kalt, ein großes Touchdisplay und ein leises Mahlwerk. Bequemer wird es nicht.','Achte auf: die Tiefe, beide Maschinen brauchen gut 45 Zentimeter.',['m-ultra','m-eq700'],'vollautomaten'],
+ viel:['Ein Vollautomat für viele Tassen und viel Komfort','Bei sechs und mehr Tassen am Tag lohnen ein großer Wassertank, zwei Tassen auf einmal und ein Milchbehälter im Gerät.','Achte auf: Platz, die größere der beiden ist gut 35 Zentimeter breit.',['m-eq700','m-ultra'],'vollautomaten'],
+ oracle:['Ein Siebträger, der beim Ritual hilft','Du willst Siebträger-Espresso, aber ohne lange Übung. Eine Maschine, die selbst mahlt, andrückt und Milch schäumt, macht jeden Morgen gleich gut.','Achte auf: Platz und Gewicht, die größere der beiden wiegt fast 17 Kilo.',['m-oracle','m-touch'],'barista'],
+ touch:['Ein Siebträger, der dich anleitet','Du magst das Ritual, willst aber nicht wochenlang üben. Ein Touchscreen führt durch Mahlen und Brühen, die Dampflanze schäumt die Milch von selbst.','Achte auf: Platz, die Maschine ist 36 Zentimeter breit.',['m-touch','m-sage'],'barista'],
  dedica:['Ein schmaler Siebträger mit Mühle','Mit 15 Zentimetern Breite passt die Maschine in jede Küche. Dazu gehört eine Mühle, denn frisch gemahlen bleibt das meiste Aroma in der Tasse.','Achte auf: Der Tamper muss genau in dein Sieb passen.',['m-dedica','m-graef'],'barista'],
  sage:['Ein Siebträger mit eingebautem Mahlwerk','Du willst selbst mahlen, dosieren und Milch schäumen. Eine Maschine mit Mahlwerk und Druckanzeige zeigt dir, ob dein Espresso gelingt.','Achte auf: genug Platz, die Maschine ist gut 30 Zentimeter breit.',['m-sage','m-dedica'],'barista'],
  filter:['Eine Filtermaschine mit großer Kanne','Für viele Tassen schwarzen Kaffee ist das die ruhigste Lösung: eine Kanne, alle bekommen. Mit 92 bis 96 Grad schmeckt er klar und rund.','Achte auf: Brühtemperatur und eine Einstellung für die halbe Kanne.',['m-mocca'],'filter'],
  hand:['Ein Handfilter','Ein Porzellanfilter, Papier und heißes Wasser. Drei, vier Minuten, die zum Morgen gehören, und eine Tasse, die nach der Bohne schmeckt.','Achte auf: Wasser mit 92 bis 96 Grad und rund 12 Gramm Kaffee für eine große Tasse.',['a-handfilter','m-graef'],'filter'],
  matcha:['Matcha statt Kaffee','Ein Bambusbesen, eine Schale, Wasser mit 75 bis 80 Grad. Mehr brauchst du nicht, und die Küche bleibt frei.','Achte auf: das Pulver vor dem Aufgießen durch ein feines Sieb streichen.',['a-matcha-set','a-matcha'],'matcha']};
+/* Budget: klein bis 300, mittel bis 500, hoch bis 1.000 Euro, egal darüber */
 function wahl(){var f=new FormData(fm),t=f.get('tassen'),a=f.get('art'),z=f.get('zeit'),p=f.get('platz'),b=f.get('budget');
  if(a==='matcha')return 'matcha';
  if(z==='tuefteln')return (p==='knapp'||b==='klein')?'dedica':'sage';
- if(a==='schwarz'){if(t==='viel')return 'filter';if(z==='ritual')return 'hand';return 'solo';}
- if(z==='ritual'){if(p==='knapp')return 'dedica';return b==='egal'?'oracle':'magnifica';}
+ if(a==='schwarz'){if(t==='viel')return 'filter';if(z==='ritual')return 'hand';return b==='klein'?'solo':'schmal';}
+ if(z==='ritual'){if(p==='knapp')return 'dedica';if(b==='egal')return 'oracle';return b==='hoch'?'touch':'magnifica';}
  if(b==='klein')return 'guenstig';
- if(t==='viel')return b==='egal'?'jura':'siemens';
- if(b==='egal')return 'luxus';
- if(p==='knapp')return a==='milch'?'philips':'magnifica';
- return 'philips';}
+ if(b==='mittel')return 'philips';
+ if(b==='hoch'){if(t==='viel')return 'siemens';return p==='knapp'?'kompakt':'komfort';}
+ return t==='viel'?'viel':'luxus';}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function zeig(){var r=T[wahl()],h='<p class="k">Passt zu dir</p><h3>'+esc(r[0])+'</h3><p>'+esc(r[1])+'</p><p class="achte">'+esc(r[2])+'</p><ul>';
- r[3].forEach(function(id){var el=$(id);if(!el)return;var karte=!el.matches('a'),a=karte?el.querySelector('.kf-buy a'):el,n=el.querySelector(karte?'h3':'b'),
-  lab=karte?'Bei OTTO ansehen':((a.querySelector('.go span')||{}).textContent||'Ansehen');
-  var pl=karte?el.querySelector('.kf-pl b'):null;h+='<li><b>'+esc(n?n.textContent:'')+(pl?' <span class="kf-note">Preis-Leistung: '+esc(pl.textContent)+'</span>':'')+'</b><a href="'+esc(a.href)+'" rel="sponsored nofollow noopener" target="_blank">'+esc(lab.trim())+'</a><span class="tag">Anzeige</span>'+(karte?'<a href="#'+id+'">Daten ansehen</a>':'')+'</li>'});
- out.innerHTML=h+'</ul><p style="margin-top:14px"><a href="#'+r[4]+'">Mehr dazu weiter unten</a></p>';}
+ r[3].forEach(function(id){var el=$(id);if(!el)return;var karte=!el.matches('a'),a=karte?el.querySelector('.kf-buy a'):el,n=el.querySelector(karte?'.kf-n':'b'),
+  lab=karte?'Bei OTTO ansehen':((a.querySelector('.go span')||{}).textContent||'Ansehen'),pl=karte?el.querySelector('.kf-pl b'):null,sv=karte?el.querySelector('.kf-bild svg'):null,
+  un=karte?[el.dataset.kn,pl?'Preis-Leistung: '+pl.textContent:''].filter(Boolean).join(', '):((el.querySelector('div span')||{}).textContent||'');
+  h+='<li>'+(sv?'<span class="kf-rb"><svg class="kf-mb" viewBox="31 0 144 150" aria-hidden="true">'+sv.innerHTML+'</svg></span>':'')
+   +'<div class="kf-rt"><b>'+esc(n?n.textContent:'')+'</b>'+(un?'<span class="kf-rm">'+esc(un)+'</span>':'')+'</div>'
+   +'<div class="kf-ra"><a class="btn" href="'+esc(a.href)+'" rel="sponsored nofollow noopener" target="_blank">'+esc(lab.trim())+'</a><span class="tag">Anzeige</span>'+(karte?'<a href="#'+id+'">Daten ansehen</a>':'')+'</div></li>'});
+ out.innerHTML=h+'</ul><p class="kf-rw"><a href="#'+r[4]+'">Mehr dazu weiter unten</a></p>';}
 fm.addEventListener('change',zeig);zeig();
 /* Koffein */
 var K=$('kf-koff'),kb=$('kf-kb'),ks=$('kf-ks');
@@ -613,14 +633,27 @@ function rech(){var tasse=num('r-preis')*num('r-g')/1000+num('r-mp')*(+$('r-ml')
  $('o-tasse').textContent=tasse<1?nf(Math.round(tasse*100),0)+' ct':nf(tasse,2)+' €';$('o-jahr').textContent=nf(Math.round(jahr),0)+' €';$('o-cafe').textContent=nf(Math.round(cafe),0)+' €';}
 $('kf-r').addEventListener('input',rech);rech();
 })();
-/* Preis-Leistungs-Übersicht: filtern und sortieren */
-(function(){var tb=document.getElementById('kf-vgl-b');if(!tb)return;var R=[].slice.call(tb.rows),seg=document.querySelectorAll('.kf-seg button'),nm=document.getElementById('kf-nurmilch'),so=document.getElementById('kf-sort'),z=document.getElementById('kf-vgl-z'),leer=document.getElementById('kf-vgl-leer'),f='alle';
- var NAME={alle:'Maschinen',voll:'Vollautomaten',sieb:'Siebträger',zub:'Geräte'};
- function los(){var sk=so.value,n=0;R.sort(function(a,b){return sk==='pl'?(a.dataset.pl-b.dataset.pl)||(a.dataset.rang-b.dataset.rang):a.dataset.rang-b.dataset.rang});
-  R.forEach(function(r){var ok=(f==='alle'||r.dataset.art===f)&&(!nm.checked||r.dataset.milch==='auto');r.hidden=!ok;if(ok)n++;tb.appendChild(r)});
+/* Preis-Leistungs-Übersicht: filtern und sortieren. Zwischenzeilen: nach Preis je Preisklasse (stehen schon im HTML), nach Preis-Leistung je Urteil. */
+(function(){var tb=document.getElementById('kf-vgl-b');if(!tb)return;var R=[].slice.call(tb.querySelectorAll('tr[data-art]')),seg=document.querySelectorAll('.kf-seg button'),nm=document.getElementById('kf-nurmilch'),so=document.getElementById('kf-sort'),z=document.getElementById('kf-vgl-z'),leer=document.getElementById('kf-vgl-leer'),f='alle';
+ var NAME={alle:'Maschinen',voll:'Vollautomaten',sieb:'Siebträger',zub:'Geräte'},PL={1:'Preis-Leistung: Sehr gut',2:'Preis-Leistung: Gut',3:'Preis-Leistung: Okay'},KL={},Z={};
+ [].forEach.call(tb.querySelectorAll('tr.kf-grp'),function(r){KL[r.dataset.g]=r});
+ function zw(sk,k){if(sk==='preis')return KL[k];if(!Z[k]){var r=document.createElement('tr'),h=document.createElement('td');r.className='kf-grp';h.colSpan=5;h.textContent=PL[k];r.appendChild(h);Z[k]=r}return Z[k]}
+ function los(){var sk=so.value,n=0,alt='';R.sort(function(a,b){return sk==='pl'?(a.dataset.pl-b.dataset.pl)||(a.dataset.rang-b.dataset.rang):a.dataset.rang-b.dataset.rang});
+  [].forEach.call(tb.querySelectorAll('tr.kf-grp'),function(r){tb.removeChild(r)});
+  R.forEach(function(r){var ok=(f==='alle'||r.dataset.art===f)&&(!nm.checked||r.dataset.milch==='auto'),k=sk==='pl'?r.dataset.pl:r.dataset.kl;r.hidden=!ok;if(ok){n++;if(k!==alt){alt=k;tb.appendChild(zw(sk,k))}}tb.appendChild(r)});
   leer.hidden=n>0;z.textContent=n+' '+(n===1?'Maschine':NAME[f])+(nm.checked?' mit Milch auf Knopfdruck':'')+', '+(sk==='pl'?'beste Preis-Leistung zuerst':'günstigste zuerst')+'.';}
  [].forEach.call(seg,function(b){b.addEventListener('click',function(){f=b.dataset.f;[].forEach.call(seg,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});los()})});
  nm.addEventListener('change',los);so.addEventListener('change',los);
+})();
+/* Bereiche, die sich auf schmalen Bildschirmen seitlich schieben lassen (Sieben Wege, Skizze der Kaffee-Ecke), auch mit der Tastatur erreichbar machen */
+(function(){var L=[['.kf-wege','Sieben Wege zur Tasse, seitlich verschiebbar'],['.kf-ecke','']];
+ function los(){L.forEach(function(x){var e=document.querySelector(x[0]);if(!e)return;var w=e.scrollWidth>e.clientWidth+2;if(w)e.tabIndex=0;else e.removeAttribute('tabindex');
+  if(x[1]){if(w){e.setAttribute('role','region');e.setAttribute('aria-label',x[1])}else{e.removeAttribute('role');e.removeAttribute('aria-label')}}})}
+ addEventListener('resize',los);los();
+})();
+/* Sprung zu einer Maschine (aus Finder, Vergleich oder Leiste): die technischen Daten gleich aufklappen */
+(function(){function auf(){var h=location.hash;if(!/^#m-[\w-]+$/.test(h))return;var el=document.querySelector(h),d=el&&el.querySelector('.kf-dat');if(d)d.open=true}
+ addEventListener('hashchange',auf);auf();
 })();
 
 </script>

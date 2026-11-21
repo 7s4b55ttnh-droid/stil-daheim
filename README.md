@@ -14,6 +14,7 @@ Die fertige Website liegt im Branch `main` desselben Repositorys und wird von Gi
 | `raumplaner.js` | Raumplaner: Rechenkern `RP` (Geometrie, Vorschläge, Raum-Check, läuft auch in Node) und Oberfläche. `build.py` liefert ihn ohne Kommentare aus |
 | `tests/` | `raumplaner-kern.js` (2.000 Zufallsräume, ohne Browser) und `raumplaner-test.js` (Bedientest mit Playwright) |
 | `site.css`, `site.js` | Gemeinsames Design und Bedienung aller Seiten |
+| `kaffee.json` | Alle Maschinen des Kaffee-Ratgebers (Daten, Preisklasse, Maßbild), siehe „Kaffee-Ratgeber“ |
 
 Bilder liegen nur im Branch `main` unter `assets/` (je `name.jpg`, `name.webp` mit 1672 px Breite und `name-m.jpg`, `name-m.webp` mit 960 px).
 
@@ -68,5 +69,18 @@ Wunsch des Inhabers: Die Seite soll zum Schauen einladen. Dafür gibt es drei Ba
 - KI-Kennzeichnung läuft wie überall automatisch (site.js): Marke „KI“ in jedem Raumbild, eine Zeile über Übersicht und Schaufenster.
 - Keine Zeilenkommentare (`//`) in `wohnideen.js` (wird mit `mini` verkleinert).
 - Test: `node tests/wohnideen-test.js [Basisadresse]` (Feed, Übersicht, Farbwelt, Saison, Handy, ohne Skript, Schaufenster, Duell, Kopfzeile).
+
+## Kaffee-Ratgeber (seit 22.11.2026 aus `kaffee.json`)
+
+Wunsch des Inhabers: Die Auswahl soll Sinn ergeben (in jeder Preisklasse das beste Gerät) und gut aussehen, auch ohne Produktfotos.
+
+- **Eine Datei für alle Maschinen:** `kaffee.json`. `build.py` (Abschnitt **KAFFEE-RATGEBER**) macht daraus die Karten (`{{KF_KARTEN:barista}}`, `{{KF_KARTEN:filter}}`), die Preisklassen-Leiter der Vollautomaten (`{{KF_LEITER}}`), die Leiste „Unsere Wahl je Preisklasse“ (`{{KF_LEISTE}}`), die Zeilen des Vergleichs (`{{KF_VERGLEICH}}`), die Quellen (`{{KF_QUELLEN}}`) und alle Zahlen im Text (`{{KF:n}}`, `{{KF:b_voll}}`, `{{KF:wahl_satz}}` …, siehe `kf_zahl`). In `pages/kaffee.html` stehen deshalb keine Gerätenamen, Maße oder Stückzahlen mehr von Hand, außer im Finder (siehe unten) und in zwei Antworten unter „Häufige Fragen“.
+- **Neues Gerät oder Preis geändert:** nur `kaffee.json` anfassen. `preis` ist der bei OTTO gesehene Preis am Tag `stand` (wird nicht angezeigt). Daraus rechnet der Build die Preisklasse (unter 300, 300 bis 500, 500 bis 800, 800 bis 1.000, über 1.000 Euro) und die Reihenfolge. Nach einer Preisprüfung `stand` auf das Datum setzen. Ist `stand` älter als 45 Tage, meldet der Build einen HINWEIS.
+- **Regeln, die der Build prüft:** jede `url` ist eine OTTO-Produktseite (`https://www.otto.de/p/…`, kein Suchlink), jedes Gerät hat Preis-Leistung (`pl` 1 = Sehr gut, 2 = Gut, 3 = Okay) mit Begründung, Dafür und Dagegen, Breite und Höhe. Bei den Vollautomaten hat **jede Preisklasse genau eine „Unsere Wahl“** (`wahl`).
+- **Auswahl:** Preis-Leistung ist unsere Einschätzung, kein Test. Wo es ein aktuelles Urteil der Stiftung Warentest gibt, nehmen wir nur Geräte auf, die dort gut abgeschnitten haben, und kennzeichnen sie mit `"test": ""` (oder einem kurzen Zusatz wie „geprüft als …“). **Nur setzen, wenn das Urteil belegt ist** (Testsiegel auf der OTTO-Produktseite, Seite des Herstellers, test.de). **Keine Noten, kein „Testsieger“, kein Logo auf der Seite**: Für Werbung mit ihrem Logo verlangt die Stiftung einen Lizenzvertrag (test.de, „Werbung mit Tests“). Wir nennen deshalb nur, dass geprüft wurde, und verlinken test.de. Der Test der Seite prüft das. Erscheint ein neuer Test, `test` in `kaffee.json` (Datum, Anzahl, Adresse) und die Kennzeichen anpassen.
+- **Maßbilder statt Fotos:** OTTO erlaubt nur eigenes Material aus dem Produktfeed (Partnerbedingungen § 4 und § 5), Bilder von otto.de dürfen wir nicht übernehmen. Der Build zeichnet deshalb je Gerät ein Maßbild von vorn (`kf_massbild`): Bauart aus `bild` (`form` voll, sieb, filter, muehle; bei Vollautomaten `milch` karaffe, schlauch, duese oder leer und `bedien` tasten, regler, display, touch; bei Siebträgern `muehle` und `bedien` tasten, manometer, touch), Größe aus `b` und `h` in Zentimetern, **alle im gleichen Maßstab** (3 px je cm). Die Zeichnung zeigt die Bauart, nie ein bestimmtes Produkt: keine Logos, keine Formen eines Herstellers nachzeichnen. Maße laut Hersteller; widersprechen sich Quellen, gilt der Hersteller (Reihenfolge der Maße prüfen: Breite, Höhe, Tiefe).
+- **Aktion mit Ablauf:** `"aktion": {"bis": "JJJJ-MM-TT", "text": …, "link": …, "url": …}` zeigt einen Hinweis mit Anzeige-Kennzeichen und verschwindet nach dem Datum von selbst. Immer mit Datum im Text („stand am … für …“).
+- **Finder:** Die Ergebnisse (`T` und `wahl()` im Skript von `pages/kaffee.html`) nennen Karten über ihre `id` (`m-` + id aus `kaffee.json`). Wer ein Gerät entfernt oder umbenennt, passt `T` und `tests/kaffee-test.js` an. Budget: klein bis 300, mittel bis 500, hoch bis 1.000 Euro, egal darüber.
+- Test: `node tests/kaffee-test.js [Basisadresse]` (Filme, Finder, Links, Maßbilder im gleichen Maßstab, Preisklassen, Leiste, Hinweise auf den Test ohne Noten, Vergleich, Rechner, Handy).
 
 Alle Tests müssen mit „ALLE TESTS BESTANDEN“ enden.

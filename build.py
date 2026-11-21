@@ -670,6 +670,302 @@ def schaufenster(anzahl=16):
                    % (l['n'], hoch(l['n'], l['fx']), l['alt'], ''.join('<i style="background:%s"></i>' % h for n, h in l['pal']), l['kurz']) for l in wahl)
 
 
+# KAFFEE-RATGEBER (seit 21.11.2026 aus kaffee.json): eine Datei für alle Maschinen. Daraus entstehen die Karten mit Maßbild,
+# die Preisklassen-Leiter, die Leiste „Unsere Wahl“, der Vergleich und alle Zahlen im Text (Anzahl, Maße von bis).
+# Regeln für die Auswahl stehen in README.md unter „Kaffee-Ratgeber“. Produktfotos gibt es nicht: OTTO erlaubt nur eigenes Material
+# aus dem Produktfeed. Deshalb zeichnet der Build je Gerät ein Maßbild von vorn, alle im gleichen Maßstab (Breite und Höhe laut Hersteller).
+KAFFEE_DATEI = HERE / 'kaffee.json'
+KF_PL = {1: 'Sehr gut', 2: 'Gut', 3: 'Okay'}
+KF_ART = {'voll': 'Vollautomat', 'sieb': 'Siebträger', 'muehle': 'Mühle', 'filter': 'Filter'}
+KF_ZAHL = ['null', 'eine', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf', 'dreizehn', 'vierzehn', 'fünfzehn', 'sechzehn', 'siebzehn', 'achtzehn', 'neunzehn', 'zwanzig']
+_KF = None
+
+
+def kf():
+    """Daten aus kaffee.json, je Gerät ergänzt um Preisklasse (kl, 1 bis 5) und Rang nach Preis. Prüft die Regeln, damit nichts Halbes online geht."""
+    global _KF
+    if _KF is None:
+        d = json.loads(KAFFEE_DATEI.read_text(encoding='utf-8'))
+        G, K = d['geraete'], d['klassen']
+        assert len({g['id'] for g in G}) == len(G), 'kaffee.json: eine id kommt doppelt vor'
+        for g in G:
+            g['kl'] = next((i + 1 for i, k in enumerate(K) if k['bis'] and g['preis'] < k['bis']), len(K))
+            assert g['url'].startswith('https://www.otto.de/p/'), 'kaffee.json %s: url muss eine OTTO-Produktseite sein' % g['id']
+            assert g['pl'] in KF_PL and g['pro'] and g['con'] and g['plsatz'], 'kaffee.json %s: Preis-Leistung, Dafür und Dagegen fehlen' % g['id']
+            assert g['art'] in KF_ART and g['ort'] in ('vollautomaten', 'barista', 'filter') and g['b'] > 0 and g['h'] > 0, 'kaffee.json %s: art, ort oder Maße' % g['id']
+        for i, g in enumerate(sorted(G, key=lambda g: (g['preis'], g['id']))):
+            g['rang'] = i + 1
+        for i in range(1, len(K) + 1):
+            w = [g['id'] for g in G if g['art'] == 'voll' and g['kl'] == i and g.get('wahl')]
+            assert len(w) == 1, 'kaffee.json: Preisklasse %d braucht bei den Vollautomaten genau eine „Unsere Wahl“, gefunden: %s' % (i, w)
+        assert max(g['h'] for g in G) < 54, 'kaffee.json: Ein Gerät ist 54 cm oder höher. Dann stimmt der Satz „passen alle Maschinen unter den Oberschrank“ bei der Kaffee-Ecke nicht mehr (pages/kaffee.html anpassen).'
+        alt = (datetime.date.today() - datetime.date.fromisoformat(d['stand'])).days
+        if alt > 45:
+            print('HINWEIS kaffee.json: Preise und Preisklassen zuletzt am %s geprüft (vor %d Tagen). Bitte bei OTTO neu prüfen und stand setzen.' % (de_date(d['stand']), alt))
+        _KF = d
+    return _KF
+
+
+def kf_nb(s):
+    """Festes Leerzeichen zwischen Zahl und Einheit."""
+    return re.sub(r'(\d)\s(cm|mm|l|g|kg|€|bar|W|°C|ml|%)(?![\w])', r'\1&nbsp;\2', s)
+
+
+def kf_de(x):
+    return ('%.1f' % x).rstrip('0').rstrip('.').replace('.', ',')
+
+
+def kf_klar(s):
+    return re.sub(r'<[^>]+>', '', s).replace('&nbsp;', ' ')
+
+
+def _kz(x):
+    return ('%.1f' % x).rstrip('0').rstrip('.')
+
+
+def _kr(x, y, w, h, c, rx=0):
+    return '<rect class="%s" x="%s" y="%s" width="%s" height="%s"%s/>' % (c, _kz(x), _kz(y), _kz(w), _kz(h), ' rx="%s"' % _kz(rx) if rx else '')
+
+
+def _kp(d, c):
+    return '<path class="%s" d="%s"/>' % (c, d)
+
+
+def _kc(x, y, r, c):
+    return '<circle class="%s" cx="%s" cy="%s" r="%s"/>' % (c, _kz(x), _kz(y), _kz(r))
+
+
+def _ktasse(cx, boden, b=21, h=15):
+    o = b / 2
+    return (_kp('M%s %sh%sl-2.4 %sq-.6 2.4-3 2.4h-%sq-2.4 0-3-2.4z' % (_kz(cx - o), _kz(boden - h), _kz(b), _kz(h - 2.4), _kz(b - 10.8)), 'f')
+            + _kp('M%s %sq6.5 .2 6 5.2q-.5 4.2-6.6 3.6' % (_kz(cx + o - .6), _kz(boden - h + 3)), 't'))
+
+
+def _kb_voll(w, h, milch, bedien):
+    """Vollautomat von vorn: Gehäuse, Bedienfeld, Nische mit Auslauf und Tasse; Milch als Karaffe, Schlauch mit Behälter oder Düse."""
+    o = [_kr(0, 0, w, h, 'f', min(9, w * .13)), _kp('M%s 5.5H%s' % (_kz(w * .22), _kz(w * .78)), 'd')]
+    if bedien == 'touch':
+        o.append(_kr(w * .2, h * .085, w * .6, h * .16, 's', 2.5))
+    elif bedien == 'display':
+        o.append(_kr(w * .32, h * .1, w * .36, h * .11, 's', 2))
+        o += [_kc(w * x, h * .155, 1.5, 'p') for x in (.16, .24, .76, .84)]
+    elif bedien == 'regler':
+        o += [_kc(w * .3, h * .15, 5, 't'), _kp('M%s %sv-3.4' % (_kz(w * .3), _kz(h * .15)), 't')]
+        o += [_kc(w * x, h * .15, 1.6, 'p') for x in (.52, .64, .76)]
+    else:
+        o += [_kc(w * x, h * .15, 1.7, 'p') for x in (.22, .36, .5, .64, .78)]
+    o.append(_kp('M3 %sH%s' % (_kz(h * .255), _kz(w - 3)), 'd'))
+    nx, ny, nw, nh = w * .16, h * .34, w * .68, h * .5
+    bo = ny + nh
+    o.append(_kr(nx, ny, nw, nh, 'n', 3))
+    cx = min(nx + nw * .64, nx + nw - 18.5) if milch in ('karaffe', 'duese') else nx + nw * .5
+    o += [_kr(cx - 7, ny, 14, 8.5, 'f', 2), _kp('M%s %sv3M%s %sv3' % (_kz(cx - 3), _kz(ny + 8.5), _kz(cx + 3), _kz(ny + 8.5)), 't'), _ktasse(cx, bo)]
+    if milch == 'karaffe':
+        kb = min(14, nw * .28)
+        o += [_kr(nx + 2.5, bo - 31, kb, 31, 'g', 3), _kr(nx + 1.5, bo - 35, kb + 2, 5.5, 'f', 2), _kp('M%s %sh4v3.5' % (_kz(nx + kb + 3.5), _kz(bo - 32)), 't')]
+    elif milch == 'duese':
+        o += [_kp('M%s %sv%s' % (_kz(nx + 7.5), _kz(ny), _kz(nh * .42)), 't'), _kr(nx + 5.3, ny + nh * .42, 4.4, 10, 'f', 2.2)]
+    elif milch == 'schlauch':
+        o += [_kr(-25, h - 33, 17, 33, 'g', 3), _kp('M-25 %sh17' % _kz(h - 22), 'd'),
+              _kp('M-16.5 %sC-16.5 %s %s %s %s %s' % (_kz(h - 33), _kz(ny - 10), _kz(cx - 16), _kz(ny + 22), _kz(cx - 7), _kz(ny + 5)), 'h')]
+    o += [_kp('M%s %sH%s' % (_kz(nx), _kz(bo), _kz(nx + nw)), 't'), _kp('M3 %sH%s' % (_kz(h * .93), _kz(w - 3)), 'd')]
+    return ''.join(o), (27 if milch == 'schlauch' else 0)
+
+
+def _kb_sieb(w, h, muehle, anzeige):
+    """Siebträger von vorn: oben das Bedienfeld, darunter Brühgruppe mit Siebträger, rechts die Dampflanze; mit Mühle sitzt links der Bohnenbehälter."""
+    o = []
+    hh = min(h * .2, 26) if muehle else 0
+    if muehle:
+        o += [_kp('M%s %sL%s 3.5H%sL%s %sz' % (_kz(w * .1), _kz(hh + 1), _kz(w * .13), _kz(w * .41), _kz(w * .44), _kz(hh + 1)), 'g'), _kr(w * .11, 0, w * .32, 4.5, 'f', 2)]
+    bh = h - hh
+    ph = bh * .3
+    o += [_kr(0, hh, w, bh, 'f', 6), _kr(w * .07, hh + ph, w * .86, bh - ph - 9, 'n', 2)]
+    y = hh + ph * .5
+    if anzeige == 'touch':
+        o.append(_kr(w * .5 - min(17, w * .2), hh + ph * .2, min(34, w * .4), ph * .62, 's', 2))
+    elif anzeige == 'manometer':
+        r = min(8.5, ph * .36)
+        o += [_kc(w * .5, y, r, 't'), _kp('M%s %sl%s %s' % (_kz(w * .5), _kz(y), _kz(r * .55), _kz(-r * .5)), 't')]
+        o += [_kc(w * x, y, 1.8, 'p') for x in (.2, .3, .7, .8)]
+    else:
+        o += [_kc(w * x, y, 2.4, 'p') for x in (.28, .5, .72)]
+    gx, gy = w * (.6 if muehle else .5), hh + ph
+    if muehle:
+        o += [_kr(w * .27 - 8, gy, 16, 6, 'f', 1.5), _kp('M%s %sv7M%s %sv7' % (_kz(w * .27 - 6), _kz(gy + 6), _kz(w * .27 + 6), _kz(gy + 6)), 'd')]
+    o += [_kr(gx - 10.5, gy, 21, 6.5, 'f', 1.5), _kr(gx - 12.5, gy + 6.5, 25, 5.5, 'f', 2), _kp('M%s %sl-13 9' % (_kz(gx - 12), _kz(gy + 10)), 'k'),
+          _kp('M%s %sv3M%s %sv3' % (_kz(gx - 3), _kz(gy + 12), _kz(gx + 3), _kz(gy + 12)), 't'),
+          _kp('M%s %sv7l4.5 %s' % (_kz(w - min(9, w * .16)), _kz(gy), _kz(min(26, bh * .28))), 'l'),
+          _kr(4, h - 9, w - 8, 9, 'f', 2), _kp('M9 %sH%s' % (_kz(h - 5.2), _kz(w - 9)), 'd'), _ktasse(gx, h - 9, 17, 12.5)]
+    return ''.join(o), 0
+
+
+def _kb_filter(w, h):
+    """Filtermaschine von vorn: links der Wassertank, rechts Filter über der Kanne."""
+    cx, yt, yb, a, b = w * .64, h * .5, h - 7, w * .2, w * .23
+    o = [_kr(0, h - 7, w, 7, 'f', 2.5), _kr(w * .05, h * .1, w * .27, h * .9 - 7, 'g', 3)]
+    o += [_kp('M%s %sh6' % (_kz(w * .05), _kz(h * i)), 'd') for i in (.3, .45, .6)]
+    o += [_kr(w * .03, h * .06, w * .31, 6, 'f', 2.5), _kp('M%s %sH%sv7' % (_kz(w * .34), _kz(h * .085), _kz(cx)), 't'), _kr(cx - w * .27, h * .17, w * .54, 5.5, 'f', 2.5),
+          _kp('M%s %sH%sL%s %sH%sz' % (_kz(cx - w * .24), _kz(h * .17 + 5.5), _kz(cx + w * .24), _kz(cx + w * .11), _kz(h * .43), _kz(cx - w * .11)), 'f'),
+          _kp('M%s %sL%s %sQ%s %s %s %sH%sQ%s %s %s %sL%s %sz' % (_kz(cx - a), _kz(yb), _kz(cx - b), _kz(yt + 10), _kz(cx - b), _kz(yt), _kz(cx - b + 8), _kz(yt), _kz(cx + b - 8),
+                                                                    _kz(cx + b), _kz(yt), _kz(cx + b), _kz(yt + 10), _kz(cx + a), _kz(yb)), 'g'),
+          _kp('M%s %sH%s' % (_kz(cx - b + .6), _kz(yt + (yb - yt) * .45), _kz(cx + b - .6)), 'd'),
+          _kp('M%s %sh7q4 0 4 4v%sq0 4-4 4h-6' % (_kz(cx + b - .5), _kz(yt + 9), _kz((yb - yt) * .42)), 't'), _kr(cx - w * .13, yt - 4, w * .26, 4.5, 'f', 2)]
+    return ''.join(o), 0
+
+
+def _kb_muehle(w, h):
+    """Kaffeemühle von vorn: Bohnenbehälter, Mahlgradring, Gehäuse mit Auffangbehälter."""
+    o = [_kp('M%s 4L%s %sH%sL%s 4z' % (_kz(w * .04), _kz(w * .2), _kz(h * .33), _kz(w * .8), _kz(w * .96)), 'g'), _kr(w * .02, 0, w * .96, 4.5, 'f', 2), _kr(w * .12, h * .33, w * .76, 7, 'f', 2)]
+    o += [_kp('M%s %sv3' % (_kz(w * x), _kz(h * .33 + 2)), 'd') for x in (.3, .42, .54, .66)]
+    o += [_kr(w * .06, h * .33 + 7, w * .88, h * .67 - 7, 'f', 4), _kc(w * .5, h * .47, 2.6, 'p'), _kr(w * .2, h * .64, w * .6, h * .3, 'g', 3), _kr(w * .34, h * .58, w * .32, h * .06, 'f', 1.5)]
+    return ''.join(o), 0
+
+
+def kf_massbild(g, klein=False):
+    """Maßbild als SVG: das Gerät von vorn auf der Arbeitsplatte, Breite und Höhe als Messinglinien. Alle Geräte im gleichen Maßstab
+    (groß 3 px je cm, klein 2,6 px je cm ohne Maßzahlen). Die Zeichnung zeigt die Bauart, kein bestimmtes Produkt."""
+    S, W, H, BASE = (2.6, 150, 130, 121) if klein else (3.0, 264, 168, 138)
+    b, h, bi = g['b'], g['h'], g['bild']
+    w, hp = b * 3.0, h * 3.0
+    f = bi['form']
+    if f == 'voll':
+        inner, li = _kb_voll(w, hp, bi.get('milch', ''), bi.get('bedien', 'tasten'))
+    elif f == 'sieb':
+        inner, li = _kb_sieb(w, hp, bi.get('muehle', False), bi.get('bedien', 'tasten'))
+    elif f == 'filter':
+        inner, li = _kb_filter(w, hp)
+    else:
+        inner, li = _kb_muehle(w, hp)
+    k = S / 3.0
+    ges = (li + w) * k + (0 if klein else 58)
+    x0 = (W - ges) / 2 + li * k
+    y0 = BASE - hp * k
+    o = ['<svg class="kf-mb%s" viewBox="0 0 %d %d" width="%d" height="%d" %s>' % (
+        ' kf-mbk' if klein else '', W, H, W, H, 'aria-hidden="true"' if klein else 'role="img" aria-label="Maßbild von vorn: %s cm breit, %s cm hoch"' % (kf_de(b), kf_de(h))),
+        _kp('M-900 %sH1200' % BASE, 'b'),
+        '<g transform="translate(%s %s)%s">%s</g>' % (_kz(x0), _kz(y0), ' scale(%.3f)' % k if klein else '', inner)]
+    if not klein:
+        mx = x0 + w + 11
+        o += [_kp('M%s %sH%sM%s %sv7M%s %sv7' % (_kz(x0), _kz(BASE + 10.5), _kz(x0 + w), _kz(x0), BASE + 7, _kz(x0 + w), BASE + 7), 'm'),
+              '<text x="%s" y="%s" text-anchor="middle">%s cm</text>' % (_kz(x0 + w / 2), BASE + 25, kf_de(b)),
+              _kp('M%s %sV%sM%s %sh7M%s %sh7' % (_kz(mx), _kz(y0), BASE, _kz(mx - 3.5), _kz(y0), _kz(mx - 3.5), BASE), 'm'),
+              '<text x="%s" y="%s">%s cm</text>' % (_kz(mx + 7), _kz(y0 + hp / 2 + 4), kf_de(h))]
+    return ''.join(o) + '</svg>'
+
+
+def kf_eu(kl, n=5):
+    return '<span class="kf-eu" aria-hidden="true">%s</span>' % ''.join('<i%s>€</i>' % (' class="an"' if i < kl else '') for i in range(n))
+
+
+def kf_karte(g, h='h3'):
+    """Eine Maschine: Maßbild, Einordnung, Preis-Leistung, Dafür und Dagegen, Daten zum Aufklappen, Link zu OTTO (Anzeige).
+    h: Überschriftenebene des Namens (in der Preisklassen-Leiter h4, weil die Preisklasse schon h3 ist)."""
+    d = kf()
+    kl = d['klassen'][g['kl'] - 1]['name']
+    spec = ([('B × H × T', '%s × %s × %s cm' % (kf_de(g['b']), kf_de(g['h']), kf_de(g['t'])))] if g.get('t') else []) + [tuple(s) for s in g['spec']] + [('Preisklasse', kl)]
+    tags = ('<span class="kf-tipp">%s</span>' % kf_nb(g['wahl']) if g.get('wahl') else '') + '<span class="kf-tag">%s</span>' % kf_nb(g['tag'])
+    test = ''
+    if 'test' in g:
+        t = d['test']
+        test = ('<p class="kf-test">Von der %s geprüft, %s%s. <a href="%s" target="_blank" rel="noopener">Ergebnis bei test.de</a></p>'
+                % (t['name'], t['kurz'], ' (%s)' % g['test'] if g['test'] else '', t['url']))
+    akt = ''
+    a = g.get('aktion')
+    if a and datetime.date.today().isoformat() <= a['bis']:
+        akt = ('<p class="kf-akt">%s <a href="{{otto:%s}}" rel="sponsored nofollow noopener" target="_blank">%s%s</a><span class="tag">Anzeige</span></p>'
+               % (kf_nb(a['text']), a['url'], a['link'], EXT))
+    li = lambda L: ''.join('<li>%s</li>' % kf_nb(x) for x in L)
+    return ('<article class="kf-m%s" id="m-%s" data-kl="%d" data-kn="%s"><div class="kf-in">'
+            '<div class="kf-bild">%s</div>'
+            '<div class="kf-txt"><div class="kf-tags">%s</div><%s class="kf-n">%s</%s><p class="mod">%s</p><p class="kf-t">%s</p>'
+            '<p class="kf-pl kf-pl-%d"><span>Preis-Leistung</span> <b>%s</b> <small>%s</small></p></div>'
+            '<div class="kf-rest"><div class="kf-pc"><div><p class="kf-pch">Dafür</p><ul class="pro">%s</ul></div><div><p class="kf-pch">Dagegen</p><ul class="con">%s</ul></div></div>%s%s'
+            '<details class="kf-dat"><summary>Technische Daten</summary><dl class="kf-spec">%s</dl></details>'
+            '<div class="kf-buy"><a class="btn" href="{{otto:%s}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen%s</a><span class="tag">Anzeige</span></div></div>'
+            '</div></article>'
+            % (' kf-wahl' if g.get('wahl') else '', g['id'], g['kl'], kl, kf_massbild(g), tags, h, g['name'], h, '%s · %s' % (g['modell'], kl.replace(' ', '&nbsp;')) if g['art'] in ('voll', 'sieb') else g['modell'],
+               kf_nb(g['text']), g['pl'], KF_PL[g['pl']], kf_nb(g['plsatz']), li(g['pro']), li(g['con']), test, akt,
+               ''.join('<dt>%s</dt><dd>%s</dd>' % (a_, kf_nb(b_)) for a_, b_ in spec), g['url'], EXT))
+
+
+def kf_karten(ort):
+    """{{KF_KARTEN:ort}}: alle Maschinen eines Abschnitts, günstigste zuerst."""
+    return '\n'.join(kf_karte(g) for g in sorted(kf()['geraete'], key=lambda g: g['rang']) if g['ort'] == ort)
+
+
+def kf_leiter():
+    """{{KF_LEITER}}: die Vollautomaten nach Preisklasse, in jeder Klasse zuerst „Unsere Wahl“."""
+    d, out = kf(), []
+    for i, k in enumerate(d['klassen']):
+        G = sorted((g for g in d['geraete'] if g['art'] == 'voll' and g['kl'] == i + 1), key=lambda g: (not g.get('wahl'), g['rang']))
+        out.append('<div class="kf-kl" id="k%d"><div class="kf-kl-h"><h3>%s%s</h3><p>%s</p></div><div class="kf-ms">\n%s\n</div></div>'
+                   % (i + 1, kf_eu(i + 1), k['titel'], k['text'], '\n'.join(kf_karte(g, 'h4') for g in G)))
+    return '\n'.join(out)
+
+
+def kf_leiste():
+    """{{KF_LEISTE}}: „Unsere Wahl“ der Vollautomaten je Preisklasse als kleine Maßbilder auf einer Arbeitsplatte, darunter die Preisklasse als Maßlinie."""
+    d = kf()
+    W = sorted((g for g in d['geraete'] if g['art'] == 'voll' and g.get('wahl')), key=lambda g: g['kl'])
+    return '<ol class="kf-leiste">%s</ol>' % ''.join(
+        '<li><a href="#m-%s"><span class="kf-lb">%s</span><span class="kf-lt"><span class="kf-lk">%s</span><b>%s</b><small>%s</small></span></a></li>'
+        % (g['id'], kf_massbild(g, klein=True), kf_nb(d['klassen'][g['kl'] - 1]['name']), g['name'], kf_nb(g['tag'])) for g in W)
+
+
+def kf_vergleich():
+    """{{KF_VERGLEICH}}: Zeilen der Übersicht, günstigste zuerst, mit einer Zwischenzeile je Preisklasse (das Skript der Seite sortiert und filtert)."""
+    d, out, kl = kf(), [], 0
+    for g in sorted(d['geraete'], key=lambda g: g['rang']):
+        if g['kl'] != kl:
+            kl = g['kl']
+            out.append('<tr class="kf-grp" data-g="%d"><td colspan="5">%s%s</td></tr>' % (kl, kf_eu(kl), kf_nb(d['klassen'][kl - 1]['name'])))
+        m = g['milch']
+        milch = '<span class="kf-mi kf-mi-%s">%s</span>' % (m, g['milchtext']) if m else '<span class="kf-leer">–</span>'
+        out.append('<tr data-art="%s" data-milch="%s" data-rang="%d" data-pl="%d" data-kl="%d"><th scope="row"><a href="#m-%s">%s</a><span class="kf-va">%s</span>%s</th>'
+                   '<td class="kf-vp" data-l="Preisklasse"><span class="v">%s%s</span></td><td data-l="Milch"%s><span class="v">%s</span></td>'
+                   '<td data-l="Breite"><span class="v"><span class="kf-bw"><i style="width:%d%%"></i></span>%s&nbsp;cm</span></td>'
+                   '<td class="kf-vr" data-l="Preis-Leistung"><span class="kf-note kf-pl-%d">%s</span></td></tr>'
+                   % ({'muehle': 'zub', 'filter': 'zub'}.get(g['art'], g['art']), m or 'keine', g['rang'], g['pl'], g['kl'], g['id'], g['name'], KF_ART[g['art']],
+                      '<span class="kf-vt">Unsere Wahl</span>' if g.get('wahl') else '', kf_eu(g['kl']), kf_nb(d['klassen'][g['kl'] - 1]['name']), '' if m else ' class="kf-ohne"', milch,
+                      round(g['b'] / 40 * 100), kf_de(g['b']), g['pl'], KF_PL[g['pl']]))
+    return '\n'.join(out)
+
+
+def kf_quellen():
+    """{{KF_QUELLEN}}: Quellen der Produktdaten je Gerät und zu den Testurteilen."""
+    d = kf()
+    A = '<a href="%s" target="_blank" rel="noopener">%s</a>'
+    G = sorted(d['geraete'], key=lambda g: g['rang'])
+    teil = lambda arten: '; '.join('%s %s' % (g['name'], ', '.join(A % (u, n) for n, u in g['quellen'])) for g in G if g['art'] in arten)
+    st = de_date(d['stand'])
+    t = d['test']
+    return ('<li>Produktdaten und Preise der Vollautomaten am %s: %s</li>\n    <li>Produktdaten und Preise von Siebträgern, Mühle und Filtermaschine am %s: %s</li>\n'
+            '    <li>%s: Kaffeevollautomaten im Test (%s, %d Geräte, Ergebnisse kostenpflichtig) %s</li>'
+            % (st, teil(('voll',)), st, teil(('sieb', 'muehle', 'filter')), t['name'], t['datum'], t['anzahl'], A % (t['url'], 'test.de')))
+
+
+def kf_zahl(key):
+    """{{KF:…}}: Zahlen und Sätze, die sich aus der Geräteliste ergeben."""
+    d = kf()
+    G = d['geraete']
+    V = [g for g in G if g['art'] == 'voll']
+    von_bis = lambda L: '%s bis %s' % (kf_de(min(L)), kf_de(max(L)))
+    wort = lambda n: KF_ZAHL[n] if n < len(KF_ZAHL) else str(n)
+    W = sorted((g for g in V if g.get('wahl')), key=lambda g: g['kl'])
+    T = [g for g in V if 'test' in g]
+    Z = {
+        'n': str(len(G)), 'n_voll': str(len(V)), 'n_sieb': str(sum(g['art'] == 'sieb' for g in G)), 'n_zub': str(sum(g['art'] in ('muehle', 'filter') for g in G)),
+        'N_voll': wort(len(V)).capitalize(), 'N_test': wort(len(T)).capitalize(), 'n_klassen': wort(len(d['klassen'])),
+        'b_voll': von_bis([g['b'] for g in V]), 'h_voll': von_bis([g['h'] for g in V]), 't_voll': von_bis([g['t'] for g in V]),
+        'h_min': str(int(min(g['h'] for g in G))), 'h_max': str(int(-(-max(g['h'] for g in G) // 1))),
+        'stand': de_date(d['stand']), 'test_datum': d['test']['datum'], 'test_n': str(d['test']['anzahl']), 'test_url': d['test']['url'],
+        'wahl_satz': ', '.join('%s die %s' % (kf_klar(d['klassen'][g['kl'] - 1]['name']).replace('€', 'Euro'), kf_klar(g['name'])) for g in W),
+        'test_namen': ', '.join(kf_klar(g['name']) for g in sorted(T, key=lambda g: g['rang'])),
+    }
+    return Z[key]
+
+
 # JETZT DRAN (seit 21.11.2026): Saison-Ratgeber rücken kurz vor ihrem Termin in „Alle Ratgeber“ nach vorn und tragen eine kleine Marke.
 # Je Seite: (ab, [(Termin, Text), …]). Sichtbar von „ab“ bis zum letzten Termin, die Marke nennt den nächsten Termin; danach verschwindet sie von selbst
 # (die Seite wird täglich neu gebaut). Höchstens 4 Seiten gleichzeitig. Jedes Jahr die Termine für das neue Jahr eintragen (erbbuch/events.json).
@@ -955,6 +1251,10 @@ def page(src):
         html = html.replace('{{SCHAUFENSTER_N}}', str((len(looks_heute()[1]) - 1) // 10 * 10)).replace('{{SCHAUFENSTER}}', schaufenster())
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2)), key), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
+    if '{{KF' in html:   # Kaffee-Ratgeber aus kaffee.json
+        html = html.replace('{{KF_VERGLEICH}}', kf_vergleich()).replace('{{KF_LEISTE}}', kf_leiste()).replace('{{KF_LEITER}}', kf_leiter()).replace('{{KF_QUELLEN}}', kf_quellen())
+        html = re.sub(r'\{\{KF_KARTEN:(\w+)\}\}', lambda m: kf_karten(m.group(1)), html)
+        html = re.sub(r'\{\{KF:(\w+)\}\}', lambda m: kf_zahl(m.group(1)), html)
     html = re.sub(r'\{\{otto:(.*?)\}\}', lambda m: otto_url(m.group(1)), html)
     html = re.sub(r'\{\{awin:(\d+)\|([^}]*)\}\}', lambda m: awin_url(m.group(1), m.group(2).strip()), html)
     html, _get = awin_haupt(html)
