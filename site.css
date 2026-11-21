@@ -76,6 +76,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (prefers-color-scheme:light){:root:not([data-theme=dark]) .th-sun{display:none}:root:not([data-theme=dark]) .th-moon{display:block}}
 :root[data-theme=light] .th-sun{display:none}:root[data-theme=light] .th-moon{display:block}
 :root[data-theme=dark] .th-sun{display:block}:root[data-theme=dark] .th-moon{display:none}
+.nav a{white-space:nowrap}
+@media (max-width:1080px){.nav a:nth-last-child(-n+2){display:none}}   /* schmale Laptops: die letzten zwei Punkte stehen nur im Menü, damit nichts umbricht */
 @media (max-width:900px){.nav{display:none}}
 
 /* Menü */
@@ -134,6 +136,27 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes fade{to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.hdim.on::before{animation:none;transform:none}.hdim.on::after,.hdim.on i,.hdim.on .lbl{animation:none;opacity:1}}
 @media (max-width:700px){.hdim{display:none}}
+
+/* Bühne in Bewegung (seit 21.11.2026, alle Seiten): Das Foto kommt beim Laden zur Ruhe, danach zeichnet sich die Maßlinie;
+   Titel, Text und Knöpfe steigen nacheinander auf. Beim Rollen bleibt das Foto etwas zurück, auf großen Bildschirmen blendet der Text dabei aus
+   (nur Browser mit animation-timeline). Aus bei „Bewegung reduzieren“. Die Kaffee-Bühne (.kf-hero) hat ihren Film und bleibt, wie sie ist. */
+@media (prefers-reduced-motion:no-preference){
+  .hero:not(.kf-hero)>picture img{animation:hsettle 2.2s cubic-bezier(.16,.7,.2,1) both}
+  .hero h1,.hero .wrap>p,.hero .btns{animation:hrise .9s cubic-bezier(.2,.8,.2,1) both}
+  .hero h1{animation-delay:.12s}.hero .wrap>p{animation-delay:.26s}.hero .btns{animation-delay:.38s}
+  .hero .hdim.on::before{animation-delay:1.5s}.hero .hdim.on::after,.hero .hdim.on i{animation-delay:1.4s}.hero .hdim.on .lbl{animation-delay:2.7s}
+  @supports (animation-timeline:scroll()){
+    .hero:not(.kf-hero)>picture,.hero>.hdim{animation:hpara linear both;animation-timeline:scroll(root);animation-range:0 100vh}
+  }
+}
+@media (prefers-reduced-motion:no-preference) and (min-width:860px) and (min-height:640px){
+  @supports (animation-timeline:scroll()){.hero>.wrap{animation:hweg linear both;animation-timeline:scroll(root);animation-range:0 85vh}}
+}
+@keyframes hsettle{from{transform:scale(1.09)}}
+@keyframes hrise{from{opacity:0;transform:translateY(22px)}}
+@keyframes hpara{to{transform:translateY(16vh)}}
+@keyframes hweg{to{opacity:0;transform:translateY(-5vh)}}
+@media print{.hero h1,.hero .wrap>p,.hero .btns,.hero>.wrap{animation:none!important;opacity:1!important;transform:none!important}}
 
 /* Zeichenblatt: Maßzeichnungen der Rechner */
 .sheet{position:relative;background-color:var(--sheet);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;background-position:-1px -1px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -288,6 +311,8 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 .starts li a svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 /* Passt dazu: Kacheln mit Foto */
 .hub.rel{background:none;border:0;border-radius:0;overflow:visible;gap:14px}
+.rel-st{margin:clamp(22px,3vw,34px) 0 0;color:var(--mut)}
+.rel-st a{font-weight:600}
 .hub.rel a{padding:0 0 22px;min-height:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .hub.rel .rimg{display:block;aspect-ratio:16/9;overflow:hidden;margin-bottom:16px;background:var(--band)}
 .hub.rel .rimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
@@ -605,6 +630,7 @@ details.src[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
 /* Menü seit 16.11.2026 */
 .sheet-in{max-width:980px}
 .m-go{display:flex;align-items:center;gap:16px;margin:14px 0 4px;padding:16px 20px;border-radius:14px;background:var(--grn);color:var(--on-grn);text-decoration:none}
+.m-go+.m-go{margin-top:8px;background:var(--pan);color:var(--ink);border:1px solid var(--line)}
 .m-go span{flex:1}.m-go b{display:block;font-size:1.1rem;font-stretch:86%}.m-go small{display:block;font-size:.86rem;opacity:.8;margin-top:2px}.m-go i{font-style:normal;font-size:1.3rem}
 .sheet-m .m-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 .m-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 24px;align-items:start}

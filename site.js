@@ -379,7 +379,7 @@ window.__VTHERO='.hero.sub';
     if(fc){if(!fc.querySelector('.ki-cap')){var c=document.createElement('span');c.className='ki-cap';c.textContent=(fc.textContent.trim()?' ':'')+C;fc.appendChild(c)}return}
     var a=box(im);if(!a||a.querySelector(':scope>.ki-marke'))return;
     if(getComputedStyle(a).position==='static')a.style.position='relative';
-    var m=document.createElement('span');m.className='ki-marke';m.textContent=T;m.title=TL;m.setAttribute('aria-label',TL);
+    var m=document.createElement('span');m.className='ki-marke';m.textContent=T;m.title=TL;m.setAttribute('role','img');m.setAttribute('aria-label',TL);
     m.__a=a;m.__i=im;a.appendChild(m);list.push(m);put(m);
     if(window.ResizeObserver){var ro=new ResizeObserver(function(){put(m)});ro.observe(a);ro.observe(im)}
     im.addEventListener('load',function(){put(m)})}
