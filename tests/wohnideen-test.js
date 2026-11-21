@@ -235,9 +235,9 @@ for(const w of [901,1000,1081,1180]){[c,p]=await neu({viewport:{width:w,height:7
   ok(await p.evaluate(()=>{const A=[...document.querySelectorAll('.hd .nav a')].filter(a=>a.getBoundingClientRect().width>0),l=document.querySelector('.hd .logo').getBoundingClientRect(),t=document.getElementById('th').getBoundingClientRect();
     return A.length>=5&&new Set(A.map(a=>Math.round(a.getBoundingClientRect().top))).size===1&&A[0].getBoundingClientRect().left>=l.right&&A[A.length-1].getBoundingClientRect().right<=t.left+1&&A.every(a=>a.getBoundingClientRect().height<50)&&document.documentElement.scrollWidth<=innerWidth}),'Kopfzeile bei '+w+' px: eine Zeile, nichts überlappt');await c.close()}
 [c,p]=await neu({viewport:{width:1280,height:800}});
-const sm=await (await p.request.get(B+'/sitemap.xml')).text(),ll=await (await p.request.get(B+'/llms.txt')).text();
-ok(/stil-daheim\.de\/wohnideen\.html/.test(sm)&&/wohnideen\.html/.test(ll),'Sitemap und llms.txt kennen die neue Seite');
 await p.goto(B+'/wohnideen.html',{waitUntil:'load'});
+const [sm,ll]=await p.evaluate(()=>Promise.all(['sitemap.xml','llms.txt'].map(u=>fetch(u,{cache:'no-store'}).then(r=>r.text()))));
+ok(/stil-daheim\.de\/wohnideen\.html/.test(sm)&&/wohnideen\.html/.test(ll),'Sitemap und llms.txt kennen die neue Seite');
 ok(await p.evaluate(()=>{const m=n=>document.querySelector('meta[property="og:'+n+'"]').content;return /assets\/og\/wohnideen\.jpg$/.test(m('image'))&&document.title.length<70&&document.querySelector('meta[name=description]').content.length<=160&&document.querySelectorAll('h1').length===1&&/"@type": ?"Article"/.test(document.querySelector('script[type="application/ld+json"]').textContent)}),'Titel, Beschreibung, Teilen-Bild und strukturierte Daten der neuen Seite');
 await c.close();
 
