@@ -55,4 +55,18 @@ Impressum und Datenschutz nennen bewusst keine Straße. Bitte so lassen.
 - 3D-Ansicht im Raumplaner (`raumplaner.js`, Abschnitt „3D-Ansicht“): nur zum Ansehen, Höhen in `HK` sind Richtwerte. Neue Möbelart im Katalog: prüfen, ob `parts3()` eine passende Form liefert. Test: `node tests/raumplaner-3d-test.js [Basisadresse]`.
 - Einbett-Modus: `?einbetten=1` zeigt nur den Abschnitt mit `data-emb` (site.js, site.css). Anleitung für fremde Websites: `pages/einbetten.html`.
 
+## Wohnideen zum Stöbern, Schaufenster, Bilder-Duell (seit 21.11.2026)
+
+Wunsch des Inhabers: Die Seite soll zum Schauen einladen. Dafür gibt es drei Bausteine, alle aus den vorhandenen Raumfotos (keine neuen Bilder nötig):
+
+- `pages/wohnideen.html` + `wohnideen.js`: ein Raum pro Bildschirm (der `<body>` rollt und rastet ein). Jeder Raum hat einen Tipp, fünf Farben aus dem Foto, Merken (nur im Browser, `localStorage` „sdmerk“), Teilen und den Link zum Ratgeber. „Alle Räume“ zeigt Übersicht, Filter, gemerkte Räume und daraus die „Farbwelt“ mit dem nächstgelegenen Stil.
+- Die Räume entstehen in `build.py`, Abschnitt **WOHNIDEEN**: Jedes Foto, das eine Seite aus `GRID` als `{{HERO:…}}` oder `{{FIG:…}}` zeigt, wird automatisch ein Raum. Tipp = `LOOK_TIPP[foto]`, sonst die Bildunterschrift (FIG) oder der erste Satz von `kurz` (HERO). **Nur Fakten, die auf der Seite belegt sind.** Fotos ohne HERO/FIG: `LOOK_FEST`. Saison: `LOOK_ZEIT` (außerhalb blendet das Skript sie aus). Nicht im Feed: `LOOK_AUS`.
+- Farben je Foto rechnet der Build einmal und legt sie in `looks.json` ab (mit einchecken). Namen kommen aus `FARBNAMEN` (nächster Ton), sie sind Beschreibungen, keine Farbtöne eines Herstellers.
+- Der Build legt je Raum `assets/<foto>-t.webp` (Übersicht) und `assets/<foto>-h.webp` (Hochformat für Schaufenster und Duell, Bildmitte in `LOOK_FX`) an.
+- Startseite: `{{SCHAUFENSTER}}` (16 Karten, Auswahl wechselt mit dem Build-Tag, Reihenfolge mischt das Skript täglich) und der Stil-Finder als Bilder-Duell (`D` im Skript der Startseite, zweites Foto je Stil: `img2`/`alt2` in `STYLES`). Die fünf Fragen bleiben als zweiter Weg.
+- Bewegung: Kamerafahrt im Feed, Schaufenster und Bühne (site.css „Bühne in Bewegung“) sind bei „Bewegung reduzieren“ aus; im Feed hält der Knopf oben alles an.
+- KI-Kennzeichnung läuft wie überall automatisch (site.js): Marke „KI“ in jedem Raumbild, eine Zeile über Übersicht und Schaufenster.
+- Keine Zeilenkommentare (`//`) in `wohnideen.js` (wird mit `mini` verkleinert).
+- Test: `node tests/wohnideen-test.js [Basisadresse]` (Feed, Übersicht, Farbwelt, Saison, Handy, ohne Skript, Schaufenster, Duell, Kopfzeile).
+
 Alle Tests müssen mit „ALLE TESTS BESTANDEN“ enden.

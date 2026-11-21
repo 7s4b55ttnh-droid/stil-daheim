@@ -1,0 +1,254 @@
+<!--meta {"key":"wohnideen","title":"Wohnideen zum Stöbern: Räume mit Tipp und Farbkarte – Stil-Daheim","desc":"Wohnideen zum Durchstöbern: ein Raum pro Bildschirm, jeder mit einem Einrichtungstipp und seinen Farben. Räume merken und die eigene Farbwelt entdecken.","og":"assets/start.jpg","updated":"2026-11-21"} -->
+<!--HEAD-->
+<link rel="expect" href="#ed-bereit" blocking="render">
+<style>
+/* Wohnideen zum Stöbern (seit 21.11.2026): ein Raum pro Bildschirm, immer dunkel wie ein Kinosaal.
+   Nicht das Fenster rollt, sondern der <body>, und er rastet je Raum ein. So bleibt die Fußzeile erreichbar und die Seite geht auch ohne Skript.
+   Bewegung: Im Hochformat fährt das Bild langsam zur Seite (wohnideen.js), im Querformat wächst es sacht (CSS). Beides hält der Knopf oben an. */
+html{height:100%;overflow:hidden;background:#14100d}
+body{height:100%;height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;background:#14100d;color:#f4ece1;scrollbar-width:none}
+body::-webkit-scrollbar{display:none}
+body::before{background:rgba(14,16,15,.5)}
+.hd{color:#f3f2ee;background:rgba(14,16,15,.42);border-bottom-color:rgba(255,255,255,.1)}
+.hd .logo svg{stroke:#e2c486}
+.hd :focus-visible,main :focus-visible{outline-color:#fff}
+
+.ed-s{position:relative;height:100vh;height:100svh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:var(--c,#14100d);color:#fff;touch-action:pan-y pinch-zoom}
+.ed-s[data-n]{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* Ankunft von einer Kachel (Startseite, Ratgeber): das angetippte Bild wächst zum ganzen Bildschirm (Seitenübergang aus site.css) */
+html.ed-ein .ed-s:target .ed-b{view-transition-name:vt-hero}
+html[data-vt] .ed-s:target .ed-b{view-transition-name:none}
+.ed-b{position:absolute;inset:0;overflow:hidden}
+.ed-b picture{display:contents}
+.ed-b img,.ed-b .kf-film{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;-webkit-user-drag:none;user-select:none}
+.ed-b .kf-film{opacity:0;transition:opacity .9s ease;pointer-events:none}
+.ed-b .kf-film.an{opacity:1}
+.ed-s::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(12,9,7,.62) 0,rgba(12,9,7,.16) 22%,rgba(12,9,7,0) 42%,rgba(12,9,7,.46) 70%,rgba(12,9,7,.92) 100%)}
+.ed-t{position:absolute;left:0;right:0;bottom:0;z-index:2;padding-bottom:calc(env(safe-area-inset-bottom,0px) + clamp(28px,5.5vh,60px))}
+.ed-wo{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:.95rem;font-weight:600;font-stretch:90%;color:#f1dfb8;text-shadow:0 1px 12px rgba(0,0,0,.5)}
+.ed-wo::before{content:"";flex:none;width:26px;height:9px;border:solid #e2c486;border-width:0 1.5px;background:linear-gradient(#e2c486,#e2c486) 50%/100% 1.5px no-repeat}
+.ed-s h2{font-size:clamp(1.5rem,3.3vw,2.85rem);line-height:1.08;max-width:23ch;color:#fff;text-shadow:0 1px 26px rgba(0,0,0,.42)}
+.ed-l{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin:clamp(16px,2.6vh,28px) 0 0}
+.ed-pal,.ed-zu{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:0 16px;border-radius:999px;font:inherit;font-size:.95rem;font-weight:600;text-decoration:none;cursor:pointer;white-space:nowrap}
+.ed-pal{color:#fff;background:rgba(24,18,13,.5);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%)}
+.ed-pal:hover{border-color:#fff}
+.ed-pal[aria-expanded=true]{background:rgba(24,18,13,.8);border-color:#e2c486}
+.ed-dots{display:inline-flex}
+.ed-dots i{width:19px;height:19px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.85);margin-left:-5px}
+.ed-dots i:first-child{margin-left:0}
+.ed-zu{color:#1b140e;background:#f3ead9;border:1px solid #f3ead9}
+.ed-zu:hover{background:#fff}
+.ed-zu svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ed-kurz{display:none}
+
+/* Farbkarte des Raums (öffnet über dem Knopf) */
+.ed-fk{margin:16px 0 0;max-width:600px}
+.ed-fks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 18px 50px -24px rgba(0,0,0,.8)}
+.ed-sw{display:block;min-width:0}
+.ed-sw button{display:flex;flex-direction:column;justify-content:flex-end;width:100%;min-height:96px;padding:9px 10px 10px;text-align:left;font-size:.84rem;font-weight:650;font-stretch:90%;line-height:1.15;cursor:copy;border-radius:0}
+.ed-sw button em{font-style:normal;font-weight:500;font-size:.72rem;font-variant-numeric:tabular-nums;margin-top:2px}
+.ed-sw button:focus-visible{outline-offset:-4px}
+.ed-fk p{display:flex;flex-wrap:wrap;gap:4px 14px;margin:10px 0 0;font-size:.86rem;line-height:1.4;color:rgba(255,255,255,.78)}
+.ed-fk a{color:#f1dfb8;font-weight:600}
+html.ed-js .ed-fk:not([hidden]) .ed-sw{animation:edfk .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*55ms)}
+@keyframes edfk{from{opacity:0;transform:translateY(16px)}}
+
+/* Knöpfe am rechten Rand: merken, teilen, weiter */
+.ed-a{position:absolute;z-index:3;right:max(14px,env(safe-area-inset-right,0px),calc((100vw - 1180px)/2 + 20px));bottom:calc(env(safe-area-inset-bottom,0px) + clamp(118px,21vh,200px));display:flex;flex-direction:column;gap:12px}
+.ed-a button,.ed-k{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(24,18,13,.46);border:1px solid rgba(255,255,255,.26);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);transition:transform .16s,background-color .2s,border-color .2s}
+.ed-a button:hover,.ed-k:hover{border-color:#fff}
+.ed-a button:active,.ed-k:active{transform:scale(.92)}
+.ed-a svg,.ed-k svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ed-herz[aria-pressed=true]{color:#ff7a66;border-color:rgba(255,122,102,.7)}
+.ed-herz[aria-pressed=true] svg{fill:currentColor}
+.ed-herz.pop svg{animation:edpop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes edpop{0%{transform:scale(.6)}55%{transform:scale(1.32)}100%{transform:scale(1)}}
+.ed-puff{position:absolute;z-index:5;width:96px;height:96px;margin:-48px 0 0 -48px;pointer-events:none;color:#ff7a66;animation:edpuff .8s cubic-bezier(.2,.8,.2,1) forwards}
+.ed-puff svg{width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 6px 18px rgba(0,0,0,.4))}
+@keyframes edpuff{0%{opacity:0;transform:scale(.3) rotate(-12deg)}25%{opacity:1;transform:scale(1.1) rotate(4deg)}60%{opacity:1;transform:scale(1) rotate(0)}100%{opacity:0;transform:scale(1.25) translateY(-30px)}}
+@media (hover:none){.ed-vor{display:none!important}}
+
+/* Leiste oben: Titel, Zähler, Bewegung anhalten, Alle Räume */
+.ed-top{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 60px);z-index:40;pointer-events:none;transition:opacity .3s,visibility .3s}
+.bf-on .ed-top{top:calc(env(safe-area-inset-top,0px) + 96px)}
+.ed-unten .ed-top{opacity:0;visibility:hidden}
+.ed-top .wrap{display:flex;align-items:center;gap:12px;padding-top:12px}
+.ed-top h1{font-size:1.06rem;line-height:1.2;font-stretch:84%;letter-spacing:.004em;color:#fff;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.ed-z{margin:2px 0 0;font-size:.84rem;line-height:1.2;color:rgba(255,255,255,.86);font-variant-numeric:tabular-nums;text-shadow:0 1px 12px rgba(0,0,0,.55)}
+.ed-kn{display:none;margin-left:auto;gap:8px;pointer-events:auto}
+html.ed-js .ed-kn{display:flex}
+.ed-k{width:44px;height:44px;position:relative}
+.ed-k svg{width:20px;height:20px}
+.ed-kt{width:auto;display:inline-flex;align-items:center;gap:8px;padding:0 15px 0 13px;border-radius:999px;font-weight:600;font-size:.92rem}
+#ed-ruhe .pl,#ed-ruhe[aria-pressed=true] .pa{display:none}
+#ed-ruhe[aria-pressed=true] .pl{display:block}
+#ed-ruhe svg{fill:currentColor;stroke:none;width:16px;height:16px}
+.ed-bz{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#ff7a66;color:#1b0e0a;font-size:.72rem;font-weight:700;line-height:20px;text-align:center;font-variant-numeric:tabular-nums}
+.ed-bz[hidden]{display:none}
+
+/* Hinweis auf dem ersten Bild */
+.ed-hint{position:absolute;left:50%;top:30%;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;transform:translateX(-50%);padding:10px 18px 8px;border-radius:999px;background:rgba(24,18,13,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font-size:.9rem;font-weight:600;white-space:nowrap;pointer-events:none;animation:edhin 6.5s ease both}
+.ed-hint svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:edhup 1.3s ease-in-out infinite}
+.ed-hint .m{display:none}
+.ed-hint svg{transform:rotate(180deg)}
+@media (hover:hover) and (pointer:fine){.ed-hint .t{display:none}.ed-hint .m{display:inline}.ed-hint svg{transform:none}}
+@keyframes edhin{0%,8%{opacity:0}18%,82%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes edhup{50%{translate:0 5px}}
+
+/* Text erscheint, wenn der Raum einrastet (nur mit Skript, sonst steht er einfach da) */
+html.ed-js .ed-s[data-n]:not(.war) .ed-t{opacity:0}
+html.ed-js .ed-s.akt .ed-wo,html.ed-js .ed-s.akt h2,html.ed-js .ed-s.akt .ed-l{animation:edin .7s cubic-bezier(.2,.8,.2,1) both}
+html.ed-js .ed-s.akt h2{animation-delay:.07s}
+html.ed-js .ed-s.akt .ed-l{animation-delay:.16s}
+@keyframes edin{from{opacity:0;transform:translateY(18px)}}
+
+/* Bewegung im Bild */
+@media (min-aspect-ratio:4/5){
+  html.ed-js .ed-s.sicht:not(.ed-film) .ed-b img{animation:edz 24s ease-in-out infinite alternate}
+  html.ed-ruhe .ed-s .ed-b img{animation-play-state:paused!important}
+}
+@keyframes edz{from{transform:scale(1)}to{transform:scale(1.08)}}
+@media (max-aspect-ratio:4/5){
+  .ed-s:not(.ed-film) .ed-b img{right:auto;left:50%;width:auto;max-width:none;transform:translateX(-50%)}
+  html.ed-js .ed-s:not(.ed-film) .ed-b img{left:0;transform:none}
+  html.ed-js .ed-s.akt:not(.ed-film) .ed-b img{will-change:transform}
+  .ed-s h2{max-width:none;padding-right:58px}
+  .ed-fk{margin-right:58px}
+  .ed-s .ed-fks{grid-template-columns:1fr}
+  .ed-s .ed-sw button{flex-direction:row;align-items:center;justify-content:space-between;min-height:38px;padding:4px 12px;font-size:.9rem}
+  .ed-s .ed-sw button em{margin:0;font-size:.78rem}
+  .ed-fk p span{display:none}
+  html.ed-fkauf .ed-top{opacity:0;visibility:hidden}
+  .ed-lang{display:none}.ed-kurz{display:inline}
+  .ed-top h1{font-size:1rem}
+  .ed-kt span{display:none}.ed-kt{width:44px;padding:0;justify-content:center}
+}
+@media (max-height:700px){html.ed-fkauf .ed-top{opacity:0;visibility:hidden}}
+@media (max-height:520px){.ed-s h2{font-size:1.35rem;max-width:26ch}.ed-a{flex-direction:row;bottom:calc(env(safe-area-inset-bottom,0px) + 28px)}.ed-hint{display:none}.ed-t{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}.ed-l{margin-top:12px}}
+
+/* Ende und Fußzeile */
+.ed-ende{display:flex;align-items:center;background:radial-gradient(120% 90% at 20% 20%,#2a1f17 0,#14100d 62%)}
+.ed-ende::after{display:none}
+.ed-ende h2{max-width:16ch;font-size:clamp(2.1rem,5vw,3.6rem)}
+.ed-ende p{max-width:44ch;margin:18px 0 0;font-size:1.12rem;line-height:1.5;color:rgba(244,236,225,.82)}
+.ed-ende .btn{background:#f3ead9;color:#1b140e;border-color:#f3ead9}
+.ed-ende .btn.ghost{background:transparent;color:#f4ece1;border-color:rgba(244,236,225,.4)}
+.ed-ende .btn.ghost:hover{border-color:#f4ece1}
+.ed-eg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:center}
+.ed-egm[hidden]{display:none}
+.ed-egm>b{display:block;margin:0 0 12px;font-size:1.05rem;font-stretch:88%;color:#f1dfb8}
+.ed-ende .ed-egm .ki-hinweis{margin:0 0 8px;font-size:.72rem;line-height:1.4;color:#b9ad9f}
+.ed-egl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ed-egl a{display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#231b16}
+.ed-egl img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.ed-egl a:hover img{transform:scale(1.05)}}
+@media (max-width:820px){.ed-eg{grid-template-columns:1fr;gap:26px}.ed-ende{align-items:flex-end;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 34px)}.ed-ende h2{font-size:2rem}.ed-ende p{font-size:1rem;margin-top:12px}.ed-egm{order:-1}.ed-egl{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.ed-ende .btns{margin-top:18px}}
+html:not(.ed-js) .ed-nurjs,html.ed-js .ed-ohnejs{display:none}
+.ft{scroll-snap-align:start;padding-top:calc(env(safe-area-inset-top,0px) + 136px);--ink:#f1e9df;--mut:#b9ad9f;--line:#2f2720;--grn:#ecd39c;--pan:#1d1713;background:#14100d;color:#b9ad9f;border-top-color:#2f2720}
+.ft a{color:#cfc4b6}
+
+/* Alle Räume: Übersicht mit Filter und gemerkten Räumen */
+.ed-alle{--bg:#17120f;--pan:#231b16;--band:#1c1612;--ink:#f1e9df;--mut:#b9ad9f;--line:#3b3129;--grn:#ecd39c;--on-grn:#1b140e;
+  width:min(1120px,calc(100vw - 32px));height:min(88vh,920px);max-width:none;max-height:none;padding:0;border:1px solid #3b3129;border-radius:18px;background:#17120f;color:#f1e9df;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.ed-alle[open]{display:flex;flex-direction:column;position:fixed;inset:0;margin:auto;z-index:90}
+.ed-alle::backdrop{background:rgba(8,6,4,.64);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ed-alle :focus-visible{outline-color:#ecd39c}
+.ed-ak{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 14px 4px 22px}
+.ed-ak h2{font-size:1.5rem;line-height:1.1}
+.ed-ak .ic{color:#f1e9df}
+.ed-af{flex:none;margin:8px 0 0;padding:2px 22px 12px}
+.ed-ar{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 22px calc(env(safe-area-inset-bottom,0px) + 26px)}
+.ed-ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.ed-ag a{position:relative;display:block;aspect-ratio:3/2;border-radius:10px;overflow:hidden;background:#231b16;color:#fff;text-decoration:none}
+.ed-ag a[hidden]{display:none}
+.ed-ag img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.ed-ag a:hover img{transform:scale(1.045)}}
+.ed-ag span{position:absolute;left:0;right:0;bottom:0;padding:22px 11px 9px;font-size:.86rem;font-weight:600;line-height:1.2;background:linear-gradient(transparent,rgba(10,8,6,.84))}
+.ed-ag a.gm::after{content:"";position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(20,15,11,.6) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff7a66'%3E%3Cpath d='M12 20.4S4.6 15.9 4.6 10.3a4 4 0 0 1 7.4-2.2 4 4 0 0 1 7.4 2.2c0 5.6-7.4 10.1-7.4 10.1z'/%3E%3C/svg%3E") 50%/15px no-repeat}
+.ed-ag a.da{outline:2px solid #ecd39c;outline-offset:-2px}
+.ed-leer{margin:26px 0;color:#b9ad9f;max-width:44ch}
+.ed-fw{margin:2px 0 22px;padding:18px 18px 16px;border:1px solid #3b3129;border-radius:14px;background:#1c1612;max-width:680px}
+.ed-fw h3{font-size:1.3rem}
+.ed-fw>p{margin:6px 0 14px;color:#b9ad9f;font-size:.92rem}
+.ed-fw .ed-fws{margin:14px 0 0;color:#f1e9df;font-size:.98rem}
+.ed-fw .ed-fws a{color:#ecd39c;font-weight:600;white-space:nowrap}
+.ed-fw .ed-fks{box-shadow:none}
+@media (max-width:700px){
+  .ed-alle{width:100vw;height:100vh;height:100dvh;margin:0;border:0;border-radius:0}
+  .ed-ak{padding:calc(env(safe-area-inset-top,0px) + 12px) 8px 2px 16px}
+  .ed-af{margin:8px 0 0;padding:2px 16px 10px}
+  .ed-ar{padding-inline:16px}
+  .ed-ag{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .ed-fw{padding:16px 14px 14px}
+  .ed-fw .ed-fks{grid-template-columns:1fr}
+  .ed-fw .ed-sw button{flex-direction:row;align-items:center;justify-content:space-between;min-height:40px;padding:4px 12px;font-size:.9rem}
+  .ed-fw .ed-sw button em{margin:0;font-size:.78rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .ed-s .ed-b img{animation:none!important}
+  html.ed-js .ed-s .ed-wo,html.ed-js .ed-s h2,html.ed-js .ed-s .ed-l,html.ed-js .ed-fk .ed-sw,.ed-herz.pop svg{animation:none!important}
+  html.ed-js .ed-s[data-n] .ed-t{opacity:1!important}
+  .ed-hint{animation:none;opacity:1}.ed-hint svg{animation:none}
+  .ed-a button,.ed-k,.ed-ag img{transition:none}
+  #ed-ruhe{display:none}
+}
+@media print{html,body{height:auto;overflow:visible}.ed-s{height:auto;min-height:60vh;break-inside:avoid}.ed-top,.ed-a,.ed-hint{display:none!important}}
+</style>
+<noscript><style>.ed-kn,.ed-nurjs{display:none!important}.ed-ohnejs{display:inline!important}</style></noscript>
+<!--MAIN-->
+<script>document.documentElement.classList.add('ed-js')</script>
+<div class="ed-top"><div class="wrap">
+  <div><h1>Wohnideen zum Stöbern</h1><p class="ed-z" id="ed-z"><span class="ed-nurjs">Raum <b id="ed-nr">1</b> von </span><span id="ed-n">{{WOHNIDEEN_N}}</span><span class="ed-ohnejs"> Räume</span></p></div>
+  <div class="ed-kn">
+    <button type="button" class="ed-k" id="ed-ruhe" aria-pressed="false" aria-label="Bewegung anhalten"><svg class="pa" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><svg class="pl" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
+    <button type="button" class="ed-k ed-kt" id="ed-auf" aria-haspopup="dialog" aria-label="Alle Räume und gemerkte Räume"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2"/></svg><span>Alle Räume</span><i class="ed-bz" id="ed-bz" hidden></i></button>
+  </div>
+</div></div>
+
+<div class="ed" id="ed">
+{{WOHNIDEEN}}
+<div class="ed-s ed-ende" id="ende"><div class="wrap ed-eg">
+  <div>
+  <h2>Das waren alle Räume.</h2>
+  <p>Morgen liegen sie in neuer Reihenfolge. Was dir gefallen hat, findest du unter „Alle Räume“ bei den gemerkten wieder.</p>
+  <div class="btns"><button type="button" class="btn ed-nurjs" id="ed-neu">Neu mischen und von vorn</button><button type="button" class="btn ghost ed-nurjs" id="ed-gem">Gemerkte Räume</button><a class="btn ghost" href="index.html#stil-finder">Meinen Stil finden</a></div>
+  </div>
+  <div class="ed-egm" id="ed-egm" hidden></div>
+</div></div>
+</div>
+
+<dialog class="ed-alle" id="ed-alle" aria-labelledby="ed-alle-h">
+  <div class="ed-ak"><h2 id="ed-alle-h">Alle Räume</h2><button type="button" class="ic" id="ed-zu" aria-label="Übersicht schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="ed-af hubc" id="ed-af" role="group" aria-label="Räume filtern"><button type="button" aria-pressed="true" data-f="">Alle</button><button type="button" aria-pressed="false" data-f="gm">Gemerkt</button><button type="button" aria-pressed="false" data-f="stile">Wohnstile</button><button type="button" aria-pressed="false" data-f="raum">Räume</button><button type="button" aria-pressed="false" data-f="licht">Licht und Farbe</button><button type="button" aria-pressed="false" data-f="saison">Saison</button></div>
+  <div class="ed-ar">
+    <div class="ed-fw" id="ed-fw" hidden></div>
+    <p class="ed-leer" id="ed-leer" hidden>Noch nichts gemerkt. Tipp bei einem Raum auf das Herz oder zweimal schnell auf das Bild, dann liegt er hier.</p>
+    <p class="ki-hinweis">Bilder mit KI erstellt.</p>
+    <div class="ed-ag" id="ed-ag">{{WOHNIDEEN_GRID}}</div>
+  </div>
+</dialog>
+<script>
+/* Läuft sofort, noch vor dem ersten Bild: Saison-Räume außerhalb ihrer Zeit entfernen, Reihenfolge des Tages mischen,
+   den Raum aus der Adresse (#raum-…) nach vorn holen. Alles Weitere macht wohnideen.js. */
+(function(){var ed=document.getElementById('ed'),ende=document.getElementById('ende');if(!ed||!ende)return;
+var d=new Date(),md=('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),t,i;
+var S=[].slice.call(ed.querySelectorAll('.ed-s[data-n]')).filter(function(s){var a=s.getAttribute('data-von'),b=s.getAttribute('data-bis');if(!a)return true;var ok=a<=b?(md>=a&&md<=b):(md>=a||md<=b);if(!ok)s.parentNode.removeChild(s);return ok});
+var z=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+window.sdMisch=function(L,z){z=z>>>0;function r(){z=(Math.imul(z,1664525)+1013904223)>>>0;return z/4294967296}for(var k=0;k<8;k++)r();
+  for(var i=L.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=L[i];L[i]=L[j];L[j]=t}
+  for(i=1;i<L.length-1;i++)if(L[i].getAttribute('data-s')===L[i-1].getAttribute('data-s')){t=L[i];L[i]=L[i+1];L[i+1]=t}return L};
+window.sdMisch(S,z);
+var h=location.hash,ziel=/^#raum-/.test(h)?document.getElementById(h.slice(1)):null,k=ziel?S.indexOf(ziel):-1;
+if(k>0)S=S.slice(k).concat(S.slice(0,k));
+if(ziel)document.documentElement.classList.add('ed-ein');
+var f=document.createDocumentFragment();S.forEach(function(s){f.appendChild(s)});ed.insertBefore(f,ende);
+if(S[0]){var im=S[0].querySelector('img');if(im){im.loading='eager';im.setAttribute('fetchpriority','high')}S[0].classList.add('akt','war','sicht')}
+var n=document.getElementById('ed-n');if(n)n.textContent=S.length;
+if(k>=0)document.body.scrollTop=0;
+})();
+</script>
+<i id="ed-bereit" hidden></i>
+<!--END-->
+<script>window.sdStile={{STYLES_JSON}};</script>
+<script src="kaffee-film.js" defer></script>
+<script src="wohnideen.js" defer></script>

@@ -5,6 +5,32 @@
 /* Startseite */
 .hero .wrap{padding-bottom:clamp(52px,8vw,96px)}
 .hero img{object-position:50% 60%}
+@media (max-width:560px){.hero .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero .btns .btn{justify-content:center;padding-inline:8px;font-size:.97rem;text-align:center}}
+/* Schaufenster (seit 21.11.2026): Reihe mit Räumen, die langsam vorbeizieht. Jede Karte führt in den Feed „Wohnideen“ (wohnideen.html).
+   Der Streifen unten an der Karte sind die fünf Farben des Raums. Fasst man die Reihe an, hält sie an und lässt sich schieben. */
+.sf-sec{padding-block:clamp(40px,6vw,84px) clamp(34px,5vw,68px);overflow:hidden}
+.sf-kopf{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px 40px;margin-bottom:clamp(14px,2.4vw,26px)}
+.sf-kopf .lede{margin-top:12px}
+.sf-kn{display:flex;align-items:center;gap:10px}
+.sf-pf{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--ink);background:var(--pan)}
+.sf-pf:hover{border-color:var(--ink)}
+.sf-pf svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sf-pf:first-child svg{transform:rotate(180deg)}
+.sf-sec .ki-hinweis{margin-bottom:4px}
+.sf{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding-block:8px 34px}
+.sf::-webkit-scrollbar{display:none}
+.sf-t{display:flex;gap:clamp(10px,1.2vw,16px);width:max-content;padding-inline:max(20px,env(safe-area-inset-left,0px),calc((100vw - 1180px)/2 + 20px))}
+.sf-c{position:relative;flex:none;width:clamp(164px,18.5vw,232px);aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:var(--band);color:#fff;text-decoration:none;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.sf-c:nth-child(even){margin-top:26px;margin-bottom:-26px}
+.sf-c img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.sf-c::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(12,9,7,0) 50%,rgba(12,9,7,.8) 100%)}
+.sf-c b{position:absolute;left:14px;right:14px;bottom:21px;z-index:1;font-size:1.08rem;font-stretch:84%;line-height:1.15;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+.sf-p{position:absolute;left:0;right:0;bottom:0;z-index:1;display:grid;grid-template-columns:repeat(5,1fr);height:8px}
+.sf-p i{display:block}
+.sf-c:focus-visible{outline-offset:-3px;outline-color:#fff}
+@media (hover:hover){.sf-c:hover{transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(0,0,0,.55)}.sf-c:hover img{transform:scale(1.05)}}
+@media (hover:none),(max-width:700px){.sf-pf{display:none}}
+@media (prefers-reduced-motion:reduce){.sf-c,.sf-c img{transition:none}.sf-c:hover{transform:none}.sf-c:hover img{transform:none}}
 .strips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
 .pstrip{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:var(--pan);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .3s cubic-bezier(.2,.7,.2,1)}
 @media (hover:hover){.pstrip:hover{border-color:var(--ink);transform:translateY(-2px)}}
@@ -48,6 +74,24 @@
 .bigpal span{display:flex;flex-direction:column;justify-content:flex-end;min-height:84px;padding:8px 10px;font-weight:600;font-size:.86rem;font-stretch:90%;line-height:1.2}
 .bigpal small{font-weight:500;font-variant-numeric:tabular-nums;font-size:.74rem}
 @media (max-width:720px){.q-opts{grid-template-columns:1fr}.q-res{grid-template-columns:1fr}.q-vis{order:-1}}
+/* Bilder-Duell (seit 21.11.2026): zwei Räume, einer wird angetippt */
+.dl{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dl-b{position:relative;display:block;width:100%;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--band);cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s,box-shadow .3s}
+.dl-b picture{display:block;height:100%}
+.dl-b img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.dl-b:hover img{transform:scale(1.045)}}
+.dl-b:focus-visible{outline-offset:4px}
+.dl-b.ja{box-shadow:0 0 0 3px var(--brass);transform:scale(1.015)}
+.dl-b.nein{opacity:.32;transform:scale(.97)}
+.dl-ok{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:var(--brass);color:#fff;display:grid;place-items:center;opacity:0;transform:scale(.4);transition:opacity .2s,transform .35s cubic-bezier(.3,1.6,.5,1)}
+.dl-ok svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.dl-b.ja .dl-ok{opacity:1;transform:none}
+.dl-o{position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);min-width:48px;height:48px;padding:0 8px;border-radius:24px;background:var(--pan);border:1px solid var(--line);display:grid;place-items:center;font-size:.86rem;font-weight:600;color:var(--mut);pointer-events:none;transition:opacity .2s}
+.dl.fertig .dl-o{opacity:0}
+.q-nav .q-rechts{margin-left:auto}
+.q-mix.dl-mix li{grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 4.6em}
+@media (max-width:720px){.dl{gap:8px}.dl-b{aspect-ratio:3/4}.dl-o{min-width:42px;height:42px}}
+@media (prefers-reduced-motion:reduce){.dl-b,.dl-b img,.dl-ok{transition:none}.dl-b.ja,.dl-b.nein{transform:none}}
 .q-mix{margin:22px 0 4px;padding:16px 0 4px;border-top:1px solid var(--line)}
 .q-mix-h{margin:0 0 10px;font-weight:600}
 .q-mix-h span{font-weight:400;color:var(--mut);font-size:.9rem}
@@ -95,7 +139,7 @@
 .weiter-l{display:flex;flex-wrap:wrap;gap:8px}
 .weiter-l a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--pan);color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem}
 .weiter-l a i{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.16);flex:none}
-.weiter+#studio{margin-top:22px}
+.weiter:not([hidden])+.sf-sec{padding-top:clamp(28px,4vw,48px)}
 </style>
 <!--MAIN-->
 <div class="hero">
@@ -109,6 +153,15 @@
 </div>
 
 <div class="wrap weiter" id="weiter" hidden><p><b>Schön, dass du wieder da bist.</b> Mach weiter, wo du warst:</p><div class="weiter-l"></div></div>
+
+<section class="sf-sec" id="schaufenster" aria-labelledby="sf-h">
+  <div class="wrap sf-kopf">
+    <div><h2 id="sf-h">Räume zum Stöbern.</h2><p class="lede">Über {{SCHAUFENSTER_N}} Räume, jeder mit einem Tipp und seinen Farben. Jeden Tag neu gemischt.</p></div>
+    <div class="sf-kn"><button type="button" class="sf-pf" data-sf="-1" aria-label="Räume davor zeigen">{{ARROW}}</button><button type="button" class="sf-pf" data-sf="1" aria-label="Weitere Räume zeigen">{{ARROW}}</button><a class="btn" href="wohnideen.html">Stöbern starten</a></div>
+  </div>
+  <div class="wrap"><p class="ki-hinweis">Bilder mit KI erstellt.</p></div>
+  <div class="sf" id="sf"><div class="sf-t" id="sf-t">{{SCHAUFENSTER}}</div></div>
+</section>
 
 <section class="band" id="studio"><div class="wrap">
   <div class="sec-h"><h2>Wie wirkt die Farbe an der Wand?</h2><p class="lede">Tipp eine Farbe an und schau zu, wie sich der Raum verändert. Ohne Pinsel, ohne Anmeldung.</p></div>
@@ -139,7 +192,7 @@
 </div></section>
 
 <section class="band" id="stil-finder"><div class="wrap">
-  <div class="sec-h"><h2>Welcher Stil passt zu dir?</h2><p class="lede">Fünf schnelle Fragen. Danach kennst du deinen Stil, seine Farben und die drei Stücke, mit denen du anfängst.</p></div>
+  <div class="sec-h"><h2>Welcher Stil passt zu dir?</h2><p class="lede">Sechs Bildpaare, jedes Mal tippst du auf den Raum, in dem du lieber wohnen würdest. Danach kennst du deinen Stil, seine Farben und die drei Stücke, mit denen du anfängst.</p></div>
   <div class="quiz" id="quiz" aria-live="polite"></div>
 </div></section>
 
@@ -200,7 +253,9 @@
 <!--END-->
 <script src="draw.js"></script>
 <script>
-/* Stil-Finder */
+/* Stil-Finder (seit 21.11.2026 als Bilder-Duell): sechs Bildpaare, jedes Mal tippt man auf den Raum, in dem man lieber wohnen würde.
+   Jeder Stil tritt zweimal an (mit je einem anderen Foto). Liegen zwei Stile vorn gleichauf, entscheidet ein Stechen.
+   Wer lieber liest, nimmt die fünf Fragen (bleiben erhalten, auch für Vorlesegeräte). Ergebnis nur im Browser gespeichert (sdquiz). */
 (()=>{const S={{STYLES_JSON}};
 const Q=[
  ['Wie sieht ein guter Sonntag bei dir aus?',[['Flohmarkt, danach Kuchen',{vintage:2,boho:1}],['Alles aufgeräumt, dazu ein gutes Buch',{modern:2,japandi:1}],['Kerzen, Decke und Tee',{skandinavisch:2,japandi:1}],['Pflanzen umtopfen, Musik an',{boho:2}],['Ausstellung oder Konzert in der Stadt',{industrial:2,modern:1}]]],
@@ -208,38 +263,70 @@ const Q=[
  ['Welches Material fasst du am liebsten an?',[['Helles Holz und Wolle',{skandinavisch:2,japandi:1}],['Teak und Samt',{vintage:2}],['Stein, Glas und Lack',{modern:2}],['Stahl und Leder',{industrial:2}],['Rattan, Jute und Leinen',{boho:2,japandi:1}]]],
  ['Wie viel steht bei dir offen herum?',[['So wenig wie möglich',{modern:2,japandi:2}],['Ein paar Lieblingsstücke',{skandinavisch:2,industrial:1}],['Viel, und jedes Stück hat eine Geschichte',{vintage:2,boho:2}]]],
  ['Welches Sofa nimmst du?',[['Niedrig, kantig, einfarbig',{modern:2}],['Schräge Holzbeine, Cord oder Samt',{vintage:2}],['Hell und weich, mit Wolldecke',{skandinavisch:2}],['Leder, das mit den Jahren schöner wird',{industrial:2}],['Tief, mit vielen bunten Kissen',{boho:2}],['Ganz flach, Leinen, nichts Überflüssiges',{japandi:2}]]]];
-const ORDER=Object.keys(S),box=document.getElementById('quiz');let step=0,ans=[];
-try{const s=JSON.parse(localStorage.getItem('sdquiz')||'null');if(s&&Array.isArray(s)&&s.length===Q.length){ans=s;step=Q.length}}catch(e){}
+const D=[['vintage','modern',0],['skandinavisch','industrial',0],['japandi','boho',0],['modern','boho',1],['industrial','japandi',1],['vintage','skandinavisch',1]];
+const ORDER=Object.keys(S),box=document.getElementById('quiz');let art='duell',step=0,ans=[],win=[];
+const seite=D.map(()=>Math.random()<.5).concat([Math.random()<.5,Math.random()<.5]);
+try{const s=JSON.parse(localStorage.getItem('sdquiz')||'null');
+  if(Array.isArray(s)&&s.length===Q.length){art='fragen';ans=s;step=Q.length}
+  else if(s&&Array.isArray(s.d)&&s.d.length>=D.length&&s.d.every(k=>S[k])){win=s.d.slice(0,D.length+2)}}catch(e){}
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function score(){const p={};ORDER.forEach(k=>p[k]=0);ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]*(1+i*0.01)});const r=ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b));r.p=p;return r}
+function score(){const p={};ORDER.forEach(k=>p[k]=0);
+  if(art==='fragen')ans.forEach((a,i)=>{const w=Q[i][1][a][1];for(const k in w)p[k]+=w[k]*(1+i*0.01)});
+  else win.forEach((k,i)=>{p[k]+=1+i*0.001});
+  const r=ORDER.slice().sort((a,b)=>p[b]-p[a]||ORDER.indexOf(a)-ORDER.indexOf(b));r.p=p;return r}
+/* Nächstes Bildpaar: erst die sechs festen Runden, dann ein Stechen, solange zwei Stile vorn gleich viele Stimmen haben */
+function paar(){const n=win.length;if(n<D.length)return {a:D[n][0],b:D[n][1],f:D[n][2],nr:n};
+  const c={};ORDER.forEach(k=>c[k]=0);win.forEach(k=>c[k]++);const mx=Math.max(...ORDER.map(k=>c[k])),top=ORDER.filter(k=>c[k]===mx);
+  return top.length>1&&n<D.length+2?{a:top[0],b:top[1],f:0,nr:n,stechen:true}:null}
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;let dir=1;
+const foto=(k,f)=>f&&S[k].img2?[S[k].img2,S[k].alt2]:[S[k].img,S[k].alt];
+const bild=(k,f)=>{const [n,alt]=foto(k,f);return `<picture><source media="(max-width:720px)" srcset="assets/${n}-h.webp"><img src="assets/${n}-m.webp" alt="${esc(alt)}" width="960" height="540" decoding="async"></picture>`};
+const OK='<span class="dl-ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>';
 function render(focus){
-  if(step<Q.length){const q=Q[step];
-    box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}</div>`;
+  const P=art==='duell'?paar():null;
+  if(P){const li=seite[P.nr]?P.b:P.a,re=seite[P.nr]?P.a:P.b,tot=Math.max(D.length,P.nr+1);
+    box.innerHTML=`<div class="q-top"><span>${P.stechen?'Stechen':'Runde '+(P.nr+1)+' von '+D.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${P.nr/tot*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${P.stechen?'Gleichstand. Welcher von beiden?':'Wo würdest du lieber wohnen?'}</h3><div class="dl"><button type="button" class="dl-b" data-k="${li}">${bild(li,P.f)}${OK}</button><span class="dl-o" aria-hidden="true">oder</span><button type="button" class="dl-b" data-k="${re}">${bild(re,P.f)}${OK}</button></div><div class="q-nav">${P.nr?'<button type="button" class="q-link" data-back>Zurück</button>':''}<button type="button" class="q-link q-rechts" data-art="fragen">Lieber fünf Fragen beantworten</button></div>`;
+    const Nx=D[P.nr+1];if(Nx&&!P.stechen)[Nx[0],Nx[1]].forEach(k=>{new Image().src='assets/'+foto(k,Nx[2])[0]+(matchMedia('(max-width:720px)').matches?'-h.webp':'-m.webp')});
+  }else if(art==='fragen'&&step<Q.length){const q=Q[step];
+    box.innerHTML=`<div class="q-top"><span>Frage ${step+1} von ${Q.length}</span><div class="q-bar" aria-hidden="true"><i style="width:${step/Q.length*100}%"></i></div></div><h3 class="q-q" tabindex="-1">${esc(q[0])}</h3><div class="q-opts">${q[1].map((o,i)=>`<button type="button" data-i="${i}" aria-pressed="${ans[step]===i}">${o[2]?`<span class="dots" aria-hidden="true">${o[2].map(c=>`<i style="background:${c}"></i>`).join('')}</span>`:''}${esc(o[0])}</button>`).join('')}</div><div class="q-nav">${step?'<button type="button" class="q-link" data-back>Zurück</button>':''}<button type="button" class="q-link q-rechts" data-art="duell">Lieber Bilder vergleichen</button></div>`;
   }else{const r=score(),a=S[r[0]],b=S[r[1]];
     const ph=a.img?`<picture><source type="image/webp" srcset="assets/${a.img}-m.webp 960w, assets/${a.img}.webp 1672w" sizes="(max-width:720px) 100vw, 420px"><img src="assets/${a.img}-m.jpg" srcset="assets/${a.img}-m.jpg 960w, assets/${a.img}.jpg 1672w" sizes="(max-width:720px) 100vw, 420px" alt="${esc(a.alt)}" decoding="async"></picture>`:'';
-    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="wandfarbe-testen.html?mix=${a.pal.map(p=>p[1].slice(1)+'-'+encodeURIComponent(p[0])).join(',')}">Deine Farben im Raum ansehen</a><a class="btn ghost" href="raumplaner.html">Raum planen</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
+    box.innerHTML=`<div class="q-res"><div><p class="kicker">Dein Stil</p><h3 tabindex="-1" class="q-q">${esc(a.name)}</h3><p>${esc(a.desc)}</p>${mix(r)}<div class="starts"><p class="starts-h"><b>Damit fängst du an</b><span class="tag">Anzeige</span></p><ul>${a.start.map(x=>`<li><a href="${esc(x[1])}" rel="sponsored nofollow noopener" target="_blank"><span>${esc(x[0])}</span><em>Bei Amazon{{EXT}}</em></a></li>`).join('')}</ul></div><p class="mix">Dein zweiter Stil ist <a href="${b.href}">${esc(b.name)}</a>. Ein Stück daraus macht den Raum persönlicher.</p><div class="btns"><a class="btn" href="${a.href}">Mehr über ${esc(a.name)}</a><a class="btn ghost" href="wandfarbe-testen.html?mix=${a.pal.map(p=>p[1].slice(1)+'-'+encodeURIComponent(p[0])).join(',')}">Deine Farben im Raum ansehen</a><a class="btn ghost" href="wohnideen.html${a.img?'#raum-'+a.img:''}">Räume zum Stöbern</a></div><div class="q-more"><button type="button" class="q-link" data-share data-share-text="Mein Wohnstil laut Stil-Finder: ${esc(a.name)}. Und deiner?" data-share-url="${location.href.split('#')[0].split('?')[0]}#stil-finder">Ergebnis teilen</button><button type="button" class="q-link" data-again>Noch einmal</button></div></div><div class="q-vis">${ph}<div class="bigpal" role="list" aria-label="Farbkarte ${esc(a.name)}">${a.pal.map(c=>`<span role="listitem" style="background:${c[1]};color:${lt(c[1])?'#1c1f1d':'#fff'}">${esc(c[0])}<small>${c[1].toUpperCase()}</small></span>`).join('')}</div></div></div>`;
   }
   if(focus){const h=box.querySelector('.q-q');if(h)h.focus({preventScroll:true})}
   if(focus){anim();const t=box.getBoundingClientRect().top;if(t<0||t>innerHeight*.6)scrollTo({top:scrollY+t-80,behavior:RM?'auto':'smooth'})}
 }
+/* Verlauf des Duells nachspielen: wie oft stand jeder Stil zur Wahl, wie oft wurde er gewählt */
+function bilanz(){const da={},ja={};ORDER.forEach(k=>{da[k]=0;ja[k]=0});
+  win.forEach((k,i)=>{let a,b;if(i<D.length){a=D[i][0];b=D[i][1]}else{const mx=Math.max(...ORDER.map(x=>ja[x])),top=ORDER.filter(x=>ja[x]===mx);a=top[0];b=top[1]||top[0]}
+    da[a]++;if(b!==a)da[b]++;ja[k]++});return {da,ja}}
 function mix(r){const p=r.p,tot=ORDER.reduce((s,k)=>s+p[k],0);if(!tot)return '';
-  const top=r.slice(0,3).filter(k=>p[k]>0),pc=top.map(k=>Math.round(p[k]/tot*100));
-  return `<div class="q-mix"><p class="q-mix-h">Dein Stil-Mix <span>aus deinen fünf Antworten</span></p><ol>${top.map((k,i)=>`<li><${i?'a href="'+S[k].href+'"':'b'}>${esc(S[k].name)}</${i?'a':'b'}><span class="mbar" aria-hidden="true"><i style="--w:${pc[i]}%"></i></span><span>${pc[i]}&nbsp;%</span></li>`).join('')}</ol></div>`}
+  const top=r.slice(0,3).filter(k=>p[k]>0),zeile=(k,i,w,t)=>`<li><${i?'a href="'+S[k].href+'"':'b'}>${esc(S[k].name)}</${i?'a':'b'}><span class="mbar" aria-hidden="true"><i style="--w:${w}%"></i></span><span>${t}</span></li>`;
+  if(art==='fragen'){const pc=top.map(k=>Math.round(p[k]/tot*100));
+    return `<div class="q-mix"><p class="q-mix-h">Dein Stil-Mix <span>aus deinen fünf Antworten</span></p><ol>${top.map((k,i)=>zeile(k,i,pc[i],pc[i]+'&nbsp;%')).join('')}</ol></div>`}
+  const B=bilanz();
+  return `<div class="q-mix dl-mix"><p class="q-mix-h">Deine Wahl <span>gewählt von gezeigt</span></p><ol>${top.map((k,i)=>zeile(k,i,Math.round(B.ja[k]/Math.max(1,B.da[k])*100),B.ja[k]+'&nbsp;von&nbsp;'+B.da[k])).join('')}</ol></div>`}
 function anim(){if(RM||!Element.prototype.animate)return;const res=box.querySelector('.q-res');
-  if(!res){box.querySelectorAll('.q-q,.q-opts').forEach((el,i)=>el.animate([{opacity:0,transform:`translateX(${dir*28}px)`},{opacity:1,transform:'none'}],{duration:320,delay:i*50,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));return}
+  if(!res){box.querySelectorAll('.q-q,.q-opts,.dl').forEach((el,i)=>el.animate([{opacity:0,transform:`translateX(${dir*28}px)`},{opacity:1,transform:'none'}],{duration:340,delay:i*50,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));return}
   const img=res.querySelector('.q-vis img');if(img)img.animate([{opacity:0,transform:'scale(1.06)'},{opacity:1,transform:'none'}],{duration:900,easing:'cubic-bezier(.2,.8,.2,1)'});
   res.querySelectorAll('.bigpal span').forEach((el,i)=>el.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:420,delay:260+i*90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
   res.querySelectorAll('.q-mix .mbar i').forEach((el,i)=>el.animate([{width:0},{width:getComputedStyle(el).width}],{duration:800,delay:400+i*140,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
   [res.querySelector('.kicker'),res.querySelector('h3')].forEach((el,i)=>el&&el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:420,delay:120+i*80,easing:'ease-out',fill:'backwards'}))}
 function lt(h){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>140}
-let busy=0;box.addEventListener('click',e=>{const o=e.target.closest('[data-i]');if(busy)return;
+function merk(){try{if(art==='fragen')localStorage.setItem('sdquiz',JSON.stringify(ans));else localStorage.setItem('sdquiz',JSON.stringify({d:win}))}catch(x){}}
+let busy=0;box.addEventListener('click',e=>{if(busy)return;
+  const w=e.target.closest('.dl-b');
+  if(w){dir=1;const k=w.dataset.k,weiter=()=>{busy=0;win.push(k);if(!paar())merk();render(true)};
+    if(RM){weiter();return}
+    busy=1;w.classList.add('ja');w.parentNode.classList.add('fertig');w.parentNode.querySelectorAll('.dl-b').forEach(x=>{if(x!==w)x.classList.add('nein')});setTimeout(weiter,430);return}
+  const o=e.target.closest('[data-i]');
   if(o&&!RM){busy=1;box.querySelectorAll('[data-i]').forEach(x=>x.setAttribute('aria-pressed',x===o));setTimeout(()=>{busy=0;pick(o)},170);return}
   if(o){pick(o);return}
-  if(e.target.closest('[data-back]')){dir=-1;step=Math.max(0,step-1);render(true);return}
-  if(e.target.closest('[data-again]')){dir=1;step=0;ans=[];try{localStorage.removeItem('sdquiz')}catch(x){}render(true)}});
-function pick(o){dir=1;
-  {ans[step]=+o.dataset.i;step++;if(step===Q.length){ans=ans.slice(0,Q.length);try{localStorage.setItem('sdquiz',JSON.stringify(ans))}catch(x){}}render(true)}}
+  const a=e.target.closest('[data-art]');
+  if(a){art=a.dataset.art;dir=1;step=0;ans=[];win=[];render(true);return}
+  if(e.target.closest('[data-back]')){dir=-1;if(art==='fragen')step=Math.max(0,step-1);else win.pop();render(true);return}
+  if(e.target.closest('[data-again]')){dir=1;art='duell';step=0;ans=[];win=[];try{localStorage.removeItem('sdquiz')}catch(x){}render(true)}});
+function pick(o){dir=1;ans[step]=+o.dataset.i;step++;if(step===Q.length){ans=ans.slice(0,Q.length);merk()}render(true)}
 render(false);
 })();
 </script>
@@ -256,13 +343,36 @@ n.addEventListener('change',()=>{let v=P(n.value);if(isNaN(v)){v=+r.value;msg.te
 up();
 })();
 </script>
+<script>
+/* Schaufenster: Reihenfolge des Tages mischen, dann zieht die Reihe langsam vorbei (nur sichtbar, nicht bei „Bewegung reduzieren“).
+   Sobald jemand sie anfasst, scrollt oder mit der Tastatur hineingeht, wird aus dem Vorbeiziehen normales Rollen, das man selbst führt.
+   Die Maus über der Reihe hält sie an, damit sich eine Karte in Ruhe anklicken lässt. */
+(function(){var sf=document.getElementById('sf'),t=document.getElementById('sf-t');if(!sf||!t)return;
+  var C=[].slice.call(t.children),d=new Date(),z=(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())>>>0,i,j,k;
+  function r(){z=(Math.imul(z,1664525)+1013904223)>>>0;return z/4294967296}for(k=0;k<8;k++)r();
+  for(i=C.length-1;i>0;i--){j=Math.floor(r()*(i+1));k=C[i];C[i]=C[j];C[j]=k}C.forEach(function(c){t.appendChild(c)});
+  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches,x=0,dir=1,frei=!RM,sicht=false,maus=false,raf=0,last=0,max=0;
+  function mess(){max=Math.max(0,t.scrollWidth-sf.clientWidth)}
+  function lauf(ts){raf=0;if(!frei||!sicht||maus||document.hidden)return;var dt=Math.min(64,ts-(last||ts));last=ts;x+=dir*16*dt/1000;
+    if(x>=max){x=max;dir=-1}else if(x<=0){x=0;dir=1}t.style.transform='translate3d('+(-x).toFixed(2)+'px,0,0)';raf=requestAnimationFrame(lauf)}
+  function los(){last=0;if(!raf&&frei&&sicht&&!maus)raf=requestAnimationFrame(lauf)}
+  function halt(){if(!frei)return;frei=false;t.style.transform='';sf.scrollLeft=x}
+  ['pointerdown','touchstart','wheel','keydown','focusin'].forEach(function(n){sf.addEventListener(n,function(e){if(n==='pointerdown'&&e.pointerType==='mouse')return;halt()},{passive:true})});
+  sf.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'){maus=true}});
+  sf.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse'){maus=false;los()}});
+  [].forEach.call(document.querySelectorAll('[data-sf]'),function(b){b.addEventListener('click',function(){halt();sf.scrollBy({left:+b.dataset.sf*Math.max(260,sf.clientWidth*.7),behavior:RM?'auto':'smooth'})})});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){sicht=es[0].isIntersecting;if(sicht){mess();los()}},{threshold:.12}).observe(sf);
+  addEventListener('resize',mess);document.addEventListener('visibilitychange',function(){if(!document.hidden)los()});
+})();
+</script>
 <script src="studio.js" defer></script>
 <script src="kaffee-film.js" defer></script>
 <script>
-/* Weitermachen, wo du warst: liest nur, was Studio (sdst), Stil-Finder (sdquiz) und Raumplaner (sdrp) im Browser abgelegt haben. Nichts wird übertragen. */
+/* Weitermachen, wo du warst: liest nur, was Studio (sdst), Stil-Finder (sdquiz), Raumplaner (sdrp) und Wohnideen (sdmerk) im Browser abgelegt haben. Nichts wird übertragen. */
 (function(){try{var box=document.getElementById('weiter'),l=box.querySelector('.weiter-l'),h='',e=function(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
  var st=JSON.parse(localStorage.getItem('sdst')||'null');if(st&&st.c&&/^#[0-9a-fA-F]{6}$/.test(st.c[1]))h+='<a href="wandfarbe-testen.html"><i style="background:'+st.c[1]+'"></i>Studio: '+e(st.c[0])+'</a>';
  if(localStorage.getItem('sdrp'))h+='<a href="raumplaner.html">Dein Raumplan</a>';
  if(localStorage.getItem('sdquiz'))h+='<a href="#stil-finder">Dein Stil-Ergebnis</a>';
+ var gm=JSON.parse(localStorage.getItem('sdmerk')||'[]');if(Array.isArray(gm)&&gm.length)h+='<a href="wohnideen.html#gemerkt">Gemerkte Räume ('+gm.length+')</a>';
  if(h){l.innerHTML=h;box.hidden=false}}catch(x){}})();
 </script>

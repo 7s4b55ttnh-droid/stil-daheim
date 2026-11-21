@@ -25,6 +25,8 @@ Platzhalter in den Seiten:
                            mit |plain am Ende ohne farbigen Hintergrund, wenn der Abschnitt davor schon farbig ist)
   {{TILES:a,b,c}}          nur die Foto-Kacheln
   {{STRIPS}} {{STYLES_JSON}} {{PRINT}} {{SHARE}}
+  {{WOHNIDEEN}} {{WOHNIDEEN_GRID}} {{WOHNIDEEN_N}}  wohnideen.html: alle Raumfotos als Feed, Übersicht und Anzahl (siehe WOHNIDEEN weiter unten)
+  {{SCHAUFENSTER}} {{SCHAUFENSTER_N}}             Startseite: Reihe mit Raumfotos, die in den Feed führen, und Anzahl aller Räume
 Aufruf: python3 build.py            (alle Seiten)
         PREVIEW=1 python3 build.py  (Hinweis „Vorschau“ in der Fußzeile)
 """
@@ -52,10 +54,11 @@ ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-
 EXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
 
 # Hauptnavigation (Kopfzeile) und alle Ratgeber (Menü, Fußzeile, „Passt dazu“)
-NAV = [('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'), ('wandfarbe-testen.html', 'Wandfarben-Studio', 'wandfarbe-testen'), ('raumplaner.html', 'Raumplaner', 'raumplaner'),
+NAV = [('wohnideen.html', 'Wohnideen', 'wohnideen'), ('index.html#stil-finder', 'Stil-Finder', 'finder'), ('stile.html', 'Stile', 'stile'), ('wandfarbe-testen.html', 'Wandfarben-Studio', 'wandfarbe-testen'), ('raumplaner.html', 'Raumplaner', 'raumplaner'),
        ('rechner.html', 'Raum-Rechner', 'rechner'), ('mieten.html', 'Zur Miete', 'mieten')]
 # (Link, Titel, Kurztext, Schlüssel, Foto)
-GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit fünf Fragen', 'finder', 'start'),
+GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finder mit sechs Bildpaaren', 'finder', 'start'),
+        ('wohnideen.html', 'Wohnideen zum Stöbern', 'Ein Raum pro Bildschirm, jeder mit Tipp und Farben', 'wohnideen', 'wohnzimmer'),
         ('stile.html', 'Wohnstile im Überblick', 'Sechs Stile, jeder mit Farbkarte', 'stile', 'start'),
         ('raumplaner.html', 'Raumplaner', 'Möbel verschieben, Abstände prüfen', 'raumplaner', 'raumplaner'),
         ('bilderwand.html', 'Bilderwand-Planer', 'Rahmen anordnen, Nagelpunkte messen', 'bilderwand', 'bilderwand'),
@@ -105,32 +108,38 @@ STYLES = [
          pal=[('Cognac', '#8f5530', '#fff'), ('Senfgelb', '#c49a3a', '#1c1f1d'), ('Petrol', '#1f5560', '#fff'), ('Oliv', '#6d6a36', '#fff')],
          start=[('Ein Sideboard aus Teak oder Nussbaum', 'Sideboard Teak Mid Century'), ('Ein Sessel mit Samt- oder Cordbezug', 'Sessel Samt Retro'),
                 ('Eine Leuchte aus Messing oder Glas', 'Tischleuchte Messing Glas')],
-         href='vintage.html', img='vintage', alt='Wohnzimmer im Vintage-Stil mit Teak-Sideboard, Samtsessel und Orientteppich'),
+         href='vintage.html', img='vintage', alt='Wohnzimmer im Vintage-Stil mit Teak-Sideboard, Samtsessel und Orientteppich',
+         img2='vintage-2', alt2='Teak-Sideboard aus den Sechzigern mit Messingleuchte, Keramikvasen und Plattenspieler, daneben ein Ledersessel'),
     dict(key='modern', name='Modern', desc='Klare Linien, ruhige Farben, wenig Deko. Alles hat seinen Platz.',
          pal=[('Kreide', '#eeede9', '#1c1f1d'), ('Kiesel', '#b9b6ae', '#1c1f1d'), ('Travertin', '#d6c7ad', '#1c1f1d'), ('Graphit', '#3a3b3c', '#fff')],
          start=[('Ein Sofa mit klarer, gerader Linie', 'Sofa 3-Sitzer modern grau'), ('Ein Couchtisch aus Stein, Holz oder Glas', 'Couchtisch Travertin'),
                 ('Ein großes, ruhiges Bild statt vieler kleiner', 'großes Wandbild abstrakt gerahmt')],
-         href='modern.html', img='modern', alt='Modernes Wohnzimmer mit Bouclé-Sofa, Couchtisch aus Travertin und großem Bild'),
+         href='modern.html', img='modern', alt='Modernes Wohnzimmer mit Bouclé-Sofa, Couchtisch aus Travertin und großem Bild',
+         img2='modern-2', alt2='Ruhige Wohnzimmerecke mit niedrigem grauem Sofa, schwarzer Stehleuchte, Steintisch und einem großen angelehnten Bild'),
     dict(key='skandinavisch', name='Skandinavisch', desc='Hell, gemütlich und praktisch. Viel Weiß, helles Holz, weiche Stoffe.',
          pal=[('Schnee', '#f4f4f1', '#1c1f1d'), ('Birke', '#e3d3b5', '#1c1f1d'), ('Nebelblau', '#a9b7c0', '#1c1f1d'), ('Salbei', '#a3ae97', '#1c1f1d')],
          start=[('Möbel aus heller Eiche oder Birke', 'Couchtisch Eiche hell'), ('Wolldecken und ein Fell', 'Wolldecke Grobstrick'),
                 ('Eine Leuchte mit Stoff- oder Papierschirm', 'Stehleuchte Stoffschirm')],
-         href='skandinavisch.html', img='skandi', alt='Heller Wohnraum mit Eichenholz, Leinen und Papierleuchte'),
+         href='skandinavisch.html', img='skandi', alt='Heller Wohnraum mit Eichenholz, Leinen und Papierleuchte',
+         img2='skandinavisch-2', alt2='Heller Essplatz mit Birkentisch, Holzstühlen, Schaffell und großer Papierleuchte'),
     dict(key='japandi', name='Japandi', desc='Japanische Ruhe trifft skandinavische Gemütlichkeit. Natur, Handwerk, viel Luft.',
          pal=[('Reispapier', '#efe8dc', '#1c1f1d'), ('Ton', '#b78c6b', '#1c1f1d'), ('Moos', '#6f7558', '#fff'), ('Tusche', '#2b2a27', '#fff')],
          start=[('Ein niedriges Sofa oder Bodenkissen', 'Bodenkissen Leinen groß'), ('Eine Papierleuchte', 'Papierleuchte Stehleuchte Reispapier'),
                 ('Handgemachte Keramik', 'Keramik Vase handgemacht')],
-         href='japandi.html', img='japandi', alt='Japandi-Wohnzimmer mit Papier-Stehleuchte, niedrigem Leinensofa, Juteteppich und Holzlamellen'),
+         href='japandi.html', img='japandi', alt='Japandi-Wohnzimmer mit Papier-Stehleuchte, niedrigem Leinensofa, Juteteppich und Holzlamellen',
+         img2='japandi-2', alt2='Niedrige Eichenbank vor beiger Wand mit Keramikschale und Vase, daneben eine runde Papierleuchte und ein Bodenkissen'),
     dict(key='industrial', name='Industrial', desc='Loft-Gefühl mit Stahl, Holz und Leder vor rohen Wänden.',
          pal=[('Beton', '#a7a5a0', '#1c1f1d'), ('Stahl', '#4a4f53', '#fff'), ('Rost', '#8e4b2c', '#fff'), ('Leder', '#6b4429', '#fff')],
          start=[('Ein Regal aus Stahl und Massivholz', 'Regal Metall Massivholz Industrial'), ('Ein Sessel aus Leder', 'Ledersessel cognac'),
                 ('Eine Pendelleuchte aus Metall', 'Pendelleuchte Metall schwarz Industrial')],
-         href='industrial.html', img='industrial', alt='Loft mit Backsteinwand, Ledersessel, Couchtisch aus Altholz und Fabrikleuchten'),
+         href='industrial.html', img='industrial', alt='Loft mit Backsteinwand, Ledersessel, Couchtisch aus Altholz und Fabrikleuchten',
+         img2='industrial-2', alt2='Schwarzes Stahlregal mit Holzböden vor einer Ziegelwand, davor ein brauner Ledersessel und eine Stehleuchte'),
     dict(key='boho', name='Boho', desc='Lässig und gesammelt: Rattan, Muster, Pflanzen und Handgemachtes.',
          pal=[('Sand', '#e2cba7', '#1c1f1d'), ('Rattan', '#c29a5b', '#1c1f1d'), ('Terrakotta', '#a8552f', '#fff'), ('Olive', '#6f6f3d', '#fff')],
          start=[('Ein Sessel aus Rattan oder Korb', 'Rattansessel'), ('Ein Teppich mit Muster', 'Kelim Teppich'),
                 ('Viele Pflanzen in Körben', 'Pflanzkorb Seegras')],
-         href='boho.html', img='boho', alt='Boho-Wohnzimmer mit Rattansessel, Kelim-Teppich, Makramee und vielen Pflanzen'),
+         href='boho.html', img='boho', alt='Boho-Wohnzimmer mit Rattansessel, Kelim-Teppich, Makramee und vielen Pflanzen',
+         img2='boho-2', alt2='Rattansessel mit gemustertem Kissen, Makramee an der Wand, Teppiche in Schichten und viele Pflanzen'),
 ]
 STYLE = {s['key']: s for s in STYLES}
 
@@ -323,7 +332,7 @@ def fig(name, alt, cap):
 
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
-KAT = {'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
+KAT = {'wohnideen': 'stile', 'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
@@ -353,6 +362,312 @@ def thumb(name):
         im = Image.open(src).convert('RGB')
         im.resize((560, round(im.height * 560 / im.width)), Image.LANCZOS).save(dst, quality=74, method=6)
     return 'assets/%s-t.webp' % name
+
+
+# ---- WOHNIDEEN (seit 21.11.2026): alle Raumfotos als Feed zum Stöbern (wohnideen.html, wohnideen.js) und als Schaufenster auf der Startseite. ----
+# Jedes Foto, das eine Seite aus GRID als {{HERO:…}} oder {{FIG:…}} zeigt, wird automatisch ein „Look“ (ein Bildschirm im Feed):
+#   Tipp   = eigener Satz aus LOOK_TIPP, sonst die Bildunterschrift (FIG) oder der erste Satz von „kurz“ (HERO). Nur Fakten, die auf der Seite stehen.
+#   Farben = fünf Farben aus dem Foto (gleiches Verfahren wie farbpalette.html), Namen aus FARBNAMEN (nächster Ton). Ablage: looks.json (mit einchecken).
+#   Thema  = erstes Thema der Seite aus KAT (für die Filter in „Alle Räume“).
+# Neue Seite mit HERO und FIG: erscheint von selbst. Fotos ohne HERO/FIG stehen in LOOK_FEST. Saison-Fotos (LOOK_ZEIT) zeigt der Feed nur in ihrer Zeit.
+LOOK_AUS = {'vorher', 'wandfarben', 'black-friday', 'black-friday-2'}     # nicht im Feed: „Vorher“-Bild, Studio-Zeichnung, Aktionsbilder
+# Foto: (Schlüssel der Seite in GRID, Ziel, Text des Links, Alt-Text)
+LOOK_FEST = {
+    'start': ('rechner', 'rechner.html', 'Zum Raum-Rechner', 'Ruhiges Wohnzimmer im Altbau im warmen Abendlicht, mit Leinensofa, Wollteppich und Pflanze'),
+    'essen': ('rechner', 'rechner.html', 'Zum Raum-Rechner', 'Essecke mit rundem Eichentisch, gemischten Stühlen und einer tief hängenden Stoff-Pendelleuchte'),
+    'nachher': ('licht', 'licht.html', '', 'Wohnzimmer mit drei warmen Leuchten, großem Teppich, bodenlangen Vorhängen, Kissen und Pflanzen'),
+    'kaffee': ('kaffee', 'kaffee.html', 'Zum Kaffee-Ratgeber', 'Nahaufnahme: Ein Tropfen Espresso hängt über einer randvollen Tasse Kaffee, Dampf steigt im warmen Morgenlicht auf'),
+    'matcha': ('kaffee', 'kaffee.html#matcha', 'Zum Matcha im Kaffee-Ratgeber', 'Aufgeschäumte Milch fließt in eine dunkle Keramikschale mit grünem Matcha, daneben Bambusbesen und Löffel'),
+    'miete': ('mieten', 'mieten.html', '', 'Kleine Mietwohnung, eingerichtet ohne Bohren: angelehnter Spiegel, Bilder auf einer Leiste, Wandleuchte mit Stoffkabel'),
+    'modern': ('modern', 'modern.html', '', 'Modernes Wohnzimmer mit niedrigem grauem Bouclé-Sofa, Couchtisch aus Travertin, großem abstraktem Bild und schwarzer Stehleuchte'),
+    'vintage': ('vintage', 'vintage.html', '', 'Wohnzimmer im Vintage-Stil mit Teak-Sideboard, Samtsessel, Orientteppich, Messing-Stehleuchte und Plattenspieler'),
+}
+LOOK_TIPP = {
+    'start': 'Der Teppich sollte 30 bis 50&nbsp;cm breiter sein als das Sofa.',
+    'essen': 'Die Leuchte hängt 60 bis 80&nbsp;cm über der Tischplatte.',
+    'nachher': 'Drei warme Leuchten auf verschiedenen Höhen statt einer kalten Birne an der Decke.',
+    'kaffee': 'Für einen klassischen Espresso reichen rund 7&nbsp;Gramm Kaffee, 9&nbsp;bar und 25&nbsp;Sekunden.',
+    'matcha': 'Matcha schlägst du mit 75 bis 80&nbsp;Grad heißem Wasser auf. Kochendes Wasser macht ihn bitter.',
+    'miete': 'Zur Miete darfst du streichen, auch farbig. Kräftige Farben müssen beim Auszug wieder neutral sein.',
+    'adventskranz': 'Für einen selbst gebundenen Kranz reichen ein Strohrohling, Wickeldraht, Nadelgrün und vier Kerzen.',
+    'arbeitsecke': 'Stell die Arbeitsecke ans Fenster oder in eine Nische. Dann siehst du sie vom Sofa aus nicht ständig.',
+    'ausmisten': 'Miste nach Kategorien aus statt nach Zimmern: zuerst Kleidung, Erinnerungsstücke zuletzt.',
+    'bilderwand': 'Die Mitte einer Bilderwand hängt auf etwa 140 bis 150&nbsp;cm Höhe.',
+    'boho': 'Höchstens drei bis vier Farben pro Raum. So bleibt Boho lässig und wird nicht chaotisch.',
+    'esszimmer': 'Rechne am Esstisch mit 60&nbsp;cm Tischkante pro Person.',
+    'farben': '60&nbsp;% Hauptfarbe, 30&nbsp;% Nebenfarbe, 10&nbsp;% Akzent: Die 60-30-10-Regel hält Farben im Gleichgewicht.',
+    'farbpalette': 'Die fünf wichtigsten Farben deines Zimmers stecken in einem Foto. Das Werkzeug zieht sie heraus.',
+    'flur': 'Im Flur bleiben etwa 90&nbsp;cm Durchgang frei. Alles darüber darf Möbeltiefe werden.',
+    'gaestezimmer': 'Das Gästebett sollte rund 20&nbsp;cm länger sein als der größte Gast.',
+    'gemuetlich': 'Mehrere warme Lichtquellen um 2.700&nbsp;Kelvin statt einer hellen Deckenlampe: So wird es gemütlich.',
+    'geschenke': 'Gute Geschenke fürs Zuhause werden täglich benutzt: Kerze, Decke, Tasse, Pflanze oder ein schönes Licht.',
+    'industrial': 'Metall, rohes Holz, Leder und Backstein. Stoffe und warmes Licht machen den Loft-Stil wohnlich.',
+    'japandi': 'Niedrige Möbel, Naturmaterialien, Erdtöne und wenige Dinge: Das ist Japandi.',
+    'kleine-raeume': 'Große Spiegel und Möbel auf Beinen lassen kleine Räume größer wirken.',
+    'licht': 'Plane Licht in drei Ebenen: Grundlicht, Arbeitslicht und Akzentlicht für die Stimmung.',
+    'modern': 'Wenige gute Stücke, geschlossener Stauraum und ein warmer Akzent auf ruhiger Basis.',
+    'pflanzen': 'Im Winter gehören Zimmerpflanzen nah ans Fenster. Gegossen wird erst, wenn die Erde trocken ist.',
+    'raumplaner': '70&nbsp;cm für Laufwege, 40 bis 50&nbsp;cm zwischen Sofa und Couchtisch.',
+    'schlafzimmer': 'Neben dem Bett und vor dem Schrank etwa 80&nbsp;cm Platz, dazu ruhige Farben und warmweißes Licht.',
+    'silvester': 'Für Raclette rechnest du etwa 200&nbsp;g Käse und 200&nbsp;g Kartoffeln pro Person.',
+    'skandi': 'Helle Wände, helles Holz, Stoffe in Schichten und warmweißes Licht: So geht skandinavisch.',
+    'tischdeko': 'Gestecke bleiben niedrig, damit sich am Tisch alle sehen.',
+    'vintage': 'Am schönsten wirkt Vintage mit einem Hauptstück auf ruhiger Basis, gemischt mit neuen Möbeln.',
+    'vorhaenge': 'Die Stange hängt etwa 15&nbsp;cm über dem Fensterrahmen und ist je Seite 15 bis 20&nbsp;cm breiter als das Fenster.',
+    'weihnachten': 'Naturmaterialien, zwei bis drei Farbtöne und warmweißes Licht statt bunter Lichterketten.',
+    'wohnzimmer': 'Der Couchtisch steht 40 bis 50&nbsp;cm vor dem Sofa. Für Laufwege bleiben etwa 70&nbsp;cm.',
+}
+# Saison: Seite -> (von, bis) als Monat-Tag. Außerhalb blendet wohnideen.js die Fotos dieser Seite aus (im Quelltext bleiben sie stehen).
+LOOK_ZEIT = {'adventskranz': ('11-01', '12-24'), 'weihnachten': ('11-01', '12-26'), 'tischdeko': ('11-01', '12-26'), 'geschenke': ('11-01', '12-26'),
+             'silvester': ('12-01', '01-01'), 'pflanzen': ('10-01', '03-31')}
+# Kurzname der Seite für Karten (Schaufenster, „Alle Räume“); ohne Eintrag: Titel aus GRID ohne „ einrichten“.
+LOOK_KURZ = {'kleine-raeume': 'Kleine Räume', 'farben': 'Wandfarbe wählen', 'mieten': 'Wohnen zur Miete', 'pflanzen': 'Zimmerpflanzen', 'arbeitsecke': 'Arbeitsecke', 'flur': 'Flur und Eingang',
+             'kaffee': 'Kaffee-Ecke', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke'}
+# Bildmitte (0 bis 1 von links) für den Hochformat-Ausschnitt (assets/<name>-h.webp); ohne Eintrag: Mitte.
+LOOK_FX = {'japandi': .34, 'modern': .42, 'start': .58, 'vintage': .36, 'weihnachten': .58, 'adventskranz': .44}
+# Kurze Filme über dem Standbild (kaffee-film.js): Foto -> Ausschnitt (object-position) für Bild und Film
+LOOK_FILM = {'kaffee': '62% 50%', 'matcha': '58% 50%'}
+
+FARBNAMEN = [
+    ('Schnee', '#f4f4f1'), ('Kreide', '#eeede9'), ('Creme', '#f1e7d2'), ('Elfenbein', '#ece0c8'), ('Leinen', '#e6dcc8'), ('Vanille', '#f0dfb3'), ('Champagner', '#e8d5b0'), ('Mandel', '#e6c9a8'),
+    ('Sand', '#d9c6a5'), ('Hafer', '#d8c8ad'), ('Düne', '#cdb891'), ('Weizen', '#dfc58f'), ('Stroh', '#dcc27a'), ('Butter', '#f0dc9c'), ('Sandstein', '#c9b08f'), ('Milchkaffee', '#b79b80'),
+    ('Kamel', '#c19a6b'), ('Karamell', '#b07a45'), ('Honig', '#d49b3d'), ('Bernstein', '#c8842c'), ('Safran', '#d99b1f'), ('Gold', '#c9a24a'), ('Messing', '#a8833f'), ('Senf', '#c49a3a'), ('Ocker', '#b98a35'), ('Bronze', '#7a5a2b'),
+    ('Cognac', '#8f5530'), ('Haselnuss', '#9b7048'), ('Zimt', '#a5673f'), ('Teak', '#8a5a34'), ('Tabak', '#7d5a3c'), ('Leder', '#6b4429'), ('Kastanie', '#70402a'), ('Nussbaum', '#6b4a35'), ('Walnuss', '#5e4130'), ('Zeder', '#7a4b2f'),
+    ('Umbra', '#6a5644'), ('Mokka', '#4b352a'), ('Kaffee', '#4a362b'), ('Schokolade', '#3d2a20'), ('Torf', '#3a2f27'), ('Espresso', '#2b1e17'), ('Ebenholz', '#241c18'), ('Mahagoni', '#5a2a1a'), ('Olivbraun', '#5c4a24'),
+    ('Terrakotta', '#a8552f'), ('Rost', '#8e4b2c'), ('Kupfer', '#b46a3c'), ('Ziegel', '#9a5136'), ('Aprikose', '#e1a36d'), ('Pfirsich', '#eab78d'), ('Koralle', '#d7735a'), ('Lachs', '#e09a80'),
+    ('Weinrot', '#6e2a2a'), ('Bordeaux', '#5a2328'), ('Rosenholz', '#b98377'), ('Altrosa', '#c9a096'), ('Puder', '#e3c4b6'),
+    ('Salbei', '#a3ae97'), ('Oliv', '#6d6a36'), ('Moos', '#6f7558'), ('Tanne', '#2f4f3e'), ('Flaschengrün', '#2a4034'), ('Farn', '#5d7a4f'), ('Eukalyptus', '#8fa596'), ('Pistazie', '#b7c19a'), ('Schilf', '#a8a77a'), ('Khaki', '#8a8457'),
+    ('Waldgrün', '#36513f'), ('Matcha', '#a9b45c'), ('Lindgrün', '#bcc68a'),
+    ('Nachtblau', '#1f2a3c'), ('Tinte', '#232c3a'), ('Petrol', '#1f5560'), ('Taubenblau', '#7d92a3'), ('Nebelblau', '#a9b7c0'), ('Stahlblau', '#51667a'), ('Rauchblau', '#6f8292'), ('Eisblau', '#cfdbe0'), ('Jeansblau', '#4e6787'),
+    ('Marine', '#1d2f4a'), ('Dämmerblau', '#3d4a63'), ('Schieferblau', '#4b5968'), ('Abendblau', '#3e3a48'),
+    ('Kiesel', '#b9b6ae'), ('Beton', '#a7a5a0'), ('Nebel', '#d5d5d0'), ('Silber', '#c3c4c2'), ('Zinn', '#8a8c8b'), ('Stein', '#8d8a82'), ('Schiefer', '#4a4f53'), ('Graphit', '#3a3b3c'), ('Anthrazit', '#2e3033'), ('Asche', '#6e6d6a'),
+    ('Taupe', '#8b7f72'), ('Greige', '#b9aea0'), ('Rauch', '#5d5a56'), ('Tusche', '#2b2a27'), ('Kohle', '#1f1f1e'),
+]
+
+
+def _lab(r, g, b):
+    def lin(c):
+        c /= 255.0
+        return c / 12.92 if c <= .04045 else ((c + .055) / 1.055) ** 2.4
+
+    def f(t):
+        return t ** (1 / 3) if t > .008856 else 7.787 * t + 16 / 116
+    r, g, b = lin(r), lin(g), lin(b)
+    x, y, z = f((r * .4124 + g * .3576 + b * .1805) / .95047), f(r * .2126 + g * .7152 + b * .0722), f((r * .0193 + g * .1192 + b * .9505) / 1.08883)
+    return (116 * y - 16, 500 * (x - y), 200 * (y - z))
+
+
+def _unlab(L, a, b):
+    y = (L + 16) / 116
+    x, z = a / 500 + y, y - b / 200
+    g = lambda t: t ** 3 if t ** 3 > .008856 else (t - 16 / 116) / 7.787
+    x, y, z = g(x) * .95047, g(y), g(z) * 1.08883
+    c = lambda v: round(min(1, max(0, 12.92 * v if v <= .0031308 else 1.055 * v ** (1 / 2.4) - .055)) * 255)
+    return '#%02x%02x%02x' % (c(x * 3.2406 + y * -1.5372 + z * -.4986), c(x * -.9689 + y * 1.8758 + z * .0415), c(x * .0557 + y * -.204 + z * 1.057))
+
+
+def _dE(p, q):
+    return ((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2 + (p[2] - q[2]) ** 2) ** .5
+
+
+_unhex = lambda h: (int(h[1:3], 16), int(h[3:5], 16), int(h[5:7], 16))
+_NAMEN = [(n, _lab(*_unhex(h))) for n, h in FARBNAMEN]
+
+
+def farbname(h, vergeben=()):
+    """Name des nächstgelegenen Tons aus FARBNAMEN, der in dieser Palette noch frei ist."""
+    L = _lab(*_unhex(h))
+    return next(n for n, q in sorted(_NAMEN, key=lambda x: _dE(L, x[1])) if n not in vergeben)
+
+
+LOOKS_DATEI = HERE / 'looks.json'   # Farben je Foto, damit der Build sie nur für neue oder geänderte Fotos rechnet
+_looks_ablage = None
+
+
+def look_farben(name, n=5, K=10):
+    """Fünf Farben aus assets/<name>-m.jpg, hell nach dunkel: [[Name, #hex], …]. Gruppen im Lab-Farbraum wie in farbpalette.html,
+    kräftige Töne zählen etwas mehr, fast schwarze Schatten weniger, sehr ähnliche Töne kommen nicht doppelt."""
+    global _looks_ablage
+    if _looks_ablage is None:
+        _looks_ablage = json.loads(LOOKS_DATEI.read_text(encoding='utf-8')) if LOOKS_DATEI.exists() else {}
+    src = OUT / 'assets' / (name + '-m.jpg')
+    g = src.stat().st_size
+    if _looks_ablage.get(name, {}).get('g') == g:
+        return _looks_ablage[name]['p']
+    from PIL import Image
+    b = Image.open(src).convert('RGB').resize((64, 40), Image.LANCZOS).tobytes()
+    P = [_lab(b[i], b[i + 1], b[i + 2]) for i in range(0, len(b), 3)]
+    C = [P[len(P) // 2]]
+    while len(C) < K:                                     # weitester Punkt als nächste Startfarbe
+        C.append(max(P[::3], key=lambda p: min(_dE(p, c) for c in C)))
+    for _ in range(10):
+        S, N = [[0, 0, 0] for _ in C], [0] * len(C)
+        for p in P:
+            j = min(range(len(C)), key=lambda k: (p[0] - C[k][0]) ** 2 + (p[1] - C[k][1]) ** 2 + (p[2] - C[k][2]) ** 2)
+            N[j] += 1
+            S[j][0] += p[0]; S[j][1] += p[1]; S[j][2] += p[2]
+        C = [(S[j][0] / N[j], S[j][1] / N[j], S[j][2] / N[j]) if N[j] else C[j] for j in range(len(C))]
+    G = [[C[j], N[j]] for j in range(len(C)) if N[j]]
+    weiter = True
+    while weiter and len(G) > n:                          # sehr ähnliche Gruppen zusammenlegen
+        weiter = False
+        for j in range(len(G)):
+            for k in range(j + 1, len(G)):
+                if _dE(G[j][0], G[k][0]) < 9:
+                    a, c = G[j], G[k]
+                    t = a[1] + c[1]
+                    a[0] = tuple((a[0][i] * a[1] + c[0][i] * c[1]) / t for i in range(3)); a[1] = t
+                    G.pop(k); weiter = True
+                    break
+            if weiter:
+                break
+    tot = sum(x[1] for x in G)
+    gew = lambda x: x[1] / tot * (1 + (x[0][1] ** 2 + x[0][2] ** 2) ** .5 / 45) * (.35 if x[0][0] < 14 else 1)
+    G.sort(key=gew, reverse=True)
+    out = []
+    for mind in (15, 11, 7, 0):
+        for x in G:
+            if len(out) < n and x not in out and all(_dE(x[0], o[0]) >= mind for o in out):
+                out.append(x)
+    out.sort(key=lambda x: -x[0][0])
+    pal, used = [], []
+    for x in out:
+        h = _unlab(*x[0])
+        used.append(farbname(h, used))
+        pal.append([used[-1], h])
+    _looks_ablage[name] = {'g': g, 'p': pal}
+    LOOKS_DATEI.write_text('{\n' + ',\n'.join('%s: %s' % (json.dumps(k, ensure_ascii=False), json.dumps(v, ensure_ascii=False)) for k, v in sorted(_looks_ablage.items())) + '\n}\n', encoding='utf-8')
+    return pal
+
+
+def hoch(name, fx=.5):
+    """Hochformat-Ausschnitt assets/<name>-h.webp (540 x 720) für Schaufenster und Bilder-Duell; fx = Bildmitte von links (0 bis 1)."""
+    src, dst = OUT / 'assets' / (name + '.jpg'), OUT / 'assets' / (name + '-h.webp')
+    if not src.exists():
+        return ''
+    if not dst.exists() or dst.stat().st_mtime < src.stat().st_mtime:   # Bildmitte (LOOK_FX) geändert? Dann die Datei löschen, der Build legt sie neu an
+        from PIL import Image
+        im = Image.open(src).convert('RGB')
+        w = round(im.height * 3 / 4)
+        x = min(max(0, round(im.width * fx - w / 2)), im.width - w)
+        im.crop((x, 0, x + w, im.height)).resize((540, 720), Image.LANCZOS).save(dst, quality=76, method=6)
+    return 'assets/%s-h.webp' % name
+
+
+_looks = None
+
+
+def looks():
+    """Alle Looks als Liste von dicts (n, key, href, label, kurz, zu, tipp, alt, kat, pal, w, h, film, zeit), in fester, gemischter Reihenfolge.
+    Die Reihenfolge im Browser mischt wohnideen.js jeden Tag neu."""
+    global _looks
+    if _looks is not None:
+        return _looks
+    import hashlib, html as H
+    from PIL import Image
+    G = {g[3]: g for g in GRID}
+    roh = {}                                               # Foto -> (Seite, Alt-Text, Bildunterschrift)
+
+    def satz(kurz):
+        t = re.sub(r'<[^>]+>', '', kurz or '')
+        return re.split(r'(?<=[a-zäöüß\)])[.!?]\s+(?=[A-ZÄÖÜ])', t)[0].rstrip('.') + '.' if t else ''
+    for src in sorted(SRC.glob('*.html')):
+        t = src.read_text()
+        m = re.search(r'<!--meta(.*?)-->', t, re.S)
+        key = json.loads(m.group(1))['key'] if m else ''
+        if key not in G or src.name.startswith('wandfarbe'):
+            continue
+        kurz = json.loads(m.group(1)).get('kurz', '')
+        for name, alt in re.findall(r'\{\{HERO:([^|}]+)\|([^}]*)\}\}', t):
+            roh.setdefault(name, (key, alt.strip(), satz(kurz)))
+        for name, alt, cap in re.findall(r'\{\{FIG:([^|}]+)\|([^|}]*)\|([^}]*)\}\}', t):
+            roh.setdefault(name, (key, alt.strip(), cap.strip()))
+    for name, (key, href, zu, alt) in LOOK_FEST.items():
+        roh[name] = (key, alt, roh.get(name, ('', '', ''))[2])
+    L = []
+    for name, (key, alt, cap) in roh.items():
+        jpg = OUT / 'assets' / (name + '.jpg')
+        if name in LOOK_AUS or not jpg.exists() or not (OUT / 'assets' / (name + '-m.jpg')).exists():
+            continue
+        g = G[key]
+        fest = LOOK_FEST.get(name)
+        tipp = LOOK_TIPP.get(name) or cap
+        if not tipp:
+            continue
+        w, h = Image.open(jpg).size
+        kat = [k for k in KAT.get(key, 'raum').split() if k != 'werkzeug'] or ['raum']
+        art = 'Zum Planer' if 'werkzeug' in KAT.get(key, '') else 'Zum Ratgeber'
+        hoch(name, LOOK_FX.get(name, .5))
+        L.append(dict(n=name, key=key, href=(fest[1] if fest else g[0]), label=g[1], kurz=LOOK_KURZ.get(key, g[1].replace(' einrichten', '')),
+                      zu=(fest[2] if fest and fest[2] else art), tipp=tipp, alt=H.escape(H.unescape(alt), quote=True), kat=kat[0],
+                      pal=look_farben(name), w=w, h=h, film=LOOK_FILM.get(name), zeit=LOOK_ZEIT.get(key), fx=LOOK_FX.get(name, .5)))
+    L.sort(key=lambda l: hashlib.md5(l['n'].encode()).hexdigest())
+    for i in range(1, len(L) - 1):                         # zwei Fotos derselben Seite nicht direkt hintereinander
+        if L[i]['key'] == L[i - 1]['key']:
+            L[i], L[i + 1] = L[i + 1], L[i]
+    _looks = L
+    return L
+
+
+def _mix(pal):
+    return 'wandfarbe-testen.html?mix=' + ','.join(h[1:] + '-' + urllib.parse.quote(n) for n, h in pal)
+
+
+def wohnideen_feed():
+    """{{WOHNIDEEN}}: ein Block je Look. Bild, Tipp, Farben des Raums (Link ins Wandfarben-Studio), Link zum Ratgeber.
+    Bewusst <div> statt <article id>: Das Menü sammelt Abschnitte mit id und <h2> unter „Auf dieser Seite“, hier wären das alle Räume."""
+    out = []
+    for l in looks():
+        zeit = ' data-von="%s" data-bis="%s"' % l['zeit'] if l['zeit'] else ''
+        film = ''
+        if l['film']:
+            film = ('<video class="kf-film" id="ed-f-%s" muted loop playsinline preload="none" aria-hidden="true" data-film="assets/%s" style="object-position:%s"></video>' % (l['n'], l['n'], l['film']))
+        bild = pic(l['n'], l['alt'], '(max-aspect-ratio:4/5) 180vh, 100vw', extra=' width="%d" height="%d"%s' % (l['w'], l['h'], ' style="object-position:%s"' % l['film'] if l['film'] else ''))
+        dots = ''.join('<i style="background:%s"></i>' % h for n, h in l['pal'])
+        fx = ' data-fx="%s"' % l['fx'] if l['fx'] != .5 else ''
+        out.append('<div class="ed-s%s" id="raum-%s" data-n="%s" data-k="%s" data-s="%s" data-p="%s"%s%s style="--c:%s">'
+                   '<div class="ed-b">%s%s</div>'
+                   '<div class="ed-t"><div class="wrap"><p class="ed-wo">%s</p><h2>%s</h2>'
+                   '<p class="ed-l"><a class="ed-pal" href="%s" aria-label="Farben dieses Raums im Wandfarben-Studio testen"><span class="ed-dots" aria-hidden="true">%s</span>'
+                   '<span class="ed-lang">Farben dieses Raums</span><span class="ed-kurz">Farben</span></a>'
+                   '<a class="ed-zu" href="%s" aria-label="%s: %s">%s%s</a></p></div></div></div>'
+                   % (' ed-film' if l['film'] else '', l['n'], l['n'], l['kat'], l['key'], ','.join(n + h for n, h in l['pal']), zeit, fx, l['pal'][-2][1], bild, film,
+                      l['label'], l['tipp'], _mix(l['pal']), dots, l['href'], l['zu'], l['label'], l['zu'], ARROW))
+    return '\n'.join(out)
+
+
+def wohnideen_grid():
+    """{{WOHNIDEEN_GRID}}: kleine Vorschaubilder aller Looks für „Alle Räume“."""
+    return ''.join('<a href="#raum-%s" data-n="%s" data-k="%s"><img src="%s" alt="%s" width="560" height="%d" loading="lazy" decoding="async"><span>%s</span></a>'
+                   % (l['n'], l['n'], l['kat'], thumb(l['n']), l['alt'], round(560 * l['h'] / l['w']), l['kurz']) for l in looks())
+
+
+def looks_heute():
+    """(heute, Looks, die heute in ihrer Saison sind): gleiche Regel wie im Skript von wohnideen.html."""
+    try:
+        from zoneinfo import ZoneInfo
+        heute = datetime.datetime.now(ZoneInfo('Europe/Berlin')).date()
+    except Exception:
+        heute = datetime.date.today()
+    md = heute.strftime('%m-%d')
+    drin = lambda z: not z or ((z[0] <= md <= z[1]) if z[0] <= z[1] else (md >= z[0] or md <= z[1]))
+    return heute, [l for l in looks() if drin(l['zeit'])]
+
+
+def schaufenster(anzahl=16):
+    """{{SCHAUFENSTER}}: Reihe mit Hochformat-Karten für die Startseite, je Seite höchstens ein Foto, Saison-Fotos nur in ihrer Zeit.
+    Die Auswahl wechselt mit dem Tag des Builds, die Reihenfolge mischt das Skript der Startseite."""
+    import random
+    heute, L = looks_heute()
+    L = [l for l in L if not l['film']]
+    random.Random(heute.toordinal()).shuffle(L)
+    wahl, seiten = [], set()
+    for l in L:
+        if l['key'] not in seiten and len(wahl) < anzahl:
+            seiten.add(l['key']); wahl.append(l)
+    return ''.join('<a class="sf-c" href="wohnideen.html#raum-%s"><img src="%s" alt="%s" width="540" height="720" loading="lazy" decoding="async">'
+                   '<span class="sf-p" aria-hidden="true">%s</span><b>%s</b></a>'
+                   % (l['n'], hoch(l['n'], l['fx']), l['alt'], ''.join('<i style="background:%s"></i>' % h for n, h in l['pal']), l['kurz']) for l in wahl)
 
 
 # JETZT DRAN (seit 21.11.2026): Saison-Ratgeber rücken kurz vor ihrem Termin in „Alle Ratgeber“ nach vorn und tragen eine kleine Marke.
@@ -395,7 +710,7 @@ def alle():
     reihe = sorted(GRID, key=lambda g: ERST.get(g[3], '2026-01-01'), reverse=True)
     reihe = sorted([g for g in reihe if g[3] in jd], key=lambda g: jd[g[3]][0]) + [g for g in reihe if g[3] not in jd]
     for href, title, desc, key, img in reihe:
-        if key in ('finder', 'lexikon'):
+        if key in ('finder', 'lexikon', 'wohnideen'):
             continue
         t = thumb(img) if img else ''
         if 'werkzeug' in KAT.get(key, '').split():
@@ -460,7 +775,8 @@ def styles_json():
         has = bool(s.get('img')) and (OUT / 'assets' / (s['img'] + '.jpg')).exists()
         d[s['key']] = {'name': s['name'], 'desc': s['desc'], 'pal': [[a, b] for a, b, c in s['pal']],
                        'start': [[t, amz_url(q).replace('&amp;', '&')] for t, q in s['start']], 'href': s['href'],
-                       'img': s['img'] if has else None, 'alt': s.get('alt', '')}
+                       'img': s['img'] if has else None, 'alt': s.get('alt', ''),
+                       'img2': s.get('img2') if s.get('img2') and (OUT / 'assets' / (s['img2'] + '.jpg')).exists() else None, 'alt2': s.get('alt2', '')}
     return json.dumps(d, ensure_ascii=False)
 
 
@@ -475,9 +791,13 @@ def tiles(spec):
     return '<div class="hub rel">%s</div>' % ''.join(out)
 
 
-def related(spec, plain=False):
-    return ('<section%s id="weiter"><div class="wrap"><div class="sec-h"><h2>Passt dazu.</h2></div>%s</div></section>'
-            % ('' if plain else ' class="band"', tiles(spec)))
+def related(spec, plain=False, key=''):
+    """Abschnitt „Passt dazu“. Darunter eine Zeile in den Feed „Wohnideen“ (seit 21.11.2026): Sie öffnet ihn beim Foto dieser Seite,
+    das Titelbild wächst dabei zum ganzen Bildschirm (Seitenübergang in site.css)."""
+    l = next((x for x in looks() if x['key'] == key and not x['n'].endswith('-2')), None) or next((x for x in looks() if x['key'] == key), None)
+    mehr = '' if key == 'wohnideen' else '<p class="rel-st">Lieber erst mal schauen? <a href="wohnideen.html%s">Wohnideen zum Stöbern</a></p>' % ('#raum-' + l['n'] if l else '')
+    return ('<section%s id="weiter"><div class="wrap"><div class="sec-h"><h2>Passt dazu.</h2></div>%s%s</div></section>'
+            % ('' if plain else ' class="band"', tiles(spec), mehr))
 
 
 def sources(m):
@@ -564,14 +884,15 @@ def page(src):
     links = ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == navkey else '', n) for h, n, k in NAV)
     # Menü (seit 16.11.2026): Stil-Finder, Planer als Karten, Ratgeber nach Thema als kurze Listen (auf dem Handy aufklappbar)
     istool = lambda k: 'werkzeug' in KAT.get(k, '').split()
-    grid = '<a class="m-go" href="./#finder"><span><b>Welcher Stil passt zu dir?</b><small>Fünf Fragen, dann dein Stil mit Farben</small></span><i aria-hidden="true">→</i></a>'
+    grid = '<a class="m-go" href="wohnideen.html"%s><span><b>Wohnideen zum Stöbern</b><small>Ein Raum pro Bildschirm, jeder mit Tipp und Farben</small></span><i aria-hidden="true">→</i></a>' % (CUR if key == 'wohnideen' else '')
+    grid += '<a class="m-go" href="./#stil-finder"><span><b>Welcher Stil passt zu dir?</b><small>Sechs Bildpaare, dann dein Stil mit Farben</small></span><i aria-hidden="true">→</i></a>'
     grid += '<p class="m-h">Planer</p><nav class="m-grid" aria-label="Planer">%s</nav>' % ''.join(
         '<a href="%s"%s><b>%s</b><small>%s</small></a>' % (h, CUR if k == key else '', n, s_) for h, n, s_, k, p in GRID if istool(k))
     cols = ''
     for fk, lab in FILTER:
         if fk in ('', 'werkzeug'):
             continue
-        hs = [(h, n, k) for h, n, s_, k, p in GRID if not istool(k) and k not in ('finder', 'lexikon') and KAT.get(k, '').split()[:1] == [fk]]
+        hs = [(h, n, k) for h, n, s_, k, p in GRID if not istool(k) and k not in ('finder', 'lexikon', 'wohnideen') and KAT.get(k, '').split()[:1] == [fk]]
         if hs:
             cols += '<details class="m-d"%s><summary>%s</summary><div>%s</div></details>' % (' open' if any(k == key for h, n, k in hs) else '', lab, ''.join('<a href="%s"%s>%s</a>' % (h, CUR if k == key else '', n) for h, n, k in hs))
     grid += '<p class="m-h">Ratgeber</p><nav class="m-cols" aria-label="Ratgeber nach Thema">%s</nav>' % cols
@@ -628,7 +949,11 @@ def page(src):
     html = re.sub(r'\{\{HERO:([^|}]+)\|([^}]*)\}\}', lambda m: pic(m.group(1), m.group(2), '100vw', lazy=False), html)
     html = re.sub(r'\{\{FIG:([^|}]+)\|([^|}]*)\|([^}]*)\}\}', lambda m: fig(m.group(1), m.group(2), m.group(3)), html)
     html = html.replace('{{ALLE}}', alle()) if '{{ALLE}}' in html else html
-    html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2))), html)
+    if '{{WOHNIDEEN' in html:
+        html = html.replace('{{WOHNIDEEN_GRID}}', wohnideen_grid()).replace('{{WOHNIDEEN_N}}', str(len(looks()))).replace('{{WOHNIDEEN}}', wohnideen_feed())
+    if '{{SCHAUFENSTER' in html:
+        html = html.replace('{{SCHAUFENSTER_N}}', str((len(looks_heute()[1]) - 1) // 10 * 10)).replace('{{SCHAUFENSTER}}', schaufenster())
+    html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2)), key), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     html = re.sub(r'\{\{otto:(.*?)\}\}', lambda m: otto_url(m.group(1)), html)
     html = re.sub(r'\{\{awin:(\d+)\|([^}]*)\}\}', lambda m: awin_url(m.group(1), m.group(2).strip()), html)
@@ -768,6 +1093,7 @@ if __name__ == '__main__':
     (OUT / 'draw.js').write_text((HERE / 'draw.js').read_text().replace('{{TAG}}', TAG))
     (OUT / 'raumplaner.js').write_text('/* Stil-Daheim Raumplaner. Lesbarer Quelltext mit Kommentaren: Branch quellen, raumplaner.js */\n' + mini((HERE / 'raumplaner.js').read_text().replace('{{TAG}}', TAG)))
     (OUT / 'studio.js').write_text((HERE / 'studio.js').read_text(encoding='utf-8').replace('{{TAG}}', TAG), encoding='utf-8')   # Wandfarben-Studio, Partner-Tag für die Einkaufsliste
+    (OUT / 'wohnideen.js').write_text('/* Stil-Daheim Wohnideen. Lesbarer Quelltext mit Kommentaren: Branch quellen, wohnideen.js */\n' + mini((HERE / 'wohnideen.js').read_text(encoding='utf-8')), encoding='utf-8')
     for f in ('site.css', 'frag.js', 'studio.css', 'kaffee-film.js', 'sw.js', 'manifest.webmanifest'):   # sw.js und Manifest: als App installierbar, siehe site.js; kaffee-film.js: Kaffee-Filme (kaffee.html, Startseite)
         shutil.copyfile(HERE / f, OUT / f)
     (OUT / 'lexikon.json').write_text(lexikon_json() + '\n', encoding='utf-8')
