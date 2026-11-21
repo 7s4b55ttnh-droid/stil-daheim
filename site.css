@@ -648,3 +648,5 @@ details.srcx[open] .sq-pre{display:none}
 .kf-pause[hidden]{display:none}
 .kf-pause .pl,.kf-pause[aria-pressed="true"] .pa{display:none}.kf-pause[aria-pressed="true"] .pl{display:block}
 .kf-pause:focus-visible{outline:2px solid #fff;outline-offset:3px}
+/* Jetzt dran (seit 21.11.2026): kleine Marke auf Saison-Ratgebern kurz vor ihrem Termin, aus JETZT in build.py */
+.hub .jd{display:table;margin:0 0 6px;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--grn) 12%,var(--pan));color:var(--grn);font-size:.78rem;font-weight:700;font-stretch:100%;line-height:1.3;letter-spacing:.01em}

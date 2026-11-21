@@ -355,20 +355,54 @@ def thumb(name):
     return 'assets/%s-t.webp' % name
 
 
+# JETZT DRAN (seit 21.11.2026): Saison-Ratgeber rücken kurz vor ihrem Termin in „Alle Ratgeber“ nach vorn und tragen eine kleine Marke.
+# Je Seite: (ab, [(Termin, Text), …]). Sichtbar von „ab“ bis zum letzten Termin, die Marke nennt den nächsten Termin; danach verschwindet sie von selbst
+# (die Seite wird täglich neu gebaut). Höchstens 4 Seiten gleichzeitig. Jedes Jahr die Termine für das neue Jahr eintragen (erbbuch/events.json).
+JETZT = {'black-friday': ('2026-11-01', [('2026-11-30', 'Angebote bis 30.11.')]),
+         'adventskranz': ('2026-11-08', [('2026-11-29', '1. Advent am 29.11.'), ('2026-12-06', '2. Advent am 6.12.')]),
+         'geschenke': ('2026-11-22', [('2026-12-06', 'Nikolaus am 6.12.'), ('2026-12-24', 'Weihnachten am 24.12.')]),
+         'weihnachten': ('2026-11-22', [('2026-12-24', 'Weihnachten am 24.12.')]),
+         'tischdeko': ('2026-12-01', [('2026-12-24', 'Heiligabend am 24.12.')]),
+         'gaestezimmer': ('2026-12-07', [('2026-12-24', 'Besuch zu Weihnachten')]),
+         'silvester': ('2026-12-10', [('2026-12-31', 'Silvester am 31.12.')]),
+         'ausmisten': ('2026-12-27', [('2027-01-31', 'Neues Jahr, neue Ordnung')])}
+
+
+def jetzt(heute=None):
+    """Liefert {Schlüssel: (nächster Termin, Text)} für die Saison-Seiten, die heute dran sind (höchstens 4, nächster Termin zuerst)."""
+    import datetime
+    if heute is None:
+        try:
+            from zoneinfo import ZoneInfo
+            heute = datetime.datetime.now(ZoneInfo('Europe/Berlin')).date().isoformat()
+        except Exception:
+            heute = datetime.date.today().isoformat()
+    an = {}
+    for k, (ab, termine) in JETZT.items():
+        nxt = [t for t in termine if t[0] >= heute]
+        if ab <= heute and nxt:
+            an[k] = nxt[0]
+    return dict(sorted(an.items(), key=lambda x: x[1][0])[:4])
+
+
 def alle():
     """Startseite (seit 16.11.2026): oben die Planer als Karten, darunter die Ratgeber als Fotokarten mit Suchfeld und Themen-Filter (Skript in site.js).
     Die Ratgeber stehen nach Erscheinungstag (neueste zuerst) und zeigen zuerst nur 8 Kacheln; der Knopf darunter öffnet alle.
     Sammelseiten mit vielen erzeugten Unterseiten bekommen EINE Kachel, die Unterseiten keine."""
     btn = ''.join('<button type="button" aria-pressed="%s" data-f="%s">%s</button>' % ('true' if not k else 'false', k, t) for k, t in FILTER if k != 'werkzeug')
     tools, out = [], []
-    for href, title, desc, key, img in sorted(GRID, key=lambda g: ERST.get(g[3], '2026-01-01'), reverse=True):
+    jd = jetzt()
+    reihe = sorted(GRID, key=lambda g: ERST.get(g[3], '2026-01-01'), reverse=True)
+    reihe = sorted([g for g in reihe if g[3] in jd], key=lambda g: jd[g[3]][0]) + [g for g in reihe if g[3] not in jd]
+    for href, title, desc, key, img in reihe:
         if key in ('finder', 'lexikon'):
             continue
         t = thumb(img) if img else ''
         if 'werkzeug' in KAT.get(key, '').split():
             continue
         ph = ('<span class="rimg"><img src="%s" alt="" width="560" height="315" loading="lazy" decoding="async"></span>' % t) if t else ''
-        out.append('<a href="%s" data-k="%s">%s<b>%s</b><span>%s</span></a>' % (href, KAT.get(key, ''), ph, title, desc))
+        mk = ('<small class="jd">%s </small>' % jd[key][1]) if key in jd else ''
+        out.append('<a href="%s" data-k="%s">%s<b>%s%s</b><span>%s</span></a>' % (href, KAT.get(key, ''), ph, mk, title, desc))
     for href, title, desc, key, img in GRID:
         if 'werkzeug' in KAT.get(key, '').split():
             tools.append('<a href="%s"><span class="tl-i"><img src="%s" alt="" width="560" height="315" loading="lazy" decoding="async"></span><b>%s</b><span>%s</span></a>' % (href, thumb(img), title, desc))
