@@ -36,6 +36,8 @@ await fall({tassen:'viel',art:'schwarz',zeit:'knopf',platz:'genug'},['Moccamaste
 await fall({tassen:'wenig',art:'schwarz',zeit:'ritual',platz:'genug'},['Handfilter'],'Schwarz mit Ritual');
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'knapp'},['Dedica','Graef'],'Tüfteln, wenig Platz');
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug',budget:'mittel'},['Barista Express'],'Tüfteln mit Platz');
+await fall({tassen:'mittel',art:'tee',zeit:'knopf',platz:'genug'},[],'Tee');
+ok(await p.evaluate(()=>{const a=document.querySelector('#kf-res .kf-rz a.btn');return !!a&&a.getAttribute('href')==='tee.html'&&!!document.querySelector('.kf-wege a[href="tee.html"]')&&!!document.querySelector('.hero a[href="tee.html"]')&&document.querySelectorAll('.kf-wege>div').length===8}),'Finder: Tee führt zum Tee-Ratgeber; Tee steht im Kopf und unter den acht Wegen');
 await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},[],'Matcha');
 ok(await p.evaluate(()=>{const a=document.querySelector('#kf-res .kf-rz a.btn');return !!a&&a.getAttribute('href')==='matcha.html'&&/Matcha-Ratgeber/.test(a.textContent)&&/Matcha/.test(document.querySelector('#kf-res h3').textContent)}),'Finder: Matcha führt zum Matcha-Ratgeber');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug',budget:'mittel'},['Magnifica'],'Milch als Ritual');
