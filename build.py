@@ -75,7 +75,8 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('licht.html', 'Licht planen', 'Lichtebenen, Kelvin, Lumen-Rechner', 'licht', 'licht'),
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'schlafzimmer'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
-        ('kaffee.html', 'Kaffee-Ecke einrichten', 'Maschinen-Finder, Espresso, Matcha, Kaffee-Ecke', 'kaffee', 'kaffee'),
+        ('kaffee.html', 'Kaffee-Ecke einrichten', 'Maschinen-Finder, Preisklassen, Espresso, Kaffee-Ecke', 'kaffee', 'kaffee'),
+        ('matcha.html', 'Matcha zubereiten', 'Anleitung, guter Matcha, Herkunft, Matcha-Rechner', 'matcha', 'matcha'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
         ('tischdeko.html', 'Weihnachtliche Tischdeko', 'Festlich decken mit Maßen und Ideen', 'tischdeko', 'tischdeko'),
         ('silvester.html', 'Silvester-Tischdeko', 'Raclette-Planer, Farben, sicher bis Mitternacht', 'silvester', 'silvester'),
@@ -333,7 +334,7 @@ def fig(name, alt, cap):
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'wohnideen': 'stile', 'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
-       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
+       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}
@@ -377,7 +378,7 @@ LOOK_FEST = {
     'essen': ('rechner', 'rechner.html', 'Zum Raum-Rechner', 'Essecke mit rundem Eichentisch, gemischten Stühlen und einer tief hängenden Stoff-Pendelleuchte'),
     'nachher': ('licht', 'licht.html', '', 'Wohnzimmer mit drei warmen Leuchten, großem Teppich, bodenlangen Vorhängen, Kissen und Pflanzen'),
     'kaffee': ('kaffee', 'kaffee.html', 'Zum Kaffee-Ratgeber', 'Nahaufnahme: Ein Tropfen Espresso hängt über einer randvollen Tasse Kaffee, Dampf steigt im warmen Morgenlicht auf'),
-    'matcha': ('kaffee', 'kaffee.html#matcha', 'Zum Matcha im Kaffee-Ratgeber', 'Aufgeschäumte Milch fließt in eine dunkle Keramikschale mit grünem Matcha, daneben Bambusbesen und Löffel'),
+    'matcha': ('matcha', 'matcha.html', 'Zum Matcha-Ratgeber', 'Aufgeschäumte Milch fließt in eine dunkle Keramikschale mit grünem Matcha, daneben Bambusbesen und Löffel'),
     'miete': ('mieten', 'mieten.html', '', 'Kleine Mietwohnung, eingerichtet ohne Bohren: angelehnter Spiegel, Bilder auf einer Leiste, Wandleuchte mit Stoffkabel'),
     'modern': ('modern', 'modern.html', '', 'Modernes Wohnzimmer mit niedrigem grauem Bouclé-Sofa, Couchtisch aus Travertin, großem abstraktem Bild und schwarzer Stehleuchte'),
     'vintage': ('vintage', 'vintage.html', '', 'Wohnzimmer im Vintage-Stil mit Teak-Sideboard, Samtsessel, Orientteppich, Messing-Stehleuchte und Plattenspieler'),
@@ -422,7 +423,7 @@ LOOK_ZEIT = {'adventskranz': ('11-01', '12-24'), 'weihnachten': ('11-01', '12-26
              'silvester': ('12-01', '01-01'), 'pflanzen': ('10-01', '03-31')}
 # Kurzname der Seite für Karten (Schaufenster, „Alle Räume“); ohne Eintrag: Titel aus GRID ohne „ einrichten“.
 LOOK_KURZ = {'kleine-raeume': 'Kleine Räume', 'farben': 'Wandfarbe wählen', 'mieten': 'Wohnen zur Miete', 'pflanzen': 'Zimmerpflanzen', 'arbeitsecke': 'Arbeitsecke', 'flur': 'Flur und Eingang',
-             'kaffee': 'Kaffee-Ecke', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke'}
+             'kaffee': 'Kaffee-Ecke', 'matcha': 'Matcha', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke'}
 # Bildmitte (0 bis 1 von links) für den Hochformat-Ausschnitt (assets/<name>-h.webp); ohne Eintrag: Mitte.
 LOOK_FX = {'japandi': .34, 'modern': .42, 'start': .58, 'vintage': .36, 'weihnachten': .58, 'adventskranz': .44}
 # Kurze Filme über dem Standbild (kaffee-film.js): Foto -> Ausschnitt (object-position) für Bild und Film

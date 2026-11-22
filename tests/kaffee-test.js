@@ -19,11 +19,7 @@ ok(await p.evaluate(()=>!!document.querySelector('.kf-hero .ki-marke')),'KI-Mark
 await p.click('[data-kaffee-pause="kf-film"]');await p.waitForTimeout(200);
 ok(await p.evaluate(()=>document.getElementById('kf-film').paused)&&await p.getAttribute('[data-kaffee-pause="kf-film"]','aria-pressed')==='true','Pause-Knopf hält an');
 await p.click('[data-kaffee-pause="kf-film"]');await p.waitForTimeout(400);ok(await p.evaluate(()=>!document.getElementById('kf-film').paused),'Pause-Knopf spielt wieder ab');
-ok(await p.evaluate(()=>{const v=document.getElementById('kf-matcha');return v.paused&&!v.currentSrc}),'Matcha-Film lädt erst beim Hinscrollen');
-await p.evaluate(()=>document.getElementById('kf-matcha').scrollIntoView({block:'center',behavior:'instant'}));
-await p.waitForFunction(()=>{const v=document.getElementById('kf-matcha');return !v.paused&&v.readyState>2},null,{timeout:15000}).catch(()=>{});
-ok(await lauf('kf-matcha')&&await p.evaluate(()=>document.getElementById('kf-film').paused),'Matcha läuft beim Hinscrollen, Kopfbild ruht');
-ok(await p.evaluate(()=>!!document.querySelector('.kf-mat .bild .ki-marke')),'KI-Marke am Matcha-Film');
+ok(await p.evaluate(()=>!document.getElementById('matcha')&&!document.getElementById('kf-matcha')),'Matcha steht nicht mehr im Kaffee-Ratgeber (eigene Seite matcha.html)');
 // Maschinen-Finder
 const fall=async(w,erw,t)=>{await p.evaluate(w=>{for(const [n,v] of Object.entries(w)){const i=document.querySelector(`#kf-q input[name="${n}"][value="${v}"]`);i.checked=true;i.dispatchEvent(new Event('change',{bubbles:true}))}},w);
   const r=await p.evaluate(()=>({h:document.querySelector('#kf-res h3').textContent,l:[...document.querySelectorAll('#kf-res li b')].map(x=>x.textContent)}));ok(erw.every(e=>r.l.some(x=>x.includes(e))),t+': '+r.h+' → '+r.l.join(', '))};
@@ -40,7 +36,8 @@ await fall({tassen:'viel',art:'schwarz',zeit:'knopf',platz:'genug'},['Moccamaste
 await fall({tassen:'wenig',art:'schwarz',zeit:'ritual',platz:'genug'},['Handfilter'],'Schwarz mit Ritual');
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'knapp'},['Dedica','Graef'],'Tüfteln, wenig Platz');
 await fall({tassen:'mittel',art:'mix',zeit:'tuefteln',platz:'genug',budget:'mittel'},['Barista Express'],'Tüfteln mit Platz');
-await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},['Matcha-Set'],'Matcha');
+await fall({tassen:'mittel',art:'matcha',zeit:'knopf',platz:'genug'},[],'Matcha');
+ok(await p.evaluate(()=>{const a=document.querySelector('#kf-res .kf-rz a.btn');return !!a&&a.getAttribute('href')==='matcha.html'&&/Matcha-Ratgeber/.test(a.textContent)&&/Matcha/.test(document.querySelector('#kf-res h3').textContent)}),'Finder: Matcha führt zum Matcha-Ratgeber');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug',budget:'mittel'},['Magnifica'],'Milch als Ritual');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug',budget:'hoch'},['Barista Touch Impress'],'Ritual, bis 1.000 Euro');
 await fall({tassen:'mittel',art:'milch',zeit:'ritual',platz:'genug',budget:'egal'},['Oracle'],'Ritual, mehr als 1.000 Euro');
