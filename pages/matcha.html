@@ -1,4 +1,4 @@
-<!--meta {"key":"matcha","title":"Matcha zubereiten: Anleitung, guter Matcha und Herkunft – Stil-Daheim","desc":"Matcha zubereiten in sechs Schritten: 1,5 g Pulver, 70 ml Wasser, 75 bis 80 Grad. Woran du guten Matcha erkennst, woher er kommt und wie viel am Tag passt.","og":"assets/matcha.jpg","updated":"2026-11-22","kurz":"Für eine Schale Matcha nimmst du etwa 1,5&nbsp;Gramm gesiebtes Pulver und 70&nbsp;ml Wasser mit 75 bis 80&nbsp;Grad und schlägst beides mit dem Bambusbesen im Zickzack schaumig. Guter Matcha ist leuchtend grün, fühlt sich cremig an und schmeckt nicht bitter. Er wird aus beschatteten Teeblättern gemahlen und kommt traditionell aus Japan. Begriffe wie „Ceremonial Grade“ sind nicht geschützt. Die Verbraucherzentrale rät vorsorglich zu höchstens 3&nbsp;Gramm Pulver am Tag."} -->
+<!--meta {"key":"matcha","title":"Matcha zubereiten, Iced Matcha Latte und guter Matcha – Stil-Daheim","desc":"Matcha zubereiten in sechs Schritten: 1,5 g Pulver, 70 ml Wasser, 75 bis 80 Grad. Dazu Iced Matcha Latte, guter Matcha, Herkunft und die Menge am Tag.","og":"assets/matcha.jpg","updated":"2026-11-22","kurz":"Für eine Schale Matcha nimmst du etwa 1,5&nbsp;Gramm gesiebtes Pulver und 70&nbsp;ml Wasser mit 75 bis 80&nbsp;Grad und schlägst beides mit dem Bambusbesen im Zickzack schaumig. Für einen Iced Matcha Latte schlägst du 3&nbsp;Gramm Pulver mit 100&nbsp;ml Wasser auf und gießt es über 100&nbsp;ml kalte Milch mit Eis. Guter Matcha ist leuchtend grün, fühlt sich cremig an und schmeckt nicht bitter. Er wird aus beschatteten Teeblättern gemahlen und kommt traditionell aus Japan. Begriffe wie „Ceremonial Grade“ sind nicht geschützt. Die Verbraucherzentrale rät vorsorglich zu höchstens 3&nbsp;Gramm Pulver am Tag."} -->
 <!--HEAD-->
 <style>
 /* Matcha-Ratgeber (seit 22.11.2026, vorher ein Abschnitt im Kaffee-Ratgeber). Kopfbild: KI-Standbild mit kurzem KI-Film darüber (kaffee-film.js),
@@ -58,13 +58,26 @@
 .mt-w small{display:block;margin-top:2px;font-size:.8rem;font-weight:700;color:var(--brass-t)}
 
 /* Drei Arten */
-.mt-a{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.mt-a{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px}
 .mt-a article{background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:20px}
 .mt-a h3{margin:0 0 2px;font-size:1.25rem}
 .mt-a .jp{margin:0 0 10px;font-size:.82rem;font-weight:700;color:var(--brass-t)}
 .mt-a p{margin:0 0 10px;font-size:.96rem}
 .mt-a p:last-child{margin-bottom:0;color:var(--mut);font-size:.9rem}
-@media (max-width:860px){.mt-a{grid-template-columns:1fr}}
+@media (max-width:1000px){.mt-a{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.mt-a{grid-template-columns:1fr}}
+.mt-a a{font-weight:600}
+
+/* Iced Matcha Latte: das Glas in Schichten als Zeichnung, daneben Mengen und Schritte (Rezept von Ippodo) */
+section.mt-eis{padding-top:0}
+.mt-e{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px 48px;align-items:start;margin-top:28px}
+.mt-glas{margin:0;padding:18px 14px 14px;background:var(--pan);border:1px solid var(--line);border-radius:16px}
+.mt-glas svg{display:block;width:100%;max-width:270px;height:auto;margin:0 auto;color:var(--ink);font:600 13px/1 inherit}
+.mt-glas figcaption{margin-top:10px;font-size:.9rem;color:var(--mut);text-align:center}
+.mt-e .mt-z{margin-top:0}
+.mt-e .mt-z b{font-size:clamp(1.7rem,3.2vw,2.3rem)}
+.mt-e .steps{margin-top:22px}
+@media (max-width:900px){.mt-e{grid-template-columns:1fr}.mt-glas{max-width:340px;width:100%;justify-self:center}.mt-e .mt-z b{font-size:clamp(1.9rem,6vw,2.6rem)}}
 
 /* Guter Matcha: Merkmale */
 .mt-g{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(22px,4vw,52px);align-items:start;margin-top:8px}
@@ -147,6 +160,13 @@
     <li><h3>Schaum glätten</h3><p>Sobald feiner, cremiger Schaum steht, langsamer über die Oberfläche streichen, bis die großen Blasen weg sind. Den Besen in der Mitte sacht herausheben.</p></li>
     <li><h3>Gleich trinken</h3><p>Das Pulver löst sich nicht auf, es schwebt nur im Wasser. Nach ein paar Minuten setzt es sich am Boden ab.</p></li>
   </ol>
+  <h3 style="margin-top:44px">Wenn es nicht schmeckt.</h3>
+  <dl class="kv" style="margin-top:14px">
+    <dt>Bitter</dt><dd>Das Wasser war zu heiß. Nimm höchstens 80&nbsp;Grad und beim nächsten Mal etwas weniger Pulver.</dd>
+    <dt>Klümpchen</dt><dd>Das Pulver vorher durch ein feines Sieb streichen. Feuchtigkeit lässt es in der Dose verklumpen.</dd>
+    <dt>Kein Schaum</dt><dd>Schneller schlagen, im Zickzack statt im Kreis, und den Besen nicht auf den Boden drücken.</dd>
+    <dt>Sandig oder stumpf</dt><dd>Das liegt am Pulver. Guter Matcha fühlt sich cremig an und leuchtet grün.</dd>
+  </dl>
 </div></section>
 
 <section class="band" id="werkzeug"><div class="wrap">
@@ -161,18 +181,58 @@
 </div></section>
 
 <section id="arten"><div class="wrap">
-  <div class="sec-h"><h2>Dünn, dick oder mit Milch.</h2><p class="lede">Aus demselben Pulver werden drei sehr verschiedene Getränke.</p></div>
+  <div class="sec-h"><h2>Dünn, dick, mit Milch oder auf Eis.</h2><p class="lede">Aus demselben Pulver werden vier sehr verschiedene Getränke.</p></div>
   <div class="mt-a">
     <article><h3>Dünner Matcha</h3><p class="jp">Usucha</p><p>Die Anleitung oben: wenig Pulver, viel Schaum, leicht und frisch. Damit fängst du an.</p><p>1,5&nbsp;g Pulver auf 70&nbsp;ml Wasser.</p></article>
     <article><h3>Matcha Latte</h3><p class="jp">Mit Milch oder Pflanzendrink</p><p>Den Matcha mit etwa der halben Menge Wasser aufschlagen und aufgeschäumte Milch dazugießen, wie beim Cappuccino.</p><p>Fertige Latte-Mischungen enthalten oft Zucker und manchmal nur wenige Prozent Matcha. Ein Blick auf die Zutatenliste lohnt sich.</p></article>
+    <article><h3>Iced Matcha Latte</h3><p class="jp">Auf Eis mit kalter Milch</p><p>Die doppelte Menge Pulver heiß aufschlagen und über kalte Milch und Eiswürfel gießen.</p><p><a href="#iced-matcha-latte">Zum Rezept</a></p></article>
     <article><h3>Dicker Matcha</h3><p class="jp">Koicha</p><p>Deutlich mehr Pulver und sehr wenig Wasser ergeben einen dicken, sämigen Tee.</p><p>Braucht besonders milde Sorten, weil in so dickem Tee jede Herbe auffällt.</p></article>
   </div>
-  <h3 style="margin-top:44px">Wenn es nicht schmeckt.</h3>
-  <dl class="kv" style="margin-top:14px">
-    <dt>Bitter</dt><dd>Das Wasser war zu heiß. Nimm höchstens 80&nbsp;Grad und beim nächsten Mal etwas weniger Pulver.</dd>
-    <dt>Klümpchen</dt><dd>Das Pulver vorher durch ein feines Sieb streichen. Feuchtigkeit lässt es in der Dose verklumpen.</dd>
-    <dt>Kein Schaum</dt><dd>Schneller schlagen, im Zickzack statt im Kreis, und den Besen nicht auf den Boden drücken.</dd>
-    <dt>Sandig oder stumpf</dt><dd>Das liegt am Pulver. Guter Matcha fühlt sich cremig an und leuchtet grün.</dd>
+</div></section>
+
+<section class="mt-eis" id="iced-matcha-latte"><div class="wrap">
+  <div class="sec-h"><h2>Iced Matcha Latte.</h2><p class="lede">Kalte Milch, Eiswürfel und frisch aufgeschlagener Matcha obenauf. Das Rezept für ein Glas stammt von Ippodo, einem Teehaus aus Kyoto.</p></div>
+  <div class="mt-e">
+    <figure class="mt-glas">
+      <svg viewBox="0 0 270 250" role="img" aria-label="Ein Glas in Schichten: unten kalte Milch mit Eiswürfeln, oben der grüne Matcha">
+        <defs>
+          <clipPath id="mt-gl"><path d="M28 18h112l-9 208a10 10 0 0 1-10 9H47a10 10 0 0 1-10-9z"/></clipPath>
+          <linearGradient id="mt-gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f9f52"/><stop offset=".3" stop-color="#8cab5e"/><stop offset=".52" stop-color="#cfd6a8"/><stop offset=".68" stop-color="#efe8d8"/><stop offset="1" stop-color="#f3eee2"/></linearGradient>
+        </defs>
+        <g clip-path="url(#mt-gl)">
+          <rect x="20" y="46" width="130" height="200" fill="url(#mt-gv)"/>
+          <g fill="#fff" fill-opacity=".5" stroke="#fff" stroke-opacity=".95" stroke-width="1.6" stroke-linejoin="round">
+            <rect x="46" y="96" width="38" height="38" rx="6" transform="rotate(-14 65 115)"/>
+            <rect x="88" y="118" width="36" height="36" rx="6" transform="rotate(11 106 136)"/>
+            <rect x="54" y="156" width="36" height="36" rx="6" transform="rotate(8 72 174)"/>
+            <rect x="92" y="78" width="30" height="30" rx="5" transform="rotate(22 107 93)"/>
+          </g>
+        </g>
+        <path d="M28 18h112l-9 208a10 10 0 0 1-10 9H47a10 10 0 0 1-10-9z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/>
+        <g stroke="currentColor" stroke-opacity=".45" stroke-width="1.2" fill="none"><path d="M128 66h36"/><path d="M118 136h46"/><path d="M122 206h42"/></g>
+        <g fill="currentColor"><text x="170" y="70">Matcha</text><text x="170" y="140">Eiswürfel</text><text x="170" y="210">Kalte Milch</text></g>
+      </svg>
+      <figcaption>Erst Milch und Eis ins Glas, dann der Matcha.</figcaption>
+    </figure>
+    <div>
+      <div class="mt-z">
+        <div><b>3&nbsp;g</b><span>Matcha: zwei gehäufte Bambuslöffel</span></div>
+        <div><b>100&nbsp;ml</b><span>Wasser mit 80&nbsp;Grad</span></div>
+        <div><b>100&nbsp;ml</b><span>kalte Milch, dazu Eiswürfel</span></div>
+      </div>
+      <ol class="steps">
+        <li><h3>Pulver sieben</h3><p>3&nbsp;Gramm Matcha durch ein feines Sieb in die Schale streichen. Das sind zwei gehäufte Bambuslöffel oder anderthalb gestrichene Teelöffel.</p></li>
+        <li><h3>Heiß aufschlagen</h3><p>100&nbsp;ml Wasser mit 80&nbsp;Grad dazugießen und etwa 15&nbsp;Sekunden kräftig im Zickzack schlagen.</p></li>
+        <li><h3>Glas füllen</h3><p>Eiswürfel und 100&nbsp;ml kalte Milch in ein Glas geben.</p></li>
+        <li><h3>Matcha darübergießen</h3><p>Den aufgeschlagenen Matcha über Milch und Eis gießen, kurz umrühren und gleich trinken.</p></li>
+      </ol>
+    </div>
+  </div>
+  <dl class="kv" style="margin-top:34px">
+    <dt>Ohne Milch</dt><dd>Für einen Iced Matcha gibst du einfach ein paar Eiswürfel in den fertig aufgeschlagenen Matcha aus der <a href="#zubereiten">Anleitung oben</a>. So beschreibt es das Teehaus Marukyu Koyamaen.</dd>
+    <dt>Pflanzendrink</dt><dd>Statt Milch geht auch ein Pflanzendrink, zum Beispiel aus Hafer.</dd>
+    <dt>Süßen</dt><dd>Honig oder Sirup rührst du in den noch warmen Matcha, bevor er ins Glas kommt.</dd>
+    <dt>Wie viel Pulver</dt><dd>In einem Glas stecken 3&nbsp;Gramm Pulver, doppelt so viel wie in einer Schale dünnem Matcha. Nach den Messwerten des bayerischen Landesamts sind das etwa 42 bis 108&nbsp;mg Koffein. 3&nbsp;Gramm sind auch die Menge, zu der die Verbraucherzentrale vorsorglich höchstens am Tag rät. Für ein kleineres Glas halbierst du alle Mengen.</dd>
   </dl>
 </div></section>
 
@@ -232,8 +292,8 @@
   <h3 style="margin-top:44px">Matcha-Rechner.</h3>
   <p style="color:var(--mut);margin:6px 0 0">Wie viel Pulver und Koffein kommt bei dir am Tag zusammen, und wie lange reicht eine Dose?</p>
   <div class="mt-re">
-    <label>Schalen am Tag<select id="mr-n"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label>
-    <label>Pulver pro Schale<select id="mr-g"><option value="1">1&nbsp;Gramm (ein gehäufter Bambuslöffel)</option><option value="1.5" selected>1,5&nbsp;Gramm (zwei Bambuslöffel)</option><option value="2">2&nbsp;Gramm (für Matcha Latte)</option></select></label>
+    <label>Schalen oder Gläser am Tag<select id="mr-n"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    <label>Pulver pro Schale oder Glas<select id="mr-g"><option value="1">1&nbsp;Gramm (ein gehäufter Bambuslöffel)</option><option value="1.5" selected>1,5&nbsp;Gramm (zwei Bambuslöffel)</option><option value="2">2&nbsp;Gramm (für Matcha Latte)</option><option value="3">3&nbsp;Gramm (für Iced Matcha Latte)</option></select></label>
   </div>
   <div class="mt-out" aria-live="polite">
     <div><b id="mr-p">–</b><span>Pulver am Tag</span></div>
@@ -275,6 +335,7 @@
   <div class="faq" style="margin-top:28px">
     <details><summary>Wie viel Matcha kommt in eine Schale?</summary><div><p>Etwa 1,5&nbsp;Gramm auf 70&nbsp;ml Wasser. Das sind zwei Bambuslöffel oder ein Teelöffel. Die Verbraucherzentrale rät vorsorglich zu 1&nbsp;Gramm pro Tasse.</p></div></details>
     <details><summary>Wie heiß darf das Wasser für Matcha sein?</summary><div><p>75 bis 80&nbsp;Grad. Kochendes Wasser macht ihn bitter. Ohne Thermometer gießt du das gekochte Wasser einmal in einen Messbecher um, im Sommer zweimal.</p></div></details>
+    <details><summary>Wie mache ich einen Iced Matcha Latte?</summary><div><p>3&nbsp;Gramm Matcha sieben, mit 100&nbsp;ml Wasser bei 80&nbsp;Grad etwa 15&nbsp;Sekunden aufschlagen und über ein Glas mit Eiswürfeln und 100&nbsp;ml kalter Milch gießen. <a href="#iced-matcha-latte">Zum Rezept</a></p></div></details>
     <details><summary>Warum schmeckt mein Matcha bitter?</summary><div><p>Meist war das Wasser zu heiß oder es war zu viel Pulver. Guter Matcha schmeckt mild und nicht bitter.</p></div></details>
     <details><summary>Was bedeutet „Ceremonial Grade“?</summary><div><p>Hersteller bewerben damit ihre beste Qualität. Geschützt ist der Begriff nicht, er darf auch auf einfachem Pulver stehen. Verlass dich lieber auf Farbe, Herkunftsangabe und Zutatenliste.</p></div></details>
     <details><summary>Wie viel Koffein hat Matcha?</summary><div><p>Eine Portion aus 1 bis 2&nbsp;Gramm Pulver enthält laut dem bayerischen Landesamt 13 bis 68&nbsp;mg Koffein. Ein Espresso hat etwa 80&nbsp;mg, eine Tasse schwarzer Tee etwa 50&nbsp;mg.</p></div></details>
@@ -290,6 +351,7 @@
   <div class="src"><ol>
     <li>Marukyu Koyamaen: Matcha zubereiten (PDF, deutsch) <a href="https://www.marukyu-koyamaen.co.jp/leaflet/enjoy_making_de.pdf" target="_blank" rel="noopener">marukyu-koyamaen.co.jp</a></li>
     <li>Marukyu Koyamaen: About Matcha, Anbau, Herstellung und Lagerung (englisch) <a href="https://marukyu-koyamaen.co.jp/english/about-tea/know-matcha.html" target="_blank" rel="noopener">marukyu-koyamaen.co.jp</a></li>
+    <li>Ippodo Tea: Iced Matcha Latte, Rezept (englisch) <a href="https://ippodotea.com/blogs/recipes-to-brew-japanese-tea/iced-matcha-latte" target="_blank" rel="noopener">ippodotea.com</a></li>
     <li>Verbraucherzentrale: Matcha, wie gesund ist das grüne Pulver? (Stand 21.04.2026) <a href="https://www.verbraucherzentrale.de/wissen/lebensmittel/kennzeichnung-und-inhaltsstoffe/matcha-wie-gesund-ist-das-gruene-pulver-17797" target="_blank" rel="noopener">verbraucherzentrale.de</a></li>
     <li>Bayerisches Landesamt für Gesundheit und Lebensmittelsicherheit: Untersuchung des Trendgetränks Matcha-Tee, 47 Proben aus 2024 (26.06.2025) <a href="https://www.lgl.bayern.de/lebensmittel/warengruppen/wc_47_tee/ue_2024_matcha.htm" target="_blank" rel="noopener">lgl.bayern.de</a></li>
     <li>Bundesinstitut für Risikobewertung: Hohe Aluminiumgehalte in einzelnen Matcha-Teeproben, Stellungnahme 027/2019 (25.07.2019, PDF) <a href="https://www.bfr.bund.de/cm/343/hohe-aluminiumgehalte-in-einzelnen-matcha-teeproben.pdf" target="_blank" rel="noopener">bfr.bund.de</a></li>

@@ -76,7 +76,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'schlafzimmer'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('kaffee.html', 'Kaffee-Ecke einrichten', 'Maschinen-Finder, Preisklassen, Espresso, Kaffee-Ecke', 'kaffee', 'kaffee'),
-        ('matcha.html', 'Matcha zubereiten', 'Anleitung, guter Matcha, Herkunft, Matcha-Rechner', 'matcha', 'matcha'),
+        ('matcha.html', 'Matcha zubereiten', 'Anleitung, Iced Matcha Latte, guter Matcha, Herkunft', 'matcha', 'matcha'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
         ('tischdeko.html', 'Weihnachtliche Tischdeko', 'Festlich decken mit Maßen und Ideen', 'tischdeko', 'tischdeko'),
         ('silvester.html', 'Silvester-Tischdeko', 'Raclette-Planer, Farben, sicher bis Mitternacht', 'silvester', 'silvester'),
