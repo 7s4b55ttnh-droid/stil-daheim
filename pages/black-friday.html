@@ -30,6 +30,22 @@
 .bfh .go a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;background:var(--brass-t);color:var(--pan);font-weight:650;text-decoration:none}
 .bfh .go a svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .bfh-n{margin-top:16px;font-size:.9rem;color:var(--mut)}
+/* Kaffee und Matcha (seit 22.11.2026): „Unsere Wahl“ je Preisklasse aus kaffee.json, Preis mit Stand */
+.bfk-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px}
+@media (max-width:900px){.bfk-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.bfk-g{grid-template-columns:1fr}}
+.bfk{display:flex;flex-direction:column;gap:6px;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px}
+.bfk h3{margin:0;font-size:1.15rem}
+.bfk p{margin:0;color:var(--mut);font-size:.94rem}
+.bfk .bfk-k{font-size:.82rem;font-weight:700;color:var(--brass-t)}
+.bfk .bfk-p{color:var(--ink)}.bfk .bfk-p b{font-size:1.4rem;font-stretch:78%;font-variant-numeric:tabular-nums;margin-right:4px}
+.bfk .go a{white-space:nowrap}
+.bfk .bfk-a{color:var(--ink);border-left:3px solid var(--brass-t);padding-left:10px}
+.bfk .go{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bfk .go a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;background:var(--brass-t);color:var(--pan);font-weight:650;text-decoration:none}
+.bfk .go a svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bfk-m{display:inline-flex;align-items:center;min-height:40px;font-weight:600;font-size:.94rem}
+.bfk-w{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 </style>
 <!--MAIN-->
 <div class="hero sub plain">
@@ -38,20 +54,30 @@
     <h1>Black Friday 2026: clever einrichten</h1>
     <p>Teppich, Lampe, Vorhang oder Sessel: So erkennst du echte Rabatte und prüfst vorher, ob das Teil wirklich in deinen Raum passt.</p>
     <div class="bfdates"><div><b>19.11.</b><span>Start Amazon-Woche</span></div><div><b>27.11.</b><span>Black Friday</span></div><div><b>30.11.</b><span>Cyber Monday</span></div><div><b id="bfcd">–</b><span id="bfcdl">Tage bis Black Friday</span></div></div>
-    <div class="btns"><a class="btn" href="{{amzdeals}}" rel="sponsored nofollow noopener" target="_blank">Alle Angebote bei Amazon <small>(Anzeige)</small></a><a class="btn ghost" href="#haendler">OTTO, Lampenwelt und Co.</a><a class="btn ghost" href="#check">Angebot prüfen</a></div>
+    <div class="btns"><a class="btn" href="{{amzdeals}}" rel="sponsored nofollow noopener" target="_blank">Alle Angebote bei Amazon <small>(Anzeige)</small></a><a class="btn ghost" href="#haendler">OTTO, Lampenwelt und Co.</a><a class="btn ghost" href="#kaffee">Kaffeemaschinen</a><a class="btn ghost" href="#check">Angebot prüfen</a></div>
   </div>
 </div>
 
 <section class="band" id="haendler"><div class="wrap">
-  <div class="sec-h"><h2>Black Friday bei unseren Händlern.</h2><p class="lede">Nicht nur Amazon macht mit. Hier steht, was die Händler selbst auf ihren Seiten nennen, Stand 20.11.2026. Aktionen können sich täglich ändern.<span class="tag">Anzeige</span></p></div>
+  <div class="sec-h"><h2>Black Friday bei unseren Händlern.</h2><p class="lede">Nicht nur Amazon macht mit. Hier steht, was die Händler selbst auf ihren Seiten nennen, Stand 22.11.2026. Aktionen können sich täglich ändern.<span class="tag">Anzeige</span></p></div>
   <div class="bfh-g">
     <div class="bfh"><h3>Amazon</h3><p class="st">Black-Friday-Woche <b>19. bis 30. November</b></p><p>Alles für Wohnen, Deko, Textilien und Technik.</p><div class="go"><a href="{{amzdeals}}" rel="sponsored nofollow noopener" target="_blank">Zu den Angeboten{{EXT}}</a><span class="tag">Anzeige</span></div></div>
-    <div class="bfh"><h3>OTTO</h3><p class="st">Eigene <b>Black-Friday-Seite</b>, die Deals sind noch nicht gestartet</p><p>Möbel, Kaffeemaschinen, Haushalt und Technik. Einen Starttermin nennt OTTO noch nicht, die Seite lohnt sich zum Merken.</p><div class="go"><a href="{{otto:https://www.otto.de/black-friday/}}" rel="sponsored nofollow noopener" target="_blank">Zur Black-Friday-Seite{{EXT}}</a><span class="tag">Anzeige</span></div></div>
-    <div class="bfh"><h3>Lampenwelt</h3><p class="st">Black Week Opening <b>bis zu 70&nbsp;%</b>, 16. bis 22. November</p><p>In allen Kategorien, ohne Gutscheincode, solange der Vorrat reicht.</p><div class="go"><a href="{{awin:7619|https://www.lampenwelt.de/aktionen/black-friday}}" rel="sponsored nofollow noopener" target="_blank">Zu den Lampen-Deals{{EXT}}</a><span class="tag">Anzeige</span></div></div>
+    <div class="bfh"><h3>OTTO</h3><p class="st">Black Friday <b>bis zu 50&nbsp;%</b></p><p>Möbel, Haushalt und Technik, die Angebote sind online. Ein Enddatum nennt OTTO nicht.</p><div class="go"><a href="{{otto:https://www.otto.de/black-friday/}}" rel="sponsored nofollow noopener" target="_blank">Zur Black-Friday-Seite{{EXT}}</a><span class="tag">Anzeige</span></div></div>
+    <div class="bfh"><h3>Lampenwelt</h3><p class="st"><b>Black Week</b> mit wechselnden Aktionen</p><p>Das Opening mit bis zu 70&nbsp;% lief bis 22.&nbsp;November. Was danach gilt, steht auf der Black-Friday-Seite.</p><div class="go"><a href="{{awin:7619|https://www.lampenwelt.de/aktionen/black-friday}}" rel="sponsored nofollow noopener" target="_blank">Zu den Lampen-Deals{{EXT}}</a><span class="tag">Anzeige</span></div></div>
     <div class="bfh"><h3>teppich.de</h3><p class="st">Black Week <b>bis zu 60&nbsp;%</b></p><p>Auf beliebte Teppiche. Ein Enddatum steht nicht auf der Seite.</p><div class="go"><a href="{{awin:53143|https://www.teppich.de/beliebte-teppiche/}}" rel="sponsored nofollow noopener" target="_blank">Zu den Teppichen{{EXT}}</a><span class="tag">Anzeige</span></div></div>
     <div class="bfh"><h3>Möbel Inhofer</h3><p class="st">Black November Weeks <b>bis 28. November</b></p><p>Tausende Möbel reduziert, im Onlineshop und im Einrichtungshaus in Senden.</p><div class="go"><a href="{{awin:41312|https://www.inhofer.de/aktionen-events/black-november-weeks/}}" rel="sponsored nofollow noopener" target="_blank">Zu den Angeboten{{EXT}}</a><span class="tag">Anzeige</span></div></div>
   </div>
   <p class="bfh-n">Auch hier gilt: erst den 30-Tage-Preis prüfen, dann kaufen. Wie das geht, steht gleich darunter.</p>
+</div></section>
+
+<section id="kaffee"><div class="wrap">
+  <div class="sec-h"><h2>Kaffeemaschine zum Black Friday.</h2><p class="lede">Unsere Wahl in jeder Preisklasse, mit dem Preis, den wir zuletzt bei OTTO gesehen haben. Liegt das Angebot darunter, ist es eins.<span class="tag">Anzeige</span></p></div>
+  <div class="bfk-g">
+{{KF_BF}}
+    <article class="bfk"><p class="bfk-k">Statt Kaffee</p><h3>Matcha-Set</h3><p>Bambusbesen, Schale und Löffel. Achte auf einen Besen mit vielen feinen Zinken und eine Schale mit breitem Boden.</p><div class="go"><a href="{{amz:Matcha Set Bambusbesen Schale Löffel}}" rel="sponsored nofollow noopener" target="_blank">Bei Amazon ansehen{{EXT}}</a><span class="tag">Anzeige</span></div><a class="bfk-m" href="matcha.html">Zum Matcha-Ratgeber</a></article>
+  </div>
+  <div class="bfk-w"><a class="btn" href="kaffee.html#finder">Welche Maschine passt zu mir?</a><a class="btn ghost" href="kaffee.html#vergleich">Alle {{KF:n}} Maschinen vergleichen</a></div>
+  <p class="bfh-n">Preise ohne Gewähr, zuletzt geprüft am {{KF:stand}}. Miss vorher die Höhe unter dem Hängeschrank: Im Kaffee-Ratgeber steht jede Maschine mit ihren Maßen.</p>
 </div></section>
 
 <section id="check"><div class="wrap narrow">

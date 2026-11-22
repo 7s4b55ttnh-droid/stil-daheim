@@ -914,6 +914,22 @@ def kf_leiste():
         % (g['id'], kf_massbild(g, klein=True), kf_nb(d['klassen'][g['kl'] - 1]['name']), g['name'], kf_nb(g['tag'])) for g in W)
 
 
+def kf_bf():
+    """{{KF_BF}}: „Unsere Wahl“ der Vollautomaten je Preisklasse als kurze Karten für die Black-Friday-Seite (Preis mit Stand, Link zu OTTO als Anzeige, Link zur Karte im Kaffee-Ratgeber)."""
+    d = kf()
+    W = sorted((g for g in d['geraete'] if g['art'] == 'voll' and g.get('wahl')), key=lambda g: g['kl'])
+    out = []
+    for g in W:
+        a, akt = g.get('aktion'), ''
+        if a and datetime.date.today().isoformat() <= a['bis']:
+            akt = '<p class="bfk-a">%s</p>' % kf_nb(a['text'])
+        out.append('<article class="bfk"><p class="bfk-k">%s</p><h3>%s</h3><p class="bfk-p"><b>%s&nbsp;€</b> bei OTTO am %s</p><p>%s</p>%s'
+                   '<div class="go"><a href="{{otto:%s}}" rel="sponsored nofollow noopener" target="_blank">Bei OTTO ansehen%s</a><span class="tag">Anzeige</span></div>'
+                   '<a class="bfk-m" href="kaffee.html#m-%s">Dafür und Dagegen</a></article>'
+                   % (kf_nb(d['klassen'][g['kl'] - 1]['name']), g['name'], '{:,}'.format(g['preis']).replace(',', '.'), de_date(d['stand']), kf_nb(g['plsatz']), akt, g['url'], EXT, g['id']))
+    return '\n'.join(out)
+
+
 def kf_vergleich():
     """{{KF_VERGLEICH}}: Zeilen der Übersicht, günstigste zuerst, mit einer Zwischenzeile je Preisklasse (das Skript der Seite sortiert und filtert)."""
     d, out, kl = kf(), [], 0
@@ -1253,7 +1269,7 @@ def page(src):
     html = re.sub(r'\{\{RELATED:([\w,=-]+)(\|plain)?\}\}', lambda m: related(m.group(1), bool(m.group(2)), key), html)
     html = re.sub(r'\{\{TILES:([\w,=-]+)\}\}', lambda m: tiles(m.group(1)), html)
     if '{{KF' in html:   # Kaffee-Ratgeber aus kaffee.json
-        html = html.replace('{{KF_VERGLEICH}}', kf_vergleich()).replace('{{KF_LEISTE}}', kf_leiste()).replace('{{KF_LEITER}}', kf_leiter()).replace('{{KF_QUELLEN}}', kf_quellen())
+        html = html.replace('{{KF_VERGLEICH}}', kf_vergleich()).replace('{{KF_LEISTE}}', kf_leiste()).replace('{{KF_LEITER}}', kf_leiter()).replace('{{KF_QUELLEN}}', kf_quellen()).replace('{{KF_BF}}', kf_bf())
         html = re.sub(r'\{\{KF_KARTEN:(\w+)\}\}', lambda m: kf_karten(m.group(1)), html)
         html = re.sub(r'\{\{KF:(\w+)\}\}', lambda m: kf_zahl(m.group(1)), html)
     html = re.sub(r'\{\{otto:(.*?)\}\}', lambda m: otto_url(m.group(1)), html)
