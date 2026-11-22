@@ -1,6 +1,7 @@
 {
 "adventskranz": {"g": 66480, "p": [["Aprikose", "#f7c07a"], ["Kamel", "#cd9660"], ["Dämmerblau", "#4d5772"], ["Zeder", "#75482c"], ["Schokolade", "#3a2516"]]},
 "adventskranz-2": {"g": 108142, "p": [["Bernstein", "#ca8442"], ["Tabak", "#825d45"], ["Cognac", "#7a4821"], ["Mahagoni", "#4f2c16"], ["Torf", "#302d1a"]]},
+"adventskranz-3": {"g": 66739, "p": [["Aprikose", "#e6a363"], ["Kamel", "#cb9e7c"], ["Cognac", "#824e2a"], ["Schokolade", "#372718"], ["Ebenholz", "#161008"]]},
 "arbeitsecke": {"g": 102694, "p": [["Bernstein", "#c77733"], ["Cognac", "#8c4d22"], ["Nussbaum", "#6f4834"], ["Schokolade", "#39190c"], ["Ebenholz", "#1a0d07"]]},
 "arbeitsecke-2": {"g": 59478, "p": [["Pfirsich", "#d7b185"], ["Haselnuss", "#a28061"], ["Tabak", "#78593e"], ["Walnuss", "#4e321a"], ["Espresso", "#2a1e10"]]},
 "ausmisten": {"g": 66261, "p": [["Weizen", "#e6be88"], ["Haselnuss", "#a17753"], ["Rauchblau", "#747084"], ["Umbra", "#624f45"], ["Schokolade", "#3d2613"]]},
