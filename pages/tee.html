@@ -1,0 +1,196 @@
+<!--meta {"key":"tee","title":"Tee richtig zubereiten: Ziehzeit und Temperatur – Stil-Daheim","desc":"Tee zubereiten mit Ziehzeit und Temperatur: schwarzer Tee kochend 2 bis 5 Minuten, grüner Tee 70 bis 90 Grad, Kräutertee sprudelnd kochend. Mit Tee-Timer.","og":"assets/gemuetlich.jpg","updated":"2026-11-22","kurz":"Schwarzen Tee gießt du mit kochendem Wasser auf und lässt ihn zwei bis fünf Minuten ziehen: kurz wirkt er anregend, länger wird er herber. Grüner Tee braucht 70 bis 90&nbsp;Grad und ein bis drei Minuten. Kräuter- und Früchtetee immer mit sprudelnd kochendem Wasser aufgießen und mindestens fünf Minuten ziehen lassen, das rät das Bundesinstitut für Risikobewertung. Auf eine Tasse kommt etwa ein Teelöffel loser Tee."} -->
+<!--HEAD-->
+<style>
+/* Tee-Ratgeber (seit 22.11.2026). Erkennungszeichen: je Sorte eine Karte mit Aufgussfarbe und Temperaturskala, dazu der Tee-Timer.
+   Zeiten und Temperaturen nur aus den Quellen unten (Stiftung Warentest, ÖKO-TEST, BfR, Teeverband). Keine Gesundheitsversprechen. */
+.hero.sub.plain.te-hero{min-height:0;background:radial-gradient(120% 120% at 85% 10%,#3d4a24 0%,#161c10 55%,#0a0d08 100%)}
+.hero.sub.plain.te-hero::after{display:none}
+.te-hero .wrap{padding-block:clamp(130px,17vw,190px) clamp(48px,7vw,84px)}
+.te-hero h1{max-width:13ch}
+.te-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.te-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.te-g{grid-template-columns:1fr}}
+.te-s{position:relative;display:flex;flex-direction:column;gap:10px;background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:20px 18px 16px;overflow:hidden}
+.te-f{position:absolute;left:0;right:0;top:0;height:8px}
+.te-s h3{margin:4px 0 0;font-size:1.3rem}
+.te-s dl{margin:0;display:grid;gap:6px}
+.te-s dl div{display:flex;justify-content:space-between;gap:10px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:6px}
+.te-s dt{font-size:.86rem;font-weight:600;color:var(--mut)}
+.te-s dd{margin:0;font-weight:700;font-stretch:88%;text-align:right;color:var(--brass-t)}
+.te-s p{margin:0;font-size:.93rem;color:var(--mut);flex:1}
+.te-sk{position:relative;height:40px;margin:4px 4px 0}
+.te-sk::before{content:"";position:absolute;left:0;right:0;top:6px;height:10px;border-radius:5px;background:color-mix(in srgb,var(--ink) 9%,var(--pan))}
+.te-sk span{position:absolute;top:3px;height:16px;border-radius:5px;background:var(--grn);min-width:10px}
+.te-sk i{position:absolute;top:22px;transform:translateX(-50%);font-style:normal;font-size:.74rem;font-weight:600;color:var(--mut);white-space:nowrap}
+.te-sk i:first-of-type{transform:none}.te-sk i:last-of-type{transform:translateX(-100%)}
+.te-go{font:inherit;font-weight:650;min-height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;padding:0 16px}
+.te-go:hover{border-color:var(--brass-t)}
+/* Timer */
+.te-t{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;align-items:center;margin-top:28px;background:var(--pan);border:1px solid var(--line);border-radius:18px;padding:24px}
+.te-ring{position:relative;width:200px;height:200px;justify-self:center}
+.te-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.te-ring circle{fill:none;stroke-width:10}
+.te-ring .bg{stroke:color-mix(in srgb,var(--ink) 9%,var(--pan))}
+.te-ring .fg{stroke:var(--grn);stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.te-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:3rem;font-stretch:78%;font-variant-numeric:tabular-nums}
+.te-t h3{margin:0 0 4px}
+.te-t p{margin:0;color:var(--mut)}
+.te-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.te-b button{font:inherit;font-weight:650;min-height:46px;min-width:46px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;padding:0 18px}
+.te-b button.pri{background:var(--grn);border-color:var(--grn);color:var(--on-grn)}
+.te-st{margin-top:14px;font-weight:650;min-height:1.5em}
+@media (max-width:640px){.te-t{grid-template-columns:1fr;padding:20px 16px}}
+@media (prefers-reduced-motion:reduce){.te-ring .fg{transition:none}}
+.te-z{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:26px}
+.te-z div{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:18px}
+.te-z b{display:block;font-size:clamp(1.7rem,3.2vw,2.3rem);font-stretch:78%;line-height:1;color:var(--brass-t);margin-bottom:6px;white-space:nowrap}
+.te-z span{font-size:.92rem;color:var(--mut)}
+@media (max-width:560px){.te-z{grid-template-columns:1fr}.te-z div{display:grid;grid-template-columns:7.4rem 1fr;align-items:center;gap:12px;padding:14px 16px}.te-z b{margin:0;font-size:1.7rem}}
+</style>
+<!--MAIN-->
+<div class="hero sub plain te-hero">
+  <div class="wrap">
+    <h1>Tee richtig zubereiten</h1>
+    <p>Wie heiß, wie lange, wie viel. Vier Sorten auf einen Blick, mit einem Timer, der dir sagt, wann der Beutel raus muss.</p>
+    <div class="btns"><a class="btn" href="#sorten">Ziehzeit und Temperatur</a><a class="btn ghost" href="#timer">Zum Tee-Timer</a></div>
+  </div>
+</div>
+
+<section id="sorten"><div class="wrap">
+  <div class="sec-h"><h2>Ziehzeit und Temperatur.</h2><p class="lede">Die Angaben stammen von Stiftung Warentest, ÖKO-TEST und dem Bundesinstitut für Risikobewertung. Steht auf deiner Packung etwas anderes, gilt die Packung.</p></div>
+  <div class="te-g">
+    <article class="te-s" id="schwarz"><span class="te-f" style="background:#8a3d17" aria-hidden="true"></span><h3>Schwarzer Tee</h3>
+      <dl><div><dt>Wasser</dt><dd>kochend</dd></div><div><dt>Ziehzeit</dt><dd>2 bis 5&nbsp;min</dd></div></dl>
+      <div class="te-sk" role="img" aria-label="Temperatur: kochend"><span style="left:95%;width:5%"></span><i style="left:0">60&nbsp;°C</i><i style="left:50%">80</i><i style="left:100%">100&nbsp;°C</i></div>
+      <p>Zwei bis drei Minuten: frisch und anregend. Vier bis fünf Minuten: mehr Gerbstoffe, kräftiger und herber.</p><button type="button" class="te-go" data-tee="schwarz" data-min="3">Timer: 3&nbsp;Minuten</button></article>
+    <article class="te-s" id="gruen"><span class="te-f" style="background:#b9b24a" aria-hidden="true"></span><h3>Grüner Tee</h3>
+      <dl><div><dt>Wasser</dt><dd>70 bis 90&nbsp;°C</dd></div><div><dt>Ziehzeit</dt><dd>1 bis 3&nbsp;min</dd></div></dl>
+      <div class="te-sk" role="img" aria-label="Temperatur: 70 bis 90 °C"><span style="left:25%;width:50%"></span><i style="left:0">60&nbsp;°C</i><i style="left:50%">80</i><i style="left:100%">100&nbsp;°C</i></div>
+      <p>Nie kochend, sonst wird er bitter. Guter grüner Tee lässt sich bis zu dreimal aufgießen.</p><button type="button" class="te-go" data-tee="gruen" data-min="2">Timer: 2&nbsp;Minuten</button></article>
+    <article class="te-s" id="kraeuter"><span class="te-f" style="background:#c9a23c" aria-hidden="true"></span><h3>Kräutertee</h3>
+      <dl><div><dt>Wasser</dt><dd>sprudelnd kochend</dd></div><div><dt>Ziehzeit</dt><dd>mindestens 5&nbsp;min</dd></div></dl>
+      <div class="te-sk" role="img" aria-label="Temperatur: sprudelnd kochend"><span style="left:95%;width:5%"></span><i style="left:0">60&nbsp;°C</i><i style="left:50%">80</i><i style="left:100%">100&nbsp;°C</i></div>
+      <p>Pfefferminze, Kamille, Fenchel und auch Rooibos. Immer mit sprudelnd kochendem Wasser, das rät das Bundesinstitut für Risikobewertung.</p><button type="button" class="te-go" data-tee="kraeuter" data-min="5">Timer: 5&nbsp;Minuten</button></article>
+    <article class="te-s" id="fruechte"><span class="te-f" style="background:#a8324a" aria-hidden="true"></span><h3>Früchtetee</h3>
+      <dl><div><dt>Wasser</dt><dd>sprudelnd kochend</dd></div><div><dt>Ziehzeit</dt><dd>5 bis 10&nbsp;min</dd></div></dl>
+      <div class="te-sk" role="img" aria-label="Temperatur: sprudelnd kochend"><span style="left:95%;width:5%"></span><i style="left:0">60&nbsp;°C</i><i style="left:50%">80</i><i style="left:100%">100&nbsp;°C</i></div>
+      <p>Hagebutte, Hibiskus, Apfel. Wie Kräutertee: kochendes Wasser und lange ziehen lassen.</p><button type="button" class="te-go" data-tee="fruechte" data-min="8">Timer: 8&nbsp;Minuten</button></article>
+  </div>
+</div></section>
+
+<section class="band" id="timer"><div class="wrap narrow">
+  <h2>Tee-Timer.</h2>
+  <p class="lede">Sorte wählen, starten, Tee genießen. Der Timer läuft nur in diesem Fenster und speichert nichts.</p>
+  <div class="te-t">
+    <div class="te-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="tt-fg" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="0"/></svg><b id="tt-z" role="timer" aria-live="off">3:00</b></div>
+    <div>
+      <h3 id="tt-n">Schwarzer Tee</h3>
+      <p id="tt-i">Kochendes Wasser. Zwei bis drei Minuten für anregend, vier bis fünf für kräftig.</p>
+      <div class="te-b"><button type="button" id="tt-m" aria-label="Eine Minute weniger">−</button><button type="button" id="tt-p" aria-label="Eine Minute mehr">+</button><button type="button" class="pri" id="tt-go">Starten</button><button type="button" id="tt-re">Zurücksetzen</button></div>
+      <p class="te-st" id="tt-st" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</div></section>
+
+<section id="menge"><div class="wrap narrow">
+  <h2>Wie viel Tee, welches Wasser.</h2>
+  <div class="te-z">
+    <div><b>1&nbsp;TL</b><span>loser Tee pro Tasse</span></div>
+    <div><b>+1</b><span>Teelöffel extra für die Kanne</span></div>
+    <div><b>×2</b><span>so stark quellen die Blätter auf</span></div>
+  </div>
+  <dl class="kv" style="margin-top:26px">
+    <dt>Menge</dt><dd>Etwa ein Teelöffel loser Tee pro Tasse und einer extra für die Kanne. Je nach Sorte und Blattgröße schwankt das, die Packung gibt den genauen Wert.</dd>
+    <dt>Platz für die Blätter</dt><dd>Teeblätter werden im Wasser etwa doppelt so groß. Ein großes Sieb oder ein Baumwollnetz ist besser als ein enges Tee-Ei.</dd>
+    <dt>Grüner Tee</dt><dd>Lass das gekochte Wasser ein paar Minuten stehen, bevor du aufgießt. Beim zweiten und dritten Aufguss darf das Wasser etwas heißer sein und die Ziehzeit kürzer.</dd>
+    <dt>Kräutertee</dt><dd>Wasser aus dem Heißwasserspender reicht nicht: Es hat meist nur 80 bis 85&nbsp;Grad. Kräuter sind ein Naturprodukt und können Keime tragen, die erst kochendes Wasser sicher abtötet. Den fertigen Tee nicht stundenlang warm stehen lassen.</dd>
+    <dt>Für Babys und Kleinkinder</dt><dd>Hier ist das besonders wichtig. Das Bundesinstitut für Risikobewertung nennt Säuglinge, Kleinkinder und Kranke ausdrücklich.</dd>
+  </dl>
+</div></section>
+
+<section class="band" id="eistee"><div class="wrap narrow">
+  <h2>Eistee selber machen.</h2>
+  <p class="lede">Das Rezept des Deutschen Tee &amp; Kräutertee Verbands: doppelt stark aufbrühen und heiß über Eis gießen.</p>
+  <div class="te-z">
+    <div><b>10</b><span>Teebeutel oder Teelöffel schwarzer Tee</span></div>
+    <div><b>1&nbsp;l</b><span>kochendes Wasser</span></div>
+    <div><b>1&nbsp;kg</b><span>Eiswürfel</span></div>
+  </div>
+  <ol class="steps" style="margin-top:30px">
+    <li><h3>Doppelt stark aufbrühen</h3><p>Die doppelte Menge Tee, die auf der Packung steht: zum Beispiel 10 Teebeutel auf einen Liter kochendes Wasser.</p></li>
+    <li><h3>Ziehen lassen</h3><p>So lange, wie es auf der Packung steht. Dann Beutel oder Sieb herausnehmen.</p></li>
+    <li><h3>Heiß über Eis gießen</h3><p>Einen Liter heißen Tee auf ein Kilogramm Eiswürfel gießen. Durch das schnelle Abkühlen bleibt er klar.</p></li>
+  </ol>
+  <p class="tip" style="margin-top:18px">Lieber Kaffee auf Eis? Iced Latte und Cold Brew stehen bei den <a href="kaffee-rezepte.html">Kaffee-Rezepten</a>, der Iced Matcha Latte im <a href="matcha.html#iced-matcha-latte">Matcha-Ratgeber</a>.</p>
+</div></section>
+
+<section id="koffein"><div class="wrap narrow">
+  <h2>Koffein und Aufbewahren.</h2>
+  <dl class="kv" style="margin-top:22px">
+    <dt>Koffein</dt><dd>Schwarzer und grüner Tee enthalten Koffein, Kaffee oft etwa doppelt so viel. Für gesunde Erwachsene gelten bis zu 400&nbsp;mg Koffein am Tag als unbedenklich, über den Tag verteilt.</dd>
+    <dt>Ohne Koffein</dt><dd>Kräuter- und Früchtetee sind keine Tees im engeren Sinn, sie stammen nicht vom Teestrauch.</dd>
+    <dt>Aufbewahren</dt><dd>Trocken, kühl, dunkel und dicht verschlossen. Die Dose sollte nicht zu groß sein, damit wenig Luft an den Tee kommt.</dd>
+    <dt>Nicht neben Gewürze</dt><dd>Tee nimmt fremde Gerüche an. Stell ihn nicht neben Gewürze oder Kaffee.</dd>
+    <dt>Haltbar</dt><dd>Richtig gelagert etwa zwei Jahre.</dd>
+    <dt>Abwechseln</dt><dd>Stiftung Warentest rät, nicht ausschließlich Tee zu trinken und die Sorten zu wechseln.</dd>
+  </dl>
+</div></section>
+
+<section class="band" id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für deine Tee-Ecke.</h2><p class="lede">Die Links führen zu einer Suche bei Amazon.<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" id="a-kocher" href="{{amz:Wasserkocher Temperatureinstellung 70 80 90 100 Grad}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Wasserkocher mit Temperaturwahl</b><span>Für grünen Tee mit 70 bis 90 Grad</span><span class="chk">Achte auf: Stufen ab 70&nbsp;Grad, Warmhaltefunktion</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Teekanne Glas mit Siebeinsatz 1 Liter}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Teekanne mit Sieb</b><span>Glas, ein Liter</span><span class="chk">Achte auf: großer Siebeinsatz, damit die Blätter Platz haben</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Teesieb Edelstahl groß für Tasse}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Teesieb für die Tasse</b><span>Edelstahl, feinmaschig</span><span class="chk">Achte auf: reicht bis zum Tassenboden, mit Ablage</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Teedosen luftdicht Set}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Teedosen</b><span>Luftdicht und lichtdicht</span><span class="chk">Achte auf: Aromadeckel, lieber mehrere kleine als eine große</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Stövchen Teekanne Gusseisen}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Stövchen</b><span>Hält die Kanne warm</span><span class="chk">Achte auf: stabiler Stand, passend zum Kannenboden</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Teetassen Set Steingut}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Teetassen</b><span>Steingut oder Porzellan</span><span class="chk">Achte auf: dünner Rand, liegt gut in der Hand</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie lange muss schwarzer Tee ziehen?</summary><div><p>Zwei bis fünf Minuten in kochendem Wasser. Nach zwei bis drei Minuten schmeckt er frisch und wirkt anregend. Nach vier bis fünf Minuten lösen sich mehr Gerbstoffe, er wird kräftiger und herber.</p></div></details>
+    <details><summary>Wie heiß darf das Wasser für grünen Tee sein?</summary><div><p>70 bis 90&nbsp;Grad, nicht kochend. Die Blätter sind empfindlicher als beim schwarzen Tee. Ziehzeit ein bis drei Minuten.</p></div></details>
+    <details><summary>Warum muss Kräutertee mit kochendem Wasser aufgegossen werden?</summary><div><p>Kräuter können Keime tragen. Das Bundesinstitut für Risikobewertung rät deshalb zu sprudelnd kochendem Wasser und mindestens fünf Minuten Ziehzeit. Wasser aus Heißwasserspendern mit 80 bis 85&nbsp;Grad genügt nicht.</p></div></details>
+    <details><summary>Wie viel Tee kommt in eine Tasse?</summary><div><p>Etwa ein Teelöffel loser Tee. Für die Kanne kommt einer extra dazu.</p></div></details>
+    <details><summary>Kann ich grünen Tee mehrmals aufgießen?</summary><div><p>Ja, guten grünen Tee bis zu dreimal. Das Wasser darf dann etwas heißer sein, die Ziehzeit kürzer.</p></div></details>
+    <details><summary>Wie bewahre ich Tee auf?</summary><div><p>Trocken, kühl, dunkel und dicht verschlossen, nicht neben Gewürzen oder Kaffee. So hält er etwa zwei Jahre.</p></div></details>
+    <details><summary>Und Matcha?</summary><div><p>Matcha ist gemahlener grüner Tee und wird aufgeschlagen statt aufgegossen. Dafür gibt es den <a href="matcha.html">Matcha-Ratgeber</a>.</p></div></details>
+  </div>
+</div></section>
+
+<section class="band" id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>Stiftung Warentest: FAQ Tee, Antworten auf die wichtigsten Fragen (23.03.2022) <a href="https://www.test.de/Tee-Antwort-auf-die-wichtigsten-Fragen-4194494-4196081/" target="_blank" rel="noopener">test.de</a></li>
+    <li>ÖKO-TEST: Grün, schwarz oder fruchtig, welche Teesorten man wie zubereitet (28.11.2024) <a href="https://www.oekotest.de/essen-trinken/Gruen-schwarz-oder-fruchtig-Welche-Teesorten-man-wie-zubereitet_15096_1.html" target="_blank" rel="noopener">oekotest.de</a></li>
+    <li>Bundesinstitut für Risikobewertung: Kräutertees unbedingt mit kochendem Wasser aufgießen, Presseinformation 37/2005 (14.12.2005) <a href="https://www.bfr.bund.de/presseinformation/kraeutertees-unbedingt-mit-kochendem-wasser-aufgiessen/" target="_blank" rel="noopener">bfr.bund.de</a></li>
+    <li>Deutscher Tee &amp; Kräutertee Verband: Die Zubereitung <a href="https://www.teeverband.de/alles-ueber-tee/zubereitung/die-zubereitung/" target="_blank" rel="noopener">teeverband.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 22.11.2026.</p></div>
+</div></section>
+
+{{RELATED:matcha,kaffee-rezepte,gemuetlich}}
+<!--END-->
+<script>
+/* Tee-Timer: zählt im offenen Fenster herunter (Endzeitpunkt statt Zählschritte, damit er auch im Hintergrund stimmt). Speichert nichts. */
+(function(){var z=document.getElementById('tt-z');if(!z)return;
+ var fg=document.getElementById('tt-fg'),go=document.getElementById('tt-go'),st=document.getElementById('tt-st'),nm=document.getElementById('tt-n'),inf=document.getElementById('tt-i');
+ var U=326.73,min=3,ende=0,iv=0;
+ var I={schwarz:['Schwarzer Tee','Kochendes Wasser. Zwei bis drei Minuten für anregend, vier bis fünf für kräftig.'],gruen:['Grüner Tee','Wasser mit 70 bis 90 Grad, nie kochend. Ein bis drei Minuten.'],kraeuter:['Kräutertee','Sprudelnd kochendes Wasser, mindestens fünf Minuten.'],fruechte:['Früchtetee','Sprudelnd kochendes Wasser, fünf bis zehn Minuten.']};
+ function f(s){return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+ function zeig(s){z.textContent=f(s);fg.setAttribute('stroke-dashoffset',String(U*(1-s/(min*60))))}
+ function halt(){clearInterval(iv);iv=0;ende=0;go.textContent='Starten'}
+ function reset(){halt();st.textContent='';zeig(min*60)}
+ function tick(){var s=Math.max(0,Math.round((ende-Date.now())/1000));zeig(s);if(!s){halt();st.textContent='Fertig. Beutel oder Sieb jetzt herausnehmen.';document.title='Fertig! '+document.title.replace(/^Fertig! /,'')}}
+ go.addEventListener('click',function(){if(iv){reset();return}st.textContent='Läuft …';ende=Date.now()+min*60000;go.textContent='Stoppen';iv=setInterval(tick,250);tick()});
+ document.getElementById('tt-re').addEventListener('click',reset);
+ document.getElementById('tt-p').addEventListener('click',function(){if(min<10){min++;reset()}});
+ document.getElementById('tt-m').addEventListener('click',function(){if(min>1){min--;reset()}});
+ Array.prototype.forEach.call(document.querySelectorAll('.te-go'),function(b){b.addEventListener('click',function(){var i=I[b.getAttribute('data-tee')];min=+b.getAttribute('data-min');nm.textContent=i[0];inf.textContent=i[1];reset();document.getElementById('timer').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})})});
+ reset();
+})();
+</script>

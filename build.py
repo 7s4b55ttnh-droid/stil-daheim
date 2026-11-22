@@ -76,6 +76,8 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('schlafzimmer.html', 'Schlafzimmer einrichten', 'Abstände, Farben, Licht, Raumklima', 'schlafzimmer', 'schlafzimmer'),
         ('gemuetlich.html', 'Gemütlich im Winter', 'Licht, Textilien, Leseecke', 'gemuetlich', 'gemuetlich'),
         ('kaffee.html', 'Kaffee-Ecke einrichten', 'Maschinen-Finder, Preisklassen, Espresso, Kaffee-Ecke', 'kaffee', 'kaffee'),
+        ('kaffee-rezepte.html', 'Kaffee-Rezepte', 'Cappuccino, Flat White, Iced Latte, Cold Brew', 'kaffee-rezepte', 'kaffee'),
+        ('tee.html', 'Tee richtig zubereiten', 'Ziehzeit, Temperatur, Tee-Timer, Eistee', 'tee', 'gemuetlich'),
         ('matcha.html', 'Matcha zubereiten', 'Anleitung, Iced Matcha Latte, guter Matcha, Herkunft', 'matcha', 'matcha'),
         ('weihnachten.html', 'Weihnachtlich dekorieren', 'Ohne Kitsch, mit Holz und Licht', 'weihnachten', 'weihnachten'),
         ('tischdeko.html', 'Weihnachtliche Tischdeko', 'Festlich decken mit Maßen und Ideen', 'tischdeko', 'tischdeko'),
@@ -334,7 +336,7 @@ def fig(name, alt, cap):
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'wohnideen': 'stile', 'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
-       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
+       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'kaffee-rezepte': 'raum', 'tee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}

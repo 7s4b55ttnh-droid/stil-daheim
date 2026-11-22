@@ -1,0 +1,173 @@
+<!--meta {"key":"kaffee-rezepte","title":"Kaffee-Rezepte für Cappuccino, Flat White und Cold Brew – Stil-Daheim","desc":"Vier Kaffee-Rezepte mit genauen Mengen: Cappuccino mit 25 ml Espresso und 100 ml Milch, Flat White, Iced Latte und Cold Brew mit 100 g Kaffee je Liter.","og":"assets/kaffee.jpg","updated":"2026-11-22","kurz":"Ein Cappuccino besteht aus 25&nbsp;ml Espresso und 100&nbsp;ml Milch, die auf etwa 125&nbsp;ml aufgeschäumt wird. Für einen Flat White nimmst du einen doppelten Espresso und feinporige Milch ohne Schaumhaube, zusammen ein Drittel Espresso und zwei Drittel Milch. Ein Iced Latte ist ein doppelter Espresso über einem Glas mit Eis und 150&nbsp;ml kalter Milch. Cold Brew setzt du mit 100&nbsp;Gramm grob gemahlenem Kaffee auf einen Liter kaltes Wasser an und lässt ihn 6 bis 24&nbsp;Stunden ziehen."} -->
+<!--HEAD-->
+<style>
+/* Kaffee-Rezepte (seit 22.11.2026). Erkennungszeichen: jedes Getränk als Schnittbild, die Schichten im Verhältnis der Mengen.
+   Mengen nur aus den Quellen unten (INEI, Siemens, Smeg, Dallmayr), nichts geschätzt. */
+.hero.sub.plain.rz-hero{min-height:0;background:radial-gradient(120% 120% at 85% 10%,#4a2f1c 0%,#1c120c 55%,#0d0907 100%)}
+.hero.sub.plain.rz-hero::after{display:none}
+.rz-hero .wrap{padding-block:clamp(130px,17vw,190px) clamp(48px,7vw,84px)}
+.rz-hero h1{max-width:13ch}
+.rz-nav{list-style:none;padding:0;margin:30px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:880px}
+.rz-nav a{display:flex;flex-direction:column;gap:2px;min-height:64px;justify-content:center;padding:12px 14px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.06);color:#fff;text-decoration:none}
+.rz-nav a:hover{background:rgba(255,255,255,.12)}
+.rz-nav b{font-size:1.05rem;font-stretch:88%}
+.rz-nav span{font-size:.84rem;color:rgba(255,255,255,.74)}
+@media (max-width:760px){.rz-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Grundlage */
+.rz-z{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rz-z div{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:18px}
+.rz-z b{display:block;font-size:clamp(1.7rem,3.2vw,2.3rem);font-stretch:78%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.rz-z span{font-size:.92rem;color:var(--mut)}
+@media (max-width:560px){.rz-z{grid-template-columns:1fr}.rz-z div{display:grid;grid-template-columns:8.8rem 1fr;align-items:center;gap:12px;padding:14px 16px}.rz-z b{margin:0;font-size:1.65rem;white-space:nowrap}}
+/* Rezept: Schnittbild links, Mengen und Schritte rechts */
+.rz-e{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px 48px;align-items:start}
+.rz-b{margin:0;padding:22px 14px 14px;background:var(--pan);border:1px solid var(--line);border-radius:16px}
+.band .rz-b,.band .rz-z div{background:var(--bg)}
+.rz-b svg{display:block;width:100%;max-width:290px;height:auto;margin:0 auto;color:var(--ink);font:600 13px/1 inherit}
+.rz-b figcaption{margin-top:12px;font-size:.84rem;color:var(--mut);text-align:center}
+.rz-e .steps{margin-top:22px}
+@media (max-width:900px){.rz-e{grid-template-columns:1fr}.rz-b{max-width:360px;width:100%;justify-self:center;box-sizing:border-box}}
+/* Rechner */
+.rz-re{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px}
+.rz-re label{display:grid;gap:6px;align-content:start;font-weight:650;font-size:.92rem}
+.rz-re select{font:inherit;font-size:1.05rem;font-weight:600;min-height:46px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--pan);color:var(--ink);width:100%;box-sizing:border-box}
+.rz-out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.rz-out div{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:16px}
+.rz-out b{display:block;font-size:1.7rem;font-stretch:80%;line-height:1.05;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.rz-out span{font-size:.9rem;color:var(--mut)}
+@media (max-width:560px){.rz-re,.rz-out{grid-template-columns:1fr}}
+</style>
+<!--MAIN-->
+<div class="hero sub plain rz-hero">
+  <div class="wrap">
+    <h1>Kaffee-Rezepte</h1>
+    <p>Vier Getränke, die zu Hause gelingen. Mit den Mengen, die Röster und Barista-Verbände nennen, und einem Schnittbild, das zeigt, was in der Tasse steckt.</p>
+    <ul class="rz-nav">
+      <li><a href="#cappuccino"><b>Cappuccino</b><span>25 ml Espresso, 100 ml Milch</span></a></li>
+      <li><a href="#flat-white"><b>Flat White</b><span>Doppelter Espresso, wenig Schaum</span></a></li>
+      <li><a href="#iced-latte"><b>Iced Latte</b><span>Eis, kalte Milch, Espresso</span></a></li>
+      <li><a href="#cold-brew"><b>Cold Brew</b><span>100 g auf einen Liter</span></a></li>
+    </ul>
+  </div>
+</div>
+
+<section id="espresso"><div class="wrap narrow">
+  <h2>Die Grundlage: ein Espresso.</h2>
+  <p class="lede">Drei der vier Rezepte beginnen mit Espresso. Das italienische Espresso-Institut beschreibt ihn so:</p>
+  <div class="rz-z" style="margin-top:26px">
+    <div><b>7&nbsp;g</b><span>gemahlener Kaffee</span></div>
+    <div><b>25&nbsp;ml</b><span>in der Tasse, mit Crema</span></div>
+    <div><b>25&nbsp;s</b><span>Durchlaufzeit</span></div>
+  </div>
+  <p class="tip" style="margin-top:18px">Ein doppelter Espresso ist die doppelte Menge, also etwa 50&nbsp;ml. Ein Vollautomat macht ihn auf Knopfdruck, am Siebträger bestimmst du jeden Schritt selbst. Welche Maschine zu dir passt, steht im <a href="kaffee.html#finder">Kaffee-Ratgeber</a>, die fünf Handgriffe am Siebträger unter <a href="kaffee.html#barista">Barista zu Hause</a>.</p>
+</div></section>
+
+<section class="band" id="cappuccino"><div class="wrap">
+  <div class="sec-h"><h2>Cappuccino.</h2><p class="lede">Espresso, heiße Milch und eine Haube aus Schaum. Die Mengen stammen vom italienischen Espresso-Institut, das den Cappuccino zertifiziert.</p></div>
+  <div class="rz-e">
+    <figure class="rz-b"><svg viewBox="-12 62 290 112" role="img" aria-label="Cappuccino im Schnitt: unten 25 ml Espresso, darüber die Milch, oben der Schaum"><defs><clipPath id="rz-c1"><path d="M22 78h100c0 44-12 78-30 84H52C34 156 22 122 22 78z"/></clipPath></defs><g clip-path="url(#rz-c1)"><rect x="10" y="149.4" width="140" height="13.2" fill="#3a2317"/><rect x="10" y="112.4" width="140" height="37.6" fill="#a9825d"/><rect x="10" y="88.0" width="140" height="25.0" fill="#fbf8f0"/></g><path d="M22 78h100c0 44-12 78-30 84H52C34 156 22 122 22 78z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/><path d="M22 92c-20-2-26 12-22 24 4 11 16 16 28 14" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8"/><g fill="currentColor"><path d="M100 156.1H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="160.6">25 ml Espresso</text><path d="M100 128.7H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="133.2">100 ml Milch</text><path d="M100 99.8H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="104.3">Schaum</text></g></svg><figcaption>Schematisch, die Schichten im Verhältnis der Mengen.</figcaption></figure>
+    <div>
+      <div class="rz-z"><div><b>25&nbsp;ml</b><span>Espresso</span></div><div><b>100&nbsp;ml</b><span>kalte Milch, direkt aus dem Kühlschrank</span></div><div><b>150–160&nbsp;ml</b><span>fasst die Tasse</span></div></div>
+      <ol class="steps"><li><h3>Tasse vorwärmen</h3><p>Mit heißem Wasser füllen und wieder ausgießen. Die Tasse fasst 150 bis 160&nbsp;ml.</p></li><li><h3>Espresso zubereiten</h3><p>25&nbsp;ml Espresso direkt in die Tasse laufen lassen.</p></li><li><h3>Milch aufschäumen</h3><p>100&nbsp;ml kalte Milch mit Dampf aufschäumen, bis sie etwa 55&nbsp;Grad warm ist. Aus 100&nbsp;ml werden dabei rund 125&nbsp;ml.</p></li><li><h3>Eingießen</h3><p>Die Milch in einem Zug auf den Espresso gießen. Erst fließt die Milch, zum Schluss der Schaum.</p></li></ol>
+    </div>
+  </div>
+  <dl class="kv" style="margin-top:34px"><dt>Mit dem Vollautomaten</dt><dd>Geräte mit Milchsystem machen den Cappuccino auf Knopfdruck. Welche das können, steht in der <a href="kaffee.html#vergleich">Übersicht aller Maschinen</a>.</dd><dt>Ohne Dampfdüse</dt><dd>Milch im Topf erwärmen, nicht kochen, und mit einem Milchaufschäumer aufschlagen.</dd><dt>Nicht zu heiß</dt><dd>Das Institut nennt etwa 55&nbsp;Grad. Spätestens bei 65&nbsp;Grad ist Schluss, sonst verliert die Milch ihre Süße. Faustregel: Die Kanne ist außen so heiß, dass du sie gerade noch halten kannst.</dd></dl>
+</div></section>
+<section id="flat-white"><div class="wrap">
+  <div class="sec-h"><h2>Flat White.</h2><p class="lede">Kräftiger als ein Cappuccino und ohne Schaumhaube. Daher der Name: flach. Australien und Neuseeland beanspruchen beide, ihn erfunden zu haben.</p></div>
+  <div class="rz-e">
+    <figure class="rz-b"><svg viewBox="-12 62 290 112" role="img" aria-label="Flat White im Schnitt: ein Drittel Espresso, zwei Drittel feinporige Milch, kaum Schaum"><defs><clipPath id="rz-c2"><path d="M22 78h100c0 44-12 78-30 84H52C34 156 22 122 22 78z"/></clipPath></defs><g clip-path="url(#rz-c2)"><rect x="10" y="137.6" width="140" height="25.0" fill="#3a2317"/><rect x="10" y="93.2" width="140" height="45.0" fill="#a9825d"/><rect x="10" y="88.0" width="140" height="5.8" fill="#fbf8f0"/></g><path d="M22 78h100c0 44-12 78-30 84H52C34 156 22 122 22 78z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/><path d="M22 92c-20-2-26 12-22 24 4 11 16 16 28 14" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8"/><g fill="currentColor"><path d="M100 150.2H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="154.7">Doppelter Espresso</text><path d="M100 116.1H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="120.6">Feinporige Milch</text></g></svg><figcaption>Schematisch, die Schichten im Verhältnis der Mengen.</figcaption></figure>
+    <div>
+      <div class="rz-z"><div><b>⅓</b><span>Espresso: ein doppelter, etwa 50&nbsp;ml</span></div><div><b>⅔</b><span>feinporig aufgeschäumte Milch</span></div><div><b>160–165&nbsp;ml</b><span>fasst die Tasse</span></div></div>
+      <ol class="steps"><li><h3>Doppelten Espresso zubereiten</h3><p>In eine dickwandige Tasse mit 160 bis 165&nbsp;ml. Sie ist kleiner als eine Cappuccino-Tasse.</p></li><li><h3>Milch feinporig aufschäumen</h3><p>Die Dampfdüse bleibt unter der Oberfläche. So entsteht kein fester Schaum, sondern samtige Milch.</p></li><li><h3>Sanft eingießen</h3><p>Die Milch langsam in den Espresso gießen, bis die Crema nach oben steigt. Die Tasse ist dann randvoll.</p></li></ol>
+    </div>
+  </div>
+  <dl class="kv" style="margin-top:34px"><dt>Unterschied zum Cappuccino</dt><dd>Mehr Espresso, weniger Schaum. Die Milch mischt sich mit dem Kaffee, statt als Haube obenauf zu liegen.</dd><dt>Wie viel Milch</dt><dd>Bei einem doppelten Espresso mit etwa 50&nbsp;ml passen rechnerisch rund 100&nbsp;ml Milch in die Tasse.</dd><dt>Mit dem Vollautomaten</dt><dd>Manche Geräte haben eine eigene Taste für Flat White. Sonst: doppelten Espresso wählen und wenig Milchschaum dazugeben.</dd></dl>
+</div></section>
+<section class="band" id="iced-latte"><div class="wrap">
+  <div class="sec-h"><h2>Iced Latte.</h2><p class="lede">Der schnellste kalte Kaffee: Der heiße Espresso trifft auf Eis und kalte Milch. Das Rezept stammt vom Hersteller Smeg.</p></div>
+  <div class="rz-e">
+    <figure class="rz-b"><svg viewBox="0 8 290 166" role="img" aria-label="Iced Latte im Schnitt: ein Glas mit Eis und 150 ml kalter Milch, obenauf ein doppelter Espresso"><defs><clipPath id="rz-c3"><path d="M34 22h76l-6 132a9 9 0 0 1-9 8H49a9 9 0 0 1-9-8z"/></clipPath></defs><g clip-path="url(#rz-c3)"><rect x="10" y="73.8" width="140" height="88.8" fill="#efe6d4"/><rect x="10" y="63.7" width="140" height="10.7" fill="#c9a583"/><rect x="10" y="36.0" width="140" height="28.3" fill="#3a2317"/><g fill="#fff" fill-opacity=".42" stroke="#fff" stroke-opacity=".9" stroke-width="1.5" stroke-linejoin="round"><rect x="48" y="60" width="28" height="28" rx="5" transform="rotate(-13 62 74)"/><rect x="74" y="84" width="26" height="26" rx="5" transform="rotate(12 87 97)"/><rect x="50" y="110" width="27" height="27" rx="5" transform="rotate(7 63 123)"/><rect x="78" y="46" width="22" height="22" rx="4" transform="rotate(21 89 57)"/></g></g><path d="M34 22h76l-6 132a9 9 0 0 1-9 8H49a9 9 0 0 1-9-8z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/><g fill="currentColor"><path d="M96 124.2H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="128.7">150 ml kalte Milch</text><path d="M96 86.4H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="90.9">Eiswürfel</text><path d="M96 49.9H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="54.4">Doppelter Espresso</text></g></svg><figcaption>Schematisch, die Schichten im Verhältnis der Mengen.</figcaption></figure>
+    <div>
+      <div class="rz-z"><div><b>2</b><span>Espresso, also ein doppelter</span></div><div><b>150&nbsp;ml</b><span>kalte Milch</span></div><div><b>1&nbsp;Glas</b><span>voll mit Eiswürfeln</span></div></div>
+      <ol class="steps"><li><h3>Glas füllen</h3><p>Ein hohes Glas großzügig mit Eiswürfeln füllen und 150&nbsp;ml kalte Milch dazugießen.</p></li><li><h3>Doppelten Espresso zubereiten</h3><p>In eine große Tasse laufen lassen, am Siebträger oder am Vollautomaten.</p></li><li><h3>Darübergießen</h3><p>Den frischen Espresso über Eis und Milch gießen. Kurz umrühren oder die Schichten erst ansehen.</p></li></ol>
+    </div>
+  </div>
+  <dl class="kv" style="margin-top:34px"><dt>Süßer</dt><dd>Vanille oder ein Schuss flüssige Sahne machen ihn milder. Zucker löst sich im heißen Espresso besser als im kalten Glas.</dd><dt>Pflanzendrink</dt><dd>Statt Milch geht auch ein Pflanzendrink, zum Beispiel aus Hafer.</dd><dt>Lieber grün</dt><dd>Dasselbe Prinzip mit Matcha steht im <a href="matcha.html#iced-matcha-latte">Matcha-Ratgeber</a>.</dd></dl>
+</div></section>
+<section id="cold-brew"><div class="wrap">
+  <div class="sec-h"><h2>Cold Brew.</h2><p class="lede">Kaffee, der nie heiß wird. Er zieht stundenlang in kaltem Wasser und braucht keine Maschine. Das Rezept stammt von der Rösterei Dallmayr.</p></div>
+  <div class="rz-e">
+    <figure class="rz-b"><svg viewBox="0 8 290 166" role="img" aria-label="Cold Brew im Glas mit Eiswürfeln"><defs><clipPath id="rz-c4"><path d="M34 22h76l-6 132a9 9 0 0 1-9 8H49a9 9 0 0 1-9-8z"/></clipPath></defs><g clip-path="url(#rz-c4)"><rect x="10" y="36.0" width="140" height="126.6" fill="#2b1a12"/><g fill="#fff" fill-opacity=".42" stroke="#fff" stroke-opacity=".9" stroke-width="1.5" stroke-linejoin="round"><rect x="48" y="60" width="28" height="28" rx="5" transform="rotate(-13 62 74)"/><rect x="74" y="84" width="26" height="26" rx="5" transform="rotate(12 87 97)"/><rect x="50" y="110" width="27" height="27" rx="5" transform="rotate(7 63 123)"/><rect x="78" y="46" width="22" height="22" rx="4" transform="rotate(21 89 57)"/></g></g><path d="M34 22h76l-6 132a9 9 0 0 1-9 8H49a9 9 0 0 1-9-8z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/><g fill="currentColor"><path d="M96 117.9H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="122.4">Cold Brew</text><path d="M96 71.3H148" stroke="currentColor" stroke-opacity=".45" stroke-width="1.2"/><text x="154" y="75.8">Eiswürfel</text></g></svg><figcaption>Schematisch, die Schichten im Verhältnis der Mengen.</figcaption></figure>
+    <div>
+      <div class="rz-z"><div><b>100&nbsp;g</b><span>Kaffee, grob gemahlen</span></div><div><b>1&nbsp;l</b><span>kaltes Wasser</span></div><div><b>6–24&nbsp;h</b><span>ziehen lassen</span></div></div>
+      <ol class="steps"><li><h3>Kaffee grob mahlen</h3><p>100&nbsp;Gramm, deutlich gröber als für Filterkaffee. Je länger er zieht, desto gröber.</p></li><li><h3>Mit kaltem Wasser ansetzen</h3><p>Einen Liter kaltes Wasser dazugeben, umrühren und das Gefäß abdecken. Eine French Press oder ein großes Schraubglas genügt.</p></li><li><h3>Ziehen lassen</h3><p>6 bis 24&nbsp;Stunden, bei Zimmertemperatur oder im Kühlschrank. Länger heißt kräftiger.</p></li><li><h3>Filtern</h3><p>Durch ein feines Sieb oder einen Papierfilter gießen. In der French Press den Stempel langsam herunterdrücken.</p></li></ol>
+    </div>
+  </div>
+  <dl class="kv" style="margin-top:34px"><dt>Haltbar</dt><dd>Im Kühlschrank hält sich Cold Brew drei bis fünf Tage.</dd><dt>Servieren</dt><dd>Pur über Eiswürfel, oder mit Milch und Pflanzendrink.</dd><dt>Mahlgrad</dt><dd>Vorgemahlener Filterkaffee ist meist zu fein. Besser ganze Bohnen kaufen und grob mahlen (lassen).</dd></dl>
+</div></section>
+<section class="band" id="rechner"><div class="wrap narrow">
+  <h2>Cold-Brew-Rechner.</h2>
+  <p class="lede">Wie viel Kaffee brauchst du für dein Gefäß, und für wie viele Gläser reicht es?</p>
+  <div class="rz-re">
+    <label>Dein Gefäß<select id="cb-l"><option value="0.35">French Press klein (0,35&nbsp;l)</option><option value="0.5">Schraubglas (0,5&nbsp;l)</option><option value="1" selected>French Press groß (1&nbsp;l)</option><option value="1.5">Karaffe (1,5&nbsp;l)</option><option value="2">Großes Glas (2&nbsp;l)</option></select></label>
+    <label>Glas zum Servieren<select id="cb-g"><option value="150">150&nbsp;ml (mit viel Eis)</option><option value="200" selected>200&nbsp;ml</option><option value="250">250&nbsp;ml</option></select></label>
+  </div>
+  <div class="rz-out" aria-live="polite">
+    <div><b id="cb-k">–</b><span>Kaffee, grob gemahlen</span></div>
+    <div><b id="cb-w">–</b><span>kaltes Wasser</span></div>
+    <div><b id="cb-n">–</b><span>reicht etwa für</span></div>
+  </div>
+  <p class="tip" style="margin-top:14px">Gerechnet mit 100&nbsp;Gramm Kaffee je Liter Wasser. Das Kaffeemehl saugt einen Teil des Wassers auf, deshalb kommen etwas weniger Gläser heraus, als das Gefäß fasst. Wir rechnen mit rund einem Fünftel Verlust, das ist ein Erfahrungswert und keine Angabe der Rösterei.</p>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Was du dafür brauchst.</h2><p class="lede">Die Links führen zu einer Suche bei Amazon. Die Maschinen selbst stehen im <a href="kaffee.html">Kaffee-Ratgeber</a>.<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" id="a-kaennchen" href="{{amz:Milchkännchen Edelstahl 350 ml Barista}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Milchkännchen</b><span>Edelstahl, 350 ml</span><span class="chk">Achte auf: spitze Tülle zum Gießen, 350&nbsp;ml für ein bis zwei Tassen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Milchaufschäumer elektrisch}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Milchaufschäumer</b><span>Für Schaum ohne Dampfdüse</span><span class="chk">Achte auf: warm und kalt, Behälter spülmaschinenfest</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Cappuccinotassen Set dickwandig 160 ml}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Cappuccinotassen</b><span>Dickwandig, 150 bis 160 ml</span><span class="chk">Achte auf: dicke Wand hält die Wärme, Untertasse dabei</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Latte Gläser doppelwandig 350 ml}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Hohe Gläser</b><span>Für Iced Latte und Cold Brew</span><span class="chk">Achte auf: mindestens 300&nbsp;ml, damit Eis und Milch hineinpassen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" id="a-french" href="{{amz:French Press 1 Liter}}" rel="sponsored nofollow noopener" target="_blank"><div><b>French Press</b><span>Ein Liter, auch für Cold Brew</span><span class="chk">Achte auf: Glas oder Edelstahl, Sieb zum Auseinandernehmen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Kaffeemühle Kegelmahlwerk einstellbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Kaffeemühle</b><span>Mahlgrad von fein bis grob</span><span class="chk">Achte auf: Kegelmahlwerk, grobe Stufe für Cold Brew</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie viel Milch kommt in einen Cappuccino?</summary><div><p>100&nbsp;ml kalte Milch auf 25&nbsp;ml Espresso. Beim Aufschäumen werden aus der Milch etwa 125&nbsp;ml. So beschreibt es das italienische Espresso-Institut.</p></div></details>
+    <details><summary>Was ist der Unterschied zwischen Flat White und Cappuccino?</summary><div><p>Ein Flat White hat mehr Espresso und kaum Schaum: ein Drittel Espresso, zwei Drittel feinporige Milch, in einer kleineren Tasse. Ein Cappuccino trägt eine sichtbare Schaumhaube.</p></div></details>
+    <details><summary>Wie heiß soll die Milch sein?</summary><div><p>Etwa 55&nbsp;Grad nennt das italienische Espresso-Institut. Über 65&nbsp;Grad verliert die Milch ihre Süße.</p></div></details>
+    <details><summary>Wie mache ich einen Iced Latte?</summary><div><p>Ein Glas mit Eiswürfeln füllen, 150&nbsp;ml kalte Milch dazugießen und einen doppelten Espresso darübergießen.</p></div></details>
+    <details><summary>Wie lange muss Cold Brew ziehen?</summary><div><p>6 bis 24&nbsp;Stunden, bei Zimmertemperatur oder im Kühlschrank. Je länger, desto kräftiger. Auf einen Liter Wasser kommen 100&nbsp;Gramm grob gemahlener Kaffee.</p></div></details>
+    <details><summary>Wie lange hält Cold Brew?</summary><div><p>Gefiltert und im Kühlschrank drei bis fünf Tage.</p></div></details>
+    <details><summary>Brauche ich für diese Rezepte eine teure Maschine?</summary><div><p>Für Cold Brew brauchst du gar keine. Für Cappuccino, Flat White und Iced Latte brauchst du Espresso: aus einem Vollautomaten, einem Siebträger oder einem Espressokocher. Welche Maschine zu dir passt, klärt der <a href="kaffee.html#finder">Finder im Kaffee-Ratgeber</a>.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>Istituto Nazionale Espresso Italiano: The Certified Italian Espresso and Cappuccino (Broschüre, englisch, PDF) <a href="https://www.nespressoguide.com/files/File/istituzionale_inei_hq_en.pdf" target="_blank" rel="noopener">istituzionale_inei_hq_en.pdf</a></li>
+    <li>Siemens Hausgeräte: Flat White, Kaffee-Know-how <a href="https://www.siemens-home.bsh-group.com/at/inspiration/erleben/kaffee-know-how/kaffeearten/flat-white" target="_blank" rel="noopener">siemens-home.bsh-group.com</a></li>
+    <li>Smeg: Iced Latte, Rezept <a href="https://www.smeg.com/de/cooking/iced-latte.html" target="_blank" rel="noopener">smeg.com</a></li>
+    <li>Dallmayr: Cold Brew selber machen <a href="https://www.dallmayr.com/deen/academy/magazine/cold-brew-selber-machen/" target="_blank" rel="noopener">dallmayr.com</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 22.11.2026. Wir haben die Rezepte nicht selbst entwickelt, sondern aus diesen Quellen zusammengetragen.</p></div>
+</div></section>
+
+{{RELATED:kaffee,matcha,gemuetlich}}
+<!--END-->
+<script>
+/* Cold-Brew-Rechner: 100 g Kaffee je Liter (Dallmayr). Ausbeute rund vier Fünftel des Wassers (Erfahrungswert, im Text so benannt). */
+(function(){var l=document.getElementById('cb-l'),g=document.getElementById('cb-g');if(!l)return;
+ function de(x){return String(x).replace('.',',')}
+ function los(){var v=parseFloat(l.value),k=Math.round(v*100),n=Math.max(1,Math.floor(v*1000*.8/+g.value));
+  document.getElementById('cb-k').textContent=k+' g';
+  document.getElementById('cb-w').textContent=de(v)+' l';
+  document.getElementById('cb-n').textContent=n+(n===1?' Glas':' Gläser');}
+ l.addEventListener('change',los);g.addEventListener('change',los);los();
+})();
+</script>

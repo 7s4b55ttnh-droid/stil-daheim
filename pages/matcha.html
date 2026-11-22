@@ -68,12 +68,12 @@
 @media (max-width:560px){.mt-a{grid-template-columns:1fr}}
 .mt-a a{font-weight:600}
 
-/* Iced Matcha Latte: das Glas in Schichten als Zeichnung, daneben Mengen und Schritte (Rezept von Ippodo) */
+/* Iced Matcha Latte: ein KI-Foto des Glases (trägt die KI-Marke), daneben Mengen und Schritte (Rezept von Ippodo) */
 section.mt-eis{padding-top:0}
 .mt-e{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px 48px;align-items:start;margin-top:28px}
-.mt-glas{margin:0;padding:18px 14px 14px;background:var(--pan);border:1px solid var(--line);border-radius:16px}
-.mt-glas svg{display:block;width:100%;max-width:270px;height:auto;margin:0 auto;color:var(--ink);font:600 13px/1 inherit}
-.mt-glas figcaption{margin-top:10px;font-size:.9rem;color:var(--mut);text-align:center}
+.mt-glas{position:relative;margin:0;background:var(--pan);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.mt-glas img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.mt-glas figcaption{padding:10px 14px 12px;font-size:.9rem;color:var(--mut);text-align:center}
 .mt-e .mt-z{margin-top:0}
 .mt-e .mt-z b{font-size:clamp(1.7rem,3.2vw,2.3rem)}
 .mt-e .steps{margin-top:22px}
@@ -193,27 +193,7 @@ section.mt-eis{padding-top:0}
 <section class="mt-eis" id="iced-matcha-latte"><div class="wrap">
   <div class="sec-h"><h2>Iced Matcha Latte.</h2><p class="lede">Kalte Milch, Eiswürfel und frisch aufgeschlagener Matcha obenauf. Das Rezept für ein Glas stammt von Ippodo, einem Teehaus aus Kyoto.</p></div>
   <div class="mt-e">
-    <figure class="mt-glas">
-      <svg viewBox="0 0 270 250" role="img" aria-label="Ein Glas in Schichten: unten kalte Milch mit Eiswürfeln, oben der grüne Matcha">
-        <defs>
-          <clipPath id="mt-gl"><path d="M28 18h112l-9 208a10 10 0 0 1-10 9H47a10 10 0 0 1-10-9z"/></clipPath>
-          <linearGradient id="mt-gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f9f52"/><stop offset=".3" stop-color="#8cab5e"/><stop offset=".52" stop-color="#cfd6a8"/><stop offset=".68" stop-color="#efe8d8"/><stop offset="1" stop-color="#f3eee2"/></linearGradient>
-        </defs>
-        <g clip-path="url(#mt-gl)">
-          <rect x="20" y="46" width="130" height="200" fill="url(#mt-gv)"/>
-          <g fill="#fff" fill-opacity=".5" stroke="#fff" stroke-opacity=".95" stroke-width="1.6" stroke-linejoin="round">
-            <rect x="46" y="96" width="38" height="38" rx="6" transform="rotate(-14 65 115)"/>
-            <rect x="88" y="118" width="36" height="36" rx="6" transform="rotate(11 106 136)"/>
-            <rect x="54" y="156" width="36" height="36" rx="6" transform="rotate(8 72 174)"/>
-            <rect x="92" y="78" width="30" height="30" rx="5" transform="rotate(22 107 93)"/>
-          </g>
-        </g>
-        <path d="M28 18h112l-9 208a10 10 0 0 1-10 9H47a10 10 0 0 1-10-9z" fill="none" stroke="currentColor" stroke-opacity=".55" stroke-width="1.8" stroke-linejoin="round"/>
-        <g stroke="currentColor" stroke-opacity=".45" stroke-width="1.2" fill="none"><path d="M128 66h36"/><path d="M118 136h46"/><path d="M122 206h42"/></g>
-        <g fill="currentColor"><text x="170" y="70">Matcha</text><text x="170" y="140">Eiswürfel</text><text x="170" y="210">Kalte Milch</text></g>
-      </svg>
-      <figcaption>Erst Milch und Eis ins Glas, dann der Matcha.</figcaption>
-    </figure>
+    <figure class="mt-glas">{{PIC:iced-matcha-latte|Ein hohes Glas Iced Matcha Latte auf einer Holzarbeitsplatte: unten kalte Milch mit Eiswürfeln, oben grüner Matcha, daneben Schale und Bambusbesen|(max-width:900px) 340px, 300px}}<figcaption>Erst Milch und Eis ins Glas, dann der Matcha.</figcaption></figure>
     <div>
       <div class="mt-z">
         <div><b>3&nbsp;g</b><span>Matcha: zwei gehäufte Bambuslöffel</span></div>
@@ -366,7 +346,7 @@ section.mt-eis{padding-top:0}
   </ol><p style="margin-top:14px">Geprüft am 22.11.2026.</p></div>
 </div></section>
 
-{{RELATED:kaffee,japandi,gemuetlich}}
+{{RELATED:tee,kaffee-rezepte,japandi}}
 <!--END-->
 <script src="kaffee-film.js" defer></script>
 <script>
