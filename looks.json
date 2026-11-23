@@ -57,6 +57,8 @@
 "vorhaenge-2": {"g": 66926, "p": [["Kamel", "#c89963"], ["Taupe", "#8d7c6d"], ["Rauch", "#615c5c"], ["Walnuss", "#58412b"], ["Torf", "#322a22"]]},
 "weihnachten": {"g": 93086, "p": [["Asche", "#746e76"], ["Teak", "#8c5e37"], ["Umbra", "#735745"], ["Graphit", "#3d3739"], ["Schokolade", "#382313"]]},
 "weihnachten-2": {"g": 70106, "p": [["Asche", "#6d6262"], ["Tabak", "#845b39"], ["Walnuss", "#5a4330"], ["Abendblau", "#454651"], ["Espresso", "#302114"]]},
+"weihnachtsbaum": {"g": 77924, "p": [["Stroh", "#eabc7e"], ["Haselnuss", "#9c714d"], ["Schiefer", "#564749"], ["Leder", "#614025"], ["Espresso", "#251709"]]},
+"weihnachtsbaum-2": {"g": 88990, "p": [["Kamel", "#b8875c"], ["Bernstein", "#c57d3a"], ["Cognac", "#8d5425"], ["Leder", "#68431f"], ["Schokolade", "#392b0f"]]},
 "wohnzimmer": {"g": 67268, "p": [["Aprikose", "#ce945b"], ["Teak", "#865b3a"], ["Rauch", "#534b4a"], ["Mokka", "#4c3323"], ["Ebenholz", "#1d1209"]]},
 "wohnzimmer-2": {"g": 74272, "p": [["Stroh", "#f8c884"], ["Taupe", "#9c806c"], ["Karamell", "#ac7543"], ["Tabak", "#825e42"], ["Mokka", "#4c3320"]]}
 }
