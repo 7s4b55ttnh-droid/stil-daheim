@@ -28,6 +28,7 @@
 "japandi": {"g": 100407, "p": [["Champagner", "#eed6bb"], ["Aprikose", "#e9b377"], ["Milchkaffee", "#c19f82"], ["Teak", "#8d623f"], ["Leder", "#62391b"]]},
 "japandi-2": {"g": 56299, "p": [["Weizen", "#f5ce9c"], ["Milchkaffee", "#b8a38b"], ["Haselnuss", "#916e4b"], ["Leder", "#654427"], ["Espresso", "#231509"]]},
 "kaffee": {"g": 40804, "p": [["Champagner", "#f0d4ad"], ["Milchkaffee", "#aa9381"], ["Rost", "#834724"], ["Schokolade", "#3d2316"], ["Ebenholz", "#190e08"]]},
+"kaffee-2": {"g": 60350, "p": [["Karamell", "#b37f55"], ["Umbra", "#725b48"], ["Teak", "#7e512d"], ["Mokka", "#4b311f"], ["Ebenholz", "#1f150f"]]},
 "kleine-raeume": {"g": 90802, "p": [["Mandel", "#e3c5a8"], ["Milchkaffee", "#ae8d73"], ["Karamell", "#bd7e49"], ["Zeder", "#7c512e"], ["Espresso", "#2a1506"]]},
 "kleine-raeume-2": {"g": 81137, "p": [["Kreide", "#e9e9e9"], ["Kiesel", "#c8c0b5"], ["Taupe", "#938069"], ["Walnuss", "#58462e"], ["Espresso", "#231a10"]]},
 "licht": {"g": 113569, "p": [["Bernstein", "#e58e3a"], ["Kupfer", "#b05f25"], ["Rost", "#884a1f"], ["Mahagoni", "#5f2d0e"], ["Schokolade", "#3f1908"]]},
