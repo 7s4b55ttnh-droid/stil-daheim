@@ -1,0 +1,206 @@
+<!--meta {"key":"fensterdeko","title":"Fensterdeko Weihnachten: Lichterkette, Sterne, Fensterbank – Stil-Daheim","desc":"Fensterdeko zu Weihnachten: Wie lang muss die Lichterkette sein, wohin mit dem Stern, was darf zur Miete? Mit Fenster-Planer für Rahmen, Vorhang und Bogen.","og":"assets/fensterdeko.jpg","updated":"2026-11-25","kurz":"Für eine Lichterkette rund um das Fenster rechnest du zweimal Breite plus zweimal Höhe und gibst den Weg bis zur Steckdose dazu. Draußen braucht eine Lichterkette mindestens die Schutzart IP44, das CE-Zeichen allein sagt laut VDE nichts über die Sicherheit. Innen im Fenster darfst du als Mieter dekorieren, an der Fassade brauchst du die Erlaubnis des Vermieters."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:60% 50%}
+.masse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}
+.masse div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:16px}
+.masse b{display:block;font-size:1.9rem;font-stretch:80%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.masse span{font-size:.92rem;color:var(--mut)}
+.fcheck{display:grid;gap:16px;margin-top:28px}
+.fcheck .in{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.fcheck label{display:flex;align-items:center;gap:10px;font-weight:600}
+.fcheck input[type=text]{width:6ch;min-height:44px;font:inherit;font-size:1.2rem;font-weight:700;text-align:right;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.fcheck select{min-height:44px;font:inherit;font-weight:600;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink);max-width:100%}
+.fres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fres div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.fres b{display:block;font-size:1.4rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--brass-t);margin-bottom:4px}
+.fres span{font-size:.9rem;color:var(--mut)}
+#fplan{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px}
+#fplan svg{display:block;width:100%;height:auto;max-height:340px}
+#fplan .frame{fill:none;stroke:var(--ink);stroke-width:3;opacity:.55}
+#fplan .glass{fill:#2b4a6b;opacity:.25}
+#fplan .sill{fill:var(--ink);opacity:.45}
+#fplan .lite{fill:none;stroke:var(--brass-t);stroke-width:3;stroke-dasharray:1 7;stroke-linecap:round}
+#fplan .cord{fill:none;stroke:var(--brass-t);stroke-width:1.5;opacity:.6;stroke-dasharray:4 4}
+#fplan .star{fill:var(--brass-t)}
+#fplan text{fill:var(--brass-t);font:600 15px Archivo,system-ui,sans-serif}
+.ftxt{margin:0;color:var(--mut)}
+.ltab{width:100%;border-collapse:collapse;margin-top:24px}
+.ltab th,.ltab td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.ltab th{font-size:.9rem;color:var(--mut);font-weight:600}
+@media (max-width:640px){.masse{grid-template-columns:repeat(2,minmax(0,1fr))}.ltab th,.ltab td{padding:8px 4px;font-size:.92rem}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:fensterdeko|Altbau-Fenster mit weißem Holzrahmen am Winterabend, rundum eine warmweiße Lichterkette, oben ein Papierstern, auf der Fensterbank Tannenzweige in einer Glasvase, LED-Kerzen und Zapfen in einer Messingschale}}
+  <div class="wrap">
+    <h1>Fensterdeko zu Weihnachten: Lichterkette, Sterne und Fensterbank</h1>
+    <p>Das Fenster ist die Bühne für den Advent, von innen und von der Straße aus. Hier steht, wie lang die Lichterkette sein muss, wohin der Stern gehört und was zur Miete erlaubt ist.</p>
+    <div class="btns"><a class="btn" href="#planer">Zum Fenster-Planer</a><a class="btn ghost" href="#ideen">Ideen fürs Fenster</a></div>
+  </div>
+</div>
+
+<section id="masse"><div class="wrap narrow">
+  <h2>Die wichtigsten Zahlen.</h2>
+  <p class="lede">Vier Werte, mit denen die Fensterdeko gut aussieht und sicher bleibt.</p>
+  <div class="masse">
+    <div><b>2&nbsp;×&nbsp;(B&nbsp;+&nbsp;H)</b><span>Länge einer Lichterkette rund um das Fenster</span></div>
+    <div><b>IP44</b><span>Schutzart, die eine Lichterkette draußen mindestens braucht</span></div>
+    <div><b>2.700&nbsp;K</b><span>warmweißes Licht wirkt ruhig und gemütlich</span></div>
+    <div><b>1</b><span>Blickfang je Fenster reicht, zum Beispiel ein Stern</span></div>
+  </div>
+</div></section>
+
+<section class="band" id="planer"><div class="wrap narrow">
+  <h2>Der Fenster-Planer.</h2>
+  <p class="lede">Miss die Breite und Höhe der Glasfläche oder des Rahmens, an dem die Lichter hängen sollen. Der Planer zeigt, wie lang die Lichterkette sein muss und wie viele Haken du brauchst.</p>
+  <div class="fcheck">
+    <div class="in">
+      <label for="fb">Breite <input id="fb" type="text" inputmode="numeric" autocomplete="off" value="120" aria-label="Breite des Fensters in Zentimetern"> cm</label>
+      <label for="fh">Höhe <input id="fh" type="text" inputmode="numeric" autocomplete="off" value="150" aria-label="Höhe des Fensters in Zentimetern"> cm</label>
+      <label for="fn">Fenster <input id="fn" type="text" inputmode="numeric" autocomplete="off" value="1" aria-label="Anzahl gleich großer Fenster"></label>
+    </div>
+    <div class="in">
+      <label for="fa">Art <select id="fa"><option value="rahmen">Lichterkette rund um den Rahmen</option><option value="vorhang">Lichtervorhang</option><option value="bogen">Bogen oben</option><option value="bank">Entlang der Fensterbank</option></select></label>
+      <label for="fs">Weg zur Steckdose <input id="fs" type="text" inputmode="numeric" autocomplete="off" value="100" aria-label="Weg von der Fensterecke bis zur Steckdose in Zentimetern, 0 bei Batterie"> cm</label>
+    </div>
+    <div class="fres" aria-live="polite">
+      <div><b id="f1"></b><span id="f1s">Leuchtende Länge je Fenster</span></div>
+      <div><b id="f2"></b><span>Mit Zuleitung, alle Fenster</span></div>
+      <div><b id="f3"></b><span>Klebehaken, grob</span></div>
+      <div><b id="f4"></b><span>Stern hängt etwa bei</span></div>
+    </div>
+    <div id="fplan" aria-hidden="true"></div>
+    <p class="ftxt" id="ftxt"></p>
+  </div>
+  <p class="tip">Unsere Planungswerte: ein Haken alle 30&nbsp;cm, beim Bogen 20&nbsp;Prozent Zugabe für den Durchhang, beim Lichtervorhang etwa 10&nbsp;cm Abstand zwischen den Strängen. Kauf die Kette lieber etwas länger, ein Rest lässt sich auf der Fensterbank in ein Glas legen.</p>
+</div></section>
+
+<section id="ideen"><div class="wrap narrow">
+  <h2>Ideen fürs Fenster.</h2>
+  <p class="lede">Wenige Dinge, dafür gut platziert. Von draußen zählt das Licht, von drinnen die Fensterbank.</p>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Ein Stern als Blickfang</h3><p>Ein Papierstern oder ein Stern aus Holz hängt mittig im oberen Drittel des Fensters. So sieht man ihn von der Straße aus, und er verdeckt den Blick nach draußen nicht. Bei mehreren Fenstern in einer Reihe: überall auf derselben Höhe.</p></li>
+    <li><h3>Licht rund um den Rahmen</h3><p>Eine dünne Drahtlichterkette entlang des Rahmens zeichnet das Fenster nach, ohne aufzufallen. Warmweiß um 2.700&nbsp;Kelvin wirkt ruhig, bunte und blinkende Lichter wirken schnell unruhig.</p></li>
+    <li><h3>Lichtervorhang für große Fenster</h3><p>Viele senkrechte Stränge an einer Leiste oben füllen bodentiefe Fenster und Balkontüren. Achte darauf, dass das Fenster noch aufgeht: Häng den Vorhang an den Flügel, nicht davor.</p></li>
+    <li><h3>Die Fensterbank als kleine Bühne</h3><p>Zweige in einer Vase, zwei bis drei Kerzen in verschiedenen Höhen und eine Schale mit Zapfen reichen. Auf schmalen Fensterbänken lieber LED-Kerzen, vor allem, wenn ein Vorhang in der Nähe hängt.</p></li>
+    <li><h3>Schwibbogen oder Lichterbogen</h3><p>Der Lichterbogen aus dem Erzgebirge steht traditionell im Fenster. Er braucht eine Fensterbank, die etwas tiefer ist als sein Fuß, und eine Steckdose in der Nähe, oder er läuft mit Batterie.</p></li>
+    <li><h3>Fensterbilder, die wieder abgehen</h3><p>Sterne aus Transparent- oder Butterbrotpapier halten mit durchsichtigem Klebeband oder an einer Schnur. Wer aufs Glas malt, nimmt Farben, die nicht dauerhaft halten, und probiert sie vorher in einer Ecke aus.</p></li>
+  </ol>
+</div></section>
+
+{{FIG:fensterdeko-2|Nahaufnahme einer Fensterecke mit weißem Holzrahmen, eine dünne warmweiße Drahtlichterkette an kleinen durchsichtigen Klebehaken, daneben ein kleines Batteriefach auf einer Eichen-Fensterbank mit Zweigen und einer getrockneten Orangenscheibe|Kleine Klebehaken halten die Lichterkette am Rahmen, ganz ohne Bohren.}}
+
+<section class="band" id="sicher"><div class="wrap narrow">
+  <h2>Sicher leuchten.</h2>
+  <p class="lede">Was der VDE zur Weihnachtsbeleuchtung rät, und was am Fenster dazukommt.</p>
+  <ul class="rechte">
+    <li><b>Prüfzeichen:</b> Achte auf das Zeichen eines unabhängigen Prüfinstituts, etwa VDE oder GS. Das CE-Zeichen bestätigt der Hersteller nur selbst, es sagt laut VDE nichts über die Sicherheit.</li>
+    <li><b>Drinnen oder draußen:</b> Ketten mit dem Haus-Symbol sind nur für innen. Draußen auf dem Balkon oder außen am Fenster braucht die Kette mindestens IP44 (spritzwassergeschützt), und auch Stecker und Verlängerung müssen für draußen gemacht sein.</li>
+    <li><b>LED statt Glühlampe:</b> LEDs brauchen viel weniger Strom und werden kaum warm. Das ist am Fenster mit Vorhang und Papiersternen ein Vorteil.</li>
+    <li><b>Nicht unbeobachtet:</b> Lichterketten nicht die ganze Nacht laufen lassen. Eine Zeitschaltuhr oder eine Kette mit Timer schaltet sie von selbst ab.</li>
+    <li><b>Kabel nicht quetschen:</b> Führ kein Netzkabel durch ein geschlossenes Fenster oder eine Balkontür. Für draußen lieber eine Kette mit Batterie oder eine Außensteckdose.</li>
+    <li><b>Kinderzimmer:</b> Dort nur Ketten mit Kleinspannung bis 24&nbsp;Volt oder mit Batterie.</li>
+  </ul>
+  <p class="tip">Was die Beleuchtung an Strom kostet, rechnet unsere Schwesterseite aus. Wie du Vorhänge klug hängst, steht im Ratgeber <a href="vorhaenge.html">Vorhänge aufhängen</a>.</p>
+</div></section>
+
+<section id="miete"><div class="wrap narrow">
+  <h2>Fensterdeko zur Miete.</h2>
+  <p class="lede">In der eigenen Wohnung darfst du fast alles. Ärger gibt es meist erst außen und im Treppenhaus.</p>
+  <table class="ltab">
+    <thead><tr><th>Wo</th><th>Was gilt</th></tr></thead>
+    <tbody>
+      <tr><td><b>Innen im Fenster</b></td><td>Erlaubt. Das Landgericht Berlin bezweifelte, dass eine Lichterkette im Fenster überhaupt eine Pflichtverletzung ist (Urteil vom 1.6.2010, 65&nbsp;S&nbsp;390/09).</td></tr>
+      <tr><td><b>Grelles Blinken</b></td><td>Sehr helle, bunte oder blinkende Lichter können Nachbarn stören. Rücksicht hilft: abends rechtzeitig ausschalten, zum Beispiel mit Timer um 22&nbsp;Uhr.</td></tr>
+      <tr><td><b>Fassade</b></td><td>Vorher den Vermieter fragen, nicht nur, wenn gebohrt werden muss. Alles muss sturmfest sitzen.</td></tr>
+      <tr><td><b>Treppenhaus</b></td><td>Deko gehört an die eigene Wohnungstür, nicht in den gemeinsamen Flur (Amtsgericht Münster, 31.7.2008, 38&nbsp;C&nbsp;1858/08).</td></tr>
+    </tbody>
+  </table>
+  <p class="tip">Das ist keine Rechtsberatung. Mehr zum Wohnen ohne Bohren im Ratgeber <a href="mieten.html">Schöner wohnen zur Miete</a>.</p>
+</div></section>
+
+<section class="band" id="checkliste"><div class="wrap narrow">
+  <h2>Checkliste fürs Fenster.</h2>
+  <p class="lede">Hak ab, was erledigt ist. Der Stand bleibt nur in deinem Browser.</p>
+  <div class="ck" id="ck" style="margin-top:26px"></div>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für dein Fenster.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:Lichterkette Fenster warmweiß Draht Timer}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Drahtlichterkette mit Timer</b><span>Zeichnet den Rahmen dezent nach</span><span class="chk">Achte auf: Länge aus dem Planer, Warmweiß, Prüfzeichen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Lichtervorhang warmweiß Fenster}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Lichtervorhang</b><span>Für große Fenster und Balkontüren</span><span class="chk">Achte auf: Breite und Höhe passend zum Fenster</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Herrnhuter Stern Papier innen}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Papierstern mit Licht</b><span>Der eine Blickfang im Fenster</span><span class="chk">Achte auf: Durchmesser zur Fenstergröße, für innen oder außen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Schwibbogen Holz LED}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Schwibbogen</b><span>Lichterbogen für die Fensterbank</span><span class="chk">Achte auf: Breite und Tiefe des Fußes</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:LED Kerzen Echtwachs Timer}}" rel="sponsored nofollow noopener" target="_blank"><div><b>LED-Kerzen aus Echtwachs</b><span>Sicher neben Vorhang und Papier</span><span class="chk">Achte auf: Timer und warmes Flackerlicht</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Klebehaken transparent Lichterkette Fenster}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Durchsichtige Klebehaken</b><span>Halten die Kette ohne Bohren</span><span class="chk">Achte auf: rückstandslos ablösbar</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Zeitschaltuhr Steckdose digital}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Zeitschaltuhr</b><span>Licht geht abends von selbst aus</span><span class="chk">Achte auf: für innen oder außen (IP44)</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Transparentpapier Sterne basteln}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Transparentpapier</b><span>Für Sterne, die wieder abgehen</span><span class="chk">Achte auf: Papier mit 115&nbsp;g oder mehr hält besser die Form</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie lang muss eine Lichterkette fürs Fenster sein?</summary><div><p>Für eine Kette rund um das Fenster rechnest du zweimal Breite plus zweimal Höhe. Bei 120 mal 150&nbsp;cm sind das 5,40&nbsp;m leuchtende Länge. Dazu kommt das Stück bis zur Steckdose.</p></div></details>
+    <details><summary>Wo hängt der Stern im Fenster am schönsten?</summary><div><p>Mittig im oberen Drittel. Dann sieht man ihn von draußen gut, und er versperrt den Blick nicht. Bei mehreren Fenstern hängen alle Sterne auf derselben Höhe.</p></div></details>
+    <details><summary>Welche Lichterkette darf nach draußen?</summary><div><p>Nur eine Kette für außen mit mindestens IP44. Ketten mit dem Haus-Symbol sind nur für innen. Auch Stecker und Verlängerungskabel müssen für draußen geeignet sein.</p></div></details>
+    <details><summary>Darf ich als Mieter eine Lichterkette ins Fenster hängen?</summary><div><p>Ja, innen im Fenster ist das in aller Regel erlaubt. Für Deko an der Fassade fragst du vorher den Vermieter. Grell blinkende Lichter können Nachbarn stören, ein Timer am Abend hilft.</p></div></details>
+    <details><summary>Wie befestige ich Deko am Fenster ohne Bohren?</summary><div><p>Mit durchsichtigen Klebehaken, die sich rückstandslos lösen, mit einer Spannstange im Rahmen oder mit Saugnäpfen am Glas. Papiersterne hängen an einer Schnur.</p></div></details>
+    <details><summary>Ist das CE-Zeichen ein Prüfsiegel?</summary><div><p>Nein. Mit dem CE-Zeichen bestätigt der Hersteller selbst, dass er die Regeln einhält. Ein Zeichen wie VDE oder GS stammt von einem unabhängigen Prüfinstitut.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>VDE: Weihnachtsbeleuchtung, sicher durch die Adventszeit; Prüfzeichen, CE-Kennzeichen, IP44 für außen, Haus-Symbol, LED, Kleinspannung bis 24&nbsp;V im Kinderzimmer (Stand 24.11.2025) <a href="https://www.vde.com/topics-de/verbraucherschutz/weihnachtsbeleuchtung" target="_blank" rel="noopener">vde.com</a></li>
+    <li>Legal Tribune Online: Weihnachtsdeko am Mietshaus; LG Berlin 65&nbsp;S&nbsp;390/09, AG Münster 38&nbsp;C&nbsp;1858/08, Fassade nur mit Erlaubnis (20.12.2011) <a href="https://www.lto.de/recht/hintergruende/h/weihnachtsdeko-am-mietshaus-besinnlicher-lichterglanz-als-festtagsaergernis" target="_blank" rel="noopener">lto.de</a></li>
+    <li>OBI Magazin: Fensterbilder für Weihnachten; Tonpapier, Transparent- oder Butterbrotpapier, Klebestreifen oder Schnur, nicht dauerhafte Fensterfarbe (06.12.2023) <a href="https://www.obi.de/magazin/wohnen/dekoration/weihnachtsdeko/fensterbilder-weihnachten" target="_blank" rel="noopener">obi.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 25.11.2026. Ein Haken alle 30&nbsp;cm, 20&nbsp;Prozent Durchhang beim Bogen, 10&nbsp;cm Strangabstand beim Vorhang und die Lage des Sterns im oberen Drittel sind unsere eigenen Planungswerte.</p></div>
+</div></section>
+
+<section class="sis"><div class="wrap narrow"><a class="sis-a" href="https://strom-daheim.de/weihnachtsbeleuchtung.html"><span class="sis-k">Von unserer Schwesterseite Strom-Daheim</span><b>Weihnachtsbeleuchtung: Was kostet das Leuchten? →</b><span>LED gegen Glühlampe, Zeitschaltuhr und Sicherheit draußen.</span></a></div></section>
+
+{{RELATED:weihnachten,adventskranz,gemuetlich}}
+<!--END-->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var $=function(i){return document.getElementById(i)};
+function num(id,d,lo,hi){var v=parseFloat(String($(id).value).replace(',','.'));if(!isFinite(v))return d;return Math.min(hi,Math.max(lo,v))}
+function m(x){return (Math.round(x/10)/10).toFixed(1).replace('.',',')+' m'}
+function calc(){
+var b=num('fb',120,30,500),h=num('fh',150,30,400),n=Math.round(num('fn',1,1,20)),a=$('fa').value,s=num('fs',100,0,1000);
+var L,hk,lab='Leuchtende Länge je Fenster',txt;
+if(a==='rahmen'){L=2*(b+h);hk=Math.ceil(L/30);txt='Rund um ein Fenster von '+b+' mal '+h+' cm leuchten '+m(L)+'. Fang an der Ecke an, die der Steckdose am nächsten ist.'}
+else if(a==='vorhang'){var st=Math.max(2,Math.round(b/10));L=st*h;hk=Math.ceil(b/30)+1;lab='Lichtervorhang, etwa';txt='Ein Lichtervorhang von etwa '+m(b)+' Breite und '+m(h)+' Höhe passt, mit rund '+st+' Strängen. Häng ihn an den Fensterflügel, damit du weiter lüften kannst.'}
+else if(a==='bogen'){L=b*1.2;hk=Math.ceil(b/30)+1;txt='Ein Bogen über '+b+' cm Breite braucht mit Durchhang etwa '+m(L)+'. Die Haken setzt du nur oben in die Ecken und in die Mitte, dazwischen hängt die Kette frei.'}
+else{L=b;hk=Math.ceil(b/30);txt='Entlang der Fensterbank leuchten '+m(L)+'. Eine dünne Drahtkette kannst du auch locker um Zweige oder in ein Glas legen.'}
+var tot=(a==='vorhang'?b:L)*n+s*(n>1?n:1);
+$('f1').textContent=a==='vorhang'?(m(b)+' × '+m(h)):m(L);$('f1s').textContent=lab;
+$('f2').textContent=a==='vorhang'?(n+' × Vorhang'+(s>0?', '+m(s)+' Kabel':'')):m(tot);
+$('f3').textContent=(hk*n)+' Stück';
+$('f4').textContent=Math.round(h/6)+' cm unter oben';
+if(s===0)txt+=' Mit Batterie oder Akku brauchst du keine Zuleitung.';else if(s>300)txt+=' Bei einem so langen Weg zur Steckdose hilft eine Kette mit längerer Zuleitung oder mit Batterie, statt einer losen Verlängerung über den Boden.';
+if(n>1)txt+=' Bei '+n+' Fenstern hängt der Stern überall auf derselben Höhe.';
+$('ftxt').textContent=txt;draw(b,h,a,s)}
+function draw(b,h,a,s){
+var sc=260/Math.max(b,h),W=b*sc,H=h*sc,x0=20,y0=20,pw=W+140,ph=H+60;
+var g='<svg viewBox="0 0 '+pw.toFixed(0)+' '+ph.toFixed(0)+'"><rect class="glass" x="'+x0+'" y="'+y0+'" width="'+W.toFixed(1)+'" height="'+H.toFixed(1)+'"/><rect class="frame" x="'+x0+'" y="'+y0+'" width="'+W.toFixed(1)+'" height="'+H.toFixed(1)+'"/><line class="frame" x1="'+(x0+W/2).toFixed(1)+'" y1="'+y0+'" x2="'+(x0+W/2).toFixed(1)+'" y2="'+(y0+H).toFixed(1)+'"/><rect class="sill" x="'+(x0-10)+'" y="'+(y0+H)+'" width="'+(W+20).toFixed(1)+'" height="10" rx="2"/>';
+var i=6;
+if(a==='rahmen')g+='<rect class="lite" x="'+(x0+i)+'" y="'+(y0+i)+'" width="'+(W-2*i).toFixed(1)+'" height="'+(H-2*i).toFixed(1)+'"/>';
+else if(a==='vorhang'){var st=Math.max(2,Math.round(b/10));for(var k=0;k<st;k++){var x=x0+i+(W-2*i)*k/(st-1);g+='<line class="lite" x1="'+x.toFixed(1)+'" y1="'+(y0+i)+'" x2="'+x.toFixed(1)+'" y2="'+(y0+H-i-(k%3)*8).toFixed(1)+'"/>'}}
+else if(a==='bogen')g+='<path class="lite" d="M'+(x0+i)+' '+(y0+i)+' Q'+(x0+W/4).toFixed(1)+' '+(y0+i+H*.12).toFixed(1)+' '+(x0+W/2).toFixed(1)+' '+(y0+i)+' Q'+(x0+W*3/4).toFixed(1)+' '+(y0+i+H*.12).toFixed(1)+' '+(x0+W-i).toFixed(1)+' '+(y0+i)+'"/>';
+else g+='<line class="lite" x1="'+(x0-6)+'" y1="'+(y0+H-3)+'" x2="'+(x0+W+6).toFixed(1)+'" y2="'+(y0+H-3)+'"/>';
+var sx=x0+W/2,sy=y0+H/6,r=Math.min(W,H)*.07;
+g+='<polygon class="star" points="';for(var p=0;p<10;p++){var rr=p%2?r*.45:r,an=Math.PI*p/5-Math.PI/2;g+=(sx+rr*Math.cos(an)).toFixed(1)+','+(sy+rr*Math.sin(an)).toFixed(1)+' '}g+='"/>';
+if(s>0)g+='<path class="cord" d="M'+(x0+W).toFixed(1)+' '+(y0+H).toFixed(1)+' L'+(x0+W+40).toFixed(1)+' '+(y0+H+30).toFixed(1)+' L'+(x0+W+90).toFixed(1)+' '+(y0+H+30).toFixed(1)+'"/><rect class="sill" x="'+(x0+W+90).toFixed(1)+'" y="'+(y0+H+22).toFixed(1)+'" width="16" height="16" rx="3"/>';
+g+='<text x="'+(x0+W+12).toFixed(1)+'" y="'+(y0+H/2).toFixed(1)+'">'+m(h)+'</text><text x="'+(x0+W/2-20).toFixed(1)+'" y="'+(y0+H+34).toFixed(1)+'">'+m(b)+'</text></svg>';
+$('fplan').innerHTML=g}
+['fb','fh','fn','fs'].forEach(function(i){$(i).addEventListener('input',calc)});$('fa').addEventListener('change',calc);calc();
+var C=[['Fenster gemessen','Breite und Höhe, dazu der Weg bis zur Steckdose.'],['Art gewählt','Rahmen, Vorhang, Bogen oder Fensterbank.'],['Kette geprüft','Prüfzeichen, Warmweiß, für draußen mindestens IP44.'],['Ohne Bohren befestigt','Klebehaken, Spannstange, Saugnapf oder Schnur.'],['Stern aufgehängt','Mittig im oberen Drittel, überall gleich hoch.'],['Fensterbank gestaltet','Zweige, zwei bis drei Kerzen, eine Schale.'],['Timer gestellt','Licht geht abends von selbst aus.'],['Kerzen sicher','Weg von Vorhang und Papier, sonst LED.']];
+sdChecklist('ck',C,'sdfd',{verb:'erledigt',done:'Dein Fenster leuchtet. Schönen Advent!'})});
+</script>

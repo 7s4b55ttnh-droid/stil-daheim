@@ -15,6 +15,8 @@
 "farben": {"g": 111275, "p": [["Bernstein", "#e6974a"], ["Zimt", "#9e6137"], ["Leder", "#63411d"], ["Rost", "#78330d"], ["Mahagoni", "#521b07"]]},
 "farben-2": {"g": 66622, "p": [["Kreide", "#eae5dd"], ["Kiesel", "#beb4aa"], ["Taupe", "#8a7e6a"], ["Zeder", "#915c47"], ["Leder", "#5c3c23"]]},
 "farbpalette": {"g": 76098, "p": [["Aprikose", "#daa46f"], ["Greige", "#baa894"], ["Haselnuss", "#a27857"], ["Taupe", "#7c7461"], ["Walnuss", "#5c3f28"]]},
+"fensterdeko": {"g": 68112, "p": [["Karamell", "#ca8c4b"], ["Zimt", "#a0693b"], ["Jeansblau", "#4c65a0"], ["Leder", "#6e4729"], ["Schokolade", "#422d20"]]},
+"fensterdeko-2": {"g": 62906, "p": [["Karamell", "#ba8148"], ["Haselnuss", "#956845"], ["Stahlblau", "#6f6d83"], ["Walnuss", "#573722"], ["Abendblau", "#333449"]]},
 "flur": {"g": 60474, "p": [["Pfirsich", "#e3b47b"], ["Stein", "#a09083"], ["Karamell", "#b97f46"], ["Tabak", "#856447"], ["Kaffee", "#503e31"]]},
 "flur-2": {"g": 70369, "p": [["Aprikose", "#daa974"], ["Haselnuss", "#8e6a4a"], ["Walnuss", "#53341b"], ["Anthrazit", "#333740"], ["Schokolade", "#2f2411"]]},
 "gaestezimmer": {"g": 67544, "p": [["Karamell", "#a8703b"], ["Umbra", "#614c47"], ["Zeder", "#70411a"], ["Walnuss", "#52321b"], ["Espresso", "#2e1d10"]]},

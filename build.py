@@ -84,6 +84,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('silvester.html', 'Silvester-Tischdeko', 'Raclette-Planer, Farben, sicher bis Mitternacht', 'silvester', 'silvester'),
         ('adventskranz.html', 'Adventskranz binden', 'Frische-Check, Anleitung, sicher mit Kerzen', 'adventskranz', 'adventskranz'),
         ('weihnachtsbaum.html', 'Weihnachtsbaum aufstellen', 'Größe, Sorten, Wasser, Baum-Planer', 'weihnachtsbaum', 'weihnachtsbaum'),
+        ('fensterdeko.html', 'Fensterdeko zu Weihnachten', 'Lichterkette, Stern, Fensterbank, Fenster-Planer', 'fensterdeko', 'fensterdeko'),
         ('geschenke.html', 'Geschenke fürs Zuhause', 'Kleine Ideen für Nikolaus und Weihnachten', 'geschenke', 'geschenke'),
         ('gaestezimmer.html', 'Gästezimmer einrichten', 'Schlafplatz für Besuch, Gäste-Planer', 'gaestezimmer', 'gaestezimmer'),
         ('vorhaenge.html', 'Vorhänge aufhängen', 'Länge, Breite, Höhe, Vorhang-Planer', 'vorhaenge', 'vorhaenge'),
@@ -339,7 +340,7 @@ def fig(name, alt, cap):
 KAT = {'wohnideen': 'stile', 'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
        'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'kaffee-rezepte': 'raum', 'tee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
-       'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'weihnachtsbaum': 'saison', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
+       'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'weihnachtsbaum': 'saison', 'fensterdeko': 'saison licht', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}
 FILTER = [('', 'Alle'), ('stile', 'Wohnstile'), ('raum', 'Räume'), ('licht', 'Licht und Farbe'), ('saison', 'Saison'), ('werkzeug', 'Planer und Rechner')]
 
@@ -418,16 +419,17 @@ LOOK_TIPP = {
     'tischdeko': 'Gestecke bleiben niedrig, damit sich am Tisch alle sehen.',
     'vintage': 'Am schönsten wirkt Vintage mit einem Hauptstück auf ruhiger Basis, gemischt mit neuen Möbeln.',
     'vorhaenge': 'Die Stange hängt etwa 15&nbsp;cm über dem Fensterrahmen und ist je Seite 15 bis 20&nbsp;cm breiter als das Fenster.',
+    'fensterdeko': 'Für eine Lichterkette rund um das Fenster rechnest du zweimal Breite plus zweimal Höhe. Draußen braucht sie mindestens IP44.',
     'weihnachtsbaum': 'Ein etwa 2&nbsp;m hoher Weihnachtsbaum trinkt rund 2&nbsp;Liter Wasser am Tag. Säg den Stamm frisch an und spitz ihn nicht an.',
     'weihnachten': 'Naturmaterialien, zwei bis drei Farbtöne und warmweißes Licht statt bunter Lichterketten.',
     'wohnzimmer': 'Der Couchtisch steht 40 bis 50&nbsp;cm vor dem Sofa. Für Laufwege bleiben etwa 70&nbsp;cm.',
 }
 # Saison: Seite -> (von, bis) als Monat-Tag. Außerhalb blendet wohnideen.js die Fotos dieser Seite aus (im Quelltext bleiben sie stehen).
-LOOK_ZEIT = {'adventskranz': ('11-01', '12-24'), 'weihnachten': ('11-01', '12-26'), 'tischdeko': ('11-01', '12-26'), 'geschenke': ('11-01', '12-26'), 'weihnachtsbaum': ('11-15', '12-26'),
+LOOK_ZEIT = {'adventskranz': ('11-01', '12-24'), 'weihnachten': ('11-01', '12-26'), 'tischdeko': ('11-01', '12-26'), 'geschenke': ('11-01', '12-26'), 'weihnachtsbaum': ('11-15', '12-26'), 'fensterdeko': ('11-15', '12-26'),
              'silvester': ('12-01', '01-01'), 'pflanzen': ('10-01', '03-31')}
 # Kurzname der Seite für Karten (Schaufenster, „Alle Räume“); ohne Eintrag: Titel aus GRID ohne „ einrichten“.
 LOOK_KURZ = {'kleine-raeume': 'Kleine Räume', 'farben': 'Wandfarbe wählen', 'mieten': 'Wohnen zur Miete', 'pflanzen': 'Zimmerpflanzen', 'arbeitsecke': 'Arbeitsecke', 'flur': 'Flur und Eingang',
-             'kaffee': 'Kaffee-Ecke', 'matcha': 'Matcha', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke'}
+             'kaffee': 'Kaffee-Ecke', 'matcha': 'Matcha', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke', 'fensterdeko': 'Fensterdeko'}
 # Bildmitte (0 bis 1 von links) für den Hochformat-Ausschnitt (assets/<name>-h.webp); ohne Eintrag: Mitte.
 LOOK_FX = {'japandi': .34, 'modern': .42, 'start': .58, 'vintage': .36, 'weihnachten': .58, 'adventskranz': .44}
 # Kurze Filme über dem Standbild (kaffee-film.js): Foto -> Ausschnitt (object-position) für Bild und Film
