@@ -1285,6 +1285,7 @@ def page(src):
     html = re.sub(r'\{\{amz:(.*?)\}\}', amz, html)
     html = awin_zeile(html, pathlib.Path(str(src)).stem, _get)
     html = re.sub(r'<div class="src">(.*?)</div>', sources, html, flags=re.S)
+    html = tab_karten(html)
     html = html.replace('href="index.html#', 'href="./#').replace('href="index.html"', 'href="./"')
     html = html.replace('Stil-Daheim', BRAND)
     html = seo(html, meta, path)
@@ -1296,6 +1297,28 @@ def page(src):
     (OUT / src.name).write_text(html)
     return meta
 
+
+def tab_karten(html):
+    """Vergleichstabellen (.ltab): jede Zelle ab der zweiten Spalte bekommt ihre Spaltenüberschrift als data-l,
+    damit site.css die Tabelle auf dem Handy als Karten zeigen kann (keine Spalte wird versteckt)."""
+    def one(m):
+        t = m.group(0)
+        if '</thead>' not in t:
+            return t
+        kopf, rumpf = t.split('</thead>', 1)
+        hs = [re.sub(r'<[^>]+>', '', h).strip() for h in re.findall(r'<th[^>]*>(.*?)</th>', kopf, re.S)]
+        if len(hs) < 2:
+            return t
+        def row(r):
+            n = [0]
+            def cell(c):
+                k = n[0]; n[0] += 1
+                if k == 0 or k >= len(hs) or 'data-l=' in c.group(1):
+                    return c.group(0)
+                return '<td data-l="%s"%s>' % (hs[k].replace('"', '&quot;'), c.group(1))
+            return re.sub(r'<td([^>]*)>', cell, r.group(0))
+        return kopf + '</thead>' + re.sub(r'<tr>.*?</tr>', row, rumpf, flags=re.S)
+    return re.sub(r'<table class="ltab">.*?</table>', one, html, flags=re.S)
 
 def _txt(s):
     import html as H
