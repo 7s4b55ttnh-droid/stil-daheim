@@ -36,6 +36,7 @@
 "licht": {"g": 113569, "p": [["Bernstein", "#e58e3a"], ["Kupfer", "#b05f25"], ["Rost", "#884a1f"], ["Mahagoni", "#5f2d0e"], ["Schokolade", "#3f1908"]]},
 "licht-2": {"g": 54258, "p": [["Aprikose", "#df9d5b"], ["Zimt", "#a66f43"], ["Leder", "#663e1f"], ["Abendblau", "#3f3f4b"], ["Schokolade", "#402512"]]},
 "matcha": {"g": 55581, "p": [["Sandstein", "#c6b59b"], ["Matcha", "#aab25a"], ["Taupe", "#998c71"], ["Umbra", "#675e45"], ["Mokka", "#45311c"]]},
+"matcha-2": {"g": 75202, "p": [["Nebel", "#ded9d5"], ["Champagner", "#eed5b6"], ["Kamel", "#c09d77"], ["Beton", "#a79991"], ["Taupe", "#84715f"]]},
 "miete": {"g": 90147, "p": [["Honig", "#eaa75c"], ["Kupfer", "#be7031"], ["Tabak", "#835e4d"], ["Zeder", "#744524"], ["Abendblau", "#484249"]]},
 "mieten-2": {"g": 66561, "p": [["Pfirsich", "#e6b97e"], ["Haselnuss", "#a47c57"], ["Taupe", "#928074"], ["Umbra", "#6c5747"], ["Mokka", "#473220"]]},
 "modern": {"g": 104090, "p": [["Kiesel", "#cbc1b4"], ["Taupe", "#9a846d"], ["Walnuss", "#56412e"], ["Mahagoni", "#572514"], ["Espresso", "#251b13"]]},
