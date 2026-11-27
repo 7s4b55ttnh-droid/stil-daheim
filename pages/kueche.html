@@ -1,0 +1,224 @@
+<!--meta {"key":"kueche","title":"Kleine Küche einrichten: Arbeitshöhe, Maße, Stauraum – Stil-Daheim","desc":"Kleine Küche einrichten: Die Arbeitsplatte liegt 15 cm unter deinem Ellenbogen, zwischen Spüle und Herd bleiben 60 cm. Mit Küchen-Planer für deine Größe.","og":"assets/kueche.jpg","updated":"2026-11-27","kurz":"Die Arbeitsplatte liegt am besten etwa 15&nbsp;cm unter deinem Ellenbogen, üblich sind 85 bis 95&nbsp;cm. Zwischen Spüle und Kochfeld brauchst du rund 60&nbsp;cm freie Fläche, Spüle, Kochfeld und Kühlschrank liegen je 100 bis 150&nbsp;cm auseinander. Zwischen zwei Küchenzeilen sind 120&nbsp;cm bequem, in sehr kleinen Küchen gehen 70 bis 90&nbsp;cm."} -->
+<!--HEAD-->
+<style>
+.hero.sub img{object-position:50% 55%}
+.masse{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}
+.masse div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:16px}
+.masse b{display:block;font-size:1.9rem;font-stretch:80%;line-height:1;color:var(--brass-t);font-variant-numeric:tabular-nums;margin-bottom:6px}
+.masse span{font-size:.92rem;color:var(--mut)}
+.kcheck{display:grid;gap:16px;margin-top:28px}
+.kcheck .in{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.kcheck label{display:flex;align-items:center;gap:10px;font-weight:600}
+.kcheck input[type=text]{width:6ch;min-height:44px;font:inherit;font-size:1.2rem;font-weight:700;text-align:right;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--pan);color:var(--ink)}
+.kform{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:0}
+.kform legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.kform label{min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--pan)}
+.kform input{position:absolute;opacity:0;pointer-events:none}
+.kform label:has(input:checked){background:var(--grn);color:var(--on-grn);border-color:var(--grn)}
+.kform label:has(input:focus-visible){outline:2px solid var(--brass-t);outline-offset:2px}
+.kres{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kres div{background:var(--pan);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kres b{display:block;font-size:1.4rem;font-stretch:85%;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--brass-t);margin-bottom:4px}
+.kres span{font-size:.9rem;color:var(--mut)}
+#kplan{background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:12px}
+#kplan svg{display:block;width:100%;height:auto;max-height:320px}
+#kplan .w{fill:none;stroke:var(--ink);stroke-width:2;opacity:.5}
+#kplan .c{fill:var(--ink);opacity:.14;stroke:var(--ink);stroke-width:2}
+#kplan .p{fill:var(--brass-t);opacity:.5}
+#kplan .m{stroke:var(--brass-t);stroke-width:1.6;fill:none}
+#kplan .g{fill:var(--brass-t);opacity:.12}
+#kplan .bad{fill:#c0392b;opacity:.18}
+#kplan text{fill:var(--brass-t);font:600 15px Archivo,system-ui,sans-serif}
+.ktxt{margin:0;color:var(--mut)}
+@media (max-width:640px){.masse{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<!--MAIN-->
+<div class="hero sub">
+  {{HERO:kueche|Kleine Altbau-Küche am Abend mit salbeigrünen Unterschränken, heller Eichen-Arbeitsplatte, Spüle und Kochfeld, offenen Holzregalen mit Tellern und Gläsern und warmem Licht unter den Regalen}}
+  <div class="wrap">
+    <h1>Kleine Küche einrichten: Maße, Stauraum und Arbeitshöhe</h1>
+    <p>Auf wenig Fläche zählt jeder Zentimeter. Mit der richtigen Arbeitshöhe, klugen Abständen und Stauraum bis unter die Decke kochst du auch in der kleinsten Küche gern.</p>
+    <div class="btns"><a class="btn" href="#planer">Zum Küchen-Planer</a><a class="btn ghost" href="#masse">Die Maße</a></div>
+  </div>
+</div>
+
+<section id="masse"><div class="wrap narrow">
+  <h2>Die wichtigsten Maße.</h2>
+  <p class="lede">Mit diesen Richtwerten passt die Küche zu dir und nicht nur zum Katalog.</p>
+  <div class="masse">
+    <div><b>−15&nbsp;cm</b><span>Arbeitsplatte unter deinem Ellenbogen, üblich 85 bis 95&nbsp;cm hoch</span></div>
+    <div><b>60&nbsp;cm</b><span>freie Arbeitsfläche zwischen Spüle und Kochfeld</span></div>
+    <div><b>100–150&nbsp;cm</b><span>zwischen Kühlschrank, Spüle und Kochfeld</span></div>
+    <div><b>120&nbsp;cm</b><span>Gang zwischen zwei Zeilen, wenn zwei kochen; allein 100</span></div>
+  </div>
+  <p style="margin-top:22px">Unterschränke sind meist 60&nbsp;cm tief, Oberschränke etwa 35&nbsp;cm. Zwischen Arbeitsplatte und Oberschrank lassen Küchenplaner meist 54 bis 60&nbsp;cm frei, über der Spüle mindestens 55&nbsp;cm. Die Dunstabzugshaube hängt 60 bis 70&nbsp;cm über dem Kochfeld.</p>
+</div></section>
+
+<section class="band" id="planer"><div class="wrap narrow">
+  <h2>Der Küchen-Planer.</h2>
+  <p class="lede">Gib deine Körpergröße ein und, wenn du sie weißt, deine Ellenbogenhöhe. Bei zwei Zeilen zählt die Breite des Raums zwischen den Wänden.</p>
+  <div class="kcheck">
+    <div class="in">
+      <label for="kk">Größe <input id="kk" type="text" inputmode="numeric" autocomplete="off" value="170" aria-label="Körpergröße in Zentimetern"> cm</label>
+      <label for="ke">Ellenbogen <input id="ke" type="text" inputmode="numeric" autocomplete="off" value="" placeholder="?" aria-label="Ellenbogenhöhe in Zentimetern, freiwillig"> cm</label>
+    </div>
+    <div class="in">
+      <fieldset class="kform"><legend>Küchenform</legend><label><input type="radio" name="kf" value="1" checked> Eine Zeile</label><label><input type="radio" name="kf" value="2"> Zwei Zeilen</label></fieldset>
+      <label for="kb">Raumbreite <input id="kb" type="text" inputmode="decimal" autocomplete="off" value="2,2" aria-label="Breite der Küche von Wand zu Wand in Metern"> m</label>
+    </div>
+    <div class="kres" aria-live="polite"><div><b id="k1"></b><span id="k1s">Höhe der Arbeitsplatte</span></div><div><b id="k2"></b><span>Spüle und Kochfeld, wenn sie eigene Höhen bekommen</span></div><div><b id="k3"></b><span>Unterkante der Oberschränke</span></div><div><b id="k4"></b><span id="k4s">Gang vor der Küchenzeile</span></div></div>
+    <div id="kplan" aria-hidden="true"></div>
+    <p class="ktxt" id="ktxt"></p>
+  </div>
+  <p class="tip">So misst du den Ellenbogen: aufrecht stehen, Oberarm locker am Körper, Unterarm waagerecht. Gemessen wird vom Boden bis zur Unterseite des Ellenbogens, am besten mit den Schuhen, die du in der Küche trägst. Ohne Messung schätzt der Planer die Ellenbogenhöhe mit 63&nbsp;Prozent der Körpergröße. Das ist eine Näherung nach dem Beispiel von NEFF (180&nbsp;cm groß, Ellenbogen etwa 114&nbsp;cm).</p>
+</div></section>
+
+<section id="zonen"><div class="wrap narrow">
+  <h2>Kurze Wege: die Reihenfolge der Zonen.</h2>
+  <p class="lede">Gekocht wird fast immer in derselben Folge: Zutaten holen, waschen, schneiden, kochen. Liegen die Zonen in dieser Reihenfolge, gehst du kaum hin und her.</p>
+  <ol class="steps" style="margin-top:32px">
+    <li><h3>Vorräte</h3><p>Kühlschrank und Vorratsschrank stehen am Anfang der Zeile, möglichst nah an der Tür. So räumst du den Einkauf ein, ohne durch die Küche zu laufen.</p></li>
+    <li><h3>Spülen</h3><p>Die Spüle mit Geschirrspüler daneben. Teller, Gläser und Besteck lagern in Griffweite, dann geht auch das Ausräumen schnell.</p></li>
+    <li><h3>Vorbereiten</h3><p>Die größte freie Fläche liegt zwischen Spüle und Kochfeld, mindestens 60&nbsp;cm, besser 80 bis 100&nbsp;cm. Darunter Messer, Bretter und Schüsseln.</p></li>
+    <li><h3>Kochen</h3><p>Kochfeld und Backofen am Ende, Töpfe, Pfannen und Gewürze direkt darunter oder daneben. Neben dem Kochfeld bleibt eine Ablage für heiße Töpfe.</p></li>
+  </ol>
+  <p style="margin-top:22px">Zwischen Kühlschrank, Spüle und Kochfeld liegen im besten Fall je 100 bis 150&nbsp;cm. Das ist das bekannte Arbeitsdreieck. In einer einzeiligen Küche wird daraus eine Linie, das Prinzip bleibt: in der Reihenfolge der Arbeit planen.</p>
+</div></section>
+
+{{FIG:kueche-2|Geöffnete Küchenschublade aus heller Eiche mit Holzeinteilern für Kochbesteck, gestapelte Vorratsdosen aus Glas mit Bambusdeckeln und Gewürzgläser in einem Holzeinsatz, daneben ein Schneidebrett mit frischen Kräutern|Einteiler in der Schublade geben jedem Teil seinen festen Platz, dann bleibt auch eine kleine Küche ordentlich.}}
+
+<section class="band" id="stauraum"><div class="wrap narrow">
+  <h2>Acht Ideen für mehr Stauraum.</h2>
+  <ul class="rechte">
+    <li><b>Bis unter die Decke:</b> Hohe Oberschränke oder ein Regalbrett darüber nehmen auf, was du selten brauchst, etwa Plätzchenformen oder die Feiertagsplatte.</li>
+    <li><b>Schubladen statt Türen:</b> In tiefen Unterschränken findest du hinter Türen hinten nichts mehr. Auszüge zeigen alles auf einen Blick.</li>
+    <li><b>Einteiler in jeder Schublade:</b> Besteck, Kochbesteck und Gewürze bekommen feste Fächer. Das spart Suchen und hält Ordnung.</li>
+    <li><b>Die Wand nutzen:</b> Eine Reling mit Haken trägt Kochlöffel, Schöpfkelle und Geschirrtuch. Die Arbeitsplatte bleibt frei.</li>
+    <li><b>Die Nische neben dem Kühlschrank:</b> Ein schmaler Rollwagen passt oft in 15 bis 20&nbsp;cm breite Lücken und nimmt Flaschen und Dosen auf.</li>
+    <li><b>Unter der Spüle:</b> Ein ausziehbares Regal, das um den Siphon herum passt, macht aus dem Chaos-Schrank zwei Etagen.</li>
+    <li><b>Gleiche Dosen:</b> Vorräte in gleichen, stapelbaren Gläsern brauchen weniger Platz als halb leere Packungen, und du siehst, was fehlt.</li>
+    <li><b>Ausmisten:</b> Doppelte Schneebesen, alte Gewürze, Geräte, die nur einmal im Jahr laufen. Was du ein Jahr nicht benutzt hast, darf gehen. Wie das ohne Stress klappt, steht im Ratgeber <a href="ausmisten.html">Wohnung ausmisten</a>.</li>
+  </ul>
+</div></section>
+
+<section id="licht"><div class="wrap narrow">
+  <h2>Licht auf die Arbeitsfläche.</h2>
+  <p class="lede">Eine Deckenleuchte allein reicht in der Küche nicht: Wer an der Arbeitsplatte steht, wirft mit dem Kopf einen Schatten aufs Brett.</p>
+  <p>Leuchten unter den Oberschränken oder unter einem Regalbrett bringen das Licht genau dahin, wo du schneidest. LED-Leisten mit Akku oder Stecker kommen ohne Elektriker aus. Für die Arbeitsfläche ist eher helles, neutrales Licht angenehm, für den Abend eine warmweiße Leuchte am Esstisch oder auf dem Regal. Mehr zu Lichtfarbe und Helligkeit steht im Ratgeber <a href="licht.html">Licht planen</a>.</p>
+</div></section>
+
+<section class="band" id="miete"><div class="wrap narrow">
+  <h2>Die Küche zur Miete verschönern.</h2>
+  <p class="lede">Vieles geht ohne Erlaubnis, solange du es beim Auszug wieder entfernen kannst.</p>
+  <table class="ltab">
+    <thead><tr><th>Was</th><th>So geht es</th></tr></thead>
+    <tbody>
+      <tr><td><b>Griffe tauschen</b></td><td>Einfach und günstig. Die alten Griffe aufheben und beim Auszug wieder anschrauben.</td></tr>
+      <tr><td><b>Fronten bekleben</b></td><td>Möbelfolie verändert die Farbe. Vorher an einer verdeckten Stelle testen, ob sie sich rückstandsfrei löst.</td></tr>
+      <tr><td><b>Fliesen überdecken</b></td><td>Klebefolie oder eine Rückwand aus Platten, die nur angelehnt oder geklemmt wird. Nichts fest auf die Fliesen kleben, was du nicht wieder abbekommst.</td></tr>
+      <tr><td><b>Licht und Regale</b></td><td>Akku-Leuchten und Regale mit Klemm- oder Klebebefestigung. Wenn du bohrst, dann lieber in die Fugen als in die Fliese.</td></tr>
+      <tr><td><b>Größere Umbauten</b></td><td>Etwa eine neue Küchenzeile oder versetzte Anschlüsse: nur mit Zustimmung des Vermieters, am besten schriftlich. Beim Auszug kann er verlangen, dass du den alten Zustand wiederherstellst (Berliner Mieterverein).</td></tr>
+    </tbody>
+  </table>
+  <p class="tip">Das ist keine Rechtsberatung. Was in der Mietwohnung ohne Bohren geht, steht im Ratgeber <a href="mieten.html">Schöner wohnen zur Miete</a>.</p>
+</div></section>
+
+<section id="fehler"><div class="wrap narrow">
+  <h2>Häufige Fehler.</h2>
+  <ul class="rechte">
+    <li><b>Die Standardhöhe ungeprüft übernehmen:</b> Wer groß ist, arbeitet an 85&nbsp;cm gebückt, wer klein ist, mit hochgezogenen Schultern. Die Sockelhöhe lässt sich meist anpassen.</li>
+    <li><b>Keine Fläche zwischen Spüle und Kochfeld:</b> Dann schneidest du auf dem Herd oder der Abtropffläche. 60&nbsp;cm sind das Mindeste.</li>
+    <li><b>Der Gang ist zu eng:</b> Unter 70&nbsp;cm gehen Spülmaschine und Backofen nicht mehr richtig auf. Beim Planen die offene Tür mitdenken.</li>
+    <li><b>Alles auf der Arbeitsplatte:</b> Toaster, Mixer, Messerblock und Kaffeemaschine fressen die Fläche. Nur stehen lassen, was du täglich nutzt.</li>
+    <li><b>Nur Licht von oben:</b> Der eigene Schatten fällt aufs Brett. Eine Leiste unter den Oberschränken hilft sofort.</li>
+  </ul>
+</div></section>
+
+<section class="band" id="checkliste"><div class="wrap narrow">
+  <h2>Checkliste.</h2>
+  <p class="lede">Hak ab, was erledigt ist. Der Stand bleibt nur in deinem Browser.</p>
+  <div class="ck" id="ck" style="margin-top:26px"></div>
+</div></section>
+
+<section id="einkauf"><div class="wrap">
+  <div class="sec-h"><h2>Für die kleine Küche.</h2><p class="lede">Ideen zum Stöbern. Die Links führen zu einer Suche bei Amazon<span class="tag">Anzeige</span></p></div>
+  <div class="shop">
+    <div class="items">
+      <a class="item" href="{{amz:LED Unterbauleuchte Küche}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Unterbauleuchte</b><span>Licht genau auf die Arbeitsfläche</span><span class="chk">Achte auf: Akku oder Stecker, wenn du nicht anschließen darfst</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Schubladeneinsatz Küche Bambus ausziehbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Schubladeneinsatz</b><span>Feste Fächer für Besteck und Kochbesteck</span><span class="chk">Achte auf: Innenmaß der Schublade, nicht Außenmaß</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Vorratsdosen Glas Bambusdeckel stapelbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Vorratsdosen aus Glas</b><span>Stapelbar, du siehst, was fehlt</span><span class="chk">Achte auf: gleiche Grundfläche, dann stapeln sie sich gut</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Küchenreling Edelstahl mit Haken}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Küchenreling</b><span>Kochbesteck an die Wand statt auf die Platte</span><span class="chk">Achte auf: Klebe-Variante, wenn du nicht bohren willst</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Nischenregal Küche schmal Rollen}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Nischenwagen</b><span>Für die Lücke neben dem Kühlschrank</span><span class="chk">Achte auf: Breite und Tiefe der Lücke nachmessen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Unterschrank Regal Spüle ausziehbar}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Regal unter der Spüle</b><span>Zwei Etagen um den Siphon herum</span><span class="chk">Achte auf: verstellbare Breite und Höhe</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Gewürzeinsatz Schublade}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Gewürzeinsatz</b><span>Gewürze liegend in der Schublade</span><span class="chk">Achte auf: passend für deine Glasgröße</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+      <a class="item" href="{{amz:Möbelfolie Küchenfronten matt}}" rel="sponsored nofollow noopener" target="_blank"><div><b>Möbelfolie</b><span>Neue Farbe für alte Fronten</span><span class="chk">Achte auf: rückstandsfrei ablösbar, vorher testen</span></div><span class="go"><span>Bei Amazon{{EXT}}</span><small>Anzeige</small></span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="fragen"><div class="wrap narrow">
+  <h2>Häufige Fragen.</h2>
+  <div class="faq" style="margin-top:28px">
+    <details><summary>Wie hoch sollte die Arbeitsplatte in der Küche sein?</summary><div><p>Etwa 15&nbsp;cm unter deinem Ellenbogen. Bei einer Ellenbogenhöhe von 107&nbsp;cm sind das 92&nbsp;cm, bei 114&nbsp;cm etwa 99&nbsp;cm. Übliche Küchen haben 85 bis 95&nbsp;cm.</p></div></details>
+    <details><summary>Wie viel Platz braucht man zwischen zwei Küchenzeilen?</summary><div><p>Kochen zwei Personen, sind 120&nbsp;cm bequem, allein reichen 100&nbsp;cm. In sehr kleinen Küchen unter 10&nbsp;m² gehen auch 70 bis 90&nbsp;cm, dann wird es aber mit offenen Türen eng.</p></div></details>
+    <details><summary>Wie viel Arbeitsfläche braucht eine kleine Küche?</summary><div><p>Zwischen Spüle und Kochfeld mindestens 60&nbsp;cm, als Hauptarbeitsfläche besser 80 bis 100&nbsp;cm. Dazu eine kleine Ablage neben dem Kochfeld.</p></div></details>
+    <details><summary>Wie viel Abstand zwischen Arbeitsplatte und Oberschrank?</summary><div><p>Meist 54 bis 60&nbsp;cm, über der Spüle mindestens 55&nbsp;cm. Kleinere Menschen hängen die Schränke eher tiefer, damit sie das obere Fach erreichen.</p></div></details>
+    <details><summary>Darf ich in der Mietwohnung die Küchenfronten bekleben?</summary><div><p>Folie, die sich rückstandsfrei ablöst, gilt meist als unproblematisch. Beim Auszug muss der alte Zustand wieder hergestellt sein. Bei größeren Umbauten vorher den Vermieter fragen.</p></div></details>
+  </div>
+</div></section>
+
+<section id="quellen"><div class="wrap narrow">
+  <h2>Quellen.</h2>
+  <div class="src"><ol>
+    <li>NEFF: Ergonomie in der Küche, Arbeitshöhe 15&nbsp;cm unter dem Ellenbogen, Tabelle Ellenbogen zu Arbeitshöhe <a href="https://www.neff-home.com/de/neff-entdecken/kuechenplanung/schritte/ergonomie" target="_blank" rel="noopener">neff-home.com</a></li>
+    <li>sanier.de: Die wichtigsten Maße und Abstände in der Küche, Arbeitsdreieck, Durchgänge, Oberschränke (aktualisiert 10.07.2025) <a href="https://www.sanier.de/kueche/die-wichtigsten-masse-und-abstaende-in-der-kueche" target="_blank" rel="noopener">sanier.de</a></li>
+    <li>Berliner Mieterverein: Info 38, Mietermodernisierung, Zustimmung und Rückbau beim Auszug (Stand 12/24) <a href="https://www.berliner-mieterverein.de/recht/infoblaetter/info-38-mietermodernisierung-als-mieter-die-wohnung-modernisieren-vereinbarung-treffen.htm" target="_blank" rel="noopener">berliner-mieterverein.de</a></li>
+  </ol><p style="margin-top:14px">Geprüft am 27.11.2026.</p></div>
+</div></section>
+
+<section class="sis"><div class="wrap narrow"><a class="sis-a" href="https://strom-daheim.de/kochen.html"><span class="sis-k">Von unserer Schwesterseite Strom-Daheim</span><b>Kochen mit wenig Strom →</b><span>Deckel, Wasserkocher und Induktion im Vergleich.</span></a></div></section>
+
+{{RELATED:ausmisten,kleine-raeume,mieten}}
+<!--END-->
+<script>
+/* Küchen-Planer: Arbeitshöhe = Ellenbogen − 15 cm (NEFF, sanier.de), Spüle +5, Kochfeld −6 (sanier.de), Oberschrank 55 cm über der Platte (54–60), Gang: Raumbreite minus 60 cm je Zeile; 120 zu zweit, 100 allein, 70–90 sehr klein */
+(function(){var $=function(i){return document.getElementById(i)},K=$('kk'),E=$('ke'),B=$('kb');
+ function num(v){var t=String(v).trim().replace(/\s|cm|m/gi,'');if(t.indexOf(',')>-1)t=t.replace(/\./g,'').replace(',','.');var n=parseFloat(t);return isFinite(n)?n:NaN}
+ function f(n){return Math.round(n).toLocaleString('de-DE')}
+ function rows(){var r=document.querySelector('input[name=kf]:checked');return r?+r.value:1}
+ function draw(h,ob,gang,z){var o=[],s=1.4,W=420,H=300,base=280,x0=40,dep=60*s;
+  o.push('<svg viewBox="0 0 '+W+' '+H+'">');
+  o.push('<path class="w" d="M'+x0+' 10V'+base+'H'+(W-20)+'"/>');
+  o.push('<rect class="c" x="'+x0+'" y="'+(base-(h-4)*s)+'" width="'+dep+'" height="'+((h-4)*s)+'"/>');
+  o.push('<rect class="p" x="'+x0+'" y="'+(base-h*s)+'" width="'+(dep+4)+'" height="'+(4*s)+'"/>');
+  var oy=base-(ob+70)*s;if(oy<10)oy=10;o.push('<rect class="c" x="'+x0+'" y="'+oy+'" width="'+(35*s)+'" height="'+(base-ob*s-oy)+'"/>');
+  o.push('<path class="m" d="M'+(x0+dep+18)+' '+base+'V'+(base-h*s)+'M'+(x0+dep+12)+' '+(base-h*s)+'h12"/><text x="'+(x0+dep+28)+'" y="'+(base-h*s/2)+'">'+f(h)+' cm</text>');
+  o.push('<path class="m" d="M'+(x0+12)+' '+(base-h*s)+'V'+(base-ob*s)+'"/><text x="'+(x0+38)+'" y="'+(base-(h+ob)/2*s+5)+'">'+f(ob-h)+' cm</text>');
+  if(gang!==null){var gx=x0+dep+4,gw=Math.max(0,Math.min(gang,190))*s*.9;o.push('<rect class="'+(gang<70?'bad':'g')+'" x="'+gx+'" y="'+(base-12)+'" width="'+gw+'" height="12"/>');
+   if(z===2)o.push('<rect class="c" x="'+(gx+gw)+'" y="'+(base-(h-4)*s)+'" width="'+dep+'" height="'+((h-4)*s)+'"/><rect class="p" x="'+(gx+gw-4)+'" y="'+(base-h*s)+'" width="'+(dep+4)+'" height="'+(4*s)+'"/>');
+   o.push('<text x="'+(gx+40)+'" y="'+(base-20)+'">Gang '+f(gang)+' cm</text>')}
+  o.push('</svg>');$('kplan').innerHTML=o.join('')}
+ function up(){var k=num(K.value),e=num(E.value),b=num(B.value),z=rows(),txt=[];
+  var eOk=E.value.trim()==='',ell;
+  if(!(k>=130&&k<=215)||(!eOk&&!(e>=80&&e<=140))||!(b>=1&&b<=8)){['k1','k2','k3','k4'].forEach(function(i){$(i).textContent='–'});$('kplan').innerHTML='';$('ktxt').textContent='Bitte eine Körpergröße von 130 bis 215 cm, eine Ellenbogenhöhe von 80 bis 140 cm (oder leer) und eine Raumbreite von 1 bis 8 m eingeben.';return}
+  ell=eOk?Math.round(k*.63):e;
+  var h=Math.round(ell-15),ob=h+55,gang=Math.round(b*100-60*z);
+  $('k1').textContent=f(h)+' cm';$('k1s').textContent='Höhe der Arbeitsplatte'+(eOk?' (Ellenbogen geschätzt: '+f(ell)+' cm)':'');
+  $('k2').textContent=f(h+5)+' / '+f(h-6)+' cm';
+  $('k3').textContent=f(ob)+'–'+f(h+60)+' cm';
+  $('k4').textContent=gang>0?f(gang)+' cm':'zu schmal';$('k4s').textContent=z===2?'Gang zwischen den beiden Zeilen':'Gang vor der Küchenzeile';
+  if(h<85)txt.push('Deine Arbeitshöhe liegt unter der üblichen Spanne von 85 bis 95 cm. Frag nach einem niedrigeren Sockel.');
+  else if(h>95)txt.push('Deine Arbeitshöhe liegt über der üblichen Spanne von 85 bis 95 cm. Ein höherer Sockel oder eine dickere Platte gleicht das aus.');
+  else txt.push('Deine Arbeitshöhe liegt in der üblichen Spanne von 85 bis 95 cm.');
+  if(gang>=120)txt.push('Der Gang ist so breit, dass zwei Personen bequem nebeneinander arbeiten.');
+  else if(gang>=100)txt.push('Für eine Person ist der Gang bequem, zu zweit wird es eng.');
+  else if(gang>=70)txt.push('Knapp, aber in kleinen Küchen üblich. Prüf, ob Spülmaschine und Backofen ganz aufgehen.');
+  else if(gang>0)txt.push('Zu eng: Unter 70 cm gehen Türen kaum auf. '+(z===2?'Plane die zweite Seite als flaches Regal mit 30 bis 35 cm Tiefe statt als volle Zeile.':'Wähle flachere Möbel oder eine andere Wand.'));
+  else txt.push('Der Raum ist zu schmal für diese Küchenform.');
+  $('ktxt').textContent=txt.join(' ');
+  draw(h,ob,gang>0?gang:0,z)}
+ [K,E,B].forEach(function(x){x.addEventListener('input',up)});document.querySelectorAll('input[name=kf]').forEach(function(x){x.addEventListener('change',up)});up()})();
+/* Checkliste, gespeichert nur im Browser */
+document.addEventListener('DOMContentLoaded',()=>{const L=[['Ellenbogen gemessen','Mit Küchenschuhen, Unterarm waagerecht.'],['Arbeitshöhe festgelegt','Etwa 15 cm unter dem Ellenbogen.'],['Zonen geordnet','Vorräte, Spülen, Vorbereiten, Kochen.'],['Arbeitsfläche frei','Mindestens 60 cm zwischen Spüle und Kochfeld.'],['Gang geprüft','Geschirrspüler und Backofen gehen ganz auf.'],['Licht unter den Schränken','Kein Schatten auf dem Brett.'],['Schubladen eingeteilt','Jedes Teil hat einen festen Platz.'],['Wand genutzt','Reling oder Regal für den Alltag.'],['Ausgemistet','Was ein Jahr nicht benutzt wurde, darf gehen.']];
+sdChecklist('ck',L,'sdku',{verb:'erledigt',done:'Deine Küche ist bereit. Guten Appetit!'})});
+</script>

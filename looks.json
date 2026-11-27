@@ -33,6 +33,8 @@
 "kaffee-2": {"g": 60350, "p": [["Karamell", "#b37f55"], ["Umbra", "#725b48"], ["Teak", "#7e512d"], ["Mokka", "#4b311f"], ["Ebenholz", "#1f150f"]]},
 "kleine-raeume": {"g": 90802, "p": [["Mandel", "#e3c5a8"], ["Milchkaffee", "#ae8d73"], ["Karamell", "#bd7e49"], ["Zeder", "#7c512e"], ["Espresso", "#2a1506"]]},
 "kleine-raeume-2": {"g": 81137, "p": [["Kreide", "#e9e9e9"], ["Kiesel", "#c8c0b5"], ["Taupe", "#938069"], ["Walnuss", "#58462e"], ["Espresso", "#231a10"]]},
+"kueche": {"g": 82552, "p": [["Aprikose", "#d39350"], ["Kupfer", "#a76834"], ["Umbra", "#7c6056"], ["Zeder", "#7d4f2d"], ["Mokka", "#4b2f1c"]]},
+"kueche-2": {"g": 75564, "p": [["Bernstein", "#d79349"], ["Kamel", "#b78861"], ["Tabak", "#765133"], ["Olivbraun", "#483f0f"], ["Espresso", "#25190e"]]},
 "licht": {"g": 113569, "p": [["Bernstein", "#e58e3a"], ["Kupfer", "#b05f25"], ["Rost", "#884a1f"], ["Mahagoni", "#5f2d0e"], ["Schokolade", "#3f1908"]]},
 "licht-2": {"g": 54258, "p": [["Aprikose", "#df9d5b"], ["Zimt", "#a66f43"], ["Leder", "#663e1f"], ["Abendblau", "#3f3f4b"], ["Schokolade", "#402512"]]},
 "matcha": {"g": 55581, "p": [["Sandstein", "#c6b59b"], ["Matcha", "#aab25a"], ["Taupe", "#998c71"], ["Umbra", "#675e45"], ["Mokka", "#45311c"]]},

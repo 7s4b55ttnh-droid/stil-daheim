@@ -92,6 +92,7 @@ GRID = [('index.html#stil-finder', 'Welcher Stil passt zu mir?', 'Der Stil-Finde
         ('wohnzimmer.html', 'Wohnzimmer einrichten', 'Maße, Anordnung, Licht, Wohnzimmer-Check', 'wohnzimmer', 'wohnzimmer'),
         ('flur.html', 'Flur und Eingang einrichten', 'Maße, Garderobe, Licht, Flur-Check', 'flur', 'flur'),
         ('ausmisten.html', 'Wohnung ausmisten', 'Vier Kisten, Ausmist-Planer, wohin damit', 'ausmisten', 'ausmisten'),
+        ('kueche.html', 'Kleine Küche einrichten', 'Arbeitshöhe, Abstände, Stauraum, Küchen-Planer', 'kueche', 'kueche'),
         ('pflanzen.html', 'Zimmerpflanzen im Winter', 'Licht, Gießen, Heizungsluft, Gieß-Check', 'pflanzen', 'pflanzen'),
         ('arbeitsecke.html', 'Arbeitsecke im Wohnzimmer', 'Platz, Maße, Licht', 'arbeitsecke', 'arbeitsecke'),
         ('black-friday.html', 'Black Friday 2026', 'Clever einrichten, echte Angebote', 'black-friday', 'black-friday'),
@@ -338,7 +339,7 @@ def fig(name, alt, cap):
 
 # Themen für die Filter auf der Startseite ({{ALLE}}). Neue Seite: Schlüssel hier eintragen (auch mehrere Themen, mit Leerzeichen).
 KAT = {'wohnideen': 'stile', 'stile': 'stile', 'vintage': 'stile', 'modern': 'stile', 'skandinavisch': 'stile', 'japandi': 'stile', 'industrial': 'stile', 'boho': 'stile',
-       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'kaffee-rezepte': 'raum', 'tee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison',
+       'kleine-raeume': 'raum', 'wohnzimmer': 'raum', 'esszimmer': 'raum', 'gaestezimmer': 'raum saison', 'vorhaenge': 'raum licht', 'schlafzimmer': 'raum', 'flur': 'raum', 'arbeitsecke': 'raum', 'kaffee': 'raum', 'kaffee-rezepte': 'raum', 'tee': 'raum', 'matcha': 'raum', 'mieten': 'raum', 'ausmisten': 'raum saison', 'kueche': 'raum werkzeug',
        'farben': 'licht', 'wandfarben': 'licht', 'licht': 'licht', 'gemuetlich': 'licht saison',
        'weihnachten': 'saison', 'tischdeko': 'saison', 'adventskranz': 'saison', 'weihnachtsbaum': 'saison', 'fensterdeko': 'saison licht', 'silvester': 'saison', 'geschenke': 'saison', 'black-friday': 'saison', 'pflanzen': 'saison raum',
        'rechner': 'werkzeug', 'raumplaner': 'werkzeug raum', 'bilderwand': 'werkzeug raum', 'farbpalette': 'werkzeug stile', 'wandfarbe-testen': 'werkzeug licht', 'lexikon': 'stile licht'}
@@ -396,6 +397,7 @@ LOOK_TIPP = {
     'miete': 'Zur Miete darfst du streichen, auch farbig. Kräftige Farben müssen beim Auszug wieder neutral sein.',
     'adventskranz': 'Für einen selbst gebundenen Kranz reichen ein Strohrohling, Wickeldraht, Nadelgrün und vier Kerzen.',
     'arbeitsecke': 'Stell die Arbeitsecke ans Fenster oder in eine Nische. Dann siehst du sie vom Sofa aus nicht ständig.',
+    'kueche': 'Die Arbeitsplatte liegt am besten 15&nbsp;cm unter deinem Ellenbogen.',
     'ausmisten': 'Miste nach Kategorien aus statt nach Zimmern: zuerst Kleidung, Erinnerungsstücke zuletzt.',
     'bilderwand': 'Die Mitte einer Bilderwand hängt auf etwa 140 bis 150&nbsp;cm Höhe.',
     'boho': 'Höchstens drei bis vier Farben pro Raum. So bleibt Boho lässig und wird nicht chaotisch.',
@@ -428,7 +430,7 @@ LOOK_TIPP = {
 LOOK_ZEIT = {'adventskranz': ('11-01', '12-24'), 'weihnachten': ('11-01', '12-26'), 'tischdeko': ('11-01', '12-26'), 'geschenke': ('11-01', '12-26'), 'weihnachtsbaum': ('11-15', '12-26'), 'fensterdeko': ('11-15', '12-26'),
              'silvester': ('12-01', '01-01'), 'pflanzen': ('10-01', '03-31')}
 # Kurzname der Seite für Karten (Schaufenster, „Alle Räume“); ohne Eintrag: Titel aus GRID ohne „ einrichten“.
-LOOK_KURZ = {'kleine-raeume': 'Kleine Räume', 'farben': 'Wandfarbe wählen', 'mieten': 'Wohnen zur Miete', 'pflanzen': 'Zimmerpflanzen', 'arbeitsecke': 'Arbeitsecke', 'flur': 'Flur und Eingang',
+LOOK_KURZ = {'kleine-raeume': 'Kleine Räume', 'kueche': 'Kleine Küche', 'farben': 'Wandfarbe wählen', 'mieten': 'Wohnen zur Miete', 'pflanzen': 'Zimmerpflanzen', 'arbeitsecke': 'Arbeitsecke', 'flur': 'Flur und Eingang',
              'kaffee': 'Kaffee-Ecke', 'matcha': 'Matcha', 'gemuetlich': 'Gemütlich', 'weihnachten': 'Weihnachten', 'tischdeko': 'Festliche Tischdeko', 'farbpalette': 'Farbpalette', 'bilderwand': 'Bilderwand', 'geschenke': 'Geschenke', 'fensterdeko': 'Fensterdeko'}
 # Bildmitte (0 bis 1 von links) für den Hochformat-Ausschnitt (assets/<name>-h.webp); ohne Eintrag: Mitte.
 LOOK_FX = {'japandi': .34, 'modern': .42, 'start': .58, 'vintage': .36, 'weihnachten': .58, 'adventskranz': .44}
