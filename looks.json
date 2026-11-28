@@ -31,6 +31,7 @@
 "japandi-2": {"g": 56299, "p": [["Weizen", "#f5ce9c"], ["Milchkaffee", "#b8a38b"], ["Haselnuss", "#916e4b"], ["Leder", "#654427"], ["Espresso", "#231509"]]},
 "kaffee": {"g": 40804, "p": [["Champagner", "#f0d4ad"], ["Milchkaffee", "#aa9381"], ["Rost", "#834724"], ["Schokolade", "#3d2316"], ["Ebenholz", "#190e08"]]},
 "kaffee-2": {"g": 60350, "p": [["Karamell", "#b37f55"], ["Umbra", "#725b48"], ["Teak", "#7e512d"], ["Mokka", "#4b311f"], ["Ebenholz", "#1f150f"]]},
+"kaffee-rezepte-2": {"g": 62755, "p": [["Weizen", "#f3c98f"], ["Aprikose", "#dca15c"], ["Milchkaffee", "#b49171"], ["Teak", "#8a5d34"], ["Leder", "#5e3f25"]]},
 "kleine-raeume": {"g": 90802, "p": [["Mandel", "#e3c5a8"], ["Milchkaffee", "#ae8d73"], ["Karamell", "#bd7e49"], ["Zeder", "#7c512e"], ["Espresso", "#2a1506"]]},
 "kleine-raeume-2": {"g": 81137, "p": [["Kreide", "#e9e9e9"], ["Kiesel", "#c8c0b5"], ["Taupe", "#938069"], ["Walnuss", "#58462e"], ["Espresso", "#231a10"]]},
 "kueche": {"g": 82552, "p": [["Aprikose", "#d39350"], ["Kupfer", "#a76834"], ["Umbra", "#7c6056"], ["Zeder", "#7d4f2d"], ["Mokka", "#4b2f1c"]]},
